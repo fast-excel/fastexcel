@@ -244,10 +244,10 @@ public class ExcelWriteFillExecutor extends AbstractExcelWriteExecutor {
 
                 for (String variable : analysisCell.getVariableList()) {
                     cellValueBuild.append(analysisCell.getPrepareDataList().get(index++));
-                    if (!dataKeySet.contains(variable)) {
-                        continue;
+                    Object value = null;
+                    if (dataKeySet.contains(variable)) {
+                        value = dataMap.get(variable);
                     }
-                    Object value = dataMap.get(variable);
                     ExcelContentProperty excelContentProperty = ClassUtils.declaredExcelContentProperty(dataMap,
                         writeContext.currentWriteHolder().excelWriteHeadProperty().getHeadClazz(), variable,
                         writeContext.currentWriteHolder());
