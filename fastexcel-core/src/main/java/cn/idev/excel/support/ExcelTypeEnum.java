@@ -8,6 +8,8 @@ import java.io.InputStream;
 import cn.idev.excel.exception.ExcelAnalysisException;
 import cn.idev.excel.exception.ExcelCommonException;
 import cn.idev.excel.read.metadata.ReadWorkbook;
+import cn.idev.excel.util.StringUtils;
+
 import lombok.Getter;
 import org.apache.poi.util.IOUtils;
 
@@ -57,6 +59,12 @@ public enum ExcelTypeEnum {
                 if (!file.exists()) {
                     throw new ExcelAnalysisException("File " + file.getAbsolutePath() + " not exists.");
                 }
+                // If there is a password, use the FileMagic first
+                if (!StringUtils.isEmpty(readWorkbook.getPassword())) {
+                    try (BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(file))) {
+                        return recognitionExcelType(bufferedInputStream);
+                    }
+                }
                 // Use the name to determine the type
                 String fileName = file.getName();
                 if (fileName.endsWith(XLSX.getValue())) {
@@ -66,8 +74,10 @@ public enum ExcelTypeEnum {
                 } else if (fileName.endsWith(CSV.getValue())) {
                     return CSV;
                 }
-                try (BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(file))) {
-                    return recognitionExcelType(bufferedInputStream);
+                if (StringUtils.isEmpty(readWorkbook.getPassword())) {
+                    try (BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(file))) {
+                        return recognitionExcelType(bufferedInputStream);
+                    }
                 }
             }
             if (!inputStream.markSupported()) {
