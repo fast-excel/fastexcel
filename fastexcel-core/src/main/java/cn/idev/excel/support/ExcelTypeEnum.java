@@ -9,8 +9,8 @@ import cn.idev.excel.exception.ExcelAnalysisException;
 import cn.idev.excel.exception.ExcelCommonException;
 import cn.idev.excel.read.metadata.ReadWorkbook;
 import cn.idev.excel.util.StringUtils;
-
 import lombok.Getter;
+import org.apache.poi.EmptyFileException;
 import org.apache.poi.util.IOUtils;
 
 /**
@@ -87,6 +87,8 @@ public enum ExcelTypeEnum {
             return recognitionExcelType(inputStream);
         } catch (ExcelCommonException e) {
             throw e;
+        } catch (EmptyFileException e) {
+            throw new ExcelCommonException("The supplied file was empty (zero bytes long)");
         } catch (Exception e) {
             throw new ExcelCommonException(
                 "Convert excel format exception.You can try specifying the 'excelType' yourself", e);
