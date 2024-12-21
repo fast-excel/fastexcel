@@ -31,7 +31,6 @@ public enum ReadDefaultReturnEnum {
     /**
      * Return to {@link ReadCellData}, can decide which field you need.
      */
-    READ_CELL_DATA,
-    ;
+    READ_CELL_DATA
 
 }
