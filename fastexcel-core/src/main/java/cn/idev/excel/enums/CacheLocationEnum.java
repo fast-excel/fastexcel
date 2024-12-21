@@ -1,7 +1,7 @@
 package cn.idev.excel.enums;
 
 /**
- * cache locaciton
+ * cache location
  *
  * @author Jiaju Zhuang
  **/
