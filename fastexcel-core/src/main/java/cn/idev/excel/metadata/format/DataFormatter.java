@@ -118,6 +118,8 @@ public class DataFormatter {
      */
     private static final String invalidDateTimeString;
 
+    private static final BigDecimal TEN = new BigDecimal(10);
+
     static {
         StringBuilder buf = new StringBuilder();
         for (int i = 0; i < 255; i++) {buf.append('#');}
@@ -524,10 +526,16 @@ public class DataFormatter {
             setExcelStyleRoundingMode(df);
             Matcher endsWithCommasMatcher = endsWithCommas.matcher(pattern);
             if (endsWithCommasMatcher.find()) {
+                int index_point = pattern.indexOf(".");
+                int index_comma = pattern.indexOf(",");
+                int cnt = index_comma - index_point - 1;
                 String commas = (endsWithCommasMatcher.group(1));
                 BigDecimal temp = BigDecimal.ONE;
                 for (int i = 0; i < commas.length(); ++i) {
                     temp = temp.multiply(ONE_THOUSAND);
+                }
+                for (int i = 0; i < cnt ; i++) {
+                    temp = temp.multiply(TEN);
                 }
                 divider = temp;
             } else {
