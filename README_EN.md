@@ -37,7 +37,7 @@ If you are using Maven for project building, add the following configuration in 
 <dependency>
     <groupId>cn.idev.excel</groupId>
     <artifactId>fastexcel</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
 </dependency>
 ```
 ### Gradle
@@ -45,9 +45,11 @@ If you are using Gradle for project building, add the following configuration in
 
 ```gradle
 dependencies {
-    implementation 'cn.idev.excel:fastexcel:1.0.0'
+    implementation 'cn.idev.excel:fastexcel:1.1.0'
 }
 ```
+## Update
+For detailed update logs, refer to [Details of version updates](update.md). You can also find all available versions in the [Maven Central Repository](https://mvnrepository.com/artifact/cn.idev.excel/fastexcel).
 
 ## Differences Between EasyExcel and FastExcel
 - FastExcel supports all the features of EasyExcel but with better performance and stability.
@@ -71,7 +73,7 @@ Replace with:
 <dependency>
     <groupId>cn.idev.excel</groupId>
     <artifactId>fastexcel</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
 </dependency>
 ```
 ### 2. Modify Code
