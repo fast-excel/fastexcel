@@ -37,7 +37,7 @@ Mavenでプロジェクトを構築する場合、`pom.xml`ファイルに次の
 <dependency>
     <groupId>cn.idev.excel</groupId>
     <artifactId>fastexcel</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
 </dependency>
 ```
 ### Gradle
@@ -45,9 +45,11 @@ Mavenでプロジェクトを構築する場合、`pom.xml`ファイルに次の
 Gradleでプロジェクトを構築する場合、build.gradleファイルに次の構成を含めてください：
 ```gradle
 dependencies {
-    implementation 'cn.idev.excel:fastexcel:1.0.0'
+    implementation 'cn.idev.excel:fastexcel:1.1.0'
 }
 ```
+## 更新する
+具体的なバージョンアップ内容は[バージョンアップ詳細](update.md)で確認できます。 [Maven Central Repository](https://mvnrepository.com/artifact/cn.idev.excel/fastexcel) 内のすべてのバージョンをクエリすることもできます。
 ## EasyExcelとFastExcelの違い
 - FastExcelはEasyExcelのすべての機能をサポートしていますが、FastExcelのパフォーマンスはより良く、より安定しています。
 - FastExcelとEasyExcelのAPIは完全に一致しているため、シームレスに切り替えることができます。
@@ -68,7 +70,7 @@ EasyExcelの依存関係をFastExcelの依存関係に置き換えます。以�
 <dependency>
     <groupId>cn.idev.excel</groupId>
     <artifactId>fastexcel</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
 </dependency>
 ```
 ### 2. コードの修正
