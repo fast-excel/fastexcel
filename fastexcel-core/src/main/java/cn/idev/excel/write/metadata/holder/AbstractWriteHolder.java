@@ -230,7 +230,9 @@ public abstract class AbstractWriteHolder extends AbstractHolder implements Writ
         if (writeBasicParameter.getCustomConverterList() != null
             && !writeBasicParameter.getCustomConverterList().isEmpty()) {
             for (Converter<?> converter : writeBasicParameter.getCustomConverterList()) {
-                getConverterMap().put(ConverterKeyBuild.buildKey(converter.supportJavaTypeKey()), converter);
+                getConverterMap().put(
+                    ConverterKeyBuild.buildKey(converter.supportJavaTypeKey(), converter.supportExcelTypeKey()),
+                    converter);
             }
         }
     }
