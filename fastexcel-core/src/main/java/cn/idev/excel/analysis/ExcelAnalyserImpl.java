@@ -66,36 +66,14 @@ public class ExcelAnalyserImpl implements ExcelAnalyser {
         ExcelTypeEnum excelType = ExcelTypeEnum.valueOf(readWorkbook);
         switch (excelType) {
             case XLS:
-                POIFSFileSystem poifsFileSystem;
-                if (readWorkbook.getFile() != null) {
-                    poifsFileSystem = new POIFSFileSystem(readWorkbook.getFile());
-                } else {
-                    poifsFileSystem = new POIFSFileSystem(readWorkbook.getInputStream());
-                }
-                // So in encrypted excel, it looks like XLS but it's actually XLSX
-                if (poifsFileSystem.getRoot().hasEntry(Decryptor.DEFAULT_POIFS_ENTRY)) {
-                    InputStream decryptedStream = null;
-                    try {
-                        decryptedStream = DocumentFactoryHelper
-                            .getDecryptedStream(poifsFileSystem.getRoot().getFileSystem(), readWorkbook.getPassword());
-                        XlsxReadContext xlsxReadContext = new DefaultXlsxReadContext(readWorkbook, ExcelTypeEnum.XLSX);
-                        analysisContext = xlsxReadContext;
-                        excelReadExecutor = new XlsxSaxAnalyser(xlsxReadContext, decryptedStream);
+                try (POIFSFileSystem poifsFileSystem = createPOIFSFileSystem(readWorkbook)) {
+                    // So in encrypted excel, it looks like XLS but it's actually XLSX
+                    if (poifsFileSystem.getRoot().hasEntry(Decryptor.DEFAULT_POIFS_ENTRY)) {
+                        handleEncryptedXLS(poifsFileSystem, readWorkbook);
                         return;
-                    } finally {
-                        IOUtils.closeQuietly(decryptedStream);
-                        // as we processed the full stream already, we can close the filesystem here
-                        // otherwise file handles are leaked
-                        poifsFileSystem.close();
                     }
+                    handleUnencryptedXLS(poifsFileSystem, readWorkbook);
                 }
-                if (readWorkbook.getPassword() != null) {
-                    Biff8EncryptionKey.setCurrentUserPassword(readWorkbook.getPassword());
-                }
-                XlsReadContext xlsReadContext = new DefaultXlsReadContext(readWorkbook, ExcelTypeEnum.XLS);
-                xlsReadContext.xlsReadWorkbookHolder().setPoifsFileSystem(poifsFileSystem);
-                analysisContext = xlsReadContext;
-                excelReadExecutor = new XlsSaxAnalyser(xlsReadContext);
                 break;
             case XLSX:
                 XlsxReadContext xlsxReadContext = new DefaultXlsxReadContext(readWorkbook, ExcelTypeEnum.XLSX);
@@ -153,47 +131,27 @@ public class ExcelAnalyserImpl implements ExcelAnalyser {
             if (readWorkbookHolder.getReadCache() != null) {
                 readWorkbookHolder.getReadCache().destroy();
             }
-        } catch (Throwable t) {
-            throwable = t;
-        }
-        try {
             if ((readWorkbookHolder instanceof XlsxReadWorkbookHolder)
-                && ((XlsxReadWorkbookHolder) readWorkbookHolder).getOpcPackage() != null) {
+                    && ((XlsxReadWorkbookHolder) readWorkbookHolder).getOpcPackage() != null) {
                 ((XlsxReadWorkbookHolder) readWorkbookHolder).getOpcPackage().revert();
             }
-        } catch (Throwable t) {
-            throwable = t;
-        }
-        try {
             if ((readWorkbookHolder instanceof XlsReadWorkbookHolder)
-                && ((XlsReadWorkbookHolder) readWorkbookHolder).getPoifsFileSystem() != null) {
+                    && ((XlsReadWorkbookHolder) readWorkbookHolder).getPoifsFileSystem() != null) {
                 ((XlsReadWorkbookHolder) readWorkbookHolder).getPoifsFileSystem().close();
             }
-        } catch (Throwable t) {
-            throwable = t;
-        }
 
-        // close csv.
-        // https://github.com/CodePhiliaX/fastexcel/issues/2309
-        try {
+            // close csv.
+            // https://github.com/CodePhiliaX/fastexcel/issues/2309
             if ((readWorkbookHolder instanceof CsvReadWorkbookHolder)
-                && ((CsvReadWorkbookHolder) readWorkbookHolder).getCsvParser() != null
-                && analysisContext.readWorkbookHolder().getAutoCloseStream()) {
+                    && ((CsvReadWorkbookHolder) readWorkbookHolder).getCsvParser() != null
+                    && analysisContext.readWorkbookHolder().getAutoCloseStream()) {
                 ((CsvReadWorkbookHolder) readWorkbookHolder).getCsvParser().close();
             }
-        } catch (Throwable t) {
-            throwable = t;
-        }
 
-        try {
             if (analysisContext.readWorkbookHolder().getAutoCloseStream()
-                && readWorkbookHolder.getInputStream() != null) {
+                    && readWorkbookHolder.getInputStream() != null) {
                 readWorkbookHolder.getInputStream().close();
             }
-        } catch (Throwable t) {
-            throwable = t;
-        }
-        try {
             if (readWorkbookHolder.getTempFile() != null) {
                 FileUtils.delete(readWorkbookHolder.getTempFile());
             }
@@ -218,7 +176,7 @@ public class ExcelAnalyserImpl implements ExcelAnalyser {
 
     private void clearEncrypt03() {
         if (StringUtils.isEmpty(analysisContext.readWorkbookHolder().getPassword())
-            || !ExcelTypeEnum.XLS.equals(analysisContext.readWorkbookHolder().getExcelType())) {
+                || !ExcelTypeEnum.XLS.equals(analysisContext.readWorkbookHolder().getExcelType())) {
             return;
         }
         Biff8EncryptionKey.setCurrentUserPassword(null);
@@ -232,5 +190,33 @@ public class ExcelAnalyserImpl implements ExcelAnalyser {
     @Override
     public AnalysisContext analysisContext() {
         return analysisContext;
+    }
+
+    private POIFSFileSystem createPOIFSFileSystem(ReadWorkbook readWorkbook) throws Exception {
+        POIFSFileSystem poifsFileSystem;
+        if (readWorkbook.getFile() != null) {
+            poifsFileSystem = new POIFSFileSystem(readWorkbook.getFile());
+        } else {
+            poifsFileSystem = new POIFSFileSystem(readWorkbook.getInputStream());
+        }
+        return poifsFileSystem;
+    }
+
+    private void handleEncryptedXLS(POIFSFileSystem poifsFileSystem, ReadWorkbook readWorkbook) throws Exception {
+        try (InputStream decryptedStream = DocumentFactoryHelper.getDecryptedStream(poifsFileSystem.getRoot().getFileSystem(), readWorkbook.getPassword())) {
+            XlsxReadContext xlsxReadContext = new DefaultXlsxReadContext(readWorkbook, ExcelTypeEnum.XLSX);
+            analysisContext = xlsxReadContext;
+            excelReadExecutor = new XlsxSaxAnalyser(xlsxReadContext, decryptedStream);
+        }
+    }
+
+    private void handleUnencryptedXLS(POIFSFileSystem poifsFileSystem, ReadWorkbook readWorkbook) {
+        if (readWorkbook.getPassword() != null) {
+            Biff8EncryptionKey.setCurrentUserPassword(readWorkbook.getPassword());
+        }
+        XlsReadContext xlsReadContext = new DefaultXlsReadContext(readWorkbook, ExcelTypeEnum.XLS);
+        xlsReadContext.xlsReadWorkbookHolder().setPoifsFileSystem(poifsFileSystem);
+        analysisContext = xlsReadContext;
+        excelReadExecutor = new XlsSaxAnalyser(xlsReadContext);
     }
 }
