@@ -5,6 +5,7 @@ import java.util.List;
 
 import cn.idev.excel.read.metadata.ReadWorkbook;
 import cn.idev.excel.read.metadata.holder.ReadWorkbookHolder;
+import cn.idev.excel.support.ExcelTypeEnum;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,8 +14,6 @@ import org.apache.poi.hssf.eventusermodel.FormatTrackingHSSFListener;
 import org.apache.poi.hssf.record.BoundSheetRecord;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
-
-import cn.idev.excel.support.ExcelTypeEnum;
 
 /**
  * Workbook holder

@@ -2,13 +2,11 @@ package cn.idev.excel.read.listener;
 
 import java.util.Map;
 
-import cn.idev.excel.event.Listener;
 import cn.idev.excel.context.AnalysisContext;
+import cn.idev.excel.event.Listener;
 import cn.idev.excel.metadata.CellExtra;
 import cn.idev.excel.metadata.data.ReadCellData;
 import cn.idev.excel.read.metadata.holder.ReadRowHolder;
-import cn.idev.excel.read.metadata.holder.ReadSheetHolder;
-import cn.idev.excel.read.metadata.holder.ReadWorkbookHolder;
 
 /**
  * Interface to listen for read results
@@ -69,10 +67,10 @@ public interface ReadListener<T> extends Listener {
      */
     default boolean hasNext(AnalysisContext context) {
         if (context == null
-                || context.readRowHolder() == null
-                || context.readSheetHolder() == null
-                || context.readSheetHolder().getReadSheet() == null
-                || context.readWorkbookHolder().getReadWorkbook() == null
+            || context.readRowHolder() == null
+            || context.readSheetHolder() == null
+            || context.readSheetHolder().getReadSheet() == null
+            || context.readWorkbookHolder().getReadWorkbook() == null
         ) {
             return true;
         }

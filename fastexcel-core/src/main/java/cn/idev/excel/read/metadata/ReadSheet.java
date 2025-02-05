@@ -31,7 +31,7 @@ public class ReadSheet extends ReadBasicParameter {
         this.sheetName = sheetName;
     }
 
-    public ReadSheet(Integer sheetNo, String sheetName,Integer numRows) {
+    public ReadSheet(Integer sheetNo, String sheetName, Integer numRows) {
         this.sheetNo = sheetNo;
         this.sheetName = sheetName;
         this.numRows = numRows;
@@ -52,7 +52,6 @@ public class ReadSheet extends ReadBasicParameter {
     public void setSheetName(String sheetName) {
         this.sheetName = sheetName;
     }
-
 
     public Integer getNumRows() {
         return numRows;

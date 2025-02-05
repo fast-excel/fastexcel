@@ -2,12 +2,11 @@ package cn.idev.excel.read.metadata.holder;
 
 import java.util.List;
 
-import cn.idev.excel.read.metadata.property.ExcelReadHeadProperty;
 import cn.idev.excel.metadata.ConfigurationHolder;
 import cn.idev.excel.read.listener.ReadListener;
+import cn.idev.excel.read.metadata.property.ExcelReadHeadProperty;
 
 /**
- *
  * Get the corresponding Holder
  *
  * @author Jiaju Zhuang

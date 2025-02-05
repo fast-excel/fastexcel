@@ -3,18 +3,17 @@ package cn.idev.excel.read.metadata.holder;
 import java.util.HashMap;
 import java.util.List;
 
-import cn.idev.excel.enums.HolderEnum;
-import cn.idev.excel.read.metadata.property.ExcelReadHeadProperty;
-import cn.idev.excel.util.ListUtils;
 import cn.idev.excel.converters.Converter;
 import cn.idev.excel.converters.ConverterKeyBuild;
 import cn.idev.excel.converters.DefaultConverterLoader;
+import cn.idev.excel.enums.HolderEnum;
 import cn.idev.excel.metadata.AbstractHolder;
 import cn.idev.excel.read.listener.ModelBuildEventListener;
 import cn.idev.excel.read.listener.ReadListener;
 import cn.idev.excel.read.metadata.ReadBasicParameter;
 import cn.idev.excel.read.metadata.ReadWorkbook;
-
+import cn.idev.excel.read.metadata.property.ExcelReadHeadProperty;
+import cn.idev.excel.util.ListUtils;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

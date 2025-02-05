@@ -4,23 +4,22 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Map;
 
+import cn.idev.excel.context.AnalysisContext;
 import cn.idev.excel.enums.CellDataTypeEnum;
 import cn.idev.excel.enums.HeadKindEnum;
 import cn.idev.excel.enums.ReadDefaultReturnEnum;
-import cn.idev.excel.read.metadata.holder.ReadSheetHolder;
-import cn.idev.excel.read.metadata.property.ExcelReadHeadProperty;
-import cn.idev.excel.context.AnalysisContext;
 import cn.idev.excel.exception.ExcelDataConvertException;
 import cn.idev.excel.metadata.Head;
 import cn.idev.excel.metadata.data.DataFormatData;
 import cn.idev.excel.metadata.data.ReadCellData;
+import cn.idev.excel.read.metadata.holder.ReadSheetHolder;
+import cn.idev.excel.read.metadata.property.ExcelReadHeadProperty;
 import cn.idev.excel.support.cglib.beans.BeanMap;
 import cn.idev.excel.util.BeanMapUtils;
 import cn.idev.excel.util.ClassUtils;
 import cn.idev.excel.util.ConverterUtils;
 import cn.idev.excel.util.DateUtils;
 import cn.idev.excel.util.MapUtils;
-
 
 /**
  * Convert to the object the user needs
@@ -57,7 +56,7 @@ public class ModelBuildEventListener implements IgnoreExceptionReadListener<Map<
             if (readDefaultReturn == ReadDefaultReturnEnum.STRING) {
                 // string
                 map.put(key,
-                    (String) ConverterUtils.convertToJavaObject(cellData, null, null, readSheetHolder.converterMap(),
+                    (String)ConverterUtils.convertToJavaObject(cellData, null, null, readSheetHolder.converterMap(),
                         context, context.readRowHolder().getRowIndex(), key));
             } else {
                 // return ReadCellData

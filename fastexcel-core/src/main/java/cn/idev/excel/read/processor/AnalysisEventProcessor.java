@@ -3,7 +3,6 @@ package cn.idev.excel.read.processor;
 import cn.idev.excel.context.AnalysisContext;
 
 /**
- *
  * Event processor
  *
  * @author jipengfei
@@ -26,8 +25,7 @@ public interface AnalysisEventProcessor {
     /**
      * Notify after all analysed
      *
-     * @param analysisContext
-     *            Analysis context
+     * @param analysisContext Analysis context
      */
     void endSheet(AnalysisContext analysisContext);
 }

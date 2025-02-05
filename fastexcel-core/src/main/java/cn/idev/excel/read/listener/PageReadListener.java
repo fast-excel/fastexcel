@@ -3,9 +3,8 @@ package cn.idev.excel.read.listener;
 import java.util.List;
 import java.util.function.Consumer;
 
-import cn.idev.excel.util.ListUtils;
 import cn.idev.excel.context.AnalysisContext;
-
+import cn.idev.excel.util.ListUtils;
 import org.apache.commons.collections4.CollectionUtils;
 
 /**

@@ -8,17 +8,17 @@ import java.util.List;
 
 import javax.xml.parsers.SAXParserFactory;
 
+import cn.idev.excel.ExcelReader;
 import cn.idev.excel.cache.ReadCache;
 import cn.idev.excel.cache.selector.ReadCacheSelector;
 import cn.idev.excel.cache.selector.SimpleReadCacheSelector;
+import cn.idev.excel.context.AnalysisContext;
 import cn.idev.excel.enums.CellExtraTypeEnum;
 import cn.idev.excel.enums.ReadDefaultReturnEnum;
 import cn.idev.excel.event.AnalysisEventListener;
 import cn.idev.excel.event.SyncReadListener;
 import cn.idev.excel.read.listener.ModelBuildEventListener;
 import cn.idev.excel.read.metadata.ReadWorkbook;
-import cn.idev.excel.ExcelReader;
-import cn.idev.excel.context.AnalysisContext;
 import cn.idev.excel.support.ExcelTypeEnum;
 
 /**
@@ -210,7 +210,6 @@ public class ExcelReaderBuilder extends AbstractExcelReaderParameterBuilder<Exce
         readWorkbook.setReadDefaultReturn(readDefaultReturn);
         return this;
     }
-
 
     public ExcelReaderBuilder numRows(Integer numRows) {
         readWorkbook.setNumRows(numRows);

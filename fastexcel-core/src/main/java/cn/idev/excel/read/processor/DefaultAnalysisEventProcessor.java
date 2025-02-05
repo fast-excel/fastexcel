@@ -4,22 +4,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.idev.excel.context.AnalysisContext;
 import cn.idev.excel.enums.CellDataTypeEnum;
 import cn.idev.excel.enums.HeadKindEnum;
 import cn.idev.excel.enums.RowTypeEnum;
+import cn.idev.excel.exception.ExcelAnalysisException;
+import cn.idev.excel.exception.ExcelAnalysisStopException;
+import cn.idev.excel.metadata.Head;
+import cn.idev.excel.metadata.data.ReadCellData;
+import cn.idev.excel.read.listener.ReadListener;
 import cn.idev.excel.read.metadata.holder.ReadRowHolder;
 import cn.idev.excel.read.metadata.holder.ReadSheetHolder;
 import cn.idev.excel.read.metadata.property.ExcelReadHeadProperty;
 import cn.idev.excel.util.BooleanUtils;
 import cn.idev.excel.util.ConverterUtils;
 import cn.idev.excel.util.StringUtils;
-import cn.idev.excel.context.AnalysisContext;
-import cn.idev.excel.exception.ExcelAnalysisException;
-import cn.idev.excel.exception.ExcelAnalysisStopException;
-import cn.idev.excel.metadata.Head;
-import cn.idev.excel.metadata.data.ReadCellData;
-import cn.idev.excel.read.listener.ReadListener;
-
 import org.apache.commons.collections4.MapUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,16 +36,28 @@ public class DefaultAnalysisEventProcessor implements AnalysisEventProcessor {
         dealExtra(analysisContext);
     }
 
+    /**
+     * Ends the processing of a row.
+     * This method is called after reading a row of data to perform corresponding processing.
+     * If the current row is empty and the workbook holder is set to ignore empty rows, then directly return without processing.
+     * If the row is not empty or empty rows are not ignored, then call the dealData method to process the data.
+     *
+     * @param analysisContext Analysis context, containing information about the current analysis, including the type and content of the row.
+     */
     @Override
     public void endRow(AnalysisContext analysisContext) {
+        // Check if the current row is empty
         if (RowTypeEnum.EMPTY.equals(analysisContext.readRowHolder().getRowType())) {
+            // Log debug information if the current row is empty
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Empty row!");
             }
+            // If the workbook holder is set to ignore empty rows, then directly return
             if (analysisContext.readWorkbookHolder().getIgnoreEmptyRow()) {
                 return;
             }
         }
+        // Call the data processing method
         dealData(analysisContext);
     }
 
