@@ -3,24 +3,24 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>cn.idev.excel</groupId>
-    <artifactId>easyexcel-plus-parent</artifactId>
+    <artifactId>fastexcel-parent</artifactId>
     <packaging>pom</packaging>
     <version>${revision}</version>
-    <name>easyexcel-plus-parent</name>
-    <description>easyexcel plus is a excel handle tools written in Java</description>
-    <url>https://github.com/CodePhiliaX/easyexcel-plus</url>
+    <name>fastexcel-parent</name>
+    <description>fastexcel is a excel handle tools written in Java</description>
+    <url>https://github.com/CodePhiliaX/fastexcel</url>
     <inceptionYear>2024</inceptionYear>
 
     <modules>
-        <module>easyexcel-plus-core</module>
-        <module>easyexcel-plus-support</module>
-        <module>easyexcel-plus-test</module>
-        <module>easyexcel-plus</module>
+        <module>fastexcel-core</module>
+        <module>fastexcel-support</module>
+        <module>fastexcel-test</module>
+        <module>fastexcel</module>
     </modules>
 
 
     <properties>
-        <revision>0.0.1</revision>
+        <revision>1.1.0</revision>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jdk.version>1.8</jdk.version>
         <gpg.skip>true</gpg.skip>
@@ -29,8 +29,8 @@
     </properties>
 
     <scm>
-        <url>https://github.com/CodePhiliaX/easyexcel-plus</url>
-        <connection>scm:git:https://git@github.com/CodePhiliaX/easyexcel-plus.git</connection>
+        <url>https://github.com/CodePhiliaX/fastexcel</url>
+        <connection>scm:git:https://git@github.com/CodePhiliaX/fastexcel.git</connection>
     </scm>
 
 
@@ -54,10 +54,10 @@
 
     <licenses>
         <license>
-            <name>Apache 2</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <name>MIT License</name>
+            <url>https://opensource.org/licenses/MIT</url>
             <distribution>repo</distribution>
-            <comments>A business-friendly OSS license</comments>
+            <comments>A permissive license that allows for wide reuse</comments>
         </license>
     </licenses>
 
@@ -77,19 +77,6 @@
         <dependencies>
         </dependencies>
     </dependencyManagement>
-
-
-    <dependencies>
-<!--        <dependency>-->
-<!--            <groupId>org.slf4j</groupId>-->
-<!--            <artifactId>slf4j-api</artifactId>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.projectlombok</groupId>-->
-<!--            <artifactId>lombok</artifactId>-->
-<!--            <scope>provided</scope>-->
-<!--        </dependency>-->
-    </dependencies>
 
 
     <build>
