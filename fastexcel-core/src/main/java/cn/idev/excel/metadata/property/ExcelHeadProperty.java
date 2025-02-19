@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  */
 @Getter
 @Setter
-@EqualsAndHashCode
+@EqualsAndHashCode(exclude = {"headMap"})
 public class ExcelHeadProperty {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ExcelHeadProperty.class);

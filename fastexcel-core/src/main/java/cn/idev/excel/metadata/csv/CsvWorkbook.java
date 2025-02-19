@@ -33,7 +33,7 @@ import org.apache.poi.ss.usermodel.Workbook;
  */
 @Getter
 @Setter
-@EqualsAndHashCode
+@EqualsAndHashCode(exclude ="csvSheet" )
 public class CsvWorkbook implements Workbook {
     /**
      * output

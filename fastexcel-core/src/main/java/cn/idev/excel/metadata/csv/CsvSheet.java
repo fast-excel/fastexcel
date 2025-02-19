@@ -52,7 +52,7 @@ import org.apache.poi.ss.util.PaneInformation;
  */
 @Getter
 @Setter
-@EqualsAndHashCode
+@EqualsAndHashCode(exclude ={"csvWorkbook"} )
 public class CsvSheet implements Sheet, Closeable {
 
     /**

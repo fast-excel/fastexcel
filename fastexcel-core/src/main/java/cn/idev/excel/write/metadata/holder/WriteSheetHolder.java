@@ -24,7 +24,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
  */
 @Getter
 @Setter
-@EqualsAndHashCode
+@EqualsAndHashCode(exclude = {"writeSheet","sheet","cachedSheet","parentWriteWorkbookHolder","hasBeenInitializedTable"})
 @NoArgsConstructor
 public class WriteSheetHolder extends AbstractWriteHolder {
     /**

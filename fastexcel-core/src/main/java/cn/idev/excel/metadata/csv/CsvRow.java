@@ -21,7 +21,7 @@ import org.apache.poi.ss.usermodel.Sheet;
  */
 @Getter
 @Setter
-@EqualsAndHashCode
+@EqualsAndHashCode(exclude = {"cellList","csvSheet","csvWorkbook"})
 public class CsvRow implements Row {
 
     /**

@@ -45,7 +45,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  */
 @Getter
 @Setter
-@EqualsAndHashCode
+@EqualsAndHashCode(exclude = {"workbook","cachedWorkbook","writeWorkbook","cellStyleIndexMap",
+        "hasBeenInitializedSheetIndexMap","hasBeenInitializedSheetNameMap","workbookWriteHandlerContext"})
 @Slf4j
 public class WriteWorkbookHolder extends AbstractWriteHolder {
     /***
