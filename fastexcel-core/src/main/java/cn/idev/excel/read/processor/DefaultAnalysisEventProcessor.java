@@ -109,10 +109,6 @@ public class DefaultAnalysisEventProcessor implements AnalysisEventProcessor {
 
         boolean isData = rowIndex >= currentHeadRowNumber;
 
-        // Last head column
-        if (!isData && currentHeadRowNumber == rowIndex + 1) {
-            buildHead(analysisContext, cellDataMap);
-        }
         // Now is data
         for (ReadListener readListener : analysisContext.currentReadHolder().readListenerList()) {
             try {
@@ -130,6 +126,10 @@ public class DefaultAnalysisEventProcessor implements AnalysisEventProcessor {
             }
         }
 
+        // Last head column
+        if (!isData && currentHeadRowNumber == rowIndex + 1) {
+            buildHead(analysisContext, cellDataMap);
+        }
     }
 
     private void buildHead(AnalysisContext analysisContext, Map<Integer, ReadCellData<?>> cellDataMap) {
