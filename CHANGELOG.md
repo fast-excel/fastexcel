@@ -1,5 +1,8 @@
-# 1.1.0
-此次升级主要修复 [EasyExcel](https://github.com/alibaba/easyexcel) 历史 BUG，同时剔除了部分依赖库，符合 `MIT` 协议的相关规范。
+# CHANGELOG
+
+## 1.1.0
+
+此次升级主要修复 [EasyExcel](https://github.com/alibaba/easyexcel) 历史 BUG，同时剔除了部分依赖库，符合 MIT 协议的相关规范。
 
 具体更新内容如下：
 - 【改进】移除 `itext` 依赖库，将 `转换PDF` 功能迁移至新项目；

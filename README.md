@@ -38,7 +38,7 @@ FastExcel 将始终坚持免费开源，并采用最开放的 MIT 协议，使�
 > 当前 FastExcel 底层使用 poi 作为基础包，如果您的项目中已经有 poi 相关组件，需要您手动排除 poi 的相关 jar 包。
 
 ## 更新 
-您可以在 [版本升级详情](update.md) 中查询到具体的版本更新细节。 您也可以在[Maven 中心仓库](https://mvnrepository.com/artifact/cn.idev.excel/fastexcel)中查询到所有的版本。
+您可以在 [版本升级详情](CHANGELOG.md) 中查询到具体的版本更新细节。 您也可以在[Maven 中心仓库](https://mvnrepository.com/artifact/cn.idev.excel/fastexcel)中查询到所有的版本。
 ### Maven
 如果您使用 Maven 进行项目构建，请在 `pom.xml` 文件中引入以下配置：
 ```xml
@@ -85,11 +85,11 @@ dependencies {
 将 EasyExcel 的包名替换为 FastExcel 的包名，如下：
 ```java
 // 将 easyexcel 的包名替换为 FastExcel 的包名
-import com.alibaba.excel.**;
+import com.alibaba.excel.*;
 ```
 替换为
 ```java
-import cn.idev.excel.**;
+import cn.idev.excel.*;
 ```
 ### 3. 不修改代码直接依赖 FastExcel
 如果由于种种原因您不想修改代码，可以直接依赖 FastExcel ，然后在 `pom.xml` 文件中直接依赖 FastExcel。

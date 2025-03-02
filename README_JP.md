@@ -49,7 +49,7 @@ dependencies {
 }
 ```
 ## 更新する
-具体的なバージョンアップ内容は[バージョンアップ詳細](update.md)で確認できます。 [Maven Central Repository](https://mvnrepository.com/artifact/cn.idev.excel/fastexcel) 内のすべてのバージョンをクエリすることもできます。
+具体的なバージョンアップ内容は[バージョンアップ詳細](CHANGELOG.md)で確認できます。 [Maven Central Repository](https://mvnrepository.com/artifact/cn.idev.excel/fastexcel) 内のすべてのバージョンをクエリすることもできます。
 ## EasyExcelとFastExcelの違い
 - FastExcelはEasyExcelのすべての機能をサポートしていますが、FastExcelのパフォーマンスはより良く、より安定しています。
 - FastExcelとEasyExcelのAPIは完全に一致しているため、シームレスに切り替えることができます。
@@ -77,11 +77,11 @@ EasyExcelの依存関係をFastExcelの依存関係に置き換えます。以�
 EasyExcelのパッケージ名をFastExcelのパッケージ名に置き換えます。以下のように：
 ```java
 // EasyExcelのパッケージ名をFastExcelのパッケージ名に置き換えます
-import com.alibaba.excel.**;
+import com.alibaba.excel.*;
 ```
 を以下に置き換えます
 ```java
-import cn.idev.excel.** ;
+import cn.idev.excel.*;
 ```
 ### 3. コードを修正せずにFastExcelを直接依存する
 何らかの理由でコードを修正したくない場合は、FastExcelに直接依存し、pom.xmlファイル内でFastExcelに直接依存できます。EasyExcelとFastExcelは共存できますが、長期的にはFastExcelを使用することを推奨します。

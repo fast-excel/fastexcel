@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+>
     <modelVersion>4.0.0</modelVersion>
+
     <groupId>cn.idev.excel</groupId>
     <artifactId>fastexcel-parent</artifactId>
+    <version>1.1.0</version>
+
     <packaging>pom</packaging>
-    <version>${revision}</version>
+
     <name>fastexcel-parent</name>
-    <description>fastexcel is a excel handle tools written in Java</description>
+    <description>Fastexcel is an Excel handle tools written in Java</description>
     <url>https://github.com/CodePhiliaX/fastexcel</url>
     <inceptionYear>2024</inceptionYear>
 
@@ -18,9 +24,7 @@
         <module>fastexcel</module>
     </modules>
 
-
     <properties>
-        <revision>1.1.0</revision>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jdk.version>1.8</jdk.version>
         <gpg.skip>true</gpg.skip>
@@ -44,14 +48,13 @@
     </properties>
 
     <scm>
-        <url>https://github.com/CodePhiliaX/fastexcel</url>
-        <connection>scm:git:https://git@github.com/CodePhiliaX/fastexcel.git</connection>
+        <url>https://github.com/fast-excel/fastexcel</url>
+        <connection>scm:git:https://git@github.com/fast-excel/fastexcel.git</connection>
     </scm>
 
-
     <organization>
-        <name>Chat2DB</name>
-        <url>https://github.com/CodePhiliaX</url>
+        <name>fast-excel</name>
+        <url>https://github.com/fast-excel</url>
     </organization>
 
     <developers>
@@ -75,7 +78,6 @@
             <comments>A permissive license that allows for wide reuse</comments>
         </license>
     </licenses>
-
 
     <distributionManagement>
         <snapshotRepository>

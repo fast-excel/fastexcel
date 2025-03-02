@@ -7,22 +7,18 @@
     <parent>
         <groupId>cn.idev.excel</groupId>
         <artifactId>fastexcel-parent</artifactId>
-        <version>${revision}</version>
+        <version>1.1.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <url>https://github.com/CodePhiliaX/fastexcel</url>
-    <packaging>jar</packaging>
     <artifactId>fastexcel</artifactId>
     <name>fastexcel</name>
-    <version>${revision}</version>
-
 
     <dependencies>
         <dependency>
             <groupId>cn.idev.excel</groupId>
             <artifactId>fastexcel-core</artifactId>
-            <version>${revision}</version>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 

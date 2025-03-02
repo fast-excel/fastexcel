@@ -7,15 +7,12 @@
     <parent>
         <groupId>cn.idev.excel</groupId>
         <artifactId>fastexcel-parent</artifactId>
-        <version>${revision}</version>
+        <version>1.1.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <url>https://github.com/CodePhiliaX/fastexcel</url>
-    <packaging>jar</packaging>
     <artifactId>fastexcel-support</artifactId>
     <name>fastexcel-support</name>
-    <version>${revision}</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -102,6 +99,5 @@
                 </executions>
             </plugin>
         </plugins>
-
     </build>
 </project>

@@ -49,7 +49,7 @@ dependencies {
 }
 ```
 ## Update
-For detailed update logs, refer to [Details of version updates](update.md). You can also find all available versions in the [Maven Central Repository](https://mvnrepository.com/artifact/cn.idev.excel/fastexcel).
+For detailed update logs, refer to [Details of version updates](CHANGELOG.md). You can also find all available versions in the [Maven Central Repository](https://mvnrepository.com/artifact/cn.idev.excel/fastexcel).
 
 ## Differences Between EasyExcel and FastExcel
 - FastExcel supports all the features of EasyExcel but with better performance and stability.
@@ -80,13 +80,13 @@ Replace with:
 Replace the EasyExcel package name with the FastExcel package name, as follows:
 ```java
 // Replace EasyExcel package name with FastExcel package name
-import com.alibaba.excel.**;
+import com.alibaba.excel.*;
 ```
 
 Replace with:
 
 ```java
-import cn.idev.excel.** ;
+import cn.idev.excel.*;
 ```
 
 ### 3. Import FastExcel Without Modifying Code
