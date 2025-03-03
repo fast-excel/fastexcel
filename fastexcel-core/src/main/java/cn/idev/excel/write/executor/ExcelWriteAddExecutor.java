@@ -102,7 +102,7 @@ public class ExcelWriteAddExecutor extends AbstractExcelWriteExecutor {
         if (dataIndex >= oneRowData.size()) {
             return;
         }
-        // fix https://github.com/CodePhiliaX/fastexcel/issues/1702
+        // fix https://github.com/fast-excel/fastexcel/issues/1702
         // If there is data, it is written to the next cell
         maxCellIndex++;
 
@@ -196,7 +196,7 @@ public class ExcelWriteAddExecutor extends AbstractExcelWriteExecutor {
                 writeContext, row, rowIndex, null, maxCellIndex, relativeRowIndex, Boolean.FALSE, excelContentProperty);
             WriteHandlerUtils.beforeCellCreate(cellWriteHandlerContext);
 
-            // fix https://github.com/CodePhiliaX/fastexcel/issues/1870
+            // fix https://github.com/fast-excel/fastexcel/issues/1870
             // If there is data, it is written to the next cell
             Cell cell = WorkBookUtil.createCell(row, maxCellIndex);
             cellWriteHandlerContext.setCell(cell);

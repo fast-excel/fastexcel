@@ -255,7 +255,7 @@ public class WriteTest {
             imageDemoData.setString(imagePath);
             imageDemoData.setInputStream(inputStream);
             imageDemoData.setUrl(new URL(
-                "https://raw.githubusercontent.com/CodePhiliaX/fastexcel/master/src/test/resources/converter/img.jpg"));
+                "https://raw.githubusercontent.com/fast-excel/fastexcel/master/src/test/resources/converter/img.jpg"));
 
             // 这里演示
             // 需要额外放入文字
@@ -328,7 +328,7 @@ public class WriteTest {
         writeCellDemoData.setHyperlink(hyperlink);
         HyperlinkData hyperlinkData = new HyperlinkData();
         hyperlink.setHyperlinkData(hyperlinkData);
-        hyperlinkData.setAddress("https://github.com/CodePhiliaX/fastexcel");
+        hyperlinkData.setAddress("https://github.com/fast-excel/fastexcel");
         hyperlinkData.setHyperlinkType(HyperlinkData.HyperlinkType.URL);
 
         // 设置备注
@@ -640,7 +640,7 @@ public class WriteTest {
     /**
      * 下拉，超链接等自定义拦截器（上面几点都不符合但是要对单元格进行操作的参照这个）
      * <p>
-     * demo这里实现2点。1. 对第一行第一列的头超链接到:https://github.com/CodePhiliaX/fastexcel 2. 对第一列第一行和第二行的数据新增下拉框，显示 测试1 测试2
+     * demo这里实现2点。1. 对第一行第一列的头超链接到:https://github.com/fast-excel/fastexcel 2. 对第一列第一行和第二行的数据新增下拉框，显示 测试1 测试2
      * <p>
      * 1. 创建excel对应的实体对象 参照{@link DemoData}
      * <p>

@@ -19,7 +19,7 @@ import org.openxmlformats.schemas.spreadsheetml.x2006.main.CTWorksheet;
 /**
  * Handle the problem of unable to write dimension.
  *
- * https://github.com/CodePhiliaX/fastexcel/issues/1282
+ * https://github.com/fast-excel/fastexcel/issues/1282
  *
  * @author Jiaju Zhuang
  */

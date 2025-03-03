@@ -14,7 +14,7 @@
 
     <name>fastexcel-parent</name>
     <description>Fastexcel is an Excel handle tools written in Java</description>
-    <url>https://github.com/CodePhiliaX/fastexcel</url>
+    <url>https://github.com/fast-excel/fastexcel</url>
     <inceptionYear>2024</inceptionYear>
 
     <modules>

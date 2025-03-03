@@ -6,7 +6,7 @@ FastExcel 欢迎社区的每一位用户和开发者成为贡献者。无论是�
 
 ## 报告问题
 
-我们鼓励用户在使用 FastExcel 的过程中随时提供反馈。您可以通过 [NEW ISSUE](https://github.com/CodePhiliaX/fastexcel/issues/new/choose) 提交问题。
+我们鼓励用户在使用 FastExcel 的过程中随时提供反馈。您可以通过 [NEW ISSUE](https://github.com/fast-excel/fastexcel/issues/new/choose) 提交问题。
 
 ### 高质量问题报告
 
@@ -55,14 +55,14 @@ FastExcel 欢迎社区的每一位用户和开发者成为贡献者。无论是�
 ### 工作区准备
 
 确保您已注册 GitHub 账号，并按照以下步骤完成本地开发环境配置：
-1. **Fork 仓库**：在 FastExcel 的 [GitHub 页面](https://github.com/CodePhiliaX/fastexcel) 点击 `Fork` 按钮，将项目复制到您的 GitHub 账户下，例如：`https://github.com/<your-username>/fastexcel`。
+1. **Fork 仓库**：在 FastExcel 的 [GitHub 页面](https://github.com/fast-excel/fastexcel) 点击 `Fork` 按钮，将项目复制到您的 GitHub 账户下，例如：`https://github.com/<your-username>/fastexcel`。
 2. **克隆代码库**：运行以下命令将 Fork 的项目克隆到本地：
    ```bash
    git clone git@github.com:<your-username>/fastexcel.git
    ```
 3. **设置上游仓库**：将官方仓库设置为 `upstream`，方便同步更新：
    ```bash
-   git remote add upstream git@github.com:CodePhiliaX/fastexcel.git
+   git remote add upstream git@github.com:fast-excel/fastexcel.git
    git remote set-url --push upstream no-pushing
    ```
    运行 `git remote -v` 可检查配置是否正确。
