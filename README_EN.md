@@ -4,7 +4,7 @@
 
 FastExcel is the latest work created by the original author of EasyExcel. After I left Alibaba in 2023, and with Alibaba announcing the cessation of EasyExcel updates, I decided to continue maintaining and upgrading this project. When restarting, I chose the name FastExcel to emphasize the high performance of this framework when handling Excel files, not just its simplicity and ease of use.
 
-FastExcel will always remain free and open-source, adopting the most open MIT license, making it suitable for any commercial scenarios. This provides developers and enterprises with great freedom and flexibility. Some notable features of FastExcel include:
+FastExcel will always be free and open source , use the business-friendly Apache license., making it suitable for any commercial scenarios. This provides developers and enterprises with great freedom and flexibility. Some notable features of FastExcel include:
 
 - 1. Full compatibility with all functionalities and features of the original EasyExcel, allowing users to transition seamlessly.
 - 2. Migrating from EasyExcel to FastExcel only requires a simple change of package name and Maven dependency to complete the upgrade.
