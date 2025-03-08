@@ -11,13 +11,23 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 /**
- * @Description 指定列数据相同时进行单元格合并
- * @Author Zhuojianlong
+ * @Description
+ * @Author Mr.Zhou
  * @Date 2025/3/8
  */
 public class DynamicMergeStrategy implements RowWriteHandler {
+
+    /**
+     * You want to merge columns that are adjacent to the same cell data
+     */
     private final int columnIndex;
+    /**
+     * Extend column
+     */
     private final int columnExtend;
+    /**
+     * size of collection date
+     */
     private final int dataSize;
     private final Deque<MergeRow> rowStack = new ArrayDeque<>();
 
@@ -30,6 +40,9 @@ public class DynamicMergeStrategy implements RowWriteHandler {
         }
         if (columnIndex < 0) {
             throw new IllegalArgumentException("ColumnIndex must be greater than 0");
+        }
+        if(dataSize<=0){
+            throw new IllegalArgumentException("dataSize must be greater than 0");
         }
         this.columnIndex = columnIndex;
         this.columnExtend = columnExtend;
