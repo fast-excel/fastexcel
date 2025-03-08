@@ -54,9 +54,11 @@ public class DynamicMergeStrategy implements RowWriteHandler {
                         context.getWriteSheetHolder().getSheet().addMergedRegionUnsafe(cellRangeAddress);
                     }else {
                         if (!prevRow.getRow().getCell(columnIndex).getStringCellValue().equals(lastRow.getRow().getCell(columnIndex).getStringCellValue())) {
-                            CellRangeAddress cellRangeAddress = new CellRangeAddress(prevRow.getRow().getRowNum()+1,
-                                lastRow.getRow().getRowNum(), columnIndex, columnIndex + columnExtend - 1);
-                            context.getWriteSheetHolder().getSheet().addMergedRegionUnsafe(cellRangeAddress);
+                            if(lastRow.getRow().getRowNum()!=(prevRow.getRow().getRowNum()+1)){
+                                CellRangeAddress cellRangeAddress = new CellRangeAddress(prevRow.getRow().getRowNum()+1,
+                                    lastRow.getRow().getRowNum(), columnIndex, columnIndex + columnExtend - 1);
+                                context.getWriteSheetHolder().getSheet().addMergedRegionUnsafe(cellRangeAddress);
+                            }
                             rowStack.push(prevRow);
                             break;
                         }
