@@ -19,7 +19,7 @@ public class DynamicMergeStrategy implements RowWriteHandler {
     private final int columnIndex;
     private final int columnExtend;
     private final int dataSize;
-    Deque<MergeRow> rowStack = new ArrayDeque<>();
+    private final Deque<MergeRow> rowStack = new ArrayDeque<>();
 
     public DynamicMergeStrategy(int columnIndex,int dataSize) {
         this(columnIndex,1,dataSize);
