@@ -1,27 +1,26 @@
 package cn.idev.excel.test.demo.read;
 
-import java.io.File;
-import java.util.List;
-import java.util.Map;
-
 import cn.idev.excel.EasyExcel;
 import cn.idev.excel.ExcelReader;
+import cn.idev.excel.annotation.ExcelProperty;
+import cn.idev.excel.annotation.format.DateTimeFormat;
+import cn.idev.excel.annotation.format.NumberFormat;
+import cn.idev.excel.context.AnalysisContext;
 import cn.idev.excel.converters.DefaultConverterLoader;
 import cn.idev.excel.enums.CellExtraTypeEnum;
 import cn.idev.excel.read.listener.PageReadListener;
 import cn.idev.excel.read.listener.ReadListener;
 import cn.idev.excel.read.metadata.ReadSheet;
 import cn.idev.excel.read.metadata.holder.csv.CsvReadWorkbookHolder;
-import cn.idev.excel.util.ListUtils;
 import cn.idev.excel.test.util.TestFileUtil;
-import cn.idev.excel.annotation.ExcelProperty;
-import cn.idev.excel.annotation.format.DateTimeFormat;
-import cn.idev.excel.annotation.format.NumberFormat;
-import cn.idev.excel.context.AnalysisContext;
+import cn.idev.excel.util.ListUtils;
 import com.alibaba.fastjson2.JSON;
-
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
+
+import java.io.File;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 读的常见写法
@@ -200,6 +199,24 @@ public class ReadTest {
         EasyExcel.read(fileName, DemoData.class, new DemoDataListener()).sheet()
             // 这里可以设置1，因为头就是一行。如果多行头，可以设置其他值。不传入也可以，因为默认会根据DemoData 来解析，他没有指定头，也就是默认1行
             .headRowNumber(1).doRead();
+    }
+
+    /**
+     * 兼容性的表头上传，例如大小写同时支持，或者中英文同时支持
+     *
+     * <p>
+     * 1. 创建excel对应的实体对象 参照{@link DemoCompatibleHeaderData}
+     * <p>
+     * 2. 由于默认一行行的读取excel，所以需要创建excel一行一行的回调监听器，参照{@link DemoCompatibleHeaderDataListener}，
+     * 且监听器种需要复写 invokeHead 方法，用来对上传的表头做转换
+     * <p>
+     * 3. 直接读即可
+     */
+    @Test
+    public void compatibleHeaderRead() {
+        String fileName = TestFileUtil.getPath() + "demo" + File.separator + "demo.xlsx";
+        // 这里 需要指定读用哪个class去读，然后读取第一个sheet
+        EasyExcel.read(fileName, DemoCompatibleHeaderData.class, new DemoCompatibleHeaderDataListener()).sheet().doRead();
     }
 
     /**
