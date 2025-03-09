@@ -1,9 +1,5 @@
 package cn.idev.excel.read.processor;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import cn.idev.excel.context.AnalysisContext;
 import cn.idev.excel.enums.CellDataTypeEnum;
 import cn.idev.excel.enums.HeadKindEnum;
@@ -22,6 +18,10 @@ import cn.idev.excel.util.StringUtils;
 import org.apache.commons.collections4.MapUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Analysis event
@@ -109,10 +109,6 @@ public class DefaultAnalysisEventProcessor implements AnalysisEventProcessor {
 
         boolean isData = rowIndex >= currentHeadRowNumber;
 
-        // Last head column
-        if (!isData && currentHeadRowNumber == rowIndex + 1) {
-            buildHead(analysisContext, cellDataMap);
-        }
         // Now is data
         for (ReadListener readListener : analysisContext.currentReadHolder().readListenerList()) {
             try {
@@ -130,6 +126,10 @@ public class DefaultAnalysisEventProcessor implements AnalysisEventProcessor {
             }
         }
 
+        // Last head column
+        if (!isData && currentHeadRowNumber == rowIndex + 1) {
+            buildHead(analysisContext, cellDataMap);
+        }
     }
 
     private void buildHead(AnalysisContext analysisContext, Map<Integer, ReadCellData<?>> cellDataMap) {
