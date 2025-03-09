@@ -6,7 +6,9 @@ import lombok.Data;
 import java.util.Date;
 
 /**
- * 多种表头上传支持的测试实体类
+ * Compatible header data class.
+ *
+ * @author xm.z
  */
 @Data
 public class DemoCompatibleHeaderData {
