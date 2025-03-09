@@ -11,7 +11,7 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 /**
- * @Description
+ * @Description  Specifies that the column merges adjacent cells with the same content
  * @Author Mr.Zhou
  * @Date 2025/3/8
  */
