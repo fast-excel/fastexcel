@@ -222,7 +222,14 @@ public class ClassUtils {
         List<Field> tempFieldList = new ArrayList<>();
         Class<?> tempClass = clazz;
         while (tempClass != null) {
-            Collections.addAll(tempFieldList, tempClass.getDeclaredFields());
+            // Collections.addAll(tempFieldList, tempClass.getDeclaredFields());
+
+            Field[] declaredFields = tempClass.getDeclaredFields();
+            for (Field declaredField : declaredFields) {
+                if (tempFieldList.stream().noneMatch(field -> field.getName().equals(declaredField.getName()))) {
+                    tempFieldList.add(declaredField);
+                }
+            }
             // Get the parent class and give it to yourself
             tempClass = tempClass.getSuperclass();
         }
@@ -305,7 +312,14 @@ public class ClassUtils {
         // When the parent class is null, it indicates that the parent class (Object class) has reached the top
         // level.
         while (tempClass != null) {
-            Collections.addAll(tempFieldList, tempClass.getDeclaredFields());
+            // Collections.addAll(tempFieldList, tempClass.getDeclaredFields());
+
+            Field[] declaredFields = tempClass.getDeclaredFields();
+            for (Field declaredField : declaredFields) {
+                if (tempFieldList.stream().noneMatch(field -> field.getName().equals(declaredField.getName()))) {
+                    tempFieldList.add(declaredField);
+                }
+            }
             // Get the parent class and give it to yourself
             tempClass = tempClass.getSuperclass();
         }
