@@ -117,8 +117,10 @@ public class DefaultAnalysisEventProcessor implements AnalysisEventProcessor {
         for (ReadListener readListener : analysisContext.currentReadHolder().readListenerList()) {
             try {
                 if (isData) {
+                    // handle data row
                     readListener.invoke(readRowHolder.getCurrentRowAnalysisResult(), analysisContext);
                 } else {
+                    // handle data header
                     readListener.invokeHead(cellDataMap, analysisContext);
                 }
             } catch (Exception e) {

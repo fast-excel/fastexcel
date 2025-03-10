@@ -7,6 +7,11 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
+ * mock data format for simple read/write
+ * <p>
+ * Use ExcelProperty {@link ExcelProperty} to mark headers
+ * </p>
+ *
  * @author Jiaju Zhuang
  */
 @Getter
