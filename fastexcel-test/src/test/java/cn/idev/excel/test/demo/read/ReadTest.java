@@ -1,27 +1,26 @@
 package cn.idev.excel.test.demo.read;
 
-import java.io.File;
-import java.util.List;
-import java.util.Map;
-
 import cn.idev.excel.EasyExcel;
 import cn.idev.excel.ExcelReader;
+import cn.idev.excel.annotation.ExcelProperty;
+import cn.idev.excel.annotation.format.DateTimeFormat;
+import cn.idev.excel.annotation.format.NumberFormat;
+import cn.idev.excel.context.AnalysisContext;
 import cn.idev.excel.converters.DefaultConverterLoader;
 import cn.idev.excel.enums.CellExtraTypeEnum;
 import cn.idev.excel.read.listener.PageReadListener;
 import cn.idev.excel.read.listener.ReadListener;
 import cn.idev.excel.read.metadata.ReadSheet;
 import cn.idev.excel.read.metadata.holder.csv.CsvReadWorkbookHolder;
-import cn.idev.excel.util.ListUtils;
 import cn.idev.excel.test.util.TestFileUtil;
-import cn.idev.excel.annotation.ExcelProperty;
-import cn.idev.excel.annotation.format.DateTimeFormat;
-import cn.idev.excel.annotation.format.NumberFormat;
-import cn.idev.excel.context.AnalysisContext;
+import cn.idev.excel.util.ListUtils;
 import com.alibaba.fastjson2.JSON;
-
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
+
+import java.io.File;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 读的常见写法
@@ -200,6 +199,29 @@ public class ReadTest {
         EasyExcel.read(fileName, DemoData.class, new DemoDataListener()).sheet()
             // 这里可以设置1，因为头就是一行。如果多行头，可以设置其他值。不传入也可以，因为默认会根据DemoData 来解析，他没有指定头，也就是默认1行
             .headRowNumber(1).doRead();
+    }
+
+    /**
+     * Method to read Excel files with headers that support compatibility, such as case sensitivity or simultaneous support for Chinese and English headers.
+     *
+     * <p>
+     * 1. Create an entity object corresponding to the Excel data structure. Refer to {@link DemoCompatibleHeaderData} for implementation details.
+     * </p>
+     *
+     * <p>
+     * 2. Since EasyExcel reads the Excel file row by row by default, you need to create a listener that handles each row's data accordingly. Refer to {@link DemoCompatibleHeaderDataListener} for implementation details.
+     * In this listener, you should override the `invokeHead` method to transform the uploaded headers as needed.
+     * </p>
+     *
+     * <p>
+     * 3. Simply proceed to read the file.
+     * </p>
+     */
+    @Test
+    public void compatibleHeaderRead() {
+        String fileName = TestFileUtil.getPath() + "demo" + File.separator + "demo.xlsx";
+        // Specify the class used for reading and choose to read the first sheet.
+        EasyExcel.read(fileName, DemoCompatibleHeaderData.class, new DemoCompatibleHeaderDataListener()).sheet().doRead();
     }
 
     /**
