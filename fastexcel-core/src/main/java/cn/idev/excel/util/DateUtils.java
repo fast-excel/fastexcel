@@ -101,6 +101,9 @@ public class DateUtils {
      * @throws ParseException
      */
     public static Date parseDate(String dateString, String dateFormat) throws ParseException {
+        if(StringUtils.isBlank(dateString)){
+            return null;
+        }
         if (StringUtils.isEmpty(dateFormat)) {
             dateFormat = switchDateFormat(dateString);
         }
@@ -116,6 +119,9 @@ public class DateUtils {
      * @return
      */
     public static LocalDateTime parseLocalDateTime(String dateString, String dateFormat, Locale local) {
+        if(StringUtils.isBlank(dateString)){
+            return null;
+        }
         if (StringUtils.isEmpty(dateFormat)) {
             dateFormat = switchDateFormat(dateString);
         }
@@ -135,6 +141,9 @@ public class DateUtils {
      * @return
      */
     public static LocalDate parseLocalDate(String dateString, String dateFormat, Locale local) {
+        if(StringUtils.isBlank(dateString)){
+            return null;
+        }
         if (StringUtils.isEmpty(dateFormat)) {
             dateFormat = switchDateFormat(dateString);
         }
