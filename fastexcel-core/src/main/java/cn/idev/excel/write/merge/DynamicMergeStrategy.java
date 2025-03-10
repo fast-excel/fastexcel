@@ -12,7 +12,6 @@ import java.util.Deque;
 
 /**
  * @Description  Specifies that the column merges adjacent cells with the same content
- * @Author Mr.Zhou
  * @Date 2025/3/8
  */
 public class DynamicMergeStrategy implements RowWriteHandler {
