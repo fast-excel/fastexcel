@@ -202,20 +202,25 @@ public class ReadTest {
     }
 
     /**
-     * 兼容性的表头上传，例如大小写同时支持，或者中英文同时支持
+     * Method to read Excel files with headers that support compatibility, such as case sensitivity or simultaneous support for Chinese and English headers.
      *
      * <p>
-     * 1. 创建excel对应的实体对象 参照{@link DemoCompatibleHeaderData}
+     * 1. Create an entity object corresponding to the Excel data structure. Refer to {@link DemoCompatibleHeaderData} for implementation details.
+     * </p>
+     *
      * <p>
-     * 2. 由于默认一行行的读取excel，所以需要创建excel一行一行的回调监听器，参照{@link DemoCompatibleHeaderDataListener}，
-     * 且监听器种需要复写 invokeHead 方法，用来对上传的表头做转换
+     * 2. Since EasyExcel reads the Excel file row by row by default, you need to create a listener that handles each row's data accordingly. Refer to {@link DemoCompatibleHeaderDataListener} for implementation details.
+     * In this listener, you should override the `invokeHead` method to transform the uploaded headers as needed.
+     * </p>
+     *
      * <p>
-     * 3. 直接读即可
+     * 3. Simply proceed to read the file.
+     * </p>
      */
     @Test
     public void compatibleHeaderRead() {
         String fileName = TestFileUtil.getPath() + "demo" + File.separator + "demo.xlsx";
-        // 这里 需要指定读用哪个class去读，然后读取第一个sheet
+        // Specify the class used for reading and choose to read the first sheet.
         EasyExcel.read(fileName, DemoCompatibleHeaderData.class, new DemoCompatibleHeaderDataListener()).sheet().doRead();
     }
 

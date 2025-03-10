@@ -7,8 +7,6 @@ import java.util.Date;
 
 /**
  * Compatible header data class.
- *
- * @author xm.z
  */
 @Data
 public class DemoCompatibleHeaderData {
