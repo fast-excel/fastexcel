@@ -110,6 +110,14 @@ public class ReadTest {
         }
     }
 
+    @Test
+    public void genericHeaderTypeRead() {
+        String fileName = TestFileUtil.getPath() + "demo" + File.separator + "generic-demo.xlsx";
+        // 模拟通过任何可能的方式获取到的excel头对应的Class<?>对象
+        Class<?> excelHeaderClass = DemoDataAnother.class;
+        EasyExcel.read(fileName, excelHeaderClass, GenericHeaderTypeDataListener.build(excelHeaderClass)).sheet().doRead();
+    }
+
     /**
      * 指定列的下标或者列名
      *
