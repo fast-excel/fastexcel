@@ -22,7 +22,7 @@ import cn.idev.excel.read.metadata.ReadWorkbook;
 import cn.idev.excel.support.ExcelTypeEnum;
 
 /**
- * Build ExcelWriter
+ * Build ExcelReader
  *
  * @author Jiaju Zhuang
  */

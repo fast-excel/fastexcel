@@ -10,7 +10,7 @@ import cn.idev.excel.support.ExcelTypeEnum;
 import cn.idev.excel.write.metadata.WriteWorkbook;
 
 /**
- * Build ExcelBuilder
+ * Build ExcelWriter
  *
  * @author Jiaju Zhuang
  */
