@@ -52,7 +52,7 @@ public class ExcelAnalyserImpl implements ExcelAnalyser {
 
     public ExcelAnalyserImpl(ReadWorkbook readWorkbook) {
         try {
-            choiceExcelExecutor(readWorkbook);
+            chooseExcelExecutor(readWorkbook);
         } catch (RuntimeException e) {
             finish();
             throw e;
@@ -62,7 +62,7 @@ public class ExcelAnalyserImpl implements ExcelAnalyser {
         }
     }
 
-    private void choiceExcelExecutor(ReadWorkbook readWorkbook) throws Exception {
+    private void chooseExcelExecutor(ReadWorkbook readWorkbook) throws Exception {
         ExcelTypeEnum excelType = ExcelTypeEnum.valueOf(readWorkbook);
         switch (excelType) {
             case XLS:
