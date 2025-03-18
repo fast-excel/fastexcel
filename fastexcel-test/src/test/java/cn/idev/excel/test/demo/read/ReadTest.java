@@ -36,7 +36,7 @@ public class ReadTest {
      * <p>
      * 1. 创建excel对应的实体对象 参照{@link DemoData}
      * <p>
-     * 2. 由于默认一行行的读取excel，所以需要创建excel一行一行的回调监听器，参照{@link DemoDataListener}
+     * 2. 由于默认按行读取excel，因此需要创建一个回调监听器来逐行处理数据，参照{@link DemoDataListener}
      * <p>
      * 3. 直接读即可
      */
@@ -92,7 +92,7 @@ public class ReadTest {
             }
         }).sheet().doRead();
 
-        // 有个很重要的点 DemoDataListener 不能被spring管理，要每次读取excel都要new,然后里面用到spring可以构造方法传进去
+        // 有个很重要的点 DemoDataListener 不能被 Spring 管理，每次读取 Excel 时都需要新建实例，若需使用 Spring 组件，可通过构造方法传入
         // 写法3：
         fileName = TestFileUtil.getPath() + "demo" + File.separator + "demo.xlsx";
         // 这里 需要指定读用哪个class去读，然后读取第一个sheet 文件流会自动关闭
@@ -102,7 +102,7 @@ public class ReadTest {
         fileName = TestFileUtil.getPath() + "demo" + File.separator + "demo.xlsx";
         // 一个文件一个reader
         try (ExcelReader excelReader = EasyExcel.read(fileName, DemoData.class, new DemoDataListener()).build()) {
-            // 构建一个sheet 这里可以指定名字或者no
+            // 构建一个sheet 这里可以指定名字或sheetNo
             ReadSheet readSheet = EasyExcel.readSheet(0).build();
             readSheet.setNumRows(2);
             // 读取一个sheet
@@ -124,7 +124,7 @@ public class ReadTest {
      * <p>
      * 1. 创建excel对应的实体对象,并使用{@link ExcelProperty}注解. 参照{@link IndexOrNameData}
      * <p>
-     * 2. 由于默认一行行的读取excel，所以需要创建excel一行一行的回调监听器，参照{@link IndexOrNameDataListener}
+     * 2. 由于默认按行读取excel，因此需要创建一个回调监听器来逐行处理数据，参照{@link IndexOrNameDataListener}
      * <p>
      * 3. 直接读即可
      */
@@ -140,7 +140,7 @@ public class ReadTest {
      * <p>
      * 1. 创建excel对应的实体对象 参照{@link DemoData}
      * <p>
-     * 2. 由于默认一行行的读取excel，所以需要创建excel一行一行的回调监听器，参照{@link DemoDataListener}
+     * 2. 由于默认按行读取excel，因此需要创建一个回调监听器来逐行处理数据，参照{@link DemoDataListener}
      * <p>
      * 3. 直接读即可
      */
@@ -156,7 +156,7 @@ public class ReadTest {
 
         // 写法1
         try (ExcelReader excelReader = EasyExcel.read(fileName).build()) {
-            // 这里为了简单 所以注册了 同样的head 和Listener 自己使用功能必须不同的Listener
+            // 这里为了简单 所以注册了同样的head 和Listener 自己使用功能必须使用不同的head和Listener
             ReadSheet readSheet1 =
                 EasyExcel.readSheet(0).head(DemoData.class).registerReadListener(new DemoDataListener()).build();
             ReadSheet readSheet2 =
@@ -173,7 +173,7 @@ public class ReadTest {
      * <p>
      * 1. 创建excel对应的实体对象 参照{@link ConverterData}.里面可以使用注解{@link DateTimeFormat}、{@link NumberFormat}或者自定义注解
      * <p>
-     * 2. 由于默认一行行的读取excel，所以需要创建excel一行一行的回调监听器，参照{@link ConverterDataListener}
+     * 2. 由于默认按行读取excel，因此需要创建一个回调监听器来逐行处理数据，参照{@link ConverterDataListener}
      * <p>
      * 3. 直接读即可
      */
@@ -182,7 +182,7 @@ public class ReadTest {
         String fileName = TestFileUtil.getPath() + "demo" + File.separator + "demo.xlsx";
         // 这里 需要指定读用哪个class去读，然后读取第一个sheet
         EasyExcel.read(fileName, ConverterData.class, new ConverterDataListener())
-            // 这里注意 我们也可以registerConverter来指定自定义转换器， 但是这个转换变成全局了， 所有java为string,excel为string的都会用这个转换器。
+            // 这里注意 我们也可以registerConverter来指定自定义转换器， 但是这个转换变成全局了， 所有java为string，或excel为string的都会用这个转换器。
             // 如果就想单个字段使用请使用@ExcelProperty 指定converter
             // .registerConverter(new CustomStringStringConverter())
             // 读取sheet
@@ -195,7 +195,7 @@ public class ReadTest {
      * <p>
      * 1. 创建excel对应的实体对象 参照{@link DemoData}
      * <p>
-     * 2. 由于默认一行行的读取excel，所以需要创建excel一行一行的回调监听器，参照{@link DemoDataListener}
+     * 2. 由于默认按行读取excel，因此需要创建一个回调监听器来逐行处理数据，参照{@link DemoDataListener}
      * <p>
      * 3. 设置headRowNumber参数，然后读。 这里要注意headRowNumber如果不指定， 会根据你传入的class的{@link ExcelProperty#value()}里面的表头的数量来决定行数，
      * 如果不传入class则默认为1.当然你指定了headRowNumber不管是否传入class都是以你传入的为准。
@@ -210,19 +210,19 @@ public class ReadTest {
     }
 
     /**
-     * Method to read Excel files with headers that support compatibility, such as case sensitivity or simultaneous support for Chinese and English headers.
+     * 读取支持兼容性的 Excel 文件（如区分大小写或同时支持中英文表头）。
      *
      * <p>
-     * 1. Create an entity object corresponding to the Excel data structure. Refer to {@link DemoCompatibleHeaderData} for implementation details.
+     * 1. 创建与 Excel 数据结构对应的实体对象，具体实现参考 {@link DemoCompatibleHeaderData}。
      * </p>
      *
      * <p>
-     * 2. Since EasyExcel reads the Excel file row by row by default, you need to create a listener that handles each row's data accordingly. Refer to {@link DemoCompatibleHeaderDataListener} for implementation details.
-     * In this listener, you should override the `invokeHead` method to transform the uploaded headers as needed.
+     * 2. 由于 EasyExcel 默认按行读取 Excel 文件，因此需要创建一个监听器来逐行处理数据。具体实现参考 {@link DemoCompatibleHeaderDataListener}。
+     *    在该监听器中，应重写 `invokeHead` 方法，以便根据需要转换上传的表头。
      * </p>
      *
      * <p>
-     * 3. Simply proceed to read the file.
+     * 3. 直接读取文件即可
      * </p>
      */
     @Test
@@ -238,7 +238,7 @@ public class ReadTest {
      * <p>
      * 1. 创建excel对应的实体对象 参照{@link DemoData}
      * <p>
-     * 2. 由于默认一行行的读取excel，所以需要创建excel一行一行的回调监听器，参照{@link DemoHeadDataListener}
+     * 2. 由于默认按行读取excel，因此需要创建一个回调监听器来逐行处理数据，参照{@link DemoHeadDataListener}
      * <p>
      * 3. 直接读即可
      */
@@ -257,7 +257,7 @@ public class ReadTest {
      * <p>
      * 1. 创建excel对应的实体对象 参照{@link DemoExtraData}
      * <p>
-     * 2. 由于默认异步读取excel，所以需要创建excel一行一行的回调监听器，参照{@link DemoExtraListener}
+     * 2. 由于默认异步读取excel，因此需要创建一个回调监听器来逐行处理数据，参照{@link DemoExtraListener}
      * <p>
      * 3. 直接读即可
      *
@@ -282,7 +282,7 @@ public class ReadTest {
      * <p>
      * 1. 创建excel对应的实体对象 参照{@link CellDataReadDemoData}
      * <p>
-     * 2. 由于默认一行行的读取excel，所以需要创建excel一行一行的回调监听器，参照{@link DemoHeadDataListener}
+     * 2. 由于默认按行读取excel，因此需要创建一个回调监听器来逐行处理数据，参照{@link DemoHeadDataListener}
      * <p>
      * 3. 直接读即可
      *
@@ -301,7 +301,7 @@ public class ReadTest {
      * <p>
      * 1. 创建excel对应的实体对象 参照{@link ExceptionDemoData}
      * <p>
-     * 2. 由于默认一行行的读取excel，所以需要创建excel一行一行的回调监听器，参照{@link DemoExceptionListener}
+     * 2. 由于默认按行读取excel，因此需要创建一个回调监听器来逐行处理数据，参照{@link DemoExceptionListener}
      * <p>
      * 3. 直接读即可
      */
