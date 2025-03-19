@@ -29,15 +29,27 @@ public class XlsListSheetListener implements HSSFListener {
     private static final Map<Short, XlsRecordHandler> XLS_RECORD_HANDLER_MAP = new HashMap<Short, XlsRecordHandler>();
 
     static {
+        // Initialize the map with handlers for specific record types
         XLS_RECORD_HANDLER_MAP.put(BOFRecord.sid, new BofRecordHandler());
         XLS_RECORD_HANDLER_MAP.put(BoundSheetRecord.sid, new BoundSheetRecordHandler());
     }
 
+    /**
+     * Constructor for initializing the listener with a given context.
+     *
+     * @param xlsReadContext The context object containing information about the XLS file being processed.
+     */
     public XlsListSheetListener(XlsReadContext xlsReadContext) {
         this.xlsReadContext = xlsReadContext;
         xlsReadContext.xlsReadWorkbookHolder().setNeedReadSheet(Boolean.FALSE);
     }
 
+
+    /**
+     * Processes a specific record by delegating it to the appropriate handler based on its SID.
+     *
+     * @param record The record to be processed.
+     */
     @Override
     public void processRecord(Record record) {
         XlsRecordHandler handler = XLS_RECORD_HANDLER_MAP.get(record.getSid());
@@ -47,6 +59,10 @@ public class XlsListSheetListener implements HSSFListener {
         handler.processRecord(xlsReadContext, record);
     }
 
+    /**
+     * Executes the event-based processing of the XLS file.
+     * It sets up listeners and processes workbook events.
+     */
     public void execute() {
         MissingRecordAwareHSSFListener listener = new MissingRecordAwareHSSFListener(this);
         HSSFListener formatListener = new FormatTrackingHSSFListener(listener);
