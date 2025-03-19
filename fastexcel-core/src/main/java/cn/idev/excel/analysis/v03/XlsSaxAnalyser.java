@@ -85,6 +85,7 @@ public class XlsSaxAnalyser implements HSSFListener, ExcelReadExecutor {
     private static final Map<Short, XlsRecordHandler> XLS_RECORD_HANDLER_MAP = new HashMap<Short, XlsRecordHandler>(32);
 
     static {
+        // Initialize a map of record handlers to process different types of Excel records.
         XLS_RECORD_HANDLER_MAP.put(BlankRecord.sid, new BlankRecordHandler());
         XLS_RECORD_HANDLER_MAP.put(BOFRecord.sid, new BofRecordHandler());
         XLS_RECORD_HANDLER_MAP.put(BoolErrRecord.sid, new BoolErrRecordHandler());
@@ -106,10 +107,22 @@ public class XlsSaxAnalyser implements HSSFListener, ExcelReadExecutor {
         XLS_RECORD_HANDLER_MAP.put(TextObjectRecord.sid, new TextObjectRecordHandler());
     }
 
+    /**
+     * Constructor to initialize the XlsSaxAnalyser with the given context.
+     *
+     * @param xlsReadContext The context containing necessary information for reading the Excel file.
+     */
     public XlsSaxAnalyser(XlsReadContext xlsReadContext) {
         this.xlsReadContext = xlsReadContext;
     }
 
+    /**
+     * Retrieves the list of sheets in the workbook.
+     *
+     * If the sheet data list is not already loaded, it triggers the execution of a listener to load the data.
+     *
+     * @return A list of ReadSheet objects representing the sheets in the workbook.
+     */
     @Override
     public List<ReadSheet> sheetList() {
         try {
@@ -124,6 +137,11 @@ public class XlsSaxAnalyser implements HSSFListener, ExcelReadExecutor {
         return xlsReadContext.readWorkbookHolder().getActualSheetDataList();
     }
 
+    /**
+     * Executes the parsing process for the Excel file.
+     *
+     * This method sets up the necessary listeners and processes the workbook events using HSSFEventFactory.
+     */
     @Override
     public void execute() {
         XlsReadWorkbookHolder xlsReadWorkbookHolder = xlsReadContext.xlsReadWorkbookHolder();
@@ -146,6 +164,14 @@ public class XlsSaxAnalyser implements HSSFListener, ExcelReadExecutor {
         xlsReadContext.analysisEventProcessor().endSheet(xlsReadContext);
     }
 
+    /**
+     * Processes a single Excel record.
+     *
+     * This method retrieves the appropriate handler for the given record and processes it. If the record is ignorable or
+     * unsupported, it skips processing.
+     *
+     * @param record The Excel record to be processed.
+     */
     @Override
     public void processRecord(Record record) {
         XlsRecordHandler handler = XLS_RECORD_HANDLER_MAP.get(record.getSid());
