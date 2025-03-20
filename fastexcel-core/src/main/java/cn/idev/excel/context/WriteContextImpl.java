@@ -51,7 +51,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * A context is the main anchorage point of a excel writer.
+ * Implementation of the WriteContext interface, which serves as the main anchorage point for writing Excel files.
+ * This class manages the context for writing workbooks, sheets, and tables, including initialization, handling,
+ * and finishing the write process.
  *
  * @author jipengfei
  */
@@ -61,26 +63,35 @@ public class WriteContextImpl implements WriteContext {
     private static final String NO_SHEETS = "no sheets";
 
     /**
-     * The Workbook currently written
+     * The Workbook currently being written.
      */
     private WriteWorkbookHolder writeWorkbookHolder;
+
     /**
-     * Current sheet holder
+     * The current sheet holder being managed.
      */
     private WriteSheetHolder writeSheetHolder;
+
     /**
-     * The table currently written
+     * The table currently being written.
      */
     private WriteTableHolder writeTableHolder;
+
     /**
-     * Configuration of currently operated cell
+     * Configuration of the currently operated cell.
      */
     private WriteHolder currentWriteHolder;
+
     /**
-     * Prevent multiple shutdowns
+     * Prevents multiple shutdowns of the context.
      */
     private boolean finished = false;
 
+    /**
+     * Constructor to initialize the WriteContextImpl with a WriteWorkbook.
+     *
+     * @param writeWorkbook The workbook configuration for writing.
+     */
     public WriteContextImpl(WriteWorkbook writeWorkbook) {
         if (writeWorkbook == null) {
             throw new IllegalArgumentException("Workbook argument cannot be null");
@@ -104,6 +115,11 @@ public class WriteContextImpl implements WriteContext {
         }
     }
 
+    /**
+     * Initializes the current workbook holder with the provided WriteWorkbook.
+     *
+     * @param writeWorkbook The workbook configuration for writing.
+     */
     private void initCurrentWorkbookHolder(WriteWorkbook writeWorkbook) {
         writeWorkbookHolder = new WriteWorkbookHolder(writeWorkbook);
         currentWriteHolder = writeWorkbookHolder;
@@ -113,7 +129,10 @@ public class WriteContextImpl implements WriteContext {
     }
 
     /**
-     * @param writeSheet
+     * Sets the current sheet for writing.
+     *
+     * @param writeSheet The sheet configuration for writing.
+     * @param writeType  The type of write operation.
      */
     @Override
     public void currentSheet(WriteSheet writeSheet, WriteTypeEnum writeType) {
@@ -126,16 +145,22 @@ public class WriteContextImpl implements WriteContext {
 
         initCurrentSheetHolder(writeSheet);
 
-        // Workbook handler need to supplementary execution
+        // Supplementary execution for workbook handlers.
         WorkbookWriteHandlerContext workbookWriteHandlerContext = WriteHandlerUtils.createWorkbookWriteHandlerContext(
             this);
         WriteHandlerUtils.beforeWorkbookCreate(workbookWriteHandlerContext, true);
         WriteHandlerUtils.afterWorkbookCreate(workbookWriteHandlerContext, true);
 
-        // Initialization current sheet
+        // Initialize the current sheet.
         initSheet(writeType);
     }
 
+    /**
+     * Checks if the sheet exists in the cache and sets it as the current sheet if found.
+     *
+     * @param writeSheet The sheet configuration for writing.
+     * @return True if the sheet is found in the cache, otherwise false.
+     */
     private boolean selectSheetFromCache(WriteSheet writeSheet) {
         writeSheetHolder = null;
         Integer sheetNo = writeSheet.getSheetNo();
@@ -163,6 +188,11 @@ public class WriteContextImpl implements WriteContext {
         return true;
     }
 
+    /**
+     * Initializes the current sheet holder with the provided WriteSheet.
+     *
+     * @param writeSheet The sheet configuration for writing.
+     */
     private void initCurrentSheetHolder(WriteSheet writeSheet) {
         writeSheetHolder = new WriteSheetHolder(writeSheet, writeWorkbookHolder);
         writeTableHolder = null;
@@ -172,26 +202,28 @@ public class WriteContextImpl implements WriteContext {
         }
     }
 
+    /**
+     * Initializes the current sheet based on the write type.
+     *
+     * @param writeType The type of write operation.
+     */
     private void initSheet(WriteTypeEnum writeType) {
         SheetWriteHandlerContext sheetWriteHandlerContext = WriteHandlerUtils.createSheetWriteHandlerContext(this);
         WriteHandlerUtils.beforeSheetCreate(sheetWriteHandlerContext);
         Sheet currentSheet;
         try {
             if (writeSheetHolder.getSheetNo() != null) {
-                // When the add default sort order of appearance
                 if (WriteTypeEnum.ADD.equals(writeType) && writeWorkbookHolder.getTempTemplateInputStream() == null) {
                     currentSheet = createSheet();
                 } else {
                     currentSheet = writeWorkbookHolder.getWorkbook().getSheetAt(writeSheetHolder.getSheetNo());
-                    writeSheetHolder
-                        .setCachedSheet(
-                            writeWorkbookHolder.getCachedWorkbook().getSheetAt(writeSheetHolder.getSheetNo()));
+                    writeSheetHolder.setCachedSheet(
+                        writeWorkbookHolder.getCachedWorkbook().getSheetAt(writeSheetHolder.getSheetNo()));
                 }
             } else {
-                // sheet name must not null
                 currentSheet = writeWorkbookHolder.getWorkbook().getSheet(writeSheetHolder.getSheetName());
-                writeSheetHolder
-                    .setCachedSheet(writeWorkbookHolder.getCachedWorkbook().getSheet(writeSheetHolder.getSheetName()));
+                writeSheetHolder.setCachedSheet(
+                    writeWorkbookHolder.getCachedWorkbook().getSheet(writeSheetHolder.getSheetName()));
             }
         } catch (IllegalArgumentException e) {
             if (e.getMessage() != null && e.getMessage().contains(NO_SHEETS)) {
@@ -206,13 +238,17 @@ public class WriteContextImpl implements WriteContext {
         writeSheetHolder.setSheet(currentSheet);
         WriteHandlerUtils.afterSheetCreate(sheetWriteHandlerContext);
         if (WriteTypeEnum.ADD.equals(writeType)) {
-            // Initialization head
             initHead(writeSheetHolder.excelWriteHeadProperty());
         }
         writeWorkbookHolder.getHasBeenInitializedSheetIndexMap().put(writeSheetHolder.getSheetNo(), writeSheetHolder);
         writeWorkbookHolder.getHasBeenInitializedSheetNameMap().put(writeSheetHolder.getSheetName(), writeSheetHolder);
     }
 
+    /**
+     * Creates a new sheet if it does not exist.
+     *
+     * @return The newly created sheet.
+     */
     private Sheet createSheet() {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Can not find sheet:{} ,now create it", writeSheetHolder.getSheetNo());
@@ -226,13 +262,17 @@ public class WriteContextImpl implements WriteContext {
         return currentSheet;
     }
 
+    /**
+     * Initializes the header for the current sheet or table.
+     *
+     * @param excelWriteHeadProperty The header property for writing.
+     */
     public void initHead(ExcelWriteHeadProperty excelWriteHeadProperty) {
         if (!currentWriteHolder.needHead() || !currentWriteHolder.excelWriteHeadProperty().hasHead()) {
             return;
         }
         int newRowIndex = writeSheetHolder.getNewRowIndexAndStartDoWrite();
         newRowIndex += currentWriteHolder.relativeHeadRowIndex();
-        // Combined head
         if (currentWriteHolder.automaticMergeHead()) {
             addMergedRegionToCurrentSheet(excelWriteHeadProperty, newRowIndex);
         }
@@ -252,6 +292,12 @@ public class WriteContextImpl implements WriteContext {
         }
     }
 
+    /**
+     * Adds merged regions to the current sheet based on the header property.
+     *
+     * @param excelWriteHeadProperty The header property for writing.
+     * @param rowIndex               The starting row index for merging.
+     */
     private void addMergedRegionToCurrentSheet(ExcelWriteHeadProperty excelWriteHeadProperty, int rowIndex) {
         for (CellRange cellRangeModel : excelWriteHeadProperty.headCellRangeList()) {
             writeSheetHolder.getSheet()
@@ -260,6 +306,14 @@ public class WriteContextImpl implements WriteContext {
         }
     }
 
+    /**
+     * Adds one row of header data to the Excel sheet.
+     *
+     * @param row          The row to add header data to.
+     * @param rowIndex     The row index.
+     * @param headMap      The map of header data.
+     * @param relativeRowIndex The relative row index for header data.
+     */
     private void addOneRowOfHeadDataToExcel(Row row, Integer rowIndex, Map<Integer, Head> headMap,
         int relativeRowIndex) {
         for (Map.Entry<Integer, Head> entry : headMap.entrySet()) {
@@ -286,6 +340,11 @@ public class WriteContextImpl implements WriteContext {
         }
     }
 
+    /**
+     * Sets the current table for writing.
+     *
+     * @param writeTable The table configuration for writing.
+     */
     @Override
     public void currentTable(WriteTable writeTable) {
         if (writeTable == null) {
@@ -309,7 +368,7 @@ public class WriteContextImpl implements WriteContext {
 
         initCurrentTableHolder(writeTable);
 
-        // Workbook and sheet handler need to supplementary execution
+        // Supplementary execution for workbook and sheet handlers.
         WorkbookWriteHandlerContext workbookWriteHandlerContext = WriteHandlerUtils.createWorkbookWriteHandlerContext(
             this);
         WriteHandlerUtils.beforeWorkbookCreate(workbookWriteHandlerContext, true);
@@ -322,6 +381,11 @@ public class WriteContextImpl implements WriteContext {
         initHead(writeTableHolder.excelWriteHeadProperty());
     }
 
+    /**
+     * Initializes the current table holder with the provided WriteTable.
+     *
+     * @param writeTable The table configuration for writing.
+     */
     private void initCurrentTableHolder(WriteTable writeTable) {
         writeTableHolder = new WriteTableHolder(writeTable, writeSheetHolder);
         writeSheetHolder.getHasBeenInitializedTable().put(writeTable.getTableNo(), writeTableHolder);
@@ -331,26 +395,51 @@ public class WriteContextImpl implements WriteContext {
         }
     }
 
+    /**
+     * Retrieves the current workbook holder.
+     *
+     * @return The current workbook holder.
+     */
     @Override
     public WriteWorkbookHolder writeWorkbookHolder() {
         return writeWorkbookHolder;
     }
 
+    /**
+     * Retrieves the current sheet holder.
+     *
+     * @return The current sheet holder.
+     */
     @Override
     public WriteSheetHolder writeSheetHolder() {
         return writeSheetHolder;
     }
 
+    /**
+     * Retrieves the current table holder.
+     *
+     * @return The current table holder.
+     */
     @Override
     public WriteTableHolder writeTableHolder() {
         return writeTableHolder;
     }
 
+    /**
+     * Retrieves the current write holder.
+     *
+     * @return The current write holder.
+     */
     @Override
     public WriteHolder currentWriteHolder() {
         return currentWriteHolder;
     }
 
+    /**
+     * Finishes the write process and releases resources.
+     *
+     * @param onException Indicates whether the finish is triggered by an exception.
+     */
     @Override
     public void finish(boolean onException) {
         if (finished) {
@@ -425,32 +514,58 @@ public class WriteContextImpl implements WriteContext {
         }
     }
 
+    /**
+     * Removes thread-local caches used during the write process.
+     */
     private void removeThreadLocalCache() {
         NumberDataFormatterUtils.removeThreadLocalCache();
         DateUtils.removeThreadLocalCache();
         ClassUtils.removeThreadLocalCache();
     }
 
+    /**
+     * Retrieves the current sheet being written.
+     *
+     * @return The current sheet.
+     */
     @Override
     public Sheet getCurrentSheet() {
         return writeSheetHolder.getSheet();
     }
 
+    /**
+     * Checks if the current sheet requires a header.
+     *
+     * @return True if a header is required, otherwise false.
+     */
     @Override
     public boolean needHead() {
         return writeSheetHolder.needHead();
     }
 
+    /**
+     * Retrieves the output stream for writing the Excel file.
+     *
+     * @return The output stream.
+     */
     @Override
     public OutputStream getOutputStream() {
         return writeWorkbookHolder.getOutputStream();
     }
 
+    /**
+     * Retrieves the workbook being written.
+     *
+     * @return The workbook.
+     */
     @Override
     public Workbook getWorkbook() {
         return writeWorkbookHolder.getWorkbook();
     }
 
+    /**
+     * Clears encryption settings for older Excel formats.
+     */
     private void clearEncrypt03() {
         if (StringUtils.isEmpty(writeWorkbookHolder.getPassword())
             || !ExcelTypeEnum.XLS.equals(writeWorkbookHolder.getExcelType())) {
@@ -460,7 +575,10 @@ public class WriteContextImpl implements WriteContext {
     }
 
     /**
-     * To encrypt
+     * Encrypts the output stream for newer Excel formats.
+     *
+     * @return True if encryption is successful, otherwise false.
+     * @throws Exception If an error occurs during encryption.
      */
     private boolean doOutputStreamEncrypt07() throws Exception {
         if (StringUtils.isEmpty(writeWorkbookHolder.getPassword())
@@ -499,19 +617,33 @@ public class WriteContextImpl implements WriteContext {
      * To encrypt
      */
     private void doFileEncrypt07() throws Exception {
+        // Check if the password is empty or the file type is not xlsx, if so, return directly
         if (StringUtils.isEmpty(writeWorkbookHolder.getPassword())
             || !ExcelTypeEnum.XLSX.equals(writeWorkbookHolder.getExcelType())) {
             return;
         }
+        // Check if the file is null, if so, return directly
         if (writeWorkbookHolder.getFile() == null) {
             return;
         }
+        // Use try-with-resources to automatically close resources, encrypt and write the file
         try (POIFSFileSystem fileSystem = openFileSystemAndEncrypt(writeWorkbookHolder.getFile());
              FileOutputStream fileOutputStream = new FileOutputStream(writeWorkbookHolder.getFile())) {
             fileSystem.writeFilesystem(fileOutputStream);
         }
     }
 
+    /**
+     * Opens a file system and encrypts the given file.
+     *
+     * This method creates a new POIFSFileSystem instance, sets up an Encryptor with a standard encryption mode,
+     * and confirms the password for encryption. It then opens the provided file in read-write mode, saves its content
+     * into an encrypted output stream, and finally returns the encrypted file system.
+     *
+     * @param file The file to be encrypted.
+     * @return An encrypted POIFSFileSystem object.
+     * @throws Exception If any error occurs during the encryption process or file handling.
+     */
     private POIFSFileSystem openFileSystemAndEncrypt(File file) throws Exception {
         POIFSFileSystem fileSystem = new POIFSFileSystem();
         Encryptor encryptor = new EncryptionInfo(EncryptionMode.standard).getEncryptor();
