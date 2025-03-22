@@ -2,6 +2,7 @@ package cn.idev.excel.test.temp.write;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,6 +26,7 @@ import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 @Slf4j
 public class TempWriteTest {
@@ -84,14 +86,14 @@ public class TempWriteTest {
     }
 
     @Test
-    public void imageWritePoi() throws Exception {
-        String file = "/Users/zhuangjiaju/test/imagetest" + System.currentTimeMillis() + ".xlsx";
+    public void imageWritePoi(@TempDir Path tempDir) throws Exception {
+        String file = tempDir.resolve(System.currentTimeMillis() + ".xlsx").toString();
         SXSSFWorkbook workbook = new SXSSFWorkbook();
         SXSSFSheet sheet = workbook.createSheet("测试");
         CreationHelper helper = workbook.getCreationHelper();
         SXSSFDrawing sxssfDrawin = sheet.createDrawingPatriarch();
 
-        byte[] imagebyte = FileUtils.readFileToByteArray(new File("/Users/zhuangjiaju/Documents/demo.jpg"));
+        byte[] imagebyte = FileUtils.readFileToByteArray(new File("src/test/resources/converter/img.jpg"));
 
         for (int i = 0; i < 1 * 10000; i++) {
             SXSSFRow row = sheet.createRow(i);
@@ -113,14 +115,14 @@ public class TempWriteTest {
     }
 
     @Test
-    public void tep() throws Exception {
-        String file = "/Users/zhuangjiaju/test/imagetest" + System.currentTimeMillis() + ".xlsx";
+    public void tep(@TempDir Path tempDir) throws Exception {
+        String file = tempDir.resolve(System.currentTimeMillis() + ".xlsx").toString();
         SXSSFWorkbook workbook = new SXSSFWorkbook();
         SXSSFSheet sheet = workbook.createSheet("测试");
         CreationHelper helper = workbook.getCreationHelper();
         SXSSFDrawing sxssfDrawin = sheet.createDrawingPatriarch();
 
-        byte[] imagebyte = FileUtils.readFileToByteArray(new File("/Users/zhuangjiaju/Documents/demo.jpg"));
+        byte[] imagebyte = FileUtils.readFileToByteArray(new File("src/test/resources/converter/img.jpg"));
 
         for (int i = 0; i < 1 * 10000; i++) {
             SXSSFRow row = sheet.createRow(i);
@@ -142,11 +144,11 @@ public class TempWriteTest {
     }
 
     @Test
-    public void large() throws Exception {
-        String file = "/Users/zhuangjiaju/test/imagetest" + System.currentTimeMillis() + ".xlsx";
+    public void large(@TempDir Path tempDir) throws Exception {
+        String file = tempDir.resolve(System.currentTimeMillis() + ".xlsx").toString();
         SXSSFWorkbook workbook = new SXSSFWorkbook(new XSSFWorkbook(
             new File(
-                "/Users/zhuangjiaju/IdeaProjects/easyexcel/easyexcel-test/src/test/resources/large/large07.xlsx")));
+                "src/test/resources/large/large07.xlsx")));
         SXSSFSheet sheet = workbook.createSheet("测试");
 
         SXSSFRow row = sheet.createRow(500000);
