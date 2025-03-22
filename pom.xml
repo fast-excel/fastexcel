@@ -222,9 +222,12 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>3.3.0</version>
+<!--                    please add below configuration if you are using JDK 9 or higher-->
 <!--                    <configuration>-->
 <!--                        <argLine>-->
-<!--                            &#45;&#45;add-opens java.base/sun.reflect.annotation=ALL-UNNAMED-->
+<!--                            &#45;&#45;add-opens=java.base/java.lang=ALL-UNNAMED-->
+<!--                            &#45;&#45;add-opens=java.base/java.util=ALL-UNNAMED-->
+<!--                            &#45;&#45;add-opens=java.base/sun.reflect.annotation=ALL-UNNAMED-->
 <!--                        </argLine>-->
 <!--                    </configuration>-->
                 </plugin>
