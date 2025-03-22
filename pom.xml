@@ -26,7 +26,9 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jdk.version>1.8</jdk.version>
+        <java.version>1.8</java.version>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
         <gpg.skip>true</gpg.skip>
         <maven.javadoc.skip>true</maven.javadoc.skip>
         <maven.test.skip>true</maven.test.skip>
@@ -220,6 +222,14 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>3.3.0</version>
+<!--                    please add below configuration if you are using JDK 9 or higher-->
+<!--                    <configuration>-->
+<!--                        <argLine>-->
+<!--                            &#45;&#45;add-opens=java.base/java.lang=ALL-UNNAMED-->
+<!--                            &#45;&#45;add-opens=java.base/java.util=ALL-UNNAMED-->
+<!--                            &#45;&#45;add-opens=java.base/sun.reflect.annotation=ALL-UNNAMED-->
+<!--                        </argLine>-->
+<!--                    </configuration>-->
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -245,8 +255,8 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
                 </configuration>
             </plugin>
             <plugin>
