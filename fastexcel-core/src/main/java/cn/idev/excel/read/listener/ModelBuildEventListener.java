@@ -71,7 +71,8 @@ public class ModelBuildEventListener implements IgnoreExceptionReadListener<Map<
         }
         // fix https://github.com/fast-excel/fastexcel/issues/2014
         int headSize = calculateHeadSize(readSheetHolder);
-        while (index < headSize) {
+        // fix https://github.com/fast-excel/fastexcel/issues/220
+        while (index <= headSize) {
             map.put(index, null);
             index++;
         }
