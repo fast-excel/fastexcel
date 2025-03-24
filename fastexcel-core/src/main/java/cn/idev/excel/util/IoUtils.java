@@ -11,14 +11,17 @@ import java.io.OutputStream;
  * @author Jiaju Zhuang
  */
 public class IoUtils {
+    
     public static final int EOF = -1;
+    
     /**
      * The default buffer size ({@value}) to use for
      */
     private static final int DEFAULT_BUFFER_SIZE = 1024 * 4;
-
-    private IoUtils() {}
-
+    
+    private IoUtils() {
+    }
+    
     /**
      * Gets the contents of an InputStream as a byte[].
      *
@@ -35,7 +38,7 @@ public class IoUtils {
             output.toByteArray();
         }
     }
-
+    
     /**
      * Gets the contents of an InputStream as a byte[].
      *
@@ -62,7 +65,7 @@ public class IoUtils {
         }
         return data;
     }
-
+    
     /**
      * Copies bytes
      *
@@ -82,6 +85,6 @@ public class IoUtils {
         if (count > Integer.MAX_VALUE) {
             return -1;
         }
-        return (int)count;
+        return (int) count;
     }
 }

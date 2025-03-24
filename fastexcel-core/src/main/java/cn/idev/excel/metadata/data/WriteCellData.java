@@ -1,20 +1,19 @@
 package cn.idev.excel.metadata.data;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Date;
-import java.util.List;
-
 import cn.idev.excel.enums.CellDataTypeEnum;
 import cn.idev.excel.util.ListUtils;
 import cn.idev.excel.write.metadata.style.WriteCellStyle;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.apache.poi.ss.usermodel.CellStyle;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
+import java.util.List;
 
 /**
  * write cell data
@@ -26,49 +25,53 @@ import org.apache.poi.ss.usermodel.CellStyle;
 @EqualsAndHashCode
 @NoArgsConstructor
 public class WriteCellData<T> extends CellData<T> {
+    
     /**
      * Support only when writing.{@link CellDataTypeEnum#DATE}
      */
     private LocalDateTime dateValue;
-
+    
     /**
      * rich text.{@link CellDataTypeEnum#RICH_TEXT_STRING}
      */
     private RichTextStringData richTextStringDataValue;
+    
     /**
      * image
      */
     private List<ImageData> imageDataList;
+    
     /**
      * comment
      */
     private CommentData commentData;
+    
     /**
      * hyper link
      */
     private HyperlinkData hyperlinkData;
-
+    
     /**
      * style
      */
     private WriteCellStyle writeCellStyle;
-
+    
     /**
-     * If originCellStyle is empty, one will be created.
-     * If both writeCellStyle and originCellStyle exist, copy from writeCellStyle to originCellStyle.
+     * If originCellStyle is empty, one will be created. If both writeCellStyle and originCellStyle exist, copy from
+     * writeCellStyle to originCellStyle.
      */
     private CellStyle originCellStyle;
-
-
+    
+    
     public WriteCellData(String stringValue) {
         this(CellDataTypeEnum.STRING, stringValue);
     }
-
+    
     public WriteCellData(CellDataTypeEnum type) {
         super();
         setType(type);
     }
-
+    
     public WriteCellData(CellDataTypeEnum type, String stringValue) {
         super();
         if (type != CellDataTypeEnum.STRING && type != CellDataTypeEnum.ERROR) {
@@ -80,7 +83,7 @@ public class WriteCellData<T> extends CellData<T> {
         setType(type);
         setStringValue(stringValue);
     }
-
+    
     public WriteCellData(BigDecimal numberValue) {
         super();
         if (numberValue == null) {
@@ -89,7 +92,7 @@ public class WriteCellData<T> extends CellData<T> {
         setType(CellDataTypeEnum.NUMBER);
         setNumberValue(numberValue);
     }
-
+    
     public WriteCellData(Boolean booleanValue) {
         super();
         if (booleanValue == null) {
@@ -98,7 +101,7 @@ public class WriteCellData<T> extends CellData<T> {
         setType(CellDataTypeEnum.BOOLEAN);
         setBooleanValue(booleanValue);
     }
-
+    
     public WriteCellData(Date dateValue) {
         super();
         if (dateValue == null) {
@@ -107,7 +110,7 @@ public class WriteCellData<T> extends CellData<T> {
         setType(CellDataTypeEnum.DATE);
         this.dateValue = LocalDateTime.ofInstant(dateValue.toInstant(), ZoneId.systemDefault());
     }
-
+    
     public WriteCellData(LocalDateTime dateValue) {
         super();
         if (dateValue == null) {
@@ -116,7 +119,7 @@ public class WriteCellData<T> extends CellData<T> {
         setType(CellDataTypeEnum.DATE);
         this.dateValue = dateValue;
     }
-
+    
     public WriteCellData(byte[] image) {
         super();
         if (image == null) {
@@ -128,7 +131,7 @@ public class WriteCellData<T> extends CellData<T> {
         imageData.setImage(image);
         imageDataList.add(imageData);
     }
-
+    
     /**
      * Return a style, if is empty, create a new
      *

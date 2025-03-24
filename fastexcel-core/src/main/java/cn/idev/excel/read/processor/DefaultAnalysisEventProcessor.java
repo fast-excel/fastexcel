@@ -29,20 +29,22 @@ import java.util.Map;
  * @author jipengfei
  */
 public class DefaultAnalysisEventProcessor implements AnalysisEventProcessor {
+    
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultAnalysisEventProcessor.class);
-
+    
     @Override
     public void extra(AnalysisContext analysisContext) {
         dealExtra(analysisContext);
     }
-
+    
     /**
-     * Ends the processing of a row.
-     * This method is called after reading a row of data to perform corresponding processing.
-     * If the current row is empty and the workbook holder is set to ignore empty rows, then directly return without processing.
-     * If the row is not empty or empty rows are not ignored, then call the dealData method to process the data.
+     * Ends the processing of a row. This method is called after reading a row of data to perform corresponding
+     * processing. If the current row is empty and the workbook holder is set to ignore empty rows, then directly return
+     * without processing. If the row is not empty or empty rows are not ignored, then call the dealData method to
+     * process the data.
      *
-     * @param analysisContext Analysis context, containing information about the current analysis, including the type and content of the row.
+     * @param analysisContext Analysis context, containing information about the current analysis, including the type
+     *                        and content of the row.
      */
     @Override
     public void endRow(AnalysisContext analysisContext) {
@@ -60,7 +62,7 @@ public class DefaultAnalysisEventProcessor implements AnalysisEventProcessor {
         // Call the data processing method
         dealData(analysisContext);
     }
-
+    
     @Override
     public void endSheet(AnalysisContext analysisContext) {
         ReadSheetHolder readSheetHolder = analysisContext.readSheetHolder();
@@ -68,12 +70,12 @@ public class DefaultAnalysisEventProcessor implements AnalysisEventProcessor {
             return;
         }
         readSheetHolder.setEnded(Boolean.TRUE);
-
+        
         for (ReadListener readListener : analysisContext.currentReadHolder().readListenerList()) {
             readListener.doAfterAllAnalysed(analysisContext);
         }
     }
-
+    
     private void dealExtra(AnalysisContext analysisContext) {
         for (ReadListener readListener : analysisContext.currentReadHolder().readListenerList()) {
             try {
@@ -87,7 +89,7 @@ public class DefaultAnalysisEventProcessor implements AnalysisEventProcessor {
             }
         }
     }
-
+    
     private void onException(AnalysisContext analysisContext, Exception e) {
         for (ReadListener readListenerException : analysisContext.currentReadHolder().readListenerList()) {
             try {
@@ -99,16 +101,16 @@ public class DefaultAnalysisEventProcessor implements AnalysisEventProcessor {
             }
         }
     }
-
+    
     private void dealData(AnalysisContext analysisContext) {
         ReadRowHolder readRowHolder = analysisContext.readRowHolder();
-        Map<Integer, ReadCellData<?>> cellDataMap = (Map)readRowHolder.getCellMap();
+        Map<Integer, ReadCellData<?>> cellDataMap = (Map) readRowHolder.getCellMap();
         readRowHolder.setCurrentRowAnalysisResult(cellDataMap);
         int rowIndex = readRowHolder.getRowIndex();
         int currentHeadRowNumber = analysisContext.readSheetHolder().getHeadRowNumber();
-
+        
         boolean isData = rowIndex >= currentHeadRowNumber;
-
+        
         // Now is data
         for (ReadListener readListener : analysisContext.currentReadHolder().readListenerList()) {
             try {
@@ -127,22 +129,20 @@ public class DefaultAnalysisEventProcessor implements AnalysisEventProcessor {
                 throw new ExcelAnalysisStopException();
             }
         }
-
+        
         // Last head column
         if (!isData && currentHeadRowNumber == rowIndex + 1) {
             buildHead(analysisContext, cellDataMap);
         }
     }
-
+    
     private void buildHead(AnalysisContext analysisContext, Map<Integer, ReadCellData<?>> cellDataMap) {
         // Rule out empty head, and then take the largest column
         if (MapUtils.isNotEmpty(cellDataMap)) {
-            cellDataMap.entrySet()
-                .stream()
-                .filter(entry -> CellDataTypeEnum.EMPTY != entry.getValue().getType())
-                .forEach(entry -> analysisContext.readSheetHolder().setMaxNotEmptyDataHeadSize(entry.getKey()));
+            cellDataMap.entrySet().stream().filter(entry -> CellDataTypeEnum.EMPTY != entry.getValue().getType())
+                    .forEach(entry -> analysisContext.readSheetHolder().setMaxNotEmptyDataHeadSize(entry.getKey()));
         }
-
+        
         if (!HeadKindEnum.CLASS.equals(analysisContext.currentReadHolder().excelReadHeadProperty().getHeadKind())) {
             return;
         }

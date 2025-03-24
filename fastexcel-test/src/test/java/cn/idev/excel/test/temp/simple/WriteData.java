@@ -1,10 +1,10 @@
 package cn.idev.excel.test.temp.simple;
 
-import java.util.Date;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.Date;
 
 /**
  * write data
@@ -15,8 +15,10 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode
 public class WriteData {
+    
     //    @ContentStyle(locked = true)
     private Date dd;
+    
     //    @ContentStyle(locked = false)
     private float f1;
 }

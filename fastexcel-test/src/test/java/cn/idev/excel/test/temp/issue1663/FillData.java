@@ -8,6 +8,8 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode
 public class FillData {
+    
     private String name;
+    
     private double number;
 }

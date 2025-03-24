@@ -1,11 +1,10 @@
 package cn.idev.excel.util;
 
+import cn.idev.excel.context.AnalysisContext;
 import cn.idev.excel.read.metadata.ReadSheet;
 import cn.idev.excel.read.metadata.holder.ReadWorkbookHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import cn.idev.excel.context.AnalysisContext;
 
 /**
  * Sheet utils
@@ -13,10 +12,12 @@ import cn.idev.excel.context.AnalysisContext;
  * @author Jiaju Zhuang
  */
 public class SheetUtils {
+    
     private static final Logger LOGGER = LoggerFactory.getLogger(SheetUtils.class);
-
-    private SheetUtils() {}
-
+    
+    private SheetUtils() {
+    }
+    
     /**
      * Match the parameters to the actual sheet
      *
@@ -39,14 +40,15 @@ public class SheetUtils {
                 }
                 parameterReadSheet.setSheetNo(0);
             }
-            boolean match = (parameterReadSheet.getSheetNo() != null
-                && parameterReadSheet.getSheetNo().equals(readSheet.getSheetNo()));
+            boolean match = (parameterReadSheet.getSheetNo() != null && parameterReadSheet.getSheetNo()
+                    .equals(readSheet.getSheetNo()));
             if (!match) {
                 String parameterSheetName = parameterReadSheet.getSheetName();
                 if (!StringUtils.isEmpty(parameterSheetName)) {
-                    boolean autoTrim = (parameterReadSheet.getAutoTrim() != null && parameterReadSheet.getAutoTrim())
-                        || (parameterReadSheet.getAutoTrim() == null
-                        && analysisContext.readWorkbookHolder().getGlobalConfiguration().getAutoTrim());
+                    boolean autoTrim =
+                            (parameterReadSheet.getAutoTrim() != null && parameterReadSheet.getAutoTrim()) || (
+                                    parameterReadSheet.getAutoTrim() == null && analysisContext.readWorkbookHolder()
+                                            .getGlobalConfiguration().getAutoTrim());
                     String sheetName = readSheet.getSheetName();
                     if (autoTrim) {
                         parameterSheetName = parameterSheetName.trim();
@@ -62,5 +64,5 @@ public class SheetUtils {
         }
         return null;
     }
-
+    
 }

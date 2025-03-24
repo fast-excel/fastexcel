@@ -2,7 +2,6 @@ package cn.idev.excel.write.style.row;
 
 import cn.idev.excel.write.handler.RowWriteHandler;
 import cn.idev.excel.write.handler.context.RowWriteHandlerContext;
-
 import org.apache.poi.ss.usermodel.Row;
 
 /**
@@ -11,6 +10,7 @@ import org.apache.poi.ss.usermodel.Row;
  * @author Jiaju Zhuang
  */
 public abstract class AbstractRowHeightStyleStrategy implements RowWriteHandler {
+    
     @Override
     public void afterRowDispose(RowWriteHandlerContext context) {
         if (context.getHead() == null) {
@@ -22,7 +22,7 @@ public abstract class AbstractRowHeightStyleStrategy implements RowWriteHandler 
             setContentColumnHeight(context.getRow(), context.getRelativeRowIndex());
         }
     }
-
+    
     /**
      * Sets the height of header
      *
@@ -30,7 +30,7 @@ public abstract class AbstractRowHeightStyleStrategy implements RowWriteHandler 
      * @param relativeRowIndex
      */
     protected abstract void setHeadColumnHeight(Row row, int relativeRowIndex);
-
+    
     /**
      * Sets the height of content
      *
@@ -38,5 +38,5 @@ public abstract class AbstractRowHeightStyleStrategy implements RowWriteHandler 
      * @param relativeRowIndex
      */
     protected abstract void setContentColumnHeight(Row row, int relativeRowIndex);
-
+    
 }

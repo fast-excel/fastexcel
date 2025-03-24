@@ -6,6 +6,7 @@ package cn.idev.excel.event;
  * @author Jiaju Zhuang
  */
 public interface Order {
+    
     /**
      * The smaller the first implementation
      *

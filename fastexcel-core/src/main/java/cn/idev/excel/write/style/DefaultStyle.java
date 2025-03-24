@@ -3,7 +3,6 @@ package cn.idev.excel.write.style;
 import cn.idev.excel.constant.OrderConstant;
 import cn.idev.excel.write.metadata.style.WriteCellStyle;
 import cn.idev.excel.write.metadata.style.WriteFont;
-
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
@@ -16,12 +15,12 @@ import org.apache.poi.ss.usermodel.VerticalAlignment;
  * @author Jiaju Zhuang
  */
 public class DefaultStyle extends HorizontalCellStyleStrategy {
-
+    
     @Override
     public int order() {
         return OrderConstant.DEFAULT_DEFINE_STYLE;
     }
-
+    
     public DefaultStyle() {
         super();
         WriteCellStyle headWriteCellStyle = new WriteCellStyle();
@@ -37,10 +36,10 @@ public class DefaultStyle extends HorizontalCellStyleStrategy {
         headWriteCellStyle.setBorderRight(BorderStyle.THIN);
         WriteFont headWriteFont = new WriteFont();
         headWriteFont.setFontName("宋体");
-        headWriteFont.setFontHeightInPoints((short)14);
+        headWriteFont.setFontHeightInPoints((short) 14);
         headWriteFont.setBold(true);
         headWriteCellStyle.setWriteFont(headWriteFont);
-
+        
         setHeadWriteCellStyle(headWriteCellStyle);
     }
 }

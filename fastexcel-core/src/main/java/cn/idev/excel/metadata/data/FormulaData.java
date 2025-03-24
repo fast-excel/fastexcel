@@ -13,11 +13,12 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode
 public class FormulaData {
+    
     /**
      * formula
      */
     private String formulaValue;
-
+    
     @Override
     public FormulaData clone() {
         FormulaData formulaData = new FormulaData();

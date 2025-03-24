@@ -3,7 +3,6 @@ package cn.idev.excel.metadata.property;
 import cn.idev.excel.annotation.write.style.ContentFontStyle;
 import cn.idev.excel.annotation.write.style.HeadFontStyle;
 import cn.idev.excel.util.StringUtils;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,22 +20,27 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 @Setter
 @EqualsAndHashCode
 public class FontProperty {
+    
     /**
      * The name for the font (i.e. Arial)
      */
     private String fontName;
+    
     /**
      * Height in the familiar unit of measure - points
      */
     private Short fontHeightInPoints;
+    
     /**
      * Whether to use italics or not
      */
     private Boolean italic;
+    
     /**
      * Whether to use a strikeout horizontal line through the text or not
      */
     private Boolean strikeout;
+    
     /**
      * The color for the font
      *
@@ -46,6 +50,7 @@ public class FontProperty {
      * @see IndexedColors
      */
     private Short color;
+    
     /**
      * Set normal, super or subscript.
      *
@@ -54,6 +59,7 @@ public class FontProperty {
      * @see Font#SS_SUB
      */
     private Short typeOffset;
+    
     /**
      * set type of text underlining to use
      *
@@ -63,8 +69,9 @@ public class FontProperty {
      * @see Font#U_SINGLE_ACCOUNTING
      * @see Font#U_DOUBLE_ACCOUNTING
      */
-
+    
     private Byte underline;
+    
     /**
      * Set character-set to use.
      *
@@ -74,11 +81,12 @@ public class FontProperty {
      * @see Font#SYMBOL_CHARSET
      */
     private Integer charset;
+    
     /**
      * Bold
      */
     private Boolean bold;
-
+    
     public static FontProperty build(HeadFontStyle headFontStyle) {
         if (headFontStyle == null) {
             return null;
@@ -107,7 +115,7 @@ public class FontProperty {
         styleProperty.setBold(headFontStyle.bold().getBooleanValue());
         return styleProperty;
     }
-
+    
     public static FontProperty build(ContentFontStyle contentFontStyle) {
         if (contentFontStyle == null) {
             return null;
@@ -136,5 +144,5 @@ public class FontProperty {
         styleProperty.setBold(contentFontStyle.bold().getBooleanValue());
         return styleProperty;
     }
-
+    
 }

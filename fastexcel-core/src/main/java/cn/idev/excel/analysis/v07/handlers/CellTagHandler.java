@@ -1,18 +1,17 @@
 package cn.idev.excel.analysis.v07.handlers;
 
-import java.math.BigDecimal;
-
 import cn.idev.excel.constant.EasyExcelConstants;
 import cn.idev.excel.constant.ExcelXmlConstants;
+import cn.idev.excel.context.xlsx.XlsxReadContext;
 import cn.idev.excel.enums.CellDataTypeEnum;
 import cn.idev.excel.metadata.data.ReadCellData;
 import cn.idev.excel.read.metadata.holder.xlsx.XlsxReadSheetHolder;
 import cn.idev.excel.util.BooleanUtils;
 import cn.idev.excel.util.PositionUtils;
 import cn.idev.excel.util.StringUtils;
-import cn.idev.excel.context.xlsx.XlsxReadContext;
-
 import org.xml.sax.Attributes;
+
+import java.math.BigDecimal;
 
 /**
  * Cell Handler
@@ -20,15 +19,15 @@ import org.xml.sax.Attributes;
  * @author jipengfei
  */
 public class CellTagHandler extends AbstractXlsxTagHandler {
-
+    
     private static final int DEFAULT_FORMAT_INDEX = 0;
-
+    
     @Override
     public void startElement(XlsxReadContext xlsxReadContext, String name, Attributes attributes) {
         XlsxReadSheetHolder xlsxReadSheetHolder = xlsxReadContext.xlsxReadSheetHolder();
         xlsxReadSheetHolder.setColumnIndex(PositionUtils.getCol(attributes.getValue(ExcelXmlConstants.ATTRIBUTE_R),
-            xlsxReadSheetHolder.getColumnIndex()));
-
+                xlsxReadSheetHolder.getColumnIndex()));
+        
         // t="s" ,it means String
         // t="str" ,it means String,but does not need to be read in the 'sharedStrings.xml'
         // t="inlineStr" ,it means String,but does not need to be read in the 'sharedStrings.xml'
@@ -39,7 +38,7 @@ public class CellTagHandler extends AbstractXlsxTagHandler {
         CellDataTypeEnum type = CellDataTypeEnum.buildFromCellType(attributes.getValue(ExcelXmlConstants.ATTRIBUTE_T));
         xlsxReadSheetHolder.setTempCellData(new ReadCellData<>(type));
         xlsxReadSheetHolder.setTempData(new StringBuilder());
-
+        
         // Put in data transformation information
         String dateFormatIndex = attributes.getValue(ExcelXmlConstants.ATTRIBUTE_S);
         int dateFormatIndexInteger;
@@ -48,11 +47,11 @@ public class CellTagHandler extends AbstractXlsxTagHandler {
         } else {
             dateFormatIndexInteger = Integer.parseInt(dateFormatIndex);
         }
-
-        xlsxReadSheetHolder.getTempCellData().setDataFormatData(
-            xlsxReadContext.xlsxReadWorkbookHolder().dataFormatData(dateFormatIndexInteger));
+        
+        xlsxReadSheetHolder.getTempCellData()
+                .setDataFormatData(xlsxReadContext.xlsxReadWorkbookHolder().dataFormatData(dateFormatIndexInteger));
     }
-
+    
     @Override
     public void endElement(XlsxReadContext xlsxReadContext, String name) {
         XlsxReadSheetHolder xlsxReadSheetHolder = xlsxReadContext.xlsxReadSheetHolder();
@@ -66,8 +65,8 @@ public class CellTagHandler extends AbstractXlsxTagHandler {
                 if (StringUtils.isEmpty(tempDataString)) {
                     break;
                 }
-                String stringValue = xlsxReadContext.readWorkbookHolder().getReadCache().get(
-                    Integer.valueOf(tempDataString));
+                String stringValue = xlsxReadContext.readWorkbookHolder().getReadCache()
+                        .get(Integer.valueOf(tempDataString));
                 tempCellData.setStringValue(stringValue);
                 break;
             case DIRECT_STRING:
@@ -91,17 +90,17 @@ public class CellTagHandler extends AbstractXlsxTagHandler {
                 tempCellData.setType(CellDataTypeEnum.NUMBER);
                 tempCellData.setOriginalNumberValue(new BigDecimal(tempDataString));
                 tempCellData.setNumberValue(
-                    tempCellData.getOriginalNumberValue().round(EasyExcelConstants.EXCEL_MATH_CONTEXT));
+                        tempCellData.getOriginalNumberValue().round(EasyExcelConstants.EXCEL_MATH_CONTEXT));
                 break;
             default:
                 throw new IllegalStateException("Cannot set values now");
         }
-
-        if (tempCellData.getStringValue() != null
-            && xlsxReadContext.currentReadHolder().globalConfiguration().getAutoTrim()) {
+        
+        if (tempCellData.getStringValue() != null && xlsxReadContext.currentReadHolder().globalConfiguration()
+                .getAutoTrim()) {
             tempCellData.setStringValue(tempCellData.getStringValue().trim());
         }
-
+        
         tempCellData.checkEmpty();
         tempCellData.setRowIndex(xlsxReadSheetHolder.getRowIndex());
         tempCellData.setColumnIndex(xlsxReadSheetHolder.getColumnIndex());

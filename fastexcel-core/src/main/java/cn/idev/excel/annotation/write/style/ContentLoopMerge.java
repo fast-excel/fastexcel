@@ -15,13 +15,14 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 public @interface ContentLoopMerge {
+    
     /**
      * Each row
      *
      * @return
      */
     int eachRow() default 1;
-
+    
     /**
      * Extend column
      *

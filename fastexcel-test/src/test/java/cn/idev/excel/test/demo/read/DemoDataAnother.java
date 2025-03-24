@@ -10,7 +10,10 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 public class DemoDataAnother {
+    
     private String strA;
+    
     private String strB;
+    
     private String strC;
 }

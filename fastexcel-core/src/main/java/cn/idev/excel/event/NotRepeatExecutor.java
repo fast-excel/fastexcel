@@ -7,6 +7,7 @@ package cn.idev.excel.event;
  * @author Jiaju Zhuang
  **/
 public interface NotRepeatExecutor {
+    
     /**
      * To see if it's the same executor
      *

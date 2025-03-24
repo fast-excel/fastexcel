@@ -1,19 +1,20 @@
 package cn.idev.excel.write.builder;
 
+import cn.idev.excel.metadata.AbstractParameterBuilder;
+import cn.idev.excel.write.handler.WriteHandler;
+import cn.idev.excel.write.metadata.WriteBasicParameter;
+
 import java.util.ArrayList;
 import java.util.Collection;
-
-import cn.idev.excel.write.handler.WriteHandler;
-import cn.idev.excel.metadata.AbstractParameterBuilder;
-import cn.idev.excel.write.metadata.WriteBasicParameter;
 
 /**
  * Build ExcelBuilder
  *
  * @author Jiaju Zhuang
  */
-public abstract class AbstractExcelWriterParameterBuilder<T extends AbstractExcelWriterParameterBuilder,
-    C extends WriteBasicParameter> extends AbstractParameterBuilder<T, C> {
+public abstract class AbstractExcelWriterParameterBuilder<T extends AbstractExcelWriterParameterBuilder, C extends WriteBasicParameter>
+        extends AbstractParameterBuilder<T, C> {
+    
     /**
      * Writes the head relative to the existing contents of the sheet. Indexes are zero-based.
      *
@@ -24,7 +25,7 @@ public abstract class AbstractExcelWriterParameterBuilder<T extends AbstractExce
         parameter().setRelativeHeadRowIndex(relativeHeadRowIndex);
         return self();
     }
-
+    
     /**
      * Need Head
      */
@@ -32,7 +33,7 @@ public abstract class AbstractExcelWriterParameterBuilder<T extends AbstractExce
         parameter().setNeedHead(needHead);
         return self();
     }
-
+    
     /**
      * Custom write handler
      *
@@ -46,7 +47,7 @@ public abstract class AbstractExcelWriterParameterBuilder<T extends AbstractExce
         parameter().getCustomWriteHandlerList().add(writeHandler);
         return self();
     }
-
+    
     /**
      * Use the default style.Default is true.
      *
@@ -57,7 +58,7 @@ public abstract class AbstractExcelWriterParameterBuilder<T extends AbstractExce
         parameter().setUseDefaultStyle(useDefaultStyle);
         return self();
     }
-
+    
     /**
      * Whether to automatically merge headers.Default is true.
      *
@@ -68,7 +69,7 @@ public abstract class AbstractExcelWriterParameterBuilder<T extends AbstractExce
         parameter().setAutomaticMergeHead(automaticMergeHead);
         return self();
     }
-
+    
     /**
      * Ignore the custom columns.
      */
@@ -76,7 +77,7 @@ public abstract class AbstractExcelWriterParameterBuilder<T extends AbstractExce
         parameter().setExcludeColumnIndexes(excludeColumnIndexes);
         return self();
     }
-
+    
     /**
      * Ignore the custom columns.
      *
@@ -86,7 +87,7 @@ public abstract class AbstractExcelWriterParameterBuilder<T extends AbstractExce
         parameter().setExcludeColumnFieldNames(excludeColumnFieldNames);
         return self();
     }
-
+    
     /**
      * Ignore the custom columns.
      */
@@ -94,7 +95,7 @@ public abstract class AbstractExcelWriterParameterBuilder<T extends AbstractExce
         parameter().setExcludeColumnFieldNames(excludeColumnFieldNames);
         return self();
     }
-
+    
     /**
      * Only output the custom columns.
      */
@@ -102,7 +103,7 @@ public abstract class AbstractExcelWriterParameterBuilder<T extends AbstractExce
         parameter().setIncludeColumnIndexes(includeColumnIndexes);
         return self();
     }
-
+    
     /**
      * Only output the custom columns.
      *
@@ -113,7 +114,7 @@ public abstract class AbstractExcelWriterParameterBuilder<T extends AbstractExce
         parameter().setIncludeColumnFieldNames(includeColumnFieldNames);
         return self();
     }
-
+    
     /**
      * Only output the custom columns.
      */
@@ -121,10 +122,10 @@ public abstract class AbstractExcelWriterParameterBuilder<T extends AbstractExce
         parameter().setIncludeColumnFieldNames(includeColumnFieldNames);
         return self();
     }
-
+    
     /**
      * Data will be order by  {@link #includeColumnFieldNames} or  {@link #includeColumnIndexes}.
-     *
+     * <p>
      * default is false.
      *
      * @since 3.3.0

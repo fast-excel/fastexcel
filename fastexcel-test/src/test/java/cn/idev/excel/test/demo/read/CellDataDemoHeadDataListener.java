@@ -1,13 +1,12 @@
 package cn.idev.excel.test.demo.read;
 
-import java.util.List;
-
+import cn.idev.excel.context.AnalysisContext;
 import cn.idev.excel.read.listener.ReadListener;
 import cn.idev.excel.util.ListUtils;
-import cn.idev.excel.context.AnalysisContext;
 import com.alibaba.fastjson2.JSON;
-
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.List;
 
 /**
  * 读取头
@@ -16,13 +15,14 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class CellDataDemoHeadDataListener implements ReadListener<CellDataReadDemoData> {
+    
     /**
      * 每隔5条存储数据库，实际使用中可以100条，然后清理list ，方便内存回收
      */
     private static final int BATCH_COUNT = 100;
-
+    
     private List<CellDataReadDemoData> cachedDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
-
+    
     @Override
     public void invoke(CellDataReadDemoData data, AnalysisContext context) {
         log.info("解析到一条数据:{}", JSON.toJSONString(data));
@@ -31,13 +31,13 @@ public class CellDataDemoHeadDataListener implements ReadListener<CellDataReadDe
             cachedDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
         }
     }
-
+    
     @Override
     public void doAfterAllAnalysed(AnalysisContext context) {
         saveData();
         log.info("所有数据解析完成！");
     }
-
+    
     /**
      * 加上存储数据库
      */

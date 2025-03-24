@@ -11,16 +11,16 @@ import cn.idev.excel.metadata.property.ExcelContentProperty;
  * @author Jiaju Zhuang
  */
 public class ByteArrayImageConverter implements Converter<byte[]> {
-
+    
     @Override
     public Class<byte[]> supportJavaTypeKey() {
         return byte[].class;
     }
-
+    
     @Override
     public WriteCellData<?> convertToExcelData(byte[] value, ExcelContentProperty contentProperty,
-                                               GlobalConfiguration globalConfiguration) {
+            GlobalConfiguration globalConfiguration) {
         return new WriteCellData<>(value);
     }
-
+    
 }

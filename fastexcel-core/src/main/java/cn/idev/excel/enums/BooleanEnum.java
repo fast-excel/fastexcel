@@ -3,8 +3,8 @@ package cn.idev.excel.enums;
 import lombok.Getter;
 
 /**
- * Default values cannot be used for annotations.
- * So an additional an enumeration to determine whether the user has added the enumeration.
+ * Default values cannot be used for annotations. So an additional an enumeration to determine whether the user has
+ * added the enumeration.
  *
  * @author Jiaju Zhuang
  */
@@ -23,11 +23,11 @@ public enum BooleanEnum {
      */
     FALSE(Boolean.FALSE),
     ;
-
+    
     Boolean booleanValue;
-
+    
     BooleanEnum(Boolean booleanValue) {
         this.booleanValue = booleanValue;
     }
-
+    
 }

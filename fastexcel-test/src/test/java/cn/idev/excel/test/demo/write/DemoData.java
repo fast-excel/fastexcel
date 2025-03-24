@@ -17,24 +17,25 @@ import java.util.Date;
 @Setter
 @EqualsAndHashCode
 public class DemoData {
+    
     /**
      * String Title
      */
     @ExcelProperty("String Title")
     private String string;
-
+    
     /**
      * Date Title
      */
     @ExcelProperty("Date Title")
     private Date date;
-
+    
     /**
      * Number Title
      */
     @ExcelProperty("Number Title")
     private Double doubleData;
-
+    
     /**
      * Ignore this field
      */

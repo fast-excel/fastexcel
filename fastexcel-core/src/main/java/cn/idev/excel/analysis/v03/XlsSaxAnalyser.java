@@ -1,17 +1,31 @@
 package cn.idev.excel.analysis.v03;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import cn.idev.excel.analysis.ExcelReadExecutor;
+import cn.idev.excel.analysis.v03.handlers.BlankRecordHandler;
+import cn.idev.excel.analysis.v03.handlers.BofRecordHandler;
+import cn.idev.excel.analysis.v03.handlers.BoolErrRecordHandler;
+import cn.idev.excel.analysis.v03.handlers.BoundSheetRecordHandler;
+import cn.idev.excel.analysis.v03.handlers.DummyRecordHandler;
+import cn.idev.excel.analysis.v03.handlers.EofRecordHandler;
+import cn.idev.excel.analysis.v03.handlers.FormulaRecordHandler;
+import cn.idev.excel.analysis.v03.handlers.HyperlinkRecordHandler;
+import cn.idev.excel.analysis.v03.handlers.IndexRecordHandler;
+import cn.idev.excel.analysis.v03.handlers.LabelRecordHandler;
+import cn.idev.excel.analysis.v03.handlers.LabelSstRecordHandler;
+import cn.idev.excel.analysis.v03.handlers.MergeCellsRecordHandler;
+import cn.idev.excel.analysis.v03.handlers.NoteRecordHandler;
+import cn.idev.excel.analysis.v03.handlers.NumberRecordHandler;
+import cn.idev.excel.analysis.v03.handlers.ObjRecordHandler;
+import cn.idev.excel.analysis.v03.handlers.RkRecordHandler;
+import cn.idev.excel.analysis.v03.handlers.SstRecordHandler;
+import cn.idev.excel.analysis.v03.handlers.StringRecordHandler;
+import cn.idev.excel.analysis.v03.handlers.TextObjectRecordHandler;
+import cn.idev.excel.context.xls.XlsReadContext;
 import cn.idev.excel.exception.ExcelAnalysisException;
 import cn.idev.excel.exception.ExcelAnalysisStopException;
 import cn.idev.excel.exception.ExcelAnalysisStopSheetException;
 import cn.idev.excel.read.metadata.ReadSheet;
 import cn.idev.excel.read.metadata.holder.xls.XlsReadWorkbookHolder;
-import cn.idev.excel.context.xls.XlsReadContext;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.hssf.eventusermodel.EventWorkbookBuilder;
 import org.apache.poi.hssf.eventusermodel.FormatTrackingHSSFListener;
@@ -41,25 +55,10 @@ import org.apache.poi.hssf.record.TextObjectRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cn.idev.excel.analysis.v03.handlers.BlankRecordHandler;
-import cn.idev.excel.analysis.v03.handlers.BofRecordHandler;
-import cn.idev.excel.analysis.v03.handlers.BoolErrRecordHandler;
-import cn.idev.excel.analysis.v03.handlers.BoundSheetRecordHandler;
-import cn.idev.excel.analysis.v03.handlers.DummyRecordHandler;
-import cn.idev.excel.analysis.v03.handlers.EofRecordHandler;
-import cn.idev.excel.analysis.v03.handlers.FormulaRecordHandler;
-import cn.idev.excel.analysis.v03.handlers.HyperlinkRecordHandler;
-import cn.idev.excel.analysis.v03.handlers.IndexRecordHandler;
-import cn.idev.excel.analysis.v03.handlers.LabelRecordHandler;
-import cn.idev.excel.analysis.v03.handlers.LabelSstRecordHandler;
-import cn.idev.excel.analysis.v03.handlers.MergeCellsRecordHandler;
-import cn.idev.excel.analysis.v03.handlers.NoteRecordHandler;
-import cn.idev.excel.analysis.v03.handlers.NumberRecordHandler;
-import cn.idev.excel.analysis.v03.handlers.ObjRecordHandler;
-import cn.idev.excel.analysis.v03.handlers.RkRecordHandler;
-import cn.idev.excel.analysis.v03.handlers.SstRecordHandler;
-import cn.idev.excel.analysis.v03.handlers.StringRecordHandler;
-import cn.idev.excel.analysis.v03.handlers.TextObjectRecordHandler;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A text extractor for Excel files.
@@ -72,18 +71,21 @@ import cn.idev.excel.analysis.v03.handlers.TextObjectRecordHandler;
  * To turn an excel file into a CSV or similar, then see the XLS2CSVmra example
  * </p>
  *
- *
  * @author jipengfei
- * @see <a href="http://svn.apache.org/repos/asf/poi/trunk/src/examples/src/org/apache/poi/hssf/eventusermodel/examples/XLS2CSVmra.java">XLS2CSVmra</a>
+ * @see <a
+ * href="http://svn.apache.org/repos/asf/poi/trunk/src/examples/src/org/apache/poi/hssf/eventusermodel/examples/XLS2CSVmra.java">XLS2CSVmra</a>
  */
 @Slf4j
 public class XlsSaxAnalyser implements HSSFListener, ExcelReadExecutor {
-
+    
     private static final Logger LOGGER = LoggerFactory.getLogger(XlsSaxAnalyser.class);
+    
     private static final short DUMMY_RECORD_SID = -1;
+    
     private final XlsReadContext xlsReadContext;
+    
     private static final Map<Short, XlsRecordHandler> XLS_RECORD_HANDLER_MAP = new HashMap<Short, XlsRecordHandler>(32);
-
+    
     static {
         // Initialize a map of record handlers to process different types of Excel records.
         XLS_RECORD_HANDLER_MAP.put(BlankRecord.sid, new BlankRecordHandler());
@@ -106,7 +108,7 @@ public class XlsSaxAnalyser implements HSSFListener, ExcelReadExecutor {
         XLS_RECORD_HANDLER_MAP.put(StringRecord.sid, new StringRecordHandler());
         XLS_RECORD_HANDLER_MAP.put(TextObjectRecord.sid, new TextObjectRecordHandler());
     }
-
+    
     /**
      * Constructor to initialize the XlsSaxAnalyser with the given context.
      *
@@ -115,10 +117,10 @@ public class XlsSaxAnalyser implements HSSFListener, ExcelReadExecutor {
     public XlsSaxAnalyser(XlsReadContext xlsReadContext) {
         this.xlsReadContext = xlsReadContext;
     }
-
+    
     /**
      * Retrieves the list of sheets in the workbook.
-     *
+     * <p>
      * If the sheet data list is not already loaded, it triggers the execution of a listener to load the data.
      *
      * @return A list of ReadSheet objects representing the sheets in the workbook.
@@ -136,10 +138,10 @@ public class XlsSaxAnalyser implements HSSFListener, ExcelReadExecutor {
         }
         return xlsReadContext.readWorkbookHolder().getActualSheetDataList();
     }
-
+    
     /**
      * Executes the parsing process for the Excel file.
-     *
+     * <p>
      * This method sets up the necessary listeners and processes the workbook events using HSSFEventFactory.
      */
     @Override
@@ -147,8 +149,7 @@ public class XlsSaxAnalyser implements HSSFListener, ExcelReadExecutor {
         XlsReadWorkbookHolder xlsReadWorkbookHolder = xlsReadContext.xlsReadWorkbookHolder();
         MissingRecordAwareHSSFListener listener = new MissingRecordAwareHSSFListener(this);
         xlsReadWorkbookHolder.setFormatTrackingHSSFListener(new FormatTrackingHSSFListener(listener));
-        EventWorkbookBuilder.SheetRecordCollectingListener workbookBuildingListener =
-            new EventWorkbookBuilder.SheetRecordCollectingListener(
+        EventWorkbookBuilder.SheetRecordCollectingListener workbookBuildingListener = new EventWorkbookBuilder.SheetRecordCollectingListener(
                 xlsReadWorkbookHolder.getFormatTrackingHSSFListener());
         xlsReadWorkbookHolder.setHssfWorkbook(workbookBuildingListener.getStubHSSFWorkbook());
         HSSFEventFactory factory = new HSSFEventFactory();
@@ -159,16 +160,16 @@ public class XlsSaxAnalyser implements HSSFListener, ExcelReadExecutor {
         } catch (IOException e) {
             throw new ExcelAnalysisException(e);
         }
-
+        
         // There are some special xls that do not have the terminator "[EOF]", so an additional
         xlsReadContext.analysisEventProcessor().endSheet(xlsReadContext);
     }
-
+    
     /**
      * Processes a single Excel record.
-     *
-     * This method retrieves the appropriate handler for the given record and processes it. If the record is ignorable or
-     * unsupported, it skips processing.
+     * <p>
+     * This method retrieves the appropriate handler for the given record and processes it. If the record is ignorable
+     * or unsupported, it skips processing.
      *
      * @param record The Excel record to be processed.
      */
@@ -178,8 +179,8 @@ public class XlsSaxAnalyser implements HSSFListener, ExcelReadExecutor {
         if (handler == null) {
             return;
         }
-        boolean ignoreRecord =
-            (handler instanceof IgnorableXlsRecordHandler) && xlsReadContext.xlsReadWorkbookHolder().getIgnoreRecord();
+        boolean ignoreRecord = (handler instanceof IgnorableXlsRecordHandler) && xlsReadContext.xlsReadWorkbookHolder()
+                .getIgnoreRecord();
         if (ignoreRecord) {
             // No need to read the current sheet
             return;
@@ -187,7 +188,7 @@ public class XlsSaxAnalyser implements HSSFListener, ExcelReadExecutor {
         if (!handler.support(xlsReadContext, record)) {
             return;
         }
-
+        
         try {
             handler.processRecord(xlsReadContext, record);
         } catch (ExcelAnalysisStopSheetException e) {
@@ -198,5 +199,5 @@ public class XlsSaxAnalyser implements HSSFListener, ExcelReadExecutor {
             xlsReadContext.xlsReadWorkbookHolder().setCurrentSheetStopped(Boolean.TRUE);
         }
     }
-
+    
 }

@@ -8,7 +8,7 @@ import cn.idev.excel.constant.OrderConstant;
  * @author Jiaju Zhuang
  **/
 public interface Handler extends Order {
-
+    
     /**
      * handler order
      *

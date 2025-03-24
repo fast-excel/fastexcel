@@ -1,6 +1,15 @@
 package cn.idev.excel.analysis;
 
+import cn.idev.excel.analysis.csv.CsvExcelReadExecutor;
+import cn.idev.excel.analysis.v03.XlsSaxAnalyser;
 import cn.idev.excel.analysis.v07.XlsxSaxAnalyser;
+import cn.idev.excel.context.AnalysisContext;
+import cn.idev.excel.context.csv.CsvReadContext;
+import cn.idev.excel.context.csv.DefaultCsvReadContext;
+import cn.idev.excel.context.xls.DefaultXlsReadContext;
+import cn.idev.excel.context.xls.XlsReadContext;
+import cn.idev.excel.context.xlsx.DefaultXlsxReadContext;
+import cn.idev.excel.context.xlsx.XlsxReadContext;
 import cn.idev.excel.exception.ExcelAnalysisException;
 import cn.idev.excel.exception.ExcelAnalysisStopException;
 import cn.idev.excel.read.metadata.ReadSheet;
@@ -9,15 +18,6 @@ import cn.idev.excel.read.metadata.holder.ReadWorkbookHolder;
 import cn.idev.excel.read.metadata.holder.csv.CsvReadWorkbookHolder;
 import cn.idev.excel.read.metadata.holder.xls.XlsReadWorkbookHolder;
 import cn.idev.excel.read.metadata.holder.xlsx.XlsxReadWorkbookHolder;
-import cn.idev.excel.analysis.csv.CsvExcelReadExecutor;
-import cn.idev.excel.analysis.v03.XlsSaxAnalyser;
-import cn.idev.excel.context.AnalysisContext;
-import cn.idev.excel.context.csv.CsvReadContext;
-import cn.idev.excel.context.csv.DefaultCsvReadContext;
-import cn.idev.excel.context.xls.DefaultXlsReadContext;
-import cn.idev.excel.context.xls.XlsReadContext;
-import cn.idev.excel.context.xlsx.DefaultXlsxReadContext;
-import cn.idev.excel.context.xlsx.XlsxReadContext;
 import cn.idev.excel.support.ExcelTypeEnum;
 import cn.idev.excel.util.ClassUtils;
 import cn.idev.excel.util.DateUtils;
@@ -37,10 +37,9 @@ import java.io.InputStream;
 import java.util.List;
 
 /**
- * A class that implements the ExcelAnalyser interface for analyzing Excel files.
- * This implementation supports various Excel file formats (XLS, XLSX, CSV) and handles
- * encrypted files as well. It provides methods to perform analysis, manage resources,
- * and clean up after the analysis is complete.
+ * A class that implements the ExcelAnalyser interface for analyzing Excel files. This implementation supports various
+ * Excel file formats (XLS, XLSX, CSV) and handles encrypted files as well. It provides methods to perform analysis,
+ * manage resources, and clean up after the analysis is complete.
  *
  * <p>Key functionalities include:</p>
  * <ul>
@@ -52,22 +51,24 @@ import java.util.List;
  * @author jipengfei
  */
 public class ExcelAnalyserImpl implements ExcelAnalyser {
+    
     private static final Logger LOGGER = LoggerFactory.getLogger(ExcelAnalyserImpl.class);
-
+    
     /**
      * The context object holding metadata and configuration for the Excel analysis process.
      */
     private AnalysisContext analysisContext;
-
+    
     /**
      * The executor responsible for performing the actual analysis of the Excel file.
      */
     private ExcelReadExecutor excelReadExecutor;
+    
     /**
      * Prevent multiple shutdowns
      */
     private boolean finished = false;
-
+    
     public ExcelAnalyserImpl(ReadWorkbook readWorkbook) {
         try {
             chooseExcelExecutor(readWorkbook);
@@ -79,10 +80,10 @@ public class ExcelAnalyserImpl implements ExcelAnalyser {
             throw new ExcelAnalysisException(e);
         }
     }
-
+    
     /**
-     * Chooses the appropriate Excel execution strategy based on the type of Excel file
-     * This method deals with different types of Excel files by creating corresponding processing contexts and executors
+     * Chooses the appropriate Excel execution strategy based on the type of Excel file This method deals with different
+     * types of Excel files by creating corresponding processing contexts and executors
      *
      * @param readWorkbook The workbook to be read, containing the necessary information for Excel reading
      * @throws Exception if an error occurs while reading the Excel file
@@ -104,8 +105,8 @@ public class ExcelAnalyserImpl implements ExcelAnalyser {
                     InputStream decryptedStream = null;
                     try {
                         // Decrypt the Excel file and treat it as XLSX for processing
-                        decryptedStream = DocumentFactoryHelper
-                            .getDecryptedStream(poifsFileSystem.getRoot().getFileSystem(), readWorkbook.getPassword());
+                        decryptedStream = DocumentFactoryHelper.getDecryptedStream(
+                                poifsFileSystem.getRoot().getFileSystem(), readWorkbook.getPassword());
                         XlsxReadContext xlsxReadContext = new DefaultXlsxReadContext(readWorkbook, ExcelTypeEnum.XLSX);
                         analysisContext = xlsxReadContext;
                         excelReadExecutor = new XlsxSaxAnalyser(xlsxReadContext, decryptedStream);
@@ -142,18 +143,18 @@ public class ExcelAnalyserImpl implements ExcelAnalyser {
                 break;
         }
     }
-
-
+    
+    
     /**
-     * Performs the analysis of the Excel file based on the specified sheets or all sheets.
-     * Ensures proper handling of exceptions and resource cleanup in case of errors.
+     * Performs the analysis of the Excel file based on the specified sheets or all sheets. Ensures proper handling of
+     * exceptions and resource cleanup in case of errors.
      *
-     * @param readSheetList A list of ReadSheet objects specifying which sheets to analyze.
-     *                      Can be null if all sheets are to be analyzed.
-     * @param readAll A boolean indicating whether to analyze all sheets in the workbook.
-     *                If true, the readSheetList parameter is ignored.
+     * @param readSheetList A list of ReadSheet objects specifying which sheets to analyze. Can be null if all sheets
+     *                      are to be analyzed.
+     * @param readAll       A boolean indicating whether to analyze all sheets in the workbook. If true, the
+     *                      readSheetList parameter is ignored.
      * @throws IllegalArgumentException If neither readAll is true nor readSheetList contains any sheets.
-     * @throws ExcelAnalysisException If a non-runtime exception occurs during the analysis.
+     * @throws ExcelAnalysisException   If a non-runtime exception occurs during the analysis.
      */
     @Override
     public void analysis(List<ReadSheet> readSheetList, Boolean readAll) {
@@ -178,10 +179,10 @@ public class ExcelAnalyserImpl implements ExcelAnalyser {
             throw new ExcelAnalysisException(e);
         }
     }
-
+    
     /**
-     * Cleans up resources used during the analysis process, including closing streams,
-     * destroying caches, and deleting temporary files. Ensures no resource leaks occur.
+     * Cleans up resources used during the analysis process, including closing streams, destroying caches, and deleting
+     * temporary files. Ensures no resource leaks occur.
      */
     @Override
     public void finish() {
@@ -193,9 +194,9 @@ public class ExcelAnalyserImpl implements ExcelAnalyser {
             return;
         }
         ReadWorkbookHolder readWorkbookHolder = analysisContext.readWorkbookHolder();
-
+        
         Throwable throwable = null;
-
+        
         try {
             if (readWorkbookHolder.getReadCache() != null) {
                 readWorkbookHolder.getReadCache().destroy();
@@ -205,7 +206,7 @@ public class ExcelAnalyserImpl implements ExcelAnalyser {
         }
         try {
             if ((readWorkbookHolder instanceof XlsxReadWorkbookHolder)
-                && ((XlsxReadWorkbookHolder) readWorkbookHolder).getOpcPackage() != null) {
+                    && ((XlsxReadWorkbookHolder) readWorkbookHolder).getOpcPackage() != null) {
                 ((XlsxReadWorkbookHolder) readWorkbookHolder).getOpcPackage().revert();
             }
         } catch (Throwable t) {
@@ -213,28 +214,28 @@ public class ExcelAnalyserImpl implements ExcelAnalyser {
         }
         try {
             if ((readWorkbookHolder instanceof XlsReadWorkbookHolder)
-                && ((XlsReadWorkbookHolder) readWorkbookHolder).getPoifsFileSystem() != null) {
+                    && ((XlsReadWorkbookHolder) readWorkbookHolder).getPoifsFileSystem() != null) {
                 ((XlsReadWorkbookHolder) readWorkbookHolder).getPoifsFileSystem().close();
             }
         } catch (Throwable t) {
             throwable = t;
         }
-
+        
         // close csv.
         // https://github.com/fast-excel/fastexcel/issues/2309
         try {
             if ((readWorkbookHolder instanceof CsvReadWorkbookHolder)
-                && ((CsvReadWorkbookHolder) readWorkbookHolder).getCsvParser() != null
-                && analysisContext.readWorkbookHolder().getAutoCloseStream()) {
+                    && ((CsvReadWorkbookHolder) readWorkbookHolder).getCsvParser() != null
+                    && analysisContext.readWorkbookHolder().getAutoCloseStream()) {
                 ((CsvReadWorkbookHolder) readWorkbookHolder).getCsvParser().close();
             }
         } catch (Throwable t) {
             throwable = t;
         }
-
+        
         try {
             if (analysisContext.readWorkbookHolder().getAutoCloseStream()
-                && readWorkbookHolder.getInputStream() != null) {
+                    && readWorkbookHolder.getInputStream() != null) {
                 readWorkbookHolder.getInputStream().close();
             }
         } catch (Throwable t) {
@@ -247,16 +248,16 @@ public class ExcelAnalyserImpl implements ExcelAnalyser {
         } catch (Throwable t) {
             throwable = t;
         }
-
+        
         clearEncrypt03();
-
+        
         removeThreadLocalCache();
-
+        
         if (throwable != null) {
             throw new ExcelAnalysisException("Can not close IO.", throwable);
         }
     }
-
+    
     /**
      * Removes thread-local caches used during the analysis process to free up memory.
      */
@@ -265,18 +266,18 @@ public class ExcelAnalyserImpl implements ExcelAnalyser {
         DateUtils.removeThreadLocalCache();
         ClassUtils.removeThreadLocalCache();
     }
-
+    
     /**
      * Clears the encryption key for XLS files to ensure secure handling of sensitive data.
      */
     private void clearEncrypt03() {
-        if (StringUtils.isEmpty(analysisContext.readWorkbookHolder().getPassword())
-            || !ExcelTypeEnum.XLS.equals(analysisContext.readWorkbookHolder().getExcelType())) {
+        if (StringUtils.isEmpty(analysisContext.readWorkbookHolder().getPassword()) || !ExcelTypeEnum.XLS.equals(
+                analysisContext.readWorkbookHolder().getExcelType())) {
             return;
         }
         Biff8EncryptionKey.setCurrentUserPassword(null);
     }
-
+    
     /**
      * Retrieves the executor used for performing the Excel analysis.
      *
@@ -286,7 +287,7 @@ public class ExcelAnalyserImpl implements ExcelAnalyser {
     public ExcelReadExecutor excelExecutor() {
         return excelReadExecutor;
     }
-
+    
     /**
      * Retrieves the context object used during the Excel analysis process.
      *

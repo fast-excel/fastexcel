@@ -1,12 +1,5 @@
 package cn.idev.excel.test.temp.fill;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import cn.idev.excel.EasyExcel;
 import cn.idev.excel.ExcelWriter;
 import cn.idev.excel.enums.WriteDirectionEnum;
@@ -15,8 +8,14 @@ import cn.idev.excel.test.util.TestFileUtil;
 import cn.idev.excel.write.metadata.WriteSheet;
 import cn.idev.excel.write.metadata.fill.FillConfig;
 import cn.idev.excel.write.metadata.fill.FillWrapper;
-
 import org.junit.jupiter.api.Test;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Example of filling data into Excel templates.
@@ -26,6 +25,7 @@ import org.junit.jupiter.api.Test;
  */
 
 public class FillTempTest {
+    
     /**
      * Simplest example of filling data.
      *
@@ -35,7 +35,7 @@ public class FillTempTest {
     public void simpleFill() {
         // Template note: Use {} to represent variables. If the template contains "{", "}" as special characters, use "\{", "\}" instead.
         String templateFileName = "src/test/resources/fill/simple.xlsx";
-
+        
         // Option 1: Fill using an object
         String fileName = TestFileUtil.getPath() + "simpleFill" + System.currentTimeMillis() + ".xlsx";
         // This will fill the first sheet, and the file stream will be closed automatically.
@@ -54,7 +54,7 @@ public class FillTempTest {
         EasyExcel.write(fileName).withTemplate(templateFileName).sheet().doFill(map);
         */
     }
-
+    
     /**
      * Example of filling a list of data.
      *
@@ -65,13 +65,13 @@ public class FillTempTest {
         // Template note: Use {} to represent variables. If the template contains "{", "}" as special characters, use "\{", "\}" instead.
         // When filling a list, note that {.} in the template indicates a list.
         String templateFileName =
-            TestFileUtil.getPath() + "demo" + File.separator + "fill" + File.separator + "list.xlsx";
-
+                TestFileUtil.getPath() + "demo" + File.separator + "fill" + File.separator + "list.xlsx";
+        
         // Option 1: Load all data into memory at once and fill
         String fileName = TestFileUtil.getPath() + "listFill" + System.currentTimeMillis() + ".xlsx";
         // This will fill the first sheet, and the file stream will be closed automatically.
         EasyExcel.write(fileName).withTemplate(templateFileName).sheet().doFill(data());
-
+        
         // Option 2: Fill in multiple passes using file caching (saves memory)
         fileName = TestFileUtil.getPath() + "listFill" + System.currentTimeMillis() + ".xlsx";
         ExcelWriter excelWriter = EasyExcel.write(fileName).withTemplate(templateFileName).build();
@@ -81,7 +81,7 @@ public class FillTempTest {
         // Do not forget to close the stream
         excelWriter.finish();
     }
-
+    
     /**
      * Example of complex data filling.
      *
@@ -92,8 +92,8 @@ public class FillTempTest {
         // Template note: Use {} to represent variables. If the template contains "{", "}" as special characters, use "\{", "\}" instead.
         // {} represents a regular variable, {.} represents a list variable.
         String templateFileName =
-            TestFileUtil.getPath() + "demo" + File.separator + "fill" + File.separator + "complex.xlsx";
-
+                TestFileUtil.getPath() + "demo" + File.separator + "fill" + File.separator + "complex.xlsx";
+        
         String fileName = TestFileUtil.getPath() + "complexFill" + System.currentTimeMillis() + ".xlsx";
         ExcelWriter excelWriter = EasyExcel.write(fileName).withTemplate(templateFileName).build();
         WriteSheet writeSheet = EasyExcel.writerSheet().build();
@@ -111,12 +111,12 @@ public class FillTempTest {
         excelWriter.fill(map, writeSheet);
         excelWriter.finish();
     }
-
+    
     /**
      * Example of complex data filling with large datasets.
      * <p>
-     * The solution here is to ensure the list in the template is the last row, then append a table.
-     * Note: Excel 2003 format is not supported and requires more memory.
+     * The solution here is to ensure the list in the template is the last row, then append a table. Note: Excel 2003
+     * format is not supported and requires more memory.
      *
      * @since 2.1.1
      */
@@ -125,21 +125,21 @@ public class FillTempTest {
         // Template note: Use {} to represent variables. If the template contains "{", "}" as special characters, use "\{", "\}" instead.
         // {} represents a regular variable, {.} represents a list variable.
         // Here, the template removes data after the list, such as summary rows.
-        String templateFileName =
-            TestFileUtil.getPath() + "demo" + File.separator + "fill" + File.separator + "complexFillWithTable.xlsx";
-
+        String templateFileName = TestFileUtil.getPath() + "demo" + File.separator + "fill" + File.separator
+                + "complexFillWithTable.xlsx";
+        
         String fileName = TestFileUtil.getPath() + "complexFillWithTable" + System.currentTimeMillis() + ".xlsx";
         ExcelWriter excelWriter = EasyExcel.write(fileName).withTemplate(templateFileName).build();
         WriteSheet writeSheet = EasyExcel.writerSheet().build();
         // Directly write data
         excelWriter.fill(data(), writeSheet);
         excelWriter.fill(data(), writeSheet);
-
+        
         // Write data before the list
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("date", "2019-10-09 13:28:28");
         excelWriter.fill(map, writeSheet);
-
+        
         // Manually write summary data after the list
         // Here, we use a list for simplicity, but an object could also be used.
         List<List<String>> totalListList = new ArrayList<List<String>>();
@@ -157,7 +157,7 @@ public class FillTempTest {
         // Asynchronous writing to Excel does not support row deletion or movement, nor does it support comments.
         // Therefore, this workaround is necessary.
     }
-
+    
     /**
      * Example of horizontal data filling.
      *
@@ -168,23 +168,23 @@ public class FillTempTest {
         // Template note: Use {} to represent variables. If the template contains "{", "}" as special characters, use "\{", "\}" instead.
         // {} represents a regular variable, {.} represents a list variable.
         String templateFileName =
-            TestFileUtil.getPath() + "demo" + File.separator + "fill" + File.separator + "horizontal.xlsx";
-
+                TestFileUtil.getPath() + "demo" + File.separator + "fill" + File.separator + "horizontal.xlsx";
+        
         String fileName = TestFileUtil.getPath() + "horizontalFill" + System.currentTimeMillis() + ".xlsx";
         ExcelWriter excelWriter = EasyExcel.write(fileName).withTemplate(templateFileName).build();
         WriteSheet writeSheet = EasyExcel.writerSheet().build();
         FillConfig fillConfig = FillConfig.builder().direction(WriteDirectionEnum.HORIZONTAL).build();
         excelWriter.fill(data(), fillConfig, writeSheet);
         excelWriter.fill(data(), fillConfig, writeSheet);
-
+        
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("date", "2019-10-09 13:28:28");
         excelWriter.fill(map, writeSheet);
-
+        
         // Do not forget to close the stream
         excelWriter.finish();
     }
-
+    
     /**
      * Example of composite data filling with multiple lists.
      *
@@ -195,8 +195,8 @@ public class FillTempTest {
         // Template note: Use {} to represent variables. If the template contains "{", "}" as special characters, use "\{", "\}" instead.
         // {} represents a regular variable, {.} represents a list variable, and {prefix.} distinguishes different lists.
         String templateFileName =
-            TestFileUtil.getPath() + "demo" + File.separator + "fill" + File.separator + "composite.xlsx";
-
+                TestFileUtil.getPath() + "demo" + File.separator + "fill" + File.separator + "composite.xlsx";
+        
         String fileName = TestFileUtil.getPath() + "compositeFill" + System.currentTimeMillis() + ".xlsx";
         ExcelWriter excelWriter = EasyExcel.write(fileName).withTemplate(templateFileName).build();
         WriteSheet writeSheet = EasyExcel.writerSheet().build();
@@ -209,17 +209,17 @@ public class FillTempTest {
         excelWriter.fill(new FillWrapper("data2", data()), writeSheet);
         excelWriter.fill(new FillWrapper("data3", data()), writeSheet);
         excelWriter.fill(new FillWrapper("data3", data()), writeSheet);
-
+        
         Map<String, Object> map = new HashMap<String, Object>();
         //map.put("date", "2019-10-09 13:28:28");
         map.put("date", new Date());
-
+        
         excelWriter.fill(map, writeSheet);
-
+        
         // Do not forget to close the stream
         excelWriter.finish();
     }
-
+    
     /**
      * Generates sample data for filling.
      *

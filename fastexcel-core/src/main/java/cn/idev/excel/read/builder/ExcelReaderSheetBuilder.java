@@ -1,12 +1,12 @@
 package cn.idev.excel.read.builder;
 
-import java.util.List;
-
 import cn.idev.excel.ExcelReader;
 import cn.idev.excel.event.SyncReadListener;
 import cn.idev.excel.exception.ExcelAnalysisException;
 import cn.idev.excel.exception.ExcelGenerateException;
 import cn.idev.excel.read.metadata.ReadSheet;
+
+import java.util.List;
 
 /**
  * Build sheet
@@ -14,21 +14,23 @@ import cn.idev.excel.read.metadata.ReadSheet;
  * @author Jiaju Zhuang
  */
 public class ExcelReaderSheetBuilder extends AbstractExcelReaderParameterBuilder<ExcelReaderSheetBuilder, ReadSheet> {
+    
     private ExcelReader excelReader;
+    
     /**
      * Sheet
      */
     private final ReadSheet readSheet;
-
+    
     public ExcelReaderSheetBuilder() {
         this.readSheet = new ReadSheet();
     }
-
+    
     public ExcelReaderSheetBuilder(ExcelReader excelReader) {
         this.readSheet = new ReadSheet();
         this.excelReader = excelReader;
     }
-
+    
     /**
      * Starting from 0
      *
@@ -39,7 +41,7 @@ public class ExcelReaderSheetBuilder extends AbstractExcelReaderParameterBuilder
         readSheet.setSheetNo(sheetNo);
         return this;
     }
-
+    
     /**
      * sheet name
      *
@@ -50,7 +52,7 @@ public class ExcelReaderSheetBuilder extends AbstractExcelReaderParameterBuilder
         readSheet.setSheetName(sheetName);
         return this;
     }
-
+    
     /**
      * numRows
      *
@@ -61,11 +63,11 @@ public class ExcelReaderSheetBuilder extends AbstractExcelReaderParameterBuilder
         readSheet.setNumRows(numRows);
         return this;
     }
-
+    
     public ReadSheet build() {
         return readSheet;
     }
-
+    
     /**
      * Sax read
      */
@@ -76,7 +78,7 @@ public class ExcelReaderSheetBuilder extends AbstractExcelReaderParameterBuilder
         excelReader.read(build());
         excelReader.finish();
     }
-
+    
     /**
      * Synchronous reads return results
      *
@@ -90,9 +92,9 @@ public class ExcelReaderSheetBuilder extends AbstractExcelReaderParameterBuilder
         registerReadListener(syncReadListener);
         excelReader.read(build());
         excelReader.finish();
-        return (List<T>)syncReadListener.getList();
+        return (List<T>) syncReadListener.getList();
     }
-
+    
     @Override
     protected ReadSheet parameter() {
         return readSheet;

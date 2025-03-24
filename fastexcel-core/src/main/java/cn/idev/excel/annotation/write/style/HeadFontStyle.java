@@ -1,17 +1,16 @@
 package cn.idev.excel.annotation.write.style;
 
+import cn.idev.excel.enums.BooleanEnum;
+import org.apache.poi.common.usermodel.fonts.FontCharset;
+import org.apache.poi.hssf.usermodel.HSSFPalette;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.IndexedColors;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-
-import cn.idev.excel.enums.BooleanEnum;
-
-import org.apache.poi.common.usermodel.fonts.FontCharset;
-import org.apache.poi.hssf.usermodel.HSSFPalette;
-import org.apache.poi.ss.usermodel.Font;
-import org.apache.poi.ss.usermodel.IndexedColors;
 
 /**
  * Custom header styles.
@@ -22,27 +21,27 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 public @interface HeadFontStyle {
-
+    
     /**
      * The name for the font (i.e. Arial)
      */
     String fontName() default "";
-
+    
     /**
      * Height in the familiar unit of measure - points
      */
     short fontHeightInPoints() default -1;
-
+    
     /**
      * Whether to use italics or not
      */
     BooleanEnum italic() default BooleanEnum.DEFAULT;
-
+    
     /**
      * Whether to use a strikeout horizontal line through the text or not
      */
     BooleanEnum strikeout() default BooleanEnum.DEFAULT;
-
+    
     /**
      * The color for the font
      *
@@ -52,7 +51,7 @@ public @interface HeadFontStyle {
      * @see IndexedColors
      */
     short color() default -1;
-
+    
     /**
      * Set normal, super or subscript.
      *
@@ -61,7 +60,7 @@ public @interface HeadFontStyle {
      * @see Font#SS_SUB
      */
     short typeOffset() default -1;
-
+    
     /**
      * set type of text underlining to use
      *
@@ -71,9 +70,9 @@ public @interface HeadFontStyle {
      * @see Font#U_SINGLE_ACCOUNTING
      * @see Font#U_DOUBLE_ACCOUNTING
      */
-
+    
     byte underline() default -1;
-
+    
     /**
      * Set character-set to use.
      *
@@ -83,7 +82,7 @@ public @interface HeadFontStyle {
      * @see Font#SYMBOL_CHARSET
      */
     int charset() default -1;
-
+    
     /**
      * Bold
      */

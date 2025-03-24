@@ -1,7 +1,5 @@
 package cn.idev.excel.context;
 
-import java.io.OutputStream;
-
 import cn.idev.excel.enums.WriteTypeEnum;
 import cn.idev.excel.write.metadata.WriteSheet;
 import cn.idev.excel.write.metadata.WriteTable;
@@ -12,49 +10,51 @@ import cn.idev.excel.write.metadata.holder.WriteWorkbookHolder;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 
+import java.io.OutputStream;
+
 /**
  * Write context
  *
  * @author jipengfei
  */
 public interface WriteContext {
+    
     /**
      * If the current sheet already exists, select it; if not, create it
      *
-     * @param writeSheet
-     *            Current sheet
+     * @param writeSheet Current sheet
      * @param writeType
      */
     void currentSheet(WriteSheet writeSheet, WriteTypeEnum writeType);
-
+    
     /**
      * If the current table already exists, select it; if not, create it
      *
      * @param writeTable
      */
     void currentTable(WriteTable writeTable);
-
+    
     /**
      * All information about the workbook you are currently working on
      *
      * @return
      */
     WriteWorkbookHolder writeWorkbookHolder();
-
+    
     /**
      * All information about the sheet you are currently working on
      *
      * @return
      */
     WriteSheetHolder writeSheetHolder();
-
+    
     /**
      * All information about the table you are currently working on
      *
      * @return
      */
     WriteTableHolder writeTableHolder();
-
+    
     /**
      * Configuration of currently operated cell. May be 'writeSheetHolder' or 'writeTableHolder' or
      * 'writeWorkbookHolder'
@@ -62,14 +62,14 @@ public interface WriteContext {
      * @return
      */
     WriteHolder currentWriteHolder();
-
+    
     /**
      * close
      *
      * @param onException
      */
     void finish(boolean onException);
-
+    
     /**
      * Current sheet
      *
@@ -78,7 +78,7 @@ public interface WriteContext {
      */
     @Deprecated
     Sheet getCurrentSheet();
-
+    
     /**
      * Need head
      *
@@ -87,7 +87,7 @@ public interface WriteContext {
      */
     @Deprecated
     boolean needHead();
-
+    
     /**
      * Get outputStream
      *
@@ -96,7 +96,7 @@ public interface WriteContext {
      */
     @Deprecated
     OutputStream getOutputStream();
-
+    
     /**
      * Get workbook
      *
@@ -105,5 +105,5 @@ public interface WriteContext {
      */
     @Deprecated
     Workbook getWorkbook();
-
+    
 }

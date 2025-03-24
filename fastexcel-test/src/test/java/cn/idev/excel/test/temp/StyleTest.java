@@ -1,15 +1,7 @@
 package cn.idev.excel.test.temp;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.lang.reflect.Field;
-import java.util.Date;
-import java.util.List;
-
 import cn.idev.excel.EasyExcel;
 import com.alibaba.fastjson2.JSON;
-
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -28,6 +20,13 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.lang.reflect.Field;
+import java.util.Date;
+import java.util.List;
+
 /**
  * 临时测试
  *
@@ -35,8 +34,9 @@ import org.slf4j.LoggerFactory;
  **/
 
 public class StyleTest {
+    
     private static final Logger LOGGER = LoggerFactory.getLogger(StyleTest.class);
-
+    
     @Test
     public void test() {
         List<Object> list = EasyExcel.read("D:\\test\\styleTest.xls").sheet().headRowNumber(0).doReadSync();
@@ -44,7 +44,7 @@ public class StyleTest {
             LOGGER.info("返回数据：{}", JSON.toJSONString(data));
         }
     }
-
+    
     @Test
     public void poi() throws Exception {
         InputStream is = new FileInputStream("D:\\test\\styleTest.xls");
@@ -59,9 +59,9 @@ public class StyleTest {
         System.out.println(hssfRow.getCell(0).getCellStyle().getDataFormatString());
         System.out.println(hssfRow.getCell(1).getCellStyle().getDataFormatString());
         System.out.println(hssfRow.getCell(2).getCellStyle().getDataFormatString());
-
+        
     }
-
+    
     @Test
     public void poi07() throws Exception {
         InputStream is = new FileInputStream("D:\\test\\styleTest.xlsx");
@@ -85,9 +85,9 @@ public class StyleTest {
         isDate(hssfRow.getCell(1));
         isDate(hssfRow.getCell(2));
         isDate(hssfRow.getCell(3));
-
+        
     }
-
+    
     @Test
     public void poi0701() throws Exception {
         InputStream is = new FileInputStream("D:\\test\\f1.xlsx");
@@ -98,7 +98,7 @@ public class StyleTest {
         print(sheet.getRow(2).getCell(0));
         print(sheet.getRow(3).getCell(0));
     }
-
+    
     @Test
     public void poi0702() throws Exception {
         Workbook workbook = WorkbookFactory.create(new FileInputStream("D:\\test\\t2.xlsx"));
@@ -107,7 +107,7 @@ public class StyleTest {
         Row row = sheet.getRow(0);
         System.out.println(row.getCell(0).getNumericCellValue());
     }
-
+    
     @Test
     public void poi0703() throws Exception {
         try {
@@ -116,7 +116,7 @@ public class StyleTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        
         try {
             POIFSFileSystem poifsFileSystem = new POIFSFileSystem(new File("D:\\test\\t2.xlsx"));
             System.out.println(poifsFileSystem.getRoot().hasEntry(Decryptor.DEFAULT_POIFS_ENTRY));
@@ -136,28 +136,28 @@ public class StyleTest {
             e.printStackTrace();
         }
     }
-
+    
     private void print(Cell cell) {
         System.out.println(
-            DateUtil.isADateFormat(cell.getCellStyle().getDataFormat(), cell.getCellStyle().getDataFormatString()));
+                DateUtil.isADateFormat(cell.getCellStyle().getDataFormat(), cell.getCellStyle().getDataFormatString()));
         System.out.println(cell.getCellStyle().getDataFormat());
         System.out.println(cell.getCellStyle().getDataFormatString());
         DataFormatter f = new DataFormatter();
         System.out.println(f.formatCellValue(cell));
         if (cell.getCellStyle().getDataFormatString() != null) {
-
+        
         }
         ExcelStyleDateFormatter ff = new ExcelStyleDateFormatter(cell.getCellStyle().getDataFormatString());
-
+        
     }
-
+    
     @Test
     public void testFormatter() throws Exception {
         ExcelStyleDateFormatter ff = new ExcelStyleDateFormatter("yyyy年m月d日");
-
+        
         System.out.println(ff.format(new Date()));
     }
-
+    
     @Test
     public void testFormatter2() throws Exception {
         StyleData styleData = new StyleData();
@@ -170,27 +170,27 @@ public class StyleTest {
         field = styleData.getClass().getDeclaredField("byteValue3");
         LOGGER.info("field:{}", field.getType());
     }
-
+    
     @Test
     public void testFormatter3() throws Exception {
         LOGGER.info("field:{}", Byte.class == Byte.class);
     }
-
+    
     private void isDate(Cell cell) {
         System.out.println(
-            DateUtil.isADateFormat(cell.getCellStyle().getDataFormat(), cell.getCellStyle().getDataFormatString()));
+                DateUtil.isADateFormat(cell.getCellStyle().getDataFormat(), cell.getCellStyle().getDataFormatString()));
         //System.out.println(HSSFDateUtil.isCellDateFormatted(cell));
         DataFormatter f = new DataFormatter();
         System.out.println(f.formatCellValue(cell));
-
+        
     }
-
+    
     @Test
     public void testBuiltinFormats() throws Exception {
         System.out.println(BuiltinFormats.getBuiltinFormat(48));
         System.out.println(BuiltinFormats.getBuiltinFormat(57));
         System.out.println(BuiltinFormats.getBuiltinFormat(28));
-
+        
     }
-
+    
 }

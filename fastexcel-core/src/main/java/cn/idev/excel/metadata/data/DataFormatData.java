@@ -1,7 +1,6 @@
 package cn.idev.excel.metadata.data;
 
 import cn.idev.excel.util.StringUtils;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,16 +14,17 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode
 public class DataFormatData {
+    
     /**
      * index
      */
     private Short index;
-
+    
     /**
      * format
      */
     private String format;
-
+    
     /**
      * The source is not empty merge the data to the target.
      *
@@ -42,7 +42,7 @@ public class DataFormatData {
             target.setFormat(source.getFormat());
         }
     }
-
+    
     @Override
     public DataFormatData clone() {
         DataFormatData dataFormatData = new DataFormatData();

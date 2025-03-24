@@ -1,16 +1,15 @@
 package cn.idev.excel.test.temp.read;
 
-import java.io.File;
-import java.util.List;
-import java.util.Map;
-
 import cn.idev.excel.EasyExcel;
 import cn.idev.excel.metadata.data.CellData;
 import com.alibaba.fastjson2.JSON;
-
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.File;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 临时测试
@@ -19,8 +18,9 @@ import org.slf4j.LoggerFactory;
  **/
 
 public class CommentTest {
+    
     private static final Logger LOGGER = LoggerFactory.getLogger(CommentTest.class);
-
+    
     @Test
     public void comment() throws Exception {
         File file = new File("D:\\test\\d1.xlsx");
@@ -29,5 +29,5 @@ public class CommentTest {
             LOGGER.info("数据:{}", JSON.toJSONString(data));
         }
     }
-
+    
 }

@@ -1,9 +1,9 @@
 package cn.idev.excel.cache;
 
+import cn.idev.excel.context.AnalysisContext;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import cn.idev.excel.context.AnalysisContext;
 
 /**
  * Putting temporary data directly into a map is a little more efficient but very memory intensive
@@ -11,16 +11,18 @@ import cn.idev.excel.context.AnalysisContext;
  * @author Jiaju Zhuang
  */
 public class MapCache implements ReadCache {
+    
     private final List<String> cache = new ArrayList<>();
-
+    
     @Override
-    public void init(AnalysisContext analysisContext) {}
-
+    public void init(AnalysisContext analysisContext) {
+    }
+    
     @Override
     public void put(String value) {
         cache.add(value);
     }
-
+    
     @Override
     public String get(Integer key) {
         if (key == null || key < 0) {
@@ -28,11 +30,13 @@ public class MapCache implements ReadCache {
         }
         return cache.get(key);
     }
-
+    
     @Override
-    public void putFinished() {}
-
+    public void putFinished() {
+    }
+    
     @Override
-    public void destroy() {}
-
+    public void destroy() {
+    }
+    
 }

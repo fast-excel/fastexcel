@@ -8,7 +8,7 @@ import cn.idev.excel.context.AnalysisContext;
  * @author Jiaju Zhuang
  */
 public interface IgnoreExceptionReadListener<T> extends ReadListener<T> {
-
+    
     /**
      * All listeners receive this method when any one Listener does an error report. If an exception is thrown here, the
      * entire read will terminate.
@@ -18,6 +18,7 @@ public interface IgnoreExceptionReadListener<T> extends ReadListener<T> {
      * @throws Exception
      */
     @Override
-    default void onException(Exception exception, AnalysisContext context) throws Exception {}
-
+    default void onException(Exception exception, AnalysisContext context) throws Exception {
+    }
+    
 }

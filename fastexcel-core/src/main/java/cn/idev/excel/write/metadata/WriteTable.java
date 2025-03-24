@@ -13,6 +13,7 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode
 public class WriteTable extends WriteBasicParameter {
+    
     /**
      * Starting from 0
      */

@@ -1,20 +1,19 @@
 package cn.idev.excel.test.temp;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import cn.idev.excel.EasyExcel;
 import cn.idev.excel.test.demo.write.DemoData;
 import cn.idev.excel.test.util.TestFileUtil;
 import cn.idev.excel.write.metadata.style.WriteCellStyle;
 import cn.idev.excel.write.metadata.style.WriteFont;
 import cn.idev.excel.write.style.HorizontalCellStyleStrategy;
-
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 临时测试
@@ -23,9 +22,9 @@ import org.slf4j.LoggerFactory;
  **/
 
 public class WriteV34Test {
-
+    
     private static final Logger LOGGER = LoggerFactory.getLogger(WriteV34Test.class);
-
+    
     @Test
     public void test() throws Exception {
         String fileName = TestFileUtil.getPath() + "handlerStyleWrite" + System.currentTimeMillis() + ".xlsx";
@@ -34,7 +33,7 @@ public class WriteV34Test {
         // 背景设置为红色
         headWriteCellStyle.setFillForegroundColor(IndexedColors.RED.getIndex());
         WriteFont headWriteFont = new WriteFont();
-        headWriteFont.setFontHeightInPoints((short)20);
+        headWriteFont.setFontHeightInPoints((short) 20);
         headWriteCellStyle.setWriteFont(headWriteFont);
         // 内容的策略
         WriteCellStyle contentWriteCellStyle = new WriteCellStyle();
@@ -44,18 +43,17 @@ public class WriteV34Test {
         contentWriteCellStyle.setFillForegroundColor(IndexedColors.GREEN.getIndex());
         WriteFont contentWriteFont = new WriteFont();
         // 字体大小
-        contentWriteFont.setFontHeightInPoints((short)20);
+        contentWriteFont.setFontHeightInPoints((short) 20);
         contentWriteCellStyle.setWriteFont(contentWriteFont);
         // 这个策略是 头是头的样式 内容是内容的样式 其他的策略可以自己实现
-        HorizontalCellStyleStrategy horizontalCellStyleStrategy =
-            new HorizontalCellStyleStrategy(headWriteCellStyle, contentWriteCellStyle);
-
+        HorizontalCellStyleStrategy horizontalCellStyleStrategy = new HorizontalCellStyleStrategy(headWriteCellStyle,
+                contentWriteCellStyle);
+        
         // 这里 需要指定写用哪个class去写，然后写到第一个sheet，名字为模板 然后文件流会自动关闭
-        EasyExcel.write(fileName, DemoData.class).head(head()).registerWriteHandler(horizontalCellStyleStrategy).sheet(
-                "模板")
-            .doWrite(data(1));
+        EasyExcel.write(fileName, DemoData.class).head(head()).registerWriteHandler(horizontalCellStyleStrategy)
+                .sheet("模板").doWrite(data(1));
     }
-
+    
     private List<List<String>> head() {
         List<List<String>> list = new ArrayList<List<String>>();
         List<String> head0 = new ArrayList<String>();
@@ -71,10 +69,10 @@ public class WriteV34Test {
         list.add(head1);
         list.add(head2);
         list.add(head3);
-
+        
         return list;
     }
-
+    
     private List<DemoData> data(int no) {
         List<DemoData> list = new ArrayList<DemoData>();
         for (int i = 0; i < 10; i++) {
@@ -84,5 +82,5 @@ public class WriteV34Test {
         }
         return list;
     }
-
+    
 }

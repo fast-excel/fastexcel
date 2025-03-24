@@ -12,18 +12,18 @@ import cn.idev.excel.support.ExcelTypeEnum;
  * @author Jiaju Zhuang
  */
 public class DefaultCsvReadContext extends AnalysisContextImpl implements CsvReadContext {
-
+    
     public DefaultCsvReadContext(ReadWorkbook readWorkbook, ExcelTypeEnum actualExcelType) {
         super(readWorkbook, actualExcelType);
     }
-
+    
     @Override
     public CsvReadWorkbookHolder csvReadWorkbookHolder() {
-        return (CsvReadWorkbookHolder)readWorkbookHolder();
+        return (CsvReadWorkbookHolder) readWorkbookHolder();
     }
-
+    
     @Override
     public CsvReadSheetHolder csvReadSheetHolder() {
-        return (CsvReadSheetHolder)readSheetHolder();
+        return (CsvReadSheetHolder) readSheetHolder();
     }
 }

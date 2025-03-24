@@ -17,14 +17,13 @@
 
 package cn.idev.excel.analysis.v07.handlers.sax;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import cn.idev.excel.cache.ReadCache;
 import cn.idev.excel.constant.ExcelXmlConstants;
-
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Sax read sharedStringsTable.xml
@@ -32,32 +31,35 @@ import org.xml.sax.helpers.DefaultHandler;
  * @author Jiaju Zhuang
  */
 public class SharedStringsTableHandler extends DefaultHandler {
-
+    
     private static final Pattern UTF_PATTERN = Pattern.compile("_x([0-9A-Fa-f]{4})_");
-
+    
     /**
      * The final piece of data
      */
     private StringBuilder currentData;
+    
     /**
      * Current element data
      */
     private StringBuilder currentElementData;
-
+    
     private final ReadCache readCache;
+    
     /**
      * Some fields in the T tag need to be ignored
      */
     private boolean ignoreTagt = false;
+    
     /**
      * The only time you need to read the characters in the T tag is when it is used
      */
     private boolean isTagt = false;
-
+    
     public SharedStringsTableHandler(ReadCache readCache) {
         this.readCache = readCache;
     }
-
+    
     @Override
     public void startElement(String uri, String localName, String name, Attributes attributes) {
         if (name == null) {
@@ -84,7 +86,7 @@ public class SharedStringsTableHandler extends DefaultHandler {
                 // ignore
         }
     }
-
+    
     @Override
     public void endElement(String uri, String localName, String name) {
         if (name == null) {
@@ -120,7 +122,7 @@ public class SharedStringsTableHandler extends DefaultHandler {
                 // ignore
         }
     }
-
+    
     @Override
     public void characters(char[] ch, int start, int length) {
         if (!isTagt || ignoreTagt) {
@@ -131,19 +133,19 @@ public class SharedStringsTableHandler extends DefaultHandler {
         }
         currentElementData.append(ch, start, length);
     }
-
+    
     /**
      * from poi XSSFRichTextString
      *
      * @param value the string to decode
      * @return the decoded string or null if the input string is null
      * <p>
-     * For all characters which cannot be represented in XML as defined by the XML 1.0 specification,
-     * the characters are escaped using the Unicode numerical character representation escape character
-     * format _xHHHH_, where H represents a hexadecimal character in the character's value.
+     * For all characters which cannot be represented in XML as defined by the XML 1.0 specification, the characters are
+     * escaped using the Unicode numerical character representation escape character format _xHHHH_, where H represents
+     * a hexadecimal character in the character's value.
      * <p>
-     * Example: The Unicode character 0D is invalid in an XML 1.0 document,
-     * so it shall be escaped as <code>_x000D_</code>.
+     * Example: The Unicode character 0D is invalid in an XML 1.0 document, so it shall be escaped as
+     * <code>_x000D_</code>.
      * </p>
      * See section 3.18.9 in the OOXML spec.
      * @see org.apache.poi.xssf.usermodel.XSSFRichTextString#utfDecode(String)
@@ -152,7 +154,7 @@ public class SharedStringsTableHandler extends DefaultHandler {
         if (value == null || !value.contains("_x")) {
             return value;
         }
-
+        
         StringBuilder buf = new StringBuilder();
         Matcher m = UTF_PATTERN.matcher(value);
         int idx = 0;
@@ -161,20 +163,20 @@ public class SharedStringsTableHandler extends DefaultHandler {
             if (pos > idx) {
                 buf.append(value, idx, pos);
             }
-
+            
             String code = m.group(1);
             int icode = Integer.decode("0x" + code);
-            buf.append((char)icode);
-
+            buf.append((char) icode);
+            
             idx = m.end();
         }
-
+        
         // small optimization: don't go via StringBuilder if not necessary,
         // the encodings are very rare, so we should almost always go via this shortcut.
         if (idx == 0) {
             return value;
         }
-
+        
         buf.append(value.substring(idx));
         return buf.toString();
     }

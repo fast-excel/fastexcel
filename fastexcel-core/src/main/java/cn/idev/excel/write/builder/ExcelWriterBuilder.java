@@ -1,13 +1,13 @@
 package cn.idev.excel.write.builder;
 
+import cn.idev.excel.ExcelWriter;
+import cn.idev.excel.support.ExcelTypeEnum;
+import cn.idev.excel.write.metadata.WriteWorkbook;
+
 import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
-
-import cn.idev.excel.ExcelWriter;
-import cn.idev.excel.support.ExcelTypeEnum;
-import cn.idev.excel.write.metadata.WriteWorkbook;
 
 /**
  * Build ExcelWriter
@@ -15,15 +15,16 @@ import cn.idev.excel.write.metadata.WriteWorkbook;
  * @author Jiaju Zhuang
  */
 public class ExcelWriterBuilder extends AbstractExcelWriterParameterBuilder<ExcelWriterBuilder, WriteWorkbook> {
+    
     /**
      * Workbook
      */
     private final WriteWorkbook writeWorkbook;
-
+    
     public ExcelWriterBuilder() {
         this.writeWorkbook = new WriteWorkbook();
     }
-
+    
     /**
      * Default true
      *
@@ -34,7 +35,7 @@ public class ExcelWriterBuilder extends AbstractExcelWriterParameterBuilder<Exce
         writeWorkbook.setAutoCloseStream(autoCloseStream);
         return this;
     }
-
+    
     /**
      * Whether the encryption.
      * <p>
@@ -47,7 +48,7 @@ public class ExcelWriterBuilder extends AbstractExcelWriterParameterBuilder<Exce
         writeWorkbook.setPassword(password);
         return this;
     }
-
+    
     /**
      * Write excel in memory. Default false, the cache file is created and finally written to excel.
      * <p>
@@ -57,7 +58,7 @@ public class ExcelWriterBuilder extends AbstractExcelWriterParameterBuilder<Exce
         writeWorkbook.setInMemory(inMemory);
         return this;
     }
-
+    
     /**
      * Excel is also written in the event of an exception being thrown.The default false.
      */
@@ -65,86 +66,81 @@ public class ExcelWriterBuilder extends AbstractExcelWriterParameterBuilder<Exce
         writeWorkbook.setWriteExcelOnException(writeExcelOnException);
         return this;
     }
-
+    
     public ExcelWriterBuilder excelType(ExcelTypeEnum excelType) {
         writeWorkbook.setExcelType(excelType);
         return this;
     }
-
+    
     public ExcelWriterBuilder file(OutputStream outputStream) {
         writeWorkbook.setOutputStream(outputStream);
         return this;
     }
-
+    
     public ExcelWriterBuilder file(File outputFile) {
         writeWorkbook.setFile(outputFile);
         return this;
     }
-
+    
     public ExcelWriterBuilder file(String outputPathName) {
         return file(new File(outputPathName));
     }
-
+    
     /**
-     * charset.
-     * Only work on the CSV file
+     * charset. Only work on the CSV file
      */
     public ExcelWriterBuilder charset(Charset charset) {
         writeWorkbook.setCharset(charset);
         return this;
     }
-
+    
     /**
-     * Set the encoding prefix in the csv file, otherwise the office may open garbled characters.
-     * Default true.
+     * Set the encoding prefix in the csv file, otherwise the office may open garbled characters. Default true.
      */
     public ExcelWriterBuilder withBom(Boolean withBom) {
         writeWorkbook.setWithBom(withBom);
         return this;
     }
-
+    
     /**
-     * Template file.
-     * This file is read into memory, excessive cases can lead to OOM.
+     * Template file. This file is read into memory, excessive cases can lead to OOM.
      */
     public ExcelWriterBuilder withTemplate(InputStream templateInputStream) {
         writeWorkbook.setTemplateInputStream(templateInputStream);
         return this;
     }
-
+    
     /**
-     * Template file.
-     * This file is read into memory, excessive cases can lead to OOM.
+     * Template file. This file is read into memory, excessive cases can lead to OOM.
      */
     public ExcelWriterBuilder withTemplate(File templateFile) {
         writeWorkbook.setTemplateFile(templateFile);
         return this;
     }
-
+    
     /**
-     * Template file.
-     * This file is read into memory, excessive cases can lead to OOM.
+     * Template file. This file is read into memory, excessive cases can lead to OOM.
      */
     public ExcelWriterBuilder withTemplate(String pathName) {
         return withTemplate(new File(pathName));
     }
-
+    
     public ExcelWriter build() {
         return new ExcelWriter(writeWorkbook);
     }
-
+    
     public ExcelWriterSheetBuilder sheet() {
         return sheet(null, null);
     }
-
+    
     public ExcelWriterSheetBuilder sheet(Integer sheetNo) {
         return sheet(sheetNo, null);
     }
-
+    
     public ExcelWriterSheetBuilder sheet(String sheetName) {
         return sheet(null, sheetName);
     }
-
+    
     public ExcelWriterSheetBuilder sheet(Integer sheetNo, String sheetName) {
         ExcelWriter excelWriter = build();
         ExcelWriterSheetBuilder excelWriterSheetBuilder = new ExcelWriterSheetBuilder(excelWriter);
@@ -156,7 +152,7 @@ public class ExcelWriterBuilder extends AbstractExcelWriterParameterBuilder<Exce
         }
         return excelWriterSheetBuilder;
     }
-
+    
     @Override
     protected WriteWorkbook parameter() {
         return writeWorkbook;

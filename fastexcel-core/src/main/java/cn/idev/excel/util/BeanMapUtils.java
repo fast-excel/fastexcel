@@ -10,14 +10,14 @@ import cn.idev.excel.support.cglib.core.DefaultNamingPolicy;
  * @author Jiaju Zhuang
  */
 public class BeanMapUtils {
-
+    
     /**
-     * Helper method to create a new <code>BeanMap</code>.  For finer
-     * control over the generated instance, use a new instance of
+     * Helper method to create a new <code>BeanMap</code>.  For finer control over the generated instance, use a new
+     * instance of
      * <code>BeanMap.Generator</code> instead of this static method.
-     *
-     * Custom naming policy to prevent null pointer exceptions.
-     * see: https://github.com/fast-excel/fastexcel/issues/2064
+     * <p>
+     * Custom naming policy to prevent null pointer exceptions. see:
+     * https://github.com/fast-excel/fastexcel/issues/2064
      *
      * @param bean the JavaBean underlying the map
      * @return a new <code>BeanMap</code> instance
@@ -29,10 +29,11 @@ public class BeanMapUtils {
         gen.setNamingPolicy(EasyExcelNamingPolicy.INSTANCE);
         return gen.create();
     }
-
+    
     public static class EasyExcelNamingPolicy extends DefaultNamingPolicy {
+        
         public static final EasyExcelNamingPolicy INSTANCE = new EasyExcelNamingPolicy();
-
+        
         @Override
         protected String getTag() {
             return "ByEasyExcelCGLIB";

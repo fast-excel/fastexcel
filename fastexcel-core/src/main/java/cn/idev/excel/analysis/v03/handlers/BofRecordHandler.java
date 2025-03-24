@@ -1,16 +1,16 @@
 package cn.idev.excel.analysis.v03.handlers;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import cn.idev.excel.context.xls.XlsReadContext;
 import cn.idev.excel.exception.ExcelAnalysisStopException;
 import cn.idev.excel.read.metadata.ReadSheet;
 import cn.idev.excel.read.metadata.holder.xls.XlsReadWorkbookHolder;
 import cn.idev.excel.util.SheetUtils;
-import cn.idev.excel.context.xls.XlsReadContext;
 import org.apache.poi.hssf.record.BOFRecord;
 import org.apache.poi.hssf.record.BoundSheetRecord;
 import org.apache.poi.hssf.record.Record;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Record handler
@@ -18,7 +18,7 @@ import org.apache.poi.hssf.record.Record;
  * @author Dan Zheng
  */
 public class BofRecordHandler extends AbstractXlsRecordHandler {
-
+    
     @Override
     public void processRecord(XlsReadContext xlsReadContext, Record record) {
         BOFRecord br = (BOFRecord) record;
@@ -52,13 +52,13 @@ public class BofRecordHandler extends AbstractXlsRecordHandler {
         // Go read the next one
         xlsReadWorkbookHolder.setReadSheetIndex(xlsReadWorkbookHolder.getReadSheetIndex() + 1);
     }
-
+    
     private void initReadSheetDataList(XlsReadWorkbookHolder xlsReadWorkbookHolder) {
         if (xlsReadWorkbookHolder.getActualSheetDataList() != null) {
             return;
         }
-        BoundSheetRecord[] boundSheetRecords =
-            BoundSheetRecord.orderByBofPosition(xlsReadWorkbookHolder.getBoundSheetRecordList());
+        BoundSheetRecord[] boundSheetRecords = BoundSheetRecord.orderByBofPosition(
+                xlsReadWorkbookHolder.getBoundSheetRecordList());
         List<ReadSheet> readSheetDataList = new ArrayList<ReadSheet>();
         for (int i = 0; i < boundSheetRecords.length; i++) {
             BoundSheetRecord boundSheetRecord = boundSheetRecords[i];

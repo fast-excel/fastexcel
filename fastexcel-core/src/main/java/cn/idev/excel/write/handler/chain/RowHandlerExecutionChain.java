@@ -2,7 +2,6 @@ package cn.idev.excel.write.handler.chain;
 
 import cn.idev.excel.write.handler.RowWriteHandler;
 import cn.idev.excel.write.handler.context.RowWriteHandlerContext;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,40 +15,42 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode
 public class RowHandlerExecutionChain {
+    
     /**
      * next chain
      */
     private RowHandlerExecutionChain next;
+    
     /**
      * handler
      */
     private RowWriteHandler handler;
-
+    
     public RowHandlerExecutionChain(RowWriteHandler handler) {
         this.handler = handler;
     }
-
+    
     public void beforeRowCreate(RowWriteHandlerContext context) {
         this.handler.beforeRowCreate(context);
         if (this.next != null) {
             this.next.beforeRowCreate(context);
         }
     }
-
+    
     public void afterRowCreate(RowWriteHandlerContext context) {
         this.handler.afterRowCreate(context);
         if (this.next != null) {
             this.next.afterRowCreate(context);
         }
     }
-
+    
     public void afterRowDispose(RowWriteHandlerContext context) {
         this.handler.afterRowDispose(context);
         if (this.next != null) {
             this.next.afterRowDispose(context);
         }
     }
-
+    
     public void addLast(RowWriteHandler handler) {
         RowHandlerExecutionChain context = this;
         while (context.next != null) {

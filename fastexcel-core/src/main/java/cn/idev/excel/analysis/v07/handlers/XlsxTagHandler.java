@@ -9,7 +9,7 @@ import org.xml.sax.Attributes;
  * @author Dan Zheng
  */
 public interface XlsxTagHandler {
-
+    
     /**
      * Whether to support
      *
@@ -17,29 +17,24 @@ public interface XlsxTagHandler {
      * @return
      */
     boolean support(XlsxReadContext xlsxReadContext);
-
+    
     /**
      * Start handle
      *
-     * @param xlsxReadContext
-     *            xlsxReadContext
-     * @param name
-     *            Tag name
-     * @param attributes
-     *            Tag attributes
+     * @param xlsxReadContext xlsxReadContext
+     * @param name            Tag name
+     * @param attributes      Tag attributes
      */
     void startElement(XlsxReadContext xlsxReadContext, String name, Attributes attributes);
-
+    
     /**
      * End handle
      *
-     * @param xlsxReadContext
-     *            xlsxReadContext
-     * @param name
-     *            Tag name
+     * @param xlsxReadContext xlsxReadContext
+     * @param name            Tag name
      */
     void endElement(XlsxReadContext xlsxReadContext, String name);
-
+    
     /**
      * Read data
      *
@@ -49,5 +44,5 @@ public interface XlsxTagHandler {
      * @param length
      */
     void characters(XlsxReadContext xlsxReadContext, char[] ch, int start, int length);
-
+    
 }

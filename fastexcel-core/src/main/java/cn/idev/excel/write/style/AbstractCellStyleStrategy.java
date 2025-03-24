@@ -1,10 +1,9 @@
 package cn.idev.excel.write.style;
 
-import cn.idev.excel.write.handler.CellWriteHandler;
-import cn.idev.excel.write.handler.context.CellWriteHandlerContext;
 import cn.idev.excel.constant.OrderConstant;
 import cn.idev.excel.metadata.Head;
-
+import cn.idev.excel.write.handler.CellWriteHandler;
+import cn.idev.excel.write.handler.context.CellWriteHandlerContext;
 import org.apache.poi.ss.usermodel.Cell;
 
 /**
@@ -13,12 +12,12 @@ import org.apache.poi.ss.usermodel.Cell;
  * @author Jiaju Zhuang
  */
 public abstract class AbstractCellStyleStrategy implements CellWriteHandler {
-
+    
     @Override
     public int order() {
         return OrderConstant.DEFINE_STYLE;
     }
-
+    
     @Override
     public void afterCellDispose(CellWriteHandlerContext context) {
         if (context.getHead() == null) {
@@ -30,7 +29,7 @@ public abstract class AbstractCellStyleStrategy implements CellWriteHandler {
             setContentCellStyle(context);
         }
     }
-
+    
     /**
      * Sets the cell style of header
      *
@@ -39,7 +38,7 @@ public abstract class AbstractCellStyleStrategy implements CellWriteHandler {
     protected void setHeadCellStyle(CellWriteHandlerContext context) {
         setHeadCellStyle(context.getCell(), context.getHeadData(), context.getRelativeRowIndex());
     }
-
+    
     /**
      * Sets the cell style of header
      *
@@ -50,7 +49,7 @@ public abstract class AbstractCellStyleStrategy implements CellWriteHandler {
     protected void setHeadCellStyle(Cell cell, Head head, Integer relativeRowIndex) {
         throw new UnsupportedOperationException("Custom styles must override the setHeadCellStyle method.");
     }
-
+    
     /**
      * Sets the cell style of content
      *
@@ -59,7 +58,7 @@ public abstract class AbstractCellStyleStrategy implements CellWriteHandler {
     protected void setContentCellStyle(CellWriteHandlerContext context) {
         setContentCellStyle(context.getCell(), context.getHeadData(), context.getRelativeRowIndex());
     }
-
+    
     /**
      * Sets the cell style of content
      *
@@ -70,5 +69,5 @@ public abstract class AbstractCellStyleStrategy implements CellWriteHandler {
     protected void setContentCellStyle(Cell cell, Head head, Integer relativeRowIndex) {
         throw new UnsupportedOperationException("Custom styles must override the setContentCellStyle method.");
     }
-
+    
 }

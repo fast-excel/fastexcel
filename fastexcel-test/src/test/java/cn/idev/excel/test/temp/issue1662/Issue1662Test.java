@@ -1,22 +1,22 @@
 package cn.idev.excel.test.temp.issue1662;
 
+import cn.idev.excel.EasyExcel;
+import cn.idev.excel.test.util.TestFileUtil;
+import org.junit.jupiter.api.Test;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import cn.idev.excel.EasyExcel;
-import cn.idev.excel.test.util.TestFileUtil;
-
-import org.junit.jupiter.api.Test;
-
 public class Issue1662Test {
+    
     @Test
     public void test1662() {
         String fileName = TestFileUtil.getPath() + "Test1939" + ".xlsx";
         System.out.println(fileName);
         EasyExcel.write(fileName).head(head()).sheet("模板").doWrite(dataList());
     }
-
+    
     private List<List<String>> head() {
         List<List<String>> list = new ArrayList<List<String>>();
         List<String> head0 = new ArrayList<String>();
@@ -28,7 +28,7 @@ public class Issue1662Test {
         list.add(head1);
         return list;
     }
-
+    
     private List<List<Object>> dataList() {
         List<List<Object>> list = new ArrayList<List<Object>>();
         List<Object> data = new ArrayList<Object>();

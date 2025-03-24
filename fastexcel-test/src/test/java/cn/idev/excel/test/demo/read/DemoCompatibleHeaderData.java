@@ -10,14 +10,14 @@ import java.util.Date;
  */
 @Data
 public class DemoCompatibleHeaderData {
-
+    
     @ExcelProperty("String")
     private String string;
-
+    
     @ExcelProperty("Date")
     private Date date;
-
+    
     @ExcelProperty("DoubleData")
     private Double doubleData;
-
+    
 }

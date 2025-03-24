@@ -7,4 +7,5 @@ package cn.idev.excel.converters;
  * @author JiaJu Zhuang
  **/
 public interface NullableObjectConverter<T> extends Converter<T> {
+
 }

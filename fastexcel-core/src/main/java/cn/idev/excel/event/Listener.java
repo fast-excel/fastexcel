@@ -5,4 +5,6 @@ package cn.idev.excel.event;
  *
  * @author Jiaju Zhuang
  */
-public interface Listener {}
+public interface Listener {
+
+}

@@ -10,8 +10,9 @@ import cn.idev.excel.util.ListUtils;
  *
  * @author Jiaju Zhuang
  */
-public abstract class AbstractExcelReaderParameterBuilder<T extends AbstractExcelReaderParameterBuilder,
-    C extends ReadBasicParameter> extends AbstractParameterBuilder<T, C> {
+public abstract class AbstractExcelReaderParameterBuilder<T extends AbstractExcelReaderParameterBuilder, C extends ReadBasicParameter>
+        extends AbstractParameterBuilder<T, C> {
+    
     /**
      * Count the number of added heads when read sheet.
      *
@@ -29,10 +30,10 @@ public abstract class AbstractExcelReaderParameterBuilder<T extends AbstractExce
         parameter().setHeadRowNumber(headRowNumber);
         return self();
     }
-
+    
     /**
      * Whether to use scientific Format.
-     *
+     * <p>
      * default is false
      *
      * @param useScientificFormat
@@ -42,7 +43,7 @@ public abstract class AbstractExcelReaderParameterBuilder<T extends AbstractExce
         parameter().setUseScientificFormat(useScientificFormat);
         return self();
     }
-
+    
     /**
      * Custom type listener run after default
      *

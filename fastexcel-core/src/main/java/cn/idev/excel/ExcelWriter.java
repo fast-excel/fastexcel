@@ -1,9 +1,5 @@
 package cn.idev.excel;
 
-import java.io.Closeable;
-import java.util.Collection;
-import java.util.function.Supplier;
-
 import cn.idev.excel.context.WriteContext;
 import cn.idev.excel.write.ExcelBuilder;
 import cn.idev.excel.write.ExcelBuilderImpl;
@@ -11,8 +7,11 @@ import cn.idev.excel.write.metadata.WriteSheet;
 import cn.idev.excel.write.metadata.WriteTable;
 import cn.idev.excel.write.metadata.WriteWorkbook;
 import cn.idev.excel.write.metadata.fill.FillConfig;
-
 import lombok.extern.slf4j.Slf4j;
+
+import java.io.Closeable;
+import java.util.Collection;
+import java.util.function.Supplier;
 
 /**
  * Excel Writer This tool is used to write value out to Excel via POI. This object can perform the following two
@@ -27,9 +26,9 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class ExcelWriter implements Closeable {
-
+    
     private final ExcelBuilder excelBuilder;
-
+    
     /**
      * Create new writer
      *
@@ -38,7 +37,7 @@ public class ExcelWriter implements Closeable {
     public ExcelWriter(WriteWorkbook writeWorkbook) {
         excelBuilder = new ExcelBuilderImpl(writeWorkbook);
     }
-
+    
     /**
      * Write data to a sheet
      *
@@ -49,7 +48,7 @@ public class ExcelWriter implements Closeable {
     public ExcelWriter write(Collection<?> data, WriteSheet writeSheet) {
         return write(data, writeSheet, null);
     }
-
+    
     /**
      * Write data to a sheet
      *
@@ -60,7 +59,7 @@ public class ExcelWriter implements Closeable {
     public ExcelWriter write(Supplier<Collection<?>> supplier, WriteSheet writeSheet) {
         return write(supplier.get(), writeSheet, null);
     }
-
+    
     /**
      * Write value to a sheet
      *
@@ -73,7 +72,7 @@ public class ExcelWriter implements Closeable {
         excelBuilder.addContent(data, writeSheet, writeTable);
         return this;
     }
-
+    
     /**
      * Write value to a sheet
      *
@@ -86,7 +85,7 @@ public class ExcelWriter implements Closeable {
         excelBuilder.addContent(supplier.get(), writeSheet, writeTable);
         return this;
     }
-
+    
     /**
      * Fill value to a sheet
      *
@@ -97,7 +96,7 @@ public class ExcelWriter implements Closeable {
     public ExcelWriter fill(Object data, WriteSheet writeSheet) {
         return fill(data, null, writeSheet);
     }
-
+    
     /**
      * Fill value to a sheet
      *
@@ -110,7 +109,7 @@ public class ExcelWriter implements Closeable {
         excelBuilder.fill(data, fillConfig, writeSheet);
         return this;
     }
-
+    
     /**
      * Fill value to a sheet
      *
@@ -121,7 +120,7 @@ public class ExcelWriter implements Closeable {
     public ExcelWriter fill(Supplier<Object> supplier, WriteSheet writeSheet) {
         return fill(supplier.get(), null, writeSheet);
     }
-
+    
     /**
      * Fill value to a sheet
      *
@@ -134,7 +133,7 @@ public class ExcelWriter implements Closeable {
         excelBuilder.fill(supplier.get(), fillConfig, writeSheet);
         return this;
     }
-
+    
     /**
      * Close IO
      */
@@ -143,7 +142,7 @@ public class ExcelWriter implements Closeable {
             excelBuilder.finish(false);
         }
     }
-
+    
     /**
      * The context of the entire writing process
      *
@@ -152,12 +151,12 @@ public class ExcelWriter implements Closeable {
     public WriteContext writeContext() {
         return excelBuilder.writeContext();
     }
-
+    
     @Override
     public void close() {
         finish();
     }
-
+    
     /**
      * Prevents calls to {@link #finish} from freeing the cache
      */

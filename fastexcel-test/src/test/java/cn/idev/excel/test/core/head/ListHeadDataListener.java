@@ -1,26 +1,26 @@
 package cn.idev.excel.test.core.head;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import cn.idev.excel.read.listener.ReadListener;
 import cn.idev.excel.context.AnalysisContext;
 import cn.idev.excel.metadata.data.ReadCellData;
+import cn.idev.excel.read.listener.ReadListener;
 import com.alibaba.fastjson2.JSON;
-
 import org.junit.jupiter.api.Assertions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Jiaju Zhuang
  */
 public class ListHeadDataListener implements ReadListener<Map<Integer, String>> {
-
+    
     private static final Logger LOGGER = LoggerFactory.getLogger(NoHeadData.class);
+    
     List<Map<Integer, String>> list = new ArrayList<Map<Integer, String>>();
-
+    
     @Override
     public void invokeHead(Map<Integer, ReadCellData<?>> headMap, AnalysisContext context) {
         Assertions.assertNotNull(context.readRowHolder().getRowIndex());
@@ -29,12 +29,12 @@ public class ListHeadDataListener implements ReadListener<Map<Integer, String>> 
             Assertions.assertEquals(value.getColumnIndex(), key);
         });
     }
-
+    
     @Override
     public void invoke(Map<Integer, String> data, AnalysisContext context) {
         list.add(data);
     }
-
+    
     @Override
     public void doAfterAllAnalysed(AnalysisContext context) {
         Assertions.assertEquals(list.size(), 1);

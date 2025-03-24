@@ -13,10 +13,12 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode
 public class AbstractCell implements Cell {
+    
     /**
      * Row index
      */
     private Integer rowIndex;
+    
     /**
      * Column index
      */

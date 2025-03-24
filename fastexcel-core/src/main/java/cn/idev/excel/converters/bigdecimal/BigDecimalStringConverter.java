@@ -1,15 +1,15 @@
 package cn.idev.excel.converters.bigdecimal;
 
-import java.math.BigDecimal;
-import java.text.ParseException;
-
 import cn.idev.excel.converters.Converter;
 import cn.idev.excel.enums.CellDataTypeEnum;
-import cn.idev.excel.util.NumberUtils;
 import cn.idev.excel.metadata.GlobalConfiguration;
 import cn.idev.excel.metadata.data.ReadCellData;
 import cn.idev.excel.metadata.data.WriteCellData;
 import cn.idev.excel.metadata.property.ExcelContentProperty;
+import cn.idev.excel.util.NumberUtils;
+
+import java.math.BigDecimal;
+import java.text.ParseException;
 
 /**
  * BigDecimal and string converter
@@ -17,26 +17,26 @@ import cn.idev.excel.metadata.property.ExcelContentProperty;
  * @author Jiaju Zhuang
  */
 public class BigDecimalStringConverter implements Converter<BigDecimal> {
-
+    
     @Override
     public Class<BigDecimal> supportJavaTypeKey() {
         return BigDecimal.class;
     }
-
+    
     @Override
     public CellDataTypeEnum supportExcelTypeKey() {
         return CellDataTypeEnum.STRING;
     }
-
+    
     @Override
     public BigDecimal convertToJavaData(ReadCellData<?> cellData, ExcelContentProperty contentProperty,
-                                        GlobalConfiguration globalConfiguration) throws ParseException {
+            GlobalConfiguration globalConfiguration) throws ParseException {
         return NumberUtils.parseBigDecimal(cellData.getStringValue(), contentProperty);
     }
-
+    
     @Override
     public WriteCellData<?> convertToExcelData(BigDecimal value, ExcelContentProperty contentProperty,
-                                               GlobalConfiguration globalConfiguration) {
+            GlobalConfiguration globalConfiguration) {
         return NumberUtils.formatToCellDataString(value, contentProperty);
     }
 }

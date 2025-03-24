@@ -8,20 +8,21 @@ import cn.idev.excel.context.AnalysisContext;
  * @author jipengfei
  */
 public interface AnalysisEventProcessor {
+    
     /**
      * Read extra information
      *
      * @param analysisContext
      */
     void extra(AnalysisContext analysisContext);
-
+    
     /**
      * End row
      *
      * @param analysisContext
      */
     void endRow(AnalysisContext analysisContext);
-
+    
     /**
      * Notify after all analysed
      *

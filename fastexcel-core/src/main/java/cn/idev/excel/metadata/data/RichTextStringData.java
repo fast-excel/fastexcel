@@ -1,15 +1,14 @@
 package cn.idev.excel.metadata.data;
 
-import java.util.List;
-
 import cn.idev.excel.util.ListUtils;
 import cn.idev.excel.write.metadata.style.WriteFont;
-
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 /**
  * rich text string
@@ -21,24 +20,30 @@ import lombok.Setter;
 @EqualsAndHashCode
 @NoArgsConstructor
 public class RichTextStringData {
+    
     private String textString;
+    
     private WriteFont writeFont;
+    
     private List<IntervalFont> intervalFontList;
-
+    
     public RichTextStringData(String textString) {
         this.textString = textString;
     }
-
+    
     @Getter
     @Setter
     @EqualsAndHashCode
     @AllArgsConstructor
     public static class IntervalFont {
+        
         private Integer startIndex;
+        
         private Integer endIndex;
+        
         private WriteFont writeFont;
     }
-
+    
     /**
      * Applies a font to the specified characters of a string.
      *
@@ -52,7 +57,7 @@ public class RichTextStringData {
         }
         intervalFontList.add(new IntervalFont(startIndex, endIndex, writeFont));
     }
-
+    
     /**
      * Sets the font of the entire string.
      *
@@ -61,5 +66,5 @@ public class RichTextStringData {
     public void applyFont(WriteFont writeFont) {
         this.writeFont = writeFont;
     }
-
+    
 }

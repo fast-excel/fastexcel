@@ -1,8 +1,5 @@
 package cn.idev.excel.read.metadata.holder.xls;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import cn.idev.excel.read.metadata.ReadWorkbook;
 import cn.idev.excel.read.metadata.holder.ReadWorkbookHolder;
 import cn.idev.excel.support.ExcelTypeEnum;
@@ -15,6 +12,9 @@ import org.apache.poi.hssf.record.BoundSheetRecord;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Workbook holder
  *
@@ -25,40 +25,47 @@ import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 @EqualsAndHashCode
 @NoArgsConstructor
 public class XlsReadWorkbookHolder extends ReadWorkbookHolder {
+    
     /**
      * File System
      */
     private POIFSFileSystem poifsFileSystem;
+    
     /**
      * Format tracking HSSFListener
      */
     private FormatTrackingHSSFListener formatTrackingHSSFListener;
+    
     /**
      * HSSFWorkbook
      */
     private HSSFWorkbook hssfWorkbook;
+    
     /**
      * Bound sheet record list.
      */
     private List<BoundSheetRecord> boundSheetRecordList;
+    
     /**
      * Need read sheet.
      */
     private Boolean needReadSheet;
+    
     /**
      * Sheet Index
      */
     private Integer readSheetIndex;
+    
     /**
      * Ignore record.
      */
     private Boolean ignoreRecord;
-
+    
     /**
      * Has the current sheet already stopped
      */
     private Boolean currentSheetStopped;
-
+    
     public XlsReadWorkbookHolder(ReadWorkbook readWorkbook) {
         super(readWorkbook);
         this.boundSheetRecordList = new ArrayList<BoundSheetRecord>();

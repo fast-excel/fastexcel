@@ -1,16 +1,5 @@
 package cn.idev.excel.write.property;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import cn.idev.excel.enums.HeadKindEnum;
-import cn.idev.excel.metadata.CellRange;
-import cn.idev.excel.metadata.ConfigurationHolder;
-import cn.idev.excel.metadata.Head;
 import cn.idev.excel.annotation.write.style.ColumnWidth;
 import cn.idev.excel.annotation.write.style.ContentLoopMerge;
 import cn.idev.excel.annotation.write.style.ContentRowHeight;
@@ -18,6 +7,10 @@ import cn.idev.excel.annotation.write.style.HeadFontStyle;
 import cn.idev.excel.annotation.write.style.HeadRowHeight;
 import cn.idev.excel.annotation.write.style.HeadStyle;
 import cn.idev.excel.annotation.write.style.OnceAbsoluteMerge;
+import cn.idev.excel.enums.HeadKindEnum;
+import cn.idev.excel.metadata.CellRange;
+import cn.idev.excel.metadata.ConfigurationHolder;
+import cn.idev.excel.metadata.Head;
 import cn.idev.excel.metadata.property.ColumnWidthProperty;
 import cn.idev.excel.metadata.property.ExcelHeadProperty;
 import cn.idev.excel.metadata.property.FontProperty;
@@ -25,10 +18,16 @@ import cn.idev.excel.metadata.property.LoopMergeProperty;
 import cn.idev.excel.metadata.property.OnceAbsoluteMergeProperty;
 import cn.idev.excel.metadata.property.RowHeightProperty;
 import cn.idev.excel.metadata.property.StyleProperty;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Define the header attribute of excel
@@ -39,59 +38,58 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode
 public class ExcelWriteHeadProperty extends ExcelHeadProperty {
-
+    
     private RowHeightProperty headRowHeightProperty;
+    
     private RowHeightProperty contentRowHeightProperty;
+    
     private OnceAbsoluteMergeProperty onceAbsoluteMergeProperty;
-
-    public ExcelWriteHeadProperty(ConfigurationHolder configurationHolder, Class<?> headClazz, List<List<String>> head) {
+    
+    public ExcelWriteHeadProperty(ConfigurationHolder configurationHolder, Class<?> headClazz,
+            List<List<String>> head) {
         super(configurationHolder, headClazz, head);
         if (getHeadKind() != HeadKindEnum.CLASS) {
             return;
         }
-        this.headRowHeightProperty =
-            RowHeightProperty.build(headClazz.getAnnotation(HeadRowHeight.class));
-        this.contentRowHeightProperty =
-            RowHeightProperty.build(headClazz.getAnnotation(ContentRowHeight.class));
-        this.onceAbsoluteMergeProperty =
-            OnceAbsoluteMergeProperty.build(headClazz.getAnnotation(OnceAbsoluteMerge.class));
-
+        this.headRowHeightProperty = RowHeightProperty.build(headClazz.getAnnotation(HeadRowHeight.class));
+        this.contentRowHeightProperty = RowHeightProperty.build(headClazz.getAnnotation(ContentRowHeight.class));
+        this.onceAbsoluteMergeProperty = OnceAbsoluteMergeProperty.build(
+                headClazz.getAnnotation(OnceAbsoluteMerge.class));
+        
         ColumnWidth parentColumnWidth = headClazz.getAnnotation(ColumnWidth.class);
         HeadStyle parentHeadStyle = headClazz.getAnnotation(HeadStyle.class);
         HeadFontStyle parentHeadFontStyle = headClazz.getAnnotation(HeadFontStyle.class);
-
-
+        
         for (Map.Entry<Integer, Head> entry : getHeadMap().entrySet()) {
             Head headData = entry.getValue();
             if (headData == null) {
                 throw new IllegalArgumentException(
-                    "Passing in the class and list the head, the two must be the same size.");
+                        "Passing in the class and list the head, the two must be the same size.");
             }
             Field field = headData.getField();
-
+            
             ColumnWidth columnWidth = field.getAnnotation(ColumnWidth.class);
             if (columnWidth == null) {
                 columnWidth = parentColumnWidth;
             }
             headData.setColumnWidthProperty(ColumnWidthProperty.build(columnWidth));
-
-
+            
             HeadStyle headStyle = field.getAnnotation(HeadStyle.class);
             if (headStyle == null) {
                 headStyle = parentHeadStyle;
             }
             headData.setHeadStyleProperty(StyleProperty.build(headStyle));
-
+            
             HeadFontStyle headFontStyle = field.getAnnotation(HeadFontStyle.class);
             if (headFontStyle == null) {
                 headFontStyle = parentHeadFontStyle;
             }
             headData.setHeadFontProperty(FontProperty.build(headFontStyle));
-
+            
             headData.setLoopMergeProperty(LoopMergeProperty.build(field.getAnnotation(ContentLoopMerge.class)));
         }
     }
-
+    
     /**
      * Calculate all cells that need to be merged
      *
@@ -127,7 +125,7 @@ public class ExcelWriteHeadProperty extends ExcelHeadProperty {
                     for (int l = i; l <= lastCol; l++) {
                         String key = l + "-" + k;
                         if (headList.get(l).getHeadNameList().get(k).equals(headName) && !alreadyRangeSet.contains(
-                            key)) {
+                                key)) {
                             tempAlreadyRangeSet.add(l + "-" + k);
                         } else {
                             break outer;
@@ -139,8 +137,8 @@ public class ExcelWriteHeadProperty extends ExcelHeadProperty {
                 if (j == lastRow && i == lastCol) {
                     continue;
                 }
-                cellRangeList
-                    .add(new CellRange(j, lastRow, head.getColumnIndex(), headList.get(lastCol).getColumnIndex()));
+                cellRangeList.add(
+                        new CellRange(j, lastRow, head.getColumnIndex(), headList.get(lastCol).getColumnIndex()));
             }
         }
         return cellRangeList;

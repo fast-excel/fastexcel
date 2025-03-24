@@ -11,12 +11,15 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode
 public class CellRange {
-
+    
     private int firstRow;
+    
     private int lastRow;
+    
     private int firstCol;
+    
     private int lastCol;
-
+    
     public CellRange(int firstRow, int lastRow, int firstCol, int lastCol) {
         this.firstRow = firstRow;
         this.lastRow = lastRow;

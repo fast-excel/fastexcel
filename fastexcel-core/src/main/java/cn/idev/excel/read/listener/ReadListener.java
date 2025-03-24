@@ -1,12 +1,12 @@
 package cn.idev.excel.read.listener;
 
-import java.util.Map;
-
 import cn.idev.excel.context.AnalysisContext;
 import cn.idev.excel.event.Listener;
 import cn.idev.excel.metadata.CellExtra;
 import cn.idev.excel.metadata.data.ReadCellData;
 import cn.idev.excel.read.metadata.holder.ReadRowHolder;
+
+import java.util.Map;
 
 /**
  * Interface to listen for read results
@@ -14,6 +14,7 @@ import cn.idev.excel.read.metadata.holder.ReadRowHolder;
  * @author Jiaju Zhuang
  */
 public interface ReadListener<T> extends Listener {
+    
     /**
      * All listeners receive this method when any one Listener does an error report. If an exception is thrown here, the
      * entire read will terminate.
@@ -25,7 +26,7 @@ public interface ReadListener<T> extends Listener {
     default void onException(Exception exception, AnalysisContext context) throws Exception {
         throw exception;
     }
-
+    
     /**
      * When analysis one head row trigger invoke function.
      *
@@ -34,7 +35,7 @@ public interface ReadListener<T> extends Listener {
      */
     default void invokeHead(Map<Integer, ReadCellData<?>> headMap, AnalysisContext context) {
     }
-
+    
     /**
      * When analysis one row trigger invoke function.
      *
@@ -42,7 +43,7 @@ public interface ReadListener<T> extends Listener {
      * @param context analysis context
      */
     void invoke(T data, AnalysisContext context);
-
+    
     /**
      * The current method is called when extra information is returned
      *
@@ -51,14 +52,14 @@ public interface ReadListener<T> extends Listener {
      */
     default void extra(CellExtra extra, AnalysisContext context) {
     }
-
+    
     /**
      * if have something to do after all analysis
      *
      * @param context
      */
     void doAfterAllAnalysed(AnalysisContext context);
-
+    
     /**
      * Verify that there is another piece of data.You can stop the read by returning false
      *
@@ -66,17 +67,14 @@ public interface ReadListener<T> extends Listener {
      * @return
      */
     default boolean hasNext(AnalysisContext context) {
-        if (context == null
-            || context.readRowHolder() == null
-            || context.readSheetHolder() == null
-            || context.readSheetHolder().getReadSheet() == null
-            || context.readWorkbookHolder().getReadWorkbook() == null
-        ) {
+        if (context == null || context.readRowHolder() == null || context.readSheetHolder() == null
+                || context.readSheetHolder().getReadSheet() == null
+                || context.readWorkbookHolder().getReadWorkbook() == null) {
             return true;
         }
         ReadRowHolder readRowHolder = context.readRowHolder();
         int index = readRowHolder.getRowIndex();
-
+        
         Integer limit = context.readSheetHolder().getReadSheet().getNumRows();
         if (limit == null) {
             limit = context.readWorkbookHolder().getReadWorkbook().getNumRows();
