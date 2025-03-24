@@ -20,6 +20,7 @@ import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,6 +68,8 @@ public class TempLargeDataTest {
         LOGGER.info("Large data total time spent:{}", System.currentTimeMillis() - start);
     }
 
+    // temp disabled for post file generator
+    @Disabled
     @Test
     public void noModelRead2() throws Exception {
         Field field = ZipSecureFile.class.getDeclaredField("MAX_ENTRY_SIZE");

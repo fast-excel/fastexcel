@@ -1,7 +1,6 @@
 package cn.idev.excel.test.temp.csv;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.OutputStreamWriter;
@@ -18,6 +17,7 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.poi.poifs.filesystem.FileMagic;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @Slf4j
@@ -39,7 +39,7 @@ public class CsvReadTest {
     @Test
     public void read1() throws Exception {
         Iterable<CSVRecord> records = CSVFormat.DEFAULT.withNullString("").parse(
-            new FileReader("/Users/zhuangjiaju/IdeaProjects/easyexcel/target/test-classes/t1.csv"));
+            new FileReader("src/test/resources/poi/last_row_number_xssf_date_test.csv"));
         for (CSVRecord record : records) {
             String lastName = record.get(0);
             String firstName = record.get(1);
@@ -77,8 +77,8 @@ public class CsvReadTest {
 
     @Test
     public void writeFile() throws Exception {
-        FileInputStream fileInputStream = new FileInputStream(new File("/Users/zhuangjiaju/test/test1.csv"));
-        FileMagic fileMagic = FileMagic.valueOf(fileInputStream);
+        FileMagic fileMagic = FileMagic.valueOf(new File("src/test/resources/poi/last_row_number_xssf_date_test.csv"));
+        Assertions.assertEquals(FileMagic.UNKNOWN, fileMagic);
         log.info("{}", fileMagic);
     }
 

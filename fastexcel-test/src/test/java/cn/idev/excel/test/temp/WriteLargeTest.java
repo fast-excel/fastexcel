@@ -86,7 +86,7 @@ public class WriteLargeTest {
     @Test
     public void read() throws Exception {
         log.info("start");
-        String fileName = "/Users/zhuangjiaju/Downloads/1e9e0578a9634abbbbd9b67f338f142a.xls";
+        String fileName = "src/test/resources/poi/last_row_number_xssf_date_test.xls";
         // 这里 需要指定读用哪个class去读，然后读取第一个sheet 文件流会自动关闭
         // 这里默认每次会读取100条数据 然后返回过来 直接调用使用数据就行
         // 具体需要返回多少行可以在`PageReadListener`的构造函数设置
@@ -105,7 +105,7 @@ public class WriteLargeTest {
         // .xls");
         // 创建一个新的org.apache.poi.poifs.filesystem.Filesystem
         POIFSFileSystem poifs = new POIFSFileSystem(
-            new File("/Users/zhuangjiaju/Downloads/1e9e0578a9634abbbbd9b67f338f142a.xls"));
+            new File("src/test/resources/poi/last_row_number_xssf_date_test.xls"));
         // 在InputStream中获取Workbook流
         InputStream din = poifs.createDocumentInputStream("Workbook");
         // 构造出HSSFRequest对象
@@ -126,7 +126,7 @@ public class WriteLargeTest {
     @Test
     public void read3() throws Exception {
         HSSFWorkbook hwb = new HSSFWorkbook(
-            new FileInputStream("/Users/zhuangjiaju/Downloads/1e9e0578a9634abbbbd9b67f338f142a.xls"));
+            new FileInputStream("src/test/resources/poi/last_row_number_xssf_date_test.xls"));
         HSSFSheet sheet = hwb.getSheetAt(0);
         HSSFRow row = null;
         HSSFCell cell = null;
@@ -147,7 +147,7 @@ public class WriteLargeTest {
         /**
          * 此方法监听传入记录并根据需要处理它们
          *
-         * @param record读取时找到的记录
+         * @param record 读取时找到的记录
          */
         public void processRecord(Record record) {
             switch (record.getSid()) {

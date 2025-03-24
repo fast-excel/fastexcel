@@ -1,5 +1,6 @@
 package cn.idev.excel.test.temp;
 
+import java.nio.file.Path;
 import java.util.List;
 
 import cn.idev.excel.EasyExcel;
@@ -9,6 +10,7 @@ import cn.idev.excel.support.cglib.core.DebuggingClassWriter;
 import com.alibaba.fastjson2.JSON;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,10 +22,12 @@ import org.slf4j.LoggerFactory;
 
 public class Xls03Test {
     private static final Logger LOGGER = LoggerFactory.getLogger(Xls03Test.class);
+    @TempDir
+    Path tempDir;
 
     @Test
     public void test() {
-        List<Object> list = EasyExcel.read("D:\\test\\8.xls").sheet().doReadSync();
+        List<Object> list = EasyExcel.read("src/test/resources/compatibility/t07.xlsx").sheet().doReadSync();
         for (Object data : list) {
             LOGGER.info("返回数据：{}", JSON.toJSONString(data));
         }
@@ -33,7 +37,7 @@ public class Xls03Test {
     public void test2() {
         System.getProperties().put("sun.misc.ProxyGenerator.saveGeneratedFiles", "true");
         System.setProperty(DebuggingClassWriter.DEBUG_LOCATION_PROPERTY,
-            "/Users/zhuangjiaju/IdeaProjects/easyexcel/target");
+          tempDir.toString());
 
         CamlData camlData = new CamlData();
         //camlData.setTest("test2");
