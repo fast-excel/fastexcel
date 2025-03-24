@@ -5,9 +5,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-/**
- * @author deleiguo
- */
 @Getter
 @Setter
 @EqualsAndHashCode

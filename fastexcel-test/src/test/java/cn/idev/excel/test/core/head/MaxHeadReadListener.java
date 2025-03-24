@@ -12,9 +12,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @author deleiguo
- */
 public class MaxHeadReadListener extends AnalysisEventListener<Map<Integer, String>> {
     private static final Logger log = LoggerFactory.getLogger(MaxHeadReadListener.class);
     List<Map<Integer, String>> list = new ArrayList<Map<Integer, String>>();

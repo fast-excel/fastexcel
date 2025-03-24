@@ -5,7 +5,11 @@ import cn.idev.excel.support.ExcelTypeEnum;
 import cn.idev.excel.test.util.TestFileUtil;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONWriter;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,9 +17,6 @@ import java.io.File;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @author deleiguo
- */
 @TestMethodOrder(MethodOrderer.MethodName.class)
 public class MaxHeadSizeTest {
     private static final Logger log = LoggerFactory.getLogger(MaxHeadSizeTest.class);
@@ -61,7 +62,7 @@ public class MaxHeadSizeTest {
             .doReadSync();
         dataList.forEach(d -> {
             log.info(JSON.toJSONString(d, JSONWriter.Feature.WriteMapNullValue));
-            Assertions.assertTrue(d.size()>=expectHeadSize);
+            Assertions.assertTrue(d.size() >= expectHeadSize);
         });
 
         // custom listener
@@ -71,7 +72,7 @@ public class MaxHeadSizeTest {
             .doReadSync();
         dataList.forEach(d -> {
             log.info(JSON.toJSONString(d, JSONWriter.Feature.WriteMapNullValue));
-            Assertions.assertTrue(d.size()>=expectHeadSize);
+            Assertions.assertTrue(d.size() >= expectHeadSize);
         });
     }
 
