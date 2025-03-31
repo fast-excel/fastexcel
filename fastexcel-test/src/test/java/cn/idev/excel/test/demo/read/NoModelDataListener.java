@@ -10,41 +10,41 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 直接用map接收数据
+ * Directly receive data using a map.
  *
  * @author Jiaju Zhuang
  */
 @Slf4j
 public class NoModelDataListener extends AnalysisEventListener<Map<Integer, String>> {
-    
+
     /**
-     * 每隔5条存储数据库，实际使用中可以100条，然后清理list ，方便内存回收
+     * Save to the database every 5 records. In actual use, it can be set to 100 records, and then clear the list to facilitate memory recycling.
      */
     private static final int BATCH_COUNT = 5;
-    
+
     private List<Map<Integer, String>> cachedDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
-    
+
     @Override
     public void invoke(Map<Integer, String> data, AnalysisContext context) {
-        log.info("解析到一条数据:{}", JSON.toJSONString(data));
+        log.info("Parsed a data row: {}", JSON.toJSONString(data));
         cachedDataList.add(data);
         if (cachedDataList.size() >= BATCH_COUNT) {
             saveData();
             cachedDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
         }
     }
-    
+
     @Override
     public void doAfterAllAnalysed(AnalysisContext context) {
         saveData();
-        log.info("所有数据解析完成！");
+        log.info("All data parsing completed!");
     }
-    
+
     /**
-     * 加上存储数据库
+     * Save data to the database.
      */
     private void saveData() {
-        log.info("{}条数据，开始存储数据库！", cachedDataList.size());
-        log.info("存储数据库成功！");
+        log.info("{} records, starting to save to the database!", cachedDataList.size());
+        log.info("Data saved to the database successfully!");
     }
 }

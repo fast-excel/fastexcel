@@ -9,41 +9,42 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.List;
 
 /**
- * 模板的读取类
+ * Template data reading class
  *
  * @author Jiaju Zhuang
  */
 @Slf4j
 public class ConverterDataListener implements ReadListener<ConverterData> {
-    
+
     /**
-     * 每隔5条存储数据库，实际使用中可以100条，然后清理list ，方便内存回收
+     * Save to the database every 5 records. In actual use, you might use 100 records,
+     * then clear the list to facilitate memory recycling.
      */
     private static final int BATCH_COUNT = 5;
-    
+
     private List<ConverterData> cachedDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
-    
+
     @Override
     public void invoke(ConverterData data, AnalysisContext context) {
-        log.info("解析到一条数据:{}", JSON.toJSONString(data));
+        log.info("Parsed a piece of data: {}", JSON.toJSONString(data));
         cachedDataList.add(data);
         if (cachedDataList.size() >= BATCH_COUNT) {
             saveData();
             cachedDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
         }
     }
-    
+
     @Override
     public void doAfterAllAnalysed(AnalysisContext context) {
         saveData();
-        log.info("所有数据解析完成！");
+        log.info("All data has been parsed and processed!");
     }
-    
+
     /**
-     * 加上存储数据库
+     * Simulate saving data to the database
      */
     private void saveData() {
-        log.info("{}条数据，开始存储数据库！", cachedDataList.size());
-        log.info("存储数据库成功！");
+        log.info("Saving {} records to the database!", cachedDataList.size());
+        log.info("Data saved to the database successfully!");
     }
 }

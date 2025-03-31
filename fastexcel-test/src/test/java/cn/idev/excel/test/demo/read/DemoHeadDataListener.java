@@ -12,71 +12,74 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 读取头
+ * Reading headers
  *
  * @author Jiaju Zhuang
  */
 @Slf4j
 public class DemoHeadDataListener implements ReadListener<DemoData> {
-    
+
     /**
-     * 每隔5条存储数据库，实际使用中可以100条，然后清理list ，方便内存回收
+     * Save to the database every 5 records. In actual use, you might use 100 records,
+     * then clear the list to facilitate memory recycling.
      */
     private static final int BATCH_COUNT = 5;
-    
+
     private List<ExceptionDemoData> cachedDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
-    
+
     /**
-     * 在转换异常 获取其他异常下会调用本接口。抛出异常则停止读取。如果这里不抛出异常则 继续读取下一行。
+     * This method is called when a conversion exception or other exceptions occur.
+     * Throwing an exception will stop the reading process. If no exception is thrown here,
+     * the reading will continue to the next row.
      *
-     * @param exception
-     * @param context
-     * @throws Exception
+     * @param exception The exception that occurred.
+     * @param context   The analysis context.
+     * @throws Exception If an exception is thrown to stop reading.
      */
     @Override
     public void onException(Exception exception, AnalysisContext context) {
-        log.error("解析失败，但是继续解析下一行:{}", exception.getMessage());
+        log.error("Parsing failed, but continue parsing the next row: {}", exception.getMessage());
         if (exception instanceof ExcelDataConvertException) {
             ExcelDataConvertException excelDataConvertException = (ExcelDataConvertException) exception;
-            log.error("第{}行，第{}列解析异常，数据为:{}", excelDataConvertException.getRowIndex(),
+            log.error("Row {}, Column {} parsing exception, data is: {}", excelDataConvertException.getRowIndex(),
                     excelDataConvertException.getColumnIndex(), excelDataConvertException.getCellData());
         }
     }
-    
+
     /**
-     * 这里会一行行的返回头
+     * This method is called for each header row.
      *
-     * @param headMap
-     * @param context
+     * @param headMap The header data as a map.
+     * @param context The analysis context.
      */
     @Override
     public void invokeHead(Map<Integer, ReadCellData<?>> headMap, AnalysisContext context) {
-        log.info("解析到一条头数据:{}", JSON.toJSONString(headMap));
-        // 如果想转成成 Map<Integer,String>
-        // 方案1： 不要implements ReadListener 而是 extends AnalysisEventListener
-        // 方案2： 调用 ConverterUtils.convertToStringMap(headMap, context) 自动会转换
+        log.info("Parsed a header row: {}", JSON.toJSONString(headMap));
+        // If you want to convert it to a Map<Integer, String>:
+        // Solution 1: Do not implement ReadListener, but extend AnalysisEventListener.
+        // Solution 2: Call ConverterUtils.convertToStringMap(headMap, context) to convert automatically.
     }
-    
+
     @Override
     public void invoke(DemoData data, AnalysisContext context) {
-        log.info("解析到一条数据:{}", JSON.toJSONString(data));
+        log.info("Parsed a piece of data: {}", JSON.toJSONString(data));
         if (cachedDataList.size() >= BATCH_COUNT) {
             saveData();
             cachedDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
         }
     }
-    
+
     @Override
     public void doAfterAllAnalysed(AnalysisContext context) {
         saveData();
-        log.info("所有数据解析完成！");
+        log.info("All data has been parsed and processed!");
     }
-    
+
     /**
-     * 加上存储数据库
+     * Simulate saving data to the database.
      */
     private void saveData() {
-        log.info("{}条数据，开始存储数据库！", cachedDataList.size());
-        log.info("存储数据库成功！");
+        log.info("Saving {} records to the database!", cachedDataList.size());
+        log.info("Data saved to the database successfully!");
     }
 }
