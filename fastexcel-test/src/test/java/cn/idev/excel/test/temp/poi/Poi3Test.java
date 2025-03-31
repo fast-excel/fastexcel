@@ -28,14 +28,15 @@ import java.nio.file.Path;
  **/
 
 public class Poi3Test {
-
+    
     private static final Logger LOGGER = LoggerFactory.getLogger(Poi3Test.class);
-
+    
     @Test
     public void Encryption(@TempDir Path tempDir) throws Exception {
         // Write out the encrypted version
         try (POIFSFileSystem fs = new POIFSFileSystem();
-             FileOutputStream fos = new FileOutputStream(tempDir.resolve(System.currentTimeMillis() + ".xlsx").toFile());) {
+                FileOutputStream fos = new FileOutputStream(
+                        tempDir.resolve(System.currentTimeMillis() + ".xlsx").toFile());) {
             String file = TestFileUtil.getPath() + "large" + File.separator + "large07.xlsx";
             EncryptionInfo info = new EncryptionInfo(EncryptionMode.agile);
             Encryptor enc = info.getEncryptor();
@@ -47,14 +48,15 @@ public class Poi3Test {
             fs.writeFilesystem(fos);
         }
     }
-
+    
     @Test
     public void Encryption2() throws Exception {
         Biff8EncryptionKey.setCurrentUserPassword("incorrect pwd");
         POIFSFileSystem fs = new POIFSFileSystem(new File("src/test/resources/demo/pwd_123.xls"), true);
-        Assertions.assertThrows(EncryptedDocumentException.class,()->new HSSFWorkbook(fs.getRoot(), true));
+        Assertions.assertThrows(EncryptedDocumentException.class, () -> new HSSFWorkbook(fs.getRoot(), true));
         Biff8EncryptionKey.setCurrentUserPassword("123");
-        HSSFWorkbook hwb = new HSSFWorkbook(new POIFSFileSystem(new File("src/test/resources/demo/pwd_123.xls"), true).getRoot(), true);
+        HSSFWorkbook hwb = new HSSFWorkbook(
+                new POIFSFileSystem(new File("src/test/resources/demo/pwd_123.xls"), true).getRoot(), true);
         Assertions.assertEquals("Sheet1", hwb.getSheetAt(0).getSheetName());
         Biff8EncryptionKey.setCurrentUserPassword(null);
     }
