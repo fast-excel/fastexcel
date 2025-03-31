@@ -11,6 +11,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.Files;
 import java.util.UUID;
 
 /**
@@ -26,11 +27,12 @@ import java.util.UUID;
  * @author Apache Software Foundation (ASF)
  */
 public class FileUtils {
-    
+
     public static final String POI_FILES = "poifiles";
-    
+
     public static final String EX_CACHE = "excache";
-    
+
+    public static final String ERROR_FILES = "errorfiles";
     /**
      * If a server has multiple projects in use at the same time, a directory with the same name will be created under
      * the temporary directory, but each project is run by a different user, so there is a permission problem, so each
@@ -39,22 +41,27 @@ public class FileUtils {
     private static String tempFilePrefix =
             System.getProperty(TempFile.JAVA_IO_TMPDIR) + File.separator + UUID.randomUUID().toString()
                     + File.separator;
-    
+
     /**
      * Used to store poi temporary files.
      */
     private static String poiFilesPath = tempFilePrefix + POI_FILES + File.separator;
-    
+
     /**
      * Used to store easy excel temporary files.
      */
     private static String cachePath = tempFilePrefix + EX_CACHE + File.separator;
-    
+
+    /**
+     * Used to store error temporary files
+     */
+    private static String errorFilePath = tempFilePrefix + ERROR_FILES + File.separator;
+
     private static final int WRITE_BUFF_SIZE = 8192;
-    
+
     private FileUtils() {
     }
-    
+
     static {
         // Create a temporary directory in advance
         File tempFile = new File(tempFilePrefix);
@@ -63,8 +70,12 @@ public class FileUtils {
         // Initialize the cache directory
         File cacheFile = new File(cachePath);
         createDirectory(cacheFile);
+        // Initialize the error file directory
+        File errorFile = new File(errorFilePath);
+        createDirectory(errorFile);
+        errorFile.deleteOnExit();
     }
-    
+
     /**
      * Reads the contents of a file into a byte array. * The file is always closed.
      *
@@ -81,7 +92,7 @@ public class FileUtils {
             in.close();
         }
     }
-    
+
     /**
      * Opens a {@link FileInputStream} for the specified file, providing better error messages than simply calling
      * <code>new FileInputStream(file)</code>.
@@ -108,7 +119,7 @@ public class FileUtils {
         }
         return new FileInputStream(file);
     }
-    
+
     /**
      * Write inputStream to file
      *
@@ -118,7 +129,7 @@ public class FileUtils {
     public static void writeToFile(File file, InputStream inputStream) {
         writeToFile(file, inputStream, true);
     }
-    
+
     /**
      * Write inputStream to file
      *
@@ -154,20 +165,20 @@ public class FileUtils {
             }
         }
     }
-    
+
     public static void createPoiFilesDirectory() {
         TempFile.setTempFileCreationStrategy(new EasyExcelTempFileCreationStrategy());
     }
-    
+
     public static File createCacheTmpFile() {
         return createDirectory(new File(cachePath + UUID.randomUUID().toString()));
     }
-    
+
     public static File createTmpFile(String fileName) {
         File directory = createDirectory(new File(tempFilePrefix));
         return new File(directory, fileName);
     }
-    
+
     /**
      * @param directory
      */
@@ -177,7 +188,7 @@ public class FileUtils {
         }
         return directory;
     }
-    
+
     /**
      * delete file
      *
@@ -200,27 +211,38 @@ public class FileUtils {
             file.delete();
         }
     }
-    
+
+
+    /**
+     * Generate a temporary error file based on the source file
+     * @param sourceFile sourceFile
+     */
+    public static File createErrorTempleFile(File sourceFile) throws IOException {
+        File tempFile = new File(errorFilePath, UUID.randomUUID() + ".xlsx");
+        writeToFile(tempFile, Files.newInputStream(sourceFile.toPath()));
+        return tempFile;
+    }
+
     public static String getTempFilePrefix() {
         return tempFilePrefix;
     }
-    
+
     public static void setTempFilePrefix(String tempFilePrefix) {
         FileUtils.tempFilePrefix = tempFilePrefix;
     }
-    
+
     public static String getPoiFilesPath() {
         return poiFilesPath;
     }
-    
+
     public static void setPoiFilesPath(String poiFilesPath) {
         FileUtils.poiFilesPath = poiFilesPath;
     }
-    
+
     public static String getCachePath() {
         return cachePath;
     }
-    
+
     public static void setCachePath(String cachePath) {
         FileUtils.cachePath = cachePath;
     }
