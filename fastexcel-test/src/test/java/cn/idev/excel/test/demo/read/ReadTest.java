@@ -133,6 +133,19 @@ public class ReadTest {
         // By default, read the first sheet
         EasyExcel.read(fileName, IndexOrNameData.class, new IndexOrNameDataListener()).numRows(1).sheet().doRead();
     }
+    /**
+     * 增加不同文件多标题映射问题
+     * @author Supoman
+     * @date 2025/3/31
+     * @param  * @param
+     * @return void
+     */
+    @Test
+    public void MultiNameDataRead() {
+        String fileName ="D:\\Download\\demo2.xlsx";
+        // By default, read the first sheet
+        EasyExcel.read(fileName, MultiNameData.class, new MultiNameDataListener()).sheet().doRead();
+    }
 
     /**
      * 读多个或者全部sheet,这里注意一个sheet不能读取多次，多次读取需要重新读取文件
