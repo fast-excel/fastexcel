@@ -10,8 +10,20 @@ import cn.idev.excel.enums.ReadDefaultReturnEnum;
 import cn.idev.excel.event.AnalysisEventListener;
 import cn.idev.excel.event.SyncReadListener;
 import cn.idev.excel.read.listener.ModelBuildEventListener;
+import cn.idev.excel.read.listener.ValidateReadListener;
 import cn.idev.excel.read.metadata.ReadWorkbook;
+import cn.idev.excel.read.metadata.holder.ValidateErrorHolder;
+import cn.idev.excel.read.processor.TextErrorHandler;
+import cn.idev.excel.read.processor.ValidateErrorHandler;
 import cn.idev.excel.support.ExcelTypeEnum;
+import lombok.Getter;
+
+import javax.xml.parsers.SAXParserFactory;
+import java.io.File;
+import java.io.InputStream;
+import java.nio.charset.Charset;
+import java.util.HashSet;
+import java.util.List;
 
 import javax.xml.parsers.SAXParserFactory;
 import java.io.File;
@@ -26,21 +38,25 @@ import java.util.List;
  * @author Jiaju Zhuang
  */
 public class ExcelReaderBuilder extends AbstractExcelReaderParameterBuilder<ExcelReaderBuilder, ReadWorkbook> {
-    
+
     /**
      * Workbook
      */
     private final ReadWorkbook readWorkbook;
-    
+    @Getter
+    private ValidateErrorHandler<?> errorHandler;
+    @Getter
+    private ValidateErrorHolder errorHolder;
+
     public ExcelReaderBuilder() {
         this.readWorkbook = new ReadWorkbook();
     }
-    
+
     public ExcelReaderBuilder excelType(ExcelTypeEnum excelType) {
         readWorkbook.setExcelType(excelType);
         return this;
     }
-    
+
     /**
      * Read InputStream
      * <p>
@@ -50,7 +66,7 @@ public class ExcelReaderBuilder extends AbstractExcelReaderParameterBuilder<Exce
         readWorkbook.setInputStream(inputStream);
         return this;
     }
-    
+
     /**
      * Read file
      * <p>
@@ -60,7 +76,7 @@ public class ExcelReaderBuilder extends AbstractExcelReaderParameterBuilder<Exce
         readWorkbook.setFile(file);
         return this;
     }
-    
+
     /**
      * Read file
      * <p>
@@ -69,7 +85,7 @@ public class ExcelReaderBuilder extends AbstractExcelReaderParameterBuilder<Exce
     public ExcelReaderBuilder file(String pathName) {
         return file(new File(pathName));
     }
-    
+
     /**
      * charset. Only work on the CSV file
      */
@@ -77,7 +93,7 @@ public class ExcelReaderBuilder extends AbstractExcelReaderParameterBuilder<Exce
         readWorkbook.setCharset(charset);
         return this;
     }
-    
+
     /**
      * Mandatory use 'inputStream' .Default is false.
      * <p>
@@ -87,7 +103,7 @@ public class ExcelReaderBuilder extends AbstractExcelReaderParameterBuilder<Exce
         readWorkbook.setMandatoryUseInputStream(mandatoryUseInputStream);
         return this;
     }
-    
+
     /**
      * Default true
      *
@@ -98,7 +114,7 @@ public class ExcelReaderBuilder extends AbstractExcelReaderParameterBuilder<Exce
         readWorkbook.setAutoCloseStream(autoCloseStream);
         return this;
     }
-    
+
     /**
      * Ignore empty rows.Default is true.
      *
@@ -109,7 +125,7 @@ public class ExcelReaderBuilder extends AbstractExcelReaderParameterBuilder<Exce
         readWorkbook.setIgnoreEmptyRow(ignoreEmptyRow);
         return this;
     }
-    
+
     /**
      * This object can be read in the Listener {@link AnalysisEventListener#invoke(Object, AnalysisContext)}
      * {@link AnalysisContext#getCustom()}
@@ -121,7 +137,7 @@ public class ExcelReaderBuilder extends AbstractExcelReaderParameterBuilder<Exce
         readWorkbook.setCustomObject(customObject);
         return this;
     }
-    
+
     /**
      * A cache that stores temp data to save memory.
      *
@@ -132,7 +148,7 @@ public class ExcelReaderBuilder extends AbstractExcelReaderParameterBuilder<Exce
         readWorkbook.setReadCache(readCache);
         return this;
     }
-    
+
     /**
      * Select the cache.Default use {@link SimpleReadCacheSelector}
      *
@@ -143,7 +159,7 @@ public class ExcelReaderBuilder extends AbstractExcelReaderParameterBuilder<Exce
         readWorkbook.setReadCacheSelector(readCacheSelector);
         return this;
     }
-    
+
     /**
      * Whether the encryption
      *
@@ -154,7 +170,7 @@ public class ExcelReaderBuilder extends AbstractExcelReaderParameterBuilder<Exce
         readWorkbook.setPassword(password);
         return this;
     }
-    
+
     /**
      * SAXParserFactory used when reading xlsx.
      * <p>
@@ -171,7 +187,7 @@ public class ExcelReaderBuilder extends AbstractExcelReaderParameterBuilder<Exce
         readWorkbook.setXlsxSAXParserFactoryName(xlsxSAXParserFactoryName);
         return this;
     }
-    
+
     /**
      * Read some extra information, not by default
      *
@@ -185,7 +201,7 @@ public class ExcelReaderBuilder extends AbstractExcelReaderParameterBuilder<Exce
         readWorkbook.getExtraReadSet().add(extraType);
         return this;
     }
-    
+
     /**
      * Whether to use the default listener, which is used by default.
      * <p>
@@ -198,7 +214,7 @@ public class ExcelReaderBuilder extends AbstractExcelReaderParameterBuilder<Exce
         readWorkbook.setUseDefaultListener(useDefaultListener);
         return this;
     }
-    
+
     /**
      * Read not to {@code cn.idev.excel.metadata.BasicParameter#clazz} value, the default will return type. Is only
      * effective when set `useDefaultListener=true` or `useDefaultListener=null`.
@@ -209,22 +225,22 @@ public class ExcelReaderBuilder extends AbstractExcelReaderParameterBuilder<Exce
         readWorkbook.setReadDefaultReturn(readDefaultReturn);
         return this;
     }
-    
+
     public ExcelReaderBuilder numRows(Integer numRows) {
         readWorkbook.setNumRows(numRows);
         return this;
     }
-    
+
     public ExcelReader build() {
         return new ExcelReader(readWorkbook);
     }
-    
+
     public void doReadAll() {
         try (ExcelReader excelReader = build()) {
             excelReader.readAll();
         }
     }
-    
+
     /**
      * Synchronous reads return results
      *
@@ -239,19 +255,19 @@ public class ExcelReaderBuilder extends AbstractExcelReaderParameterBuilder<Exce
         }
         return (List<T>) syncReadListener.getList();
     }
-    
+
     public ExcelReaderSheetBuilder sheet() {
         return sheet(null, null);
     }
-    
+
     public ExcelReaderSheetBuilder sheet(Integer sheetNo) {
         return sheet(sheetNo, null);
     }
-    
+
     public ExcelReaderSheetBuilder sheet(String sheetName) {
         return sheet(null, sheetName);
     }
-    
+
     public ExcelReaderSheetBuilder sheet(Integer sheetNo, String sheetName) {
         ExcelReaderSheetBuilder excelReaderSheetBuilder = new ExcelReaderSheetBuilder(build());
         if (sheetNo != null) {
@@ -262,9 +278,35 @@ public class ExcelReaderBuilder extends AbstractExcelReaderParameterBuilder<Exce
         }
         return excelReaderSheetBuilder;
     }
-    
+
     @Override
     protected ReadWorkbook parameter() {
         return readWorkbook;
+    }
+
+
+    public ExcelReaderBuilder setErrorHandler(ValidateErrorHandler<?> validateErrorHandler) {
+        this.errorHandler = validateErrorHandler;
+        return this;
+    }
+
+
+    /**
+     * enable validate,
+     * Note: The default {@link TextErrorHandler} is used here.
+     * If a replacement is needed, call {@link ExcelReaderBuilder#setErrorHandler} after this method.
+     *
+     * @return
+     */
+    public ExcelReaderBuilder validate() {
+        ValidateReadListener<?> validateReadListener = new ValidateReadListener<>();
+        registerReadListener(validateReadListener);
+        errorHolder = validateReadListener;
+        setErrorHandler(TextErrorHandler.INSTANCE);
+        return this;
+    }
+
+    public <T> T handleError() {
+        return (T) getErrorHandler().handleError(getErrorHolder());
     }
 }
