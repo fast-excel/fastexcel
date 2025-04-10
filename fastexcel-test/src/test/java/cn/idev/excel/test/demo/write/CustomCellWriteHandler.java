@@ -3,6 +3,7 @@ package cn.idev.excel.test.demo.write;
 import cn.idev.excel.util.BooleanUtils;
 import cn.idev.excel.write.handler.CellWriteHandler;
 import cn.idev.excel.write.handler.context.CellWriteHandlerContext;
+
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.common.usermodel.HyperlinkType;
 import org.apache.poi.ss.usermodel.Cell;
@@ -16,7 +17,7 @@ import org.apache.poi.ss.usermodel.Hyperlink;
  */
 @Slf4j
 public class CustomCellWriteHandler implements CellWriteHandler {
-    
+
     @Override
     public void afterCellDispose(CellWriteHandlerContext context) {
         Cell cell = context.getCell();
@@ -29,5 +30,5 @@ public class CustomCellWriteHandler implements CellWriteHandler {
             cell.setHyperlink(hyperlink);
         }
     }
-    
+
 }

@@ -1,6 +1,7 @@
 package cn.idev.excel.write.metadata.style;
 
 import cn.idev.excel.util.StringUtils;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,27 +19,22 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 @Setter
 @EqualsAndHashCode
 public class WriteFont {
-    
     /**
      * The name for the font (i.e. Arial)
      */
     private String fontName;
-    
     /**
      * Height in the familiar unit of measure - points
      */
     private Short fontHeightInPoints;
-    
     /**
      * Whether to use italics or not
      */
     private Boolean italic;
-    
     /**
      * Whether to use a strikeout horizontal line through the text or not
      */
     private Boolean strikeout;
-    
     /**
      * The color for the font
      *
@@ -48,7 +44,6 @@ public class WriteFont {
      * @see IndexedColors
      */
     private Short color;
-    
     /**
      * Set normal, super or subscript.
      *
@@ -57,7 +52,6 @@ public class WriteFont {
      * @see Font#SS_SUB
      */
     private Short typeOffset;
-    
     /**
      * set type of text underlining to use
      *
@@ -67,9 +61,8 @@ public class WriteFont {
      * @see Font#U_SINGLE_ACCOUNTING
      * @see Font#U_DOUBLE_ACCOUNTING
      */
-    
+
     private Byte underline;
-    
     /**
      * Set character-set to use.
      *
@@ -79,12 +72,11 @@ public class WriteFont {
      * @see Font#SYMBOL_CHARSET
      */
     private Integer charset;
-    
     /**
      * Bold
      */
     private Boolean bold;
-    
+
     /**
      * The source is not empty merge the data to the target.
      *

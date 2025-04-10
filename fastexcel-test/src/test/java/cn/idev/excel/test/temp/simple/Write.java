@@ -1,23 +1,24 @@
 package cn.idev.excel.test.temp.simple;
 
-import cn.idev.excel.EasyExcel;
-import cn.idev.excel.ExcelWriter;
-import cn.idev.excel.test.core.large.LargeData;
-import cn.idev.excel.test.demo.write.DemoData;
-import cn.idev.excel.test.util.TestFileUtil;
-import cn.idev.excel.util.BeanMapUtils;
-import cn.idev.excel.write.metadata.WriteSheet;
-import cn.idev.excel.write.metadata.WriteTable;
-import com.alibaba.fastjson2.JSON;
-import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
+import cn.idev.excel.EasyExcel;
+import cn.idev.excel.ExcelWriter;
+import cn.idev.excel.test.core.large.LargeData;
+import cn.idev.excel.test.demo.write.DemoData;
+import cn.idev.excel.util.BeanMapUtils;
+import cn.idev.excel.test.util.TestFileUtil;
+import cn.idev.excel.write.metadata.WriteSheet;
+import cn.idev.excel.write.metadata.WriteTable;
+import com.alibaba.fastjson2.JSON;
+
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 测试poi
@@ -27,9 +28,8 @@ import java.util.Map;
 
 @Slf4j
 public class Write {
-    
     private static final Logger LOGGER = LoggerFactory.getLogger(Write.class);
-    
+
     @Test
     public void simpleWrite1() {
         LargeData ss = new LargeData();
@@ -40,7 +40,7 @@ public class Write {
         System.out.println(map.get("str23"));
         System.out.println(map.get("str22"));
     }
-    
+
     @Test
     public void simpleWrite() {
         log.info("t5");
@@ -50,17 +50,17 @@ public class Write {
         // 如果这里想使用03 则 传入excelType参数即可
         EasyExcel.write(fileName, DemoData.class).relativeHeadRowIndex(10).sheet("模板").doWrite(data());
     }
-    
+
     @Test
     public void simpleWrite2() {
         // 写法1
         String fileName = TestFileUtil.getPath() + "t22" + System.currentTimeMillis() + ".xlsx";
         // 这里 需要指定写用哪个class去读，然后写到第一个sheet，名字为模板 然后文件流会自动关闭
         // 如果这里想使用03 则 传入excelType参数即可
-        EasyExcel.write(fileName, WriteData.class).sheet("模板").registerWriteHandler(new WriteHandler())
-                .doWrite(data1());
+        EasyExcel.write(fileName, WriteData.class).sheet("模板").registerWriteHandler(new WriteHandler()).doWrite(
+            data1());
     }
-    
+
     @Test
     public void simpleWrite3() {
         // 写法1
@@ -68,9 +68,10 @@ public class Write {
         // 这里 需要指定写用哪个class去读，然后写到第一个sheet，名字为模板 然后文件流会自动关闭
         // 如果这里想使用03 则 传入excelType参数即可
         EasyExcel.write(fileName).head(head()).inMemory(true).sheet("模板").registerWriteHandler(new WriteCellHandler())
-                .doWrite(data1());
+            .doWrite(
+                data1());
     }
-    
+
     @Test
     public void json() {
         JsonData jsonData = new JsonData();
@@ -78,18 +79,18 @@ public class Write {
         jsonData.setSS2("22");
         jsonData.setSs3("33");
         System.out.println(JSON.toJSONString(jsonData));
-        
+
     }
-    
+
     @Test
     public void json3() {
         String json = "{\"SS1\":\"11\",\"sS2\":\"22\",\"ss3\":\"33\"}";
-        
+
         JsonData jsonData = JSON.parseObject(json, JsonData.class);
         System.out.println(JSON.toJSONString(jsonData));
-        
+
     }
-    
+
     @Test
     public void tableWrite() {
         String fileName = TestFileUtil.getPath() + "tableWrite" + System.currentTimeMillis() + ".xlsx";
@@ -106,7 +107,7 @@ public class Write {
         /// 千万别忘记close 会帮忙关闭流
         excelWriter.finish();
     }
-    
+
     private List<List<String>> head() {
         List<List<String>> list = new ArrayList<List<String>>();
         List<String> head0 = new ArrayList<String>();
@@ -120,7 +121,7 @@ public class Write {
         list.add(head2);
         return list;
     }
-    
+
     private List<DemoData> data() {
         List<DemoData> list = new ArrayList<DemoData>();
         for (int i = 0; i < 10; i++) {
@@ -132,7 +133,7 @@ public class Write {
         }
         return list;
     }
-    
+
     private List<WriteData> data1() {
         List<WriteData> list = new ArrayList<WriteData>();
         for (int i = 0; i < 10; i++) {
@@ -143,5 +144,5 @@ public class Write {
         }
         return list;
     }
-    
+
 }

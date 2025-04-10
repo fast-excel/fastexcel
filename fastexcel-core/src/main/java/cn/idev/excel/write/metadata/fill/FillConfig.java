@@ -1,6 +1,7 @@
 package cn.idev.excel.write.metadata.fill;
 
 import cn.idev.excel.enums.WriteDirectionEnum;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -20,9 +21,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FillConfig {
-    
     private WriteDirectionEnum direction;
-    
     /**
      * Create a new row each time you use the list parameter.The default create if necessary.
      * <p>
@@ -30,16 +29,16 @@ public class FillConfig {
      * say the whole file will be stored in memory.
      */
     private Boolean forceNewRow;
-    
+
     /**
      * Automatically inherit style
-     * <p>
+     *
      * default true.
      */
     private Boolean autoStyle;
-    
+
     private boolean hasInit;
-    
+
     public void init() {
         if (hasInit) {
             return;

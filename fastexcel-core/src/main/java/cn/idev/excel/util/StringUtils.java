@@ -1,32 +1,34 @@
 package cn.idev.excel.util;
 
 /**
- * Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements.  See the NOTICE
- * file distributed with this work for additional information regarding copyright ownership. The ASF licenses this file
- * to You under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the
- * License.  You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * <p>
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
- * specific language governing permissions and limitations under the License.
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  *
  * @author Apache Software Foundation (ASF)
  */
 public class StringUtils {
-    
-    private StringUtils() {
-    }
-    
+    private StringUtils() {}
+
     /**
      * A String for a space character.
      */
     public static final String SPACE = " ";
-    
+
     /**
      * The empty String {@code ""}.
      */
     public static final String EMPTY = "";
-    
+
     /**
      * <p>Checks if a CharSequence is empty ("") or null.</p>
      *
@@ -39,7 +41,8 @@ public class StringUtils {
      * </pre>
      *
      * <p>NOTE: This method changed in Lang version 2.0.
-     * It no longer trims the CharSequence. That functionality is available in isBlank().</p>
+     * It no longer trims the CharSequence.
+     * That functionality is available in isBlank().</p>
      *
      * @param cs the CharSequence to check, may be null
      * @return {@code true} if the CharSequence is empty or null
@@ -47,7 +50,7 @@ public class StringUtils {
     public static boolean isEmpty(final CharSequence cs) {
         return cs == null || cs.length() == 0;
     }
-    
+
     /**
      * <p>Checks if a CharSequence is empty (""), null or whitespace only.</p>
      *
@@ -76,7 +79,7 @@ public class StringUtils {
         }
         return true;
     }
-    
+
     /**
      * <p>Checks if a CharSequence is not empty (""), not null and not whitespace only.</p>
      *
@@ -91,14 +94,15 @@ public class StringUtils {
      * </pre>
      *
      * @param cs the CharSequence to check, may be null
-     * @return {@code true} if the CharSequence is not empty and not null and not whitespace only
+     * @return {@code true} if the CharSequence is
+     * not empty and not null and not whitespace only
      * @since 2.0
      * @since 3.0 Changed signature from isNotBlank(String) to isNotBlank(CharSequence)
      */
     public static boolean isNotBlank(final CharSequence cs) {
         return !isBlank(cs);
     }
-    
+
     /**
      * <p>Compares two CharSequences, returning {@code true} if they represent
      * equal sequences of characters.</p>
@@ -135,7 +139,7 @@ public class StringUtils {
         }
         return regionMatches(cs1, false, 0, cs2, 0, cs1.length());
     }
-    
+
     /**
      * Green implementation of regionMatches.
      *
@@ -148,50 +152,50 @@ public class StringUtils {
      * @return whether the region matched
      */
     public static boolean regionMatches(final CharSequence cs, final boolean ignoreCase, final int thisStart,
-            final CharSequence substring, final int start, final int length) {
+        final CharSequence substring, final int start, final int length) {
         if (cs instanceof String && substring instanceof String) {
-            return ((String) cs).regionMatches(ignoreCase, thisStart, (String) substring, start, length);
+            return ((String)cs).regionMatches(ignoreCase, thisStart, (String)substring, start, length);
         }
         int index1 = thisStart;
         int index2 = start;
         int tmpLen = length;
-        
+
         // Extract these first so we detect NPEs the same as the java.lang.String version
         final int srcLen = cs.length() - thisStart;
         final int otherLen = substring.length() - start;
-        
+
         // Check for invalid parameters
         if (thisStart < 0 || start < 0 || length < 0) {
             return false;
         }
-        
+
         // Check that the regions are long enough
         if (srcLen < length || otherLen < length) {
             return false;
         }
-        
+
         while (tmpLen-- > 0) {
             final char c1 = cs.charAt(index1++);
             final char c2 = substring.charAt(index2++);
-            
+
             if (c1 == c2) {
                 continue;
             }
-            
+
             if (!ignoreCase) {
                 return false;
             }
-            
+
             // The same check as in String.regionMatches():
             if (Character.toUpperCase(c1) != Character.toUpperCase(c2)
-                    && Character.toLowerCase(c1) != Character.toLowerCase(c2)) {
+                && Character.toLowerCase(c1) != Character.toLowerCase(c2)) {
                 return false;
             }
         }
-        
+
         return true;
     }
-    
+
     /**
      * <p>Checks if the CharSequence contains only Unicode digits.
      * A decimal point is not a Unicode digit and returns false.</p>
@@ -200,8 +204,9 @@ public class StringUtils {
      * An empty CharSequence (length()=0) will return {@code false}.</p>
      *
      * <p>Note that the method does not allow for a leading sign, either positive or negative.
-     * Also, if a String passes the numeric test, it may still generate a NumberFormatException when parsed by
-     * Integer.parseInt or Long.parseLong, e.g. if the value is outside the range for int or long respectively.</p>
+     * Also, if a String passes the numeric test, it may still generate a NumberFormatException
+     * when parsed by Integer.parseInt or Long.parseLong, e.g. if the value is outside the range
+     * for int or long respectively.</p>
      *
      * <pre>
      * StringUtils.isNumeric(null)   = false

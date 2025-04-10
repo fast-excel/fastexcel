@@ -209,18 +209,15 @@ public class ReadTest {
     }
 
     /**
-     * Method to read Excel files with headers that support compatibility, such as case sensitivity or simultaneous
-     * support for Chinese and English headers.
+     * Method to read Excel files with headers that support compatibility, such as case sensitivity or simultaneous support for Chinese and English headers.
      *
      * <p>
-     * 1. Create an entity object corresponding to the Excel data structure. Refer to {@link DemoCompatibleHeaderData}
-     * for implementation details.
+     * 1. Create an entity object corresponding to the Excel data structure. Refer to {@link DemoCompatibleHeaderData} for implementation details.
      * </p>
      *
      * <p>
-     * 2. Since EasyExcel reads the Excel file row by row by default, you need to create a listener that handles each
-     * row's data accordingly. Refer to {@link DemoCompatibleHeaderDataListener} for implementation details. In this
-     * listener, you should override the `invokeHead` method to transform the uploaded headers as needed.
+     * 2. Since EasyExcel reads the Excel file row by row by default, you need to create a listener that handles each row's data accordingly. Refer to {@link DemoCompatibleHeaderDataListener} for implementation details.
+     * In this listener, you should override the `invokeHead` method to transform the uploaded headers as needed.
      * </p>
      *
      * <p>
@@ -231,8 +228,7 @@ public class ReadTest {
     public void compatibleHeaderRead() {
         String fileName = TestFileUtil.getPath() + "demo" + File.separator + "demo.xlsx";
         // Specify the class used for reading and choose to read the first sheet.
-        EasyExcel.read(fileName, DemoCompatibleHeaderData.class, new DemoCompatibleHeaderDataListener()).sheet()
-                .doRead();
+        EasyExcel.read(fileName, DemoCompatibleHeaderData.class, new DemoCompatibleHeaderDataListener()).sheet().doRead();
     }
 
     /**
@@ -271,12 +267,12 @@ public class ReadTest {
         String fileName = TestFileUtil.getPath() + "demo" + File.separator + "extra.xlsx";
         // 这里 需要指定读用哪个class去读，然后读取第一个sheet
         EasyExcel.read(fileName, DemoExtraData.class, new DemoExtraListener())
-                // 需要读取批注 默认不读取
-                .extraRead(CellExtraTypeEnum.COMMENT)
-                // 需要读取超链接 默认不读取
-                .extraRead(CellExtraTypeEnum.HYPERLINK)
-                // 需要读取合并单元格信息 默认不读取
-                .extraRead(CellExtraTypeEnum.MERGE).sheet().doRead();
+            // 需要读取批注 默认不读取
+            .extraRead(CellExtraTypeEnum.COMMENT)
+            // 需要读取超链接 默认不读取
+            .extraRead(CellExtraTypeEnum.HYPERLINK)
+            // 需要读取合并单元格信息 默认不读取
+            .extraRead(CellExtraTypeEnum.MERGE).sheet().doRead();
     }
 
     /**
@@ -354,8 +350,8 @@ public class ReadTest {
         try (ExcelReader excelReader = EasyExcel.read(fileName, DemoData.class, new DemoDataListener()).build()) {
             // 判断是 csv 文件
             if (excelReader.analysisContext().readWorkbookHolder() instanceof CsvReadWorkbookHolder) {
-                CsvReadWorkbookHolder csvReadWorkbookHolder = (CsvReadWorkbookHolder) excelReader.analysisContext()
-                        .readWorkbookHolder();
+                CsvReadWorkbookHolder csvReadWorkbookHolder = (CsvReadWorkbookHolder)excelReader.analysisContext()
+                    .readWorkbookHolder();
                 // 设置成逗号分隔 当然默认也是逗号分隔
                 // 这里要注意 withDelimiter 会重新生成一个 所以要放回去
                 csvReadWorkbookHolder.setCsvFormat(csvReadWorkbookHolder.getCsvFormat().withDelimiter(','));

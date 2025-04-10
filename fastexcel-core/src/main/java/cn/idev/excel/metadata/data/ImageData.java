@@ -13,17 +13,17 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode
 public class ImageData extends ClientAnchorData {
-    
+
     /**
      * image
      */
     private byte[] image;
-    
+
     /**
      * image type
      */
     private ImageType imageType;
-    
+
     @Getter
     public enum ImageType {
         /**
@@ -50,14 +50,14 @@ public class ImageData extends ClientAnchorData {
          * Device independent bitmap
          */
         PICTURE_TYPE_DIB(7),
-        
+
         ;
-        
+
         int value;
-        
+
         ImageType(int value) {
             this.value = value;
         }
     }
-    
+
 }

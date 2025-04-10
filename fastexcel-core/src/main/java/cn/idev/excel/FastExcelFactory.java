@@ -1,5 +1,9 @@
 package cn.idev.excel;
 
+import java.io.File;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 import cn.idev.excel.read.builder.ExcelReaderBuilder;
 import cn.idev.excel.read.builder.ExcelReaderSheetBuilder;
 import cn.idev.excel.read.listener.ReadListener;
@@ -7,17 +11,13 @@ import cn.idev.excel.write.builder.ExcelWriterBuilder;
 import cn.idev.excel.write.builder.ExcelWriterSheetBuilder;
 import cn.idev.excel.write.builder.ExcelWriterTableBuilder;
 
-import java.io.File;
-import java.io.InputStream;
-import java.io.OutputStream;
-
 /**
  * Reader and writer factory class
  *
  * @author jipengfei
  */
 public class FastExcelFactory {
-    
+
     /**
      * Build excel the write
      *
@@ -26,7 +26,7 @@ public class FastExcelFactory {
     public static ExcelWriterBuilder write() {
         return new ExcelWriterBuilder();
     }
-    
+
     /**
      * Build excel the write
      *
@@ -36,7 +36,7 @@ public class FastExcelFactory {
     public static ExcelWriterBuilder write(File file) {
         return write(file, null);
     }
-    
+
     /**
      * Build excel the write
      *
@@ -52,7 +52,7 @@ public class FastExcelFactory {
         }
         return excelWriterBuilder;
     }
-    
+
     /**
      * Build excel the write
      *
@@ -62,7 +62,7 @@ public class FastExcelFactory {
     public static ExcelWriterBuilder write(String pathName) {
         return write(pathName, null);
     }
-    
+
     /**
      * Build excel the write
      *
@@ -78,7 +78,7 @@ public class FastExcelFactory {
         }
         return excelWriterBuilder;
     }
-    
+
     /**
      * Build excel the write
      *
@@ -88,7 +88,7 @@ public class FastExcelFactory {
     public static ExcelWriterBuilder write(OutputStream outputStream) {
         return write(outputStream, null);
     }
-    
+
     /**
      * Build excel the write
      *
@@ -104,7 +104,7 @@ public class FastExcelFactory {
         }
         return excelWriterBuilder;
     }
-    
+
     /**
      * Build excel the <code>writerSheet</code>
      *
@@ -113,7 +113,7 @@ public class FastExcelFactory {
     public static ExcelWriterSheetBuilder writerSheet() {
         return writerSheet(null, null);
     }
-    
+
     /**
      * Build excel the <code>writerSheet</code>
      *
@@ -123,7 +123,7 @@ public class FastExcelFactory {
     public static ExcelWriterSheetBuilder writerSheet(Integer sheetNo) {
         return writerSheet(sheetNo, null);
     }
-    
+
     /**
      * Build excel the 'writerSheet'
      *
@@ -133,7 +133,7 @@ public class FastExcelFactory {
     public static ExcelWriterSheetBuilder writerSheet(String sheetName) {
         return writerSheet(null, sheetName);
     }
-    
+
     /**
      * Build excel the 'writerSheet'
      *
@@ -151,7 +151,7 @@ public class FastExcelFactory {
         }
         return excelWriterSheetBuilder;
     }
-    
+
     /**
      * Build excel the <code>writerTable</code>
      *
@@ -160,7 +160,7 @@ public class FastExcelFactory {
     public static ExcelWriterTableBuilder writerTable() {
         return writerTable(null);
     }
-    
+
     /**
      * Build excel the 'writerTable'
      *
@@ -174,7 +174,7 @@ public class FastExcelFactory {
         }
         return excelWriterTableBuilder;
     }
-    
+
     /**
      * Build excel the read
      *
@@ -183,7 +183,7 @@ public class FastExcelFactory {
     public static ExcelReaderBuilder read() {
         return new ExcelReaderBuilder();
     }
-    
+
     /**
      * Build excel the read
      *
@@ -193,7 +193,7 @@ public class FastExcelFactory {
     public static ExcelReaderBuilder read(File file) {
         return read(file, null, null);
     }
-    
+
     /**
      * Build excel the read
      *
@@ -204,7 +204,7 @@ public class FastExcelFactory {
     public static ExcelReaderBuilder read(File file, ReadListener readListener) {
         return read(file, null, readListener);
     }
-    
+
     /**
      * Build excel the read
      *
@@ -224,7 +224,7 @@ public class FastExcelFactory {
         }
         return excelReaderBuilder;
     }
-    
+
     /**
      * Build excel the read
      *
@@ -234,7 +234,7 @@ public class FastExcelFactory {
     public static ExcelReaderBuilder read(String pathName) {
         return read(pathName, null, null);
     }
-    
+
     /**
      * Build excel the read
      *
@@ -245,7 +245,7 @@ public class FastExcelFactory {
     public static ExcelReaderBuilder read(String pathName, ReadListener readListener) {
         return read(pathName, null, readListener);
     }
-    
+
     /**
      * Build excel the read
      *
@@ -265,7 +265,7 @@ public class FastExcelFactory {
         }
         return excelReaderBuilder;
     }
-    
+
     /**
      * Build excel the read
      *
@@ -275,7 +275,7 @@ public class FastExcelFactory {
     public static ExcelReaderBuilder read(InputStream inputStream) {
         return read(inputStream, null, null);
     }
-    
+
     /**
      * Build excel the read
      *
@@ -286,7 +286,7 @@ public class FastExcelFactory {
     public static ExcelReaderBuilder read(InputStream inputStream, ReadListener readListener) {
         return read(inputStream, null, readListener);
     }
-    
+
     /**
      * Build excel the read
      *
@@ -306,7 +306,7 @@ public class FastExcelFactory {
         }
         return excelReaderBuilder;
     }
-    
+
     /**
      * Build excel the 'readSheet'
      *
@@ -315,7 +315,7 @@ public class FastExcelFactory {
     public static ExcelReaderSheetBuilder readSheet() {
         return readSheet(null, null);
     }
-    
+
     /**
      * Build excel the 'readSheet'
      *
@@ -325,7 +325,7 @@ public class FastExcelFactory {
     public static ExcelReaderSheetBuilder readSheet(Integer sheetNo) {
         return readSheet(sheetNo, null);
     }
-    
+
     /**
      * Build excel the 'readSheet'
      *
@@ -335,7 +335,7 @@ public class FastExcelFactory {
     public static ExcelReaderSheetBuilder readSheet(String sheetName) {
         return readSheet(null, sheetName);
     }
-    
+
     /**
      * Build excel the 'readSheet'
      *
@@ -353,16 +353,15 @@ public class FastExcelFactory {
         }
         return excelReaderSheetBuilder;
     }
-    
+
     /**
      * Build excel the 'readSheet'
-     *
-     * @param sheetNo   Index of sheet,0 base.
+     * @param sheetNo Index of sheet,0 base.
      * @param sheetName The name of sheet.
-     * @param numRows   The number of rows to read, the default is all, start with 0.
+     * @param numRows The number of rows to read, the default is all, start with 0.
      * @return
      */
-    public static ExcelReaderSheetBuilder readSheet(Integer sheetNo, String sheetName, Integer numRows) {
+    public static ExcelReaderSheetBuilder readSheet(Integer sheetNo, String sheetName,Integer numRows) {
         ExcelReaderSheetBuilder excelReaderSheetBuilder = new ExcelReaderSheetBuilder();
         if (sheetNo != null) {
             excelReaderSheetBuilder.sheetNo(sheetNo);
@@ -370,7 +369,7 @@ public class FastExcelFactory {
         if (sheetName != null) {
             excelReaderSheetBuilder.sheetName(sheetName);
         }
-        if (numRows != null) {
+        if (numRows !=null) {
             excelReaderSheetBuilder.numRows(numRows);
         }
         return excelReaderSheetBuilder;

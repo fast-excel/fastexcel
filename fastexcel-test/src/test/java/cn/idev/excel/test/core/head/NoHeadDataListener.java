@@ -1,29 +1,28 @@
 package cn.idev.excel.test.core.head;
 
-import cn.idev.excel.context.AnalysisContext;
+import java.util.ArrayList;
+import java.util.List;
+
 import cn.idev.excel.event.AnalysisEventListener;
+import cn.idev.excel.context.AnalysisContext;
 import com.alibaba.fastjson2.JSON;
+
 import org.junit.jupiter.api.Assertions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Jiaju Zhuang
  */
 public class NoHeadDataListener extends AnalysisEventListener<NoHeadData> {
-    
     private static final Logger LOGGER = LoggerFactory.getLogger(NoHeadData.class);
-    
     List<NoHeadData> list = new ArrayList<NoHeadData>();
-    
+
     @Override
     public void invoke(NoHeadData data, AnalysisContext context) {
         list.add(data);
     }
-    
+
     @Override
     public void doAfterAllAnalysed(AnalysisContext context) {
         Assertions.assertEquals(list.size(), 1);

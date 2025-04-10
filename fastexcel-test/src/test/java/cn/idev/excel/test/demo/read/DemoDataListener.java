@@ -1,12 +1,13 @@
 package cn.idev.excel.test.demo.read;
 
-import cn.idev.excel.context.AnalysisContext;
+import java.util.List;
+
 import cn.idev.excel.read.listener.ReadListener;
 import cn.idev.excel.util.ListUtils;
+import cn.idev.excel.context.AnalysisContext;
 import com.alibaba.fastjson2.JSON;
-import lombok.extern.slf4j.Slf4j;
 
-import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Template reading class
@@ -24,12 +25,10 @@ public class DemoDataListener implements ReadListener<DemoData> {
      * and then clear the list to facilitate memory recycling.
      */
     private static final int BATCH_COUNT = 100;
-
     /**
      * Cached data
      */
     private List<DemoData> cachedDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
-
     /**
      * Assume this is a DAO. Of course, if there is business logic, this can also be a service.
      * If the data does not need to be stored, this object is useless.
