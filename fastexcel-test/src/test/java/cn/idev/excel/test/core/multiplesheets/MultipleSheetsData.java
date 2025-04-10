@@ -11,6 +11,5 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode
 public class MultipleSheetsData {
-    
     private String title;
 }

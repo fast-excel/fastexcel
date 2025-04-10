@@ -1,17 +1,18 @@
 package cn.idev.excel.metadata;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+
 import cn.idev.excel.exception.ExcelGenerateException;
 import cn.idev.excel.metadata.property.ColumnWidthProperty;
 import cn.idev.excel.metadata.property.FontProperty;
 import cn.idev.excel.metadata.property.LoopMergeProperty;
 import cn.idev.excel.metadata.property.StyleProperty;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * excel head
@@ -22,59 +23,51 @@ import java.util.List;
 @Setter
 @EqualsAndHashCode
 public class Head {
-    
     /**
      * Column index of head
      */
     private Integer columnIndex;
-    
     /**
      * It only has values when passed in {@link Sheet#setClazz(Class)} and {@link Table#setClazz(Class)}
      */
     private Field field;
-    
     /**
      * It only has values when passed in {@link Sheet#setClazz(Class)} and {@link Table#setClazz(Class)}
      */
     private String fieldName;
-    
     /**
      * Head name
      */
     private List<String> headNameList;
-    
     /**
      * Whether index is specified
      */
     private Boolean forceIndex;
-    
     /**
      * Whether to specify a name
      */
     private Boolean forceName;
-    
+
     /**
      * column with
      */
     private ColumnWidthProperty columnWidthProperty;
-    
+
     /**
      * Loop merge
      */
     private LoopMergeProperty loopMergeProperty;
-    
     /**
      * Head style
      */
     private StyleProperty headStyleProperty;
-    
     /**
      * Head font
      */
     private FontProperty headFontProperty;
-    
+
     public Head(Integer columnIndex, Field field, String fieldName, List<String> headNameList, Boolean forceIndex,
-            Boolean forceName) {
+        Boolean forceName) {
         this.columnIndex = columnIndex;
         this.field = field;
         this.fieldName = fieldName;

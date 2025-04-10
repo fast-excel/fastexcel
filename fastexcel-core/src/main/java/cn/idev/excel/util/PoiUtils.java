@@ -15,14 +15,14 @@ import java.lang.reflect.Field;
  * @author Jiaju Zhuang
  */
 public class PoiUtils {
-    
+
     /**
      * Whether to customize the height
      */
     public static final BitField CUSTOM_HEIGHT = BitFieldFactory.getInstance(0x640);
-    
+
     private static final Field ROW_RECORD_FIELD = FieldUtils.getField(HSSFRow.class, "row", true);
-    
+
     /**
      * Whether to customize the height
      *
@@ -31,13 +31,13 @@ public class PoiUtils {
      */
     public static boolean customHeight(Row row) {
         if (row instanceof XSSFRow) {
-            XSSFRow xssfRow = (XSSFRow) row;
+            XSSFRow xssfRow = (XSSFRow)row;
             return xssfRow.getCTRow().getCustomHeight();
         }
         if (row instanceof HSSFRow) {
-            HSSFRow hssfRow = (HSSFRow) row;
+            HSSFRow hssfRow = (HSSFRow)row;
             try {
-                RowRecord record = (RowRecord) ROW_RECORD_FIELD.get(hssfRow);
+                RowRecord record = (RowRecord)ROW_RECORD_FIELD.get(hssfRow);
                 return CUSTOM_HEIGHT.getValue(record.getOptionFlags()) == 1;
             } catch (IllegalAccessException ignore) {
             }

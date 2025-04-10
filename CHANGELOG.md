@@ -22,7 +22,7 @@
 4. 更新并增加相关API文档和说明。
 
 具体更新内容如下：
-- 【新增】新功能-支持支持自定义表头解析 [#257](https://github.com/fast-excel/fastexcel/pull/257) [@721806280](https://github.com/721806280)
+- 【新增】新功能-支持自定义表头解析 [#257](https://github.com/fast-excel/fastexcel/pull/257) [@721806280](https://github.com/721806280)
 - 【新增】增加测试用例 [#264](https://github.com/fast-excel/fastexcel/pull/264) [@happyfeetw](https://github.com/happyfeetw)
 - 【改进】将开源协议修改为 Apache-2.0 license [#251](https://github.com/fast-excel/fastexcel/pull/251) [@psxjoy](https://github.com/psxjoy)
 - 【修复】修复最后空列无法读取的BUG [#287](https://github.com/fast-excel/fastexcel/pull/287) [@delei](https://github.com/delei)

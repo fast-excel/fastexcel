@@ -1,7 +1,8 @@
 package cn.idev.excel.analysis.v03;
 
-import cn.idev.excel.context.xls.XlsReadContext;
 import org.apache.poi.hssf.record.Record;
+
+import cn.idev.excel.context.xls.XlsReadContext;
 
 /**
  * Intercepts handle xls reads.
@@ -9,7 +10,6 @@ import org.apache.poi.hssf.record.Record;
  * @author Dan Zheng
  */
 public interface XlsRecordHandler {
-    
     /**
      * Whether to support
      *
@@ -18,7 +18,7 @@ public interface XlsRecordHandler {
      * @return
      */
     boolean support(XlsReadContext xlsReadContext, Record record);
-    
+
     /**
      * Processing record
      *

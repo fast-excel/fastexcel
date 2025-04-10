@@ -1,11 +1,12 @@
 package cn.idev.excel.write.metadata.fill;
 
+import java.util.List;
+
 import cn.idev.excel.enums.WriteTemplateAnalysisCellTypeEnum;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.List;
 
 /**
  * Read the cells of the template while populating the data.
@@ -16,23 +17,15 @@ import java.util.List;
 @Setter
 @EqualsAndHashCode
 public class AnalysisCell {
-    
     private int columnIndex;
-    
     private int rowIndex;
-    
     private List<String> variableList;
-    
     private List<String> prepareDataList;
-    
     private Boolean onlyOneVariable;
-    
     private WriteTemplateAnalysisCellTypeEnum cellType;
-    
     private String prefix;
-    
     private Boolean firstRow;
-    
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -41,13 +34,13 @@ public class AnalysisCell {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        AnalysisCell that = (AnalysisCell) o;
+        AnalysisCell that = (AnalysisCell)o;
         if (columnIndex != that.columnIndex) {
             return false;
         }
         return rowIndex == that.rowIndex;
     }
-    
+
     @Override
     public int hashCode() {
         int result = columnIndex;

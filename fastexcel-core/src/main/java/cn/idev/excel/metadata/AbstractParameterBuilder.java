@@ -1,11 +1,11 @@
 package cn.idev.excel.metadata;
 
+import java.util.List;
+import java.util.Locale;
+
 import cn.idev.excel.converters.Converter;
 import cn.idev.excel.enums.CacheLocationEnum;
 import cn.idev.excel.util.ListUtils;
-
-import java.util.List;
-import java.util.Locale;
 
 /**
  * ExcelBuilder
@@ -13,7 +13,6 @@ import java.util.Locale;
  * @author Jiaju Zhuang
  */
 public abstract class AbstractParameterBuilder<T extends AbstractParameterBuilder, C extends BasicParameter> {
-    
     /**
      * You can only choose one of the {@link #head(List)} and {@link #head(Class)}
      *
@@ -24,7 +23,7 @@ public abstract class AbstractParameterBuilder<T extends AbstractParameterBuilde
         parameter().setHead(head);
         return self();
     }
-    
+
     /**
      * You can only choose one of the {@link #head(List)} and {@link #head(Class)}
      *
@@ -35,7 +34,7 @@ public abstract class AbstractParameterBuilder<T extends AbstractParameterBuilde
         parameter().setClazz(clazz);
         return self();
     }
-    
+
     /**
      * Custom type conversions override the default.
      *
@@ -49,10 +48,10 @@ public abstract class AbstractParameterBuilder<T extends AbstractParameterBuilde
         parameter().getCustomConverterList().add(converter);
         return self();
     }
-    
+
     /**
      * true if date uses 1904 windowing, or false if using 1900 date windowing.
-     * <p>
+     *
      * default is false
      *
      * @param use1904windowing
@@ -62,7 +61,7 @@ public abstract class AbstractParameterBuilder<T extends AbstractParameterBuilde
         parameter().setUse1904windowing(use1904windowing);
         return self();
     }
-    
+
     /**
      * A <code>Locale</code> object represents a specific geographical, political, or cultural region. This parameter is
      * used when formatting dates and numbers.
@@ -74,10 +73,10 @@ public abstract class AbstractParameterBuilder<T extends AbstractParameterBuilde
         parameter().setLocale(locale);
         return self();
     }
-    
+
     /**
      * The cache used when parsing fields such as head.
-     * <p>
+     *
      * default is THREAD_LOCAL.
      *
      * @since 3.3.0
@@ -86,7 +85,7 @@ public abstract class AbstractParameterBuilder<T extends AbstractParameterBuilde
         parameter().setFiledCacheLocation(filedCacheLocation);
         return self();
     }
-    
+
     /**
      * Automatic trim includes sheet name and content
      *
@@ -97,12 +96,12 @@ public abstract class AbstractParameterBuilder<T extends AbstractParameterBuilde
         parameter().setAutoTrim(autoTrim);
         return self();
     }
-    
+
     @SuppressWarnings("unchecked")
     protected T self() {
-        return (T) this;
+        return (T)this;
     }
-    
+
     /**
      * Get parameter
      *

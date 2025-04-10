@@ -37,7 +37,7 @@ If you are using Maven for project building, add the following configuration in 
 <dependency>
     <groupId>cn.idev.excel</groupId>
     <artifactId>fastexcel</artifactId>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
 </dependency>
 ```
 ### Gradle
@@ -45,7 +45,7 @@ If you are using Gradle for project building, add the following configuration in
 
 ```gradle
 dependencies {
-    implementation 'cn.idev.excel:fastexcel:1.1.0'
+    implementation 'cn.idev.excel:fastexcel:1.2.0'
 }
 ```
 ## Update
@@ -73,7 +73,7 @@ Replace with:
 <dependency>
     <groupId>cn.idev.excel</groupId>
     <artifactId>fastexcel</artifactId>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
 </dependency>
 ```
 ### 2. Update Code

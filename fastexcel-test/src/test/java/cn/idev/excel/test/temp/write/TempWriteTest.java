@@ -29,40 +29,44 @@ import java.util.Map;
 
 @Slf4j
 public class TempWriteTest {
-    
+
     @Test
     public void write() {
         TempWriteData tempWriteData = new TempWriteData();
         tempWriteData.setName("zs\r\n \\ \r\n t4");
         EasyExcel.write(TestFileUtil.getPath() + "TempWriteTest" + System.currentTimeMillis() + ".xlsx",
-                        TempWriteData.class).sheet().registerConverter(new CustomStringStringConverter())
-                .doWrite(ListUtils.newArrayList(tempWriteData));
-        
+                TempWriteData.class)
+            .sheet()
+            .registerConverter(new CustomStringStringConverter())
+            .doWrite(ListUtils.newArrayList(tempWriteData));
+
         EasyExcel.write(TestFileUtil.getPath() + "TempWriteTest" + System.currentTimeMillis() + ".xlsx",
-                TempWriteData.class).sheet().doWrite(ListUtils.newArrayList(tempWriteData));
-        
+                TempWriteData.class)
+            .sheet()
+            .doWrite(ListUtils.newArrayList(tempWriteData));
+
     }
-    
+
     @Test
     public void cglib() {
         TempWriteData tempWriteData = new TempWriteData();
         tempWriteData.setName("1");
         tempWriteData.setName1("2");
         BeanMap beanMap = BeanMapUtils.create(tempWriteData);
-        
+
         log.info("d1{}", beanMap.get("name"));
         log.info("d2{}", beanMap.get("name1"));
-        
+
         TempWriteData tempWriteData2 = new TempWriteData();
-        
+
         Map<String, String> map = new HashMap<>();
         map.put("name", "zs");
         BeanMap beanMap2 = BeanMapUtils.create(tempWriteData2);
         beanMap2.putAll(map);
         log.info("3{}", tempWriteData2.getName());
-        
+
     }
-    
+
     @Test
     public void imageWrite() throws Exception {
         //String fileName = TestFileUtil.getPath() + "imageWrite" + System.currentTimeMillis() + ".xlsx";
@@ -79,18 +83,19 @@ public class TempWriteTest {
         //    }
         //}
     }
-    
+
     @Test
     public void imageWritePoi(@TempDir Path tempDir) throws Exception {
         String file = tempDir.resolve(System.currentTimeMillis() + ".xlsx").toString();
         try (SXSSFWorkbook workbook = new SXSSFWorkbook();
-                FileOutputStream fileOutputStream = new FileOutputStream(file);) {
+             FileOutputStream fileOutputStream = new FileOutputStream(file);
+        ) {
             SXSSFSheet sheet = workbook.createSheet("测试");
             CreationHelper helper = workbook.getCreationHelper();
             SXSSFDrawing sxssfDrawin = sheet.createDrawingPatriarch();
-            
+
             byte[] imagebyte = FileUtils.readFileToByteArray(new File("src/test/resources/converter/img.jpg"));
-            
+
             for (int i = 0; i < 1 * 10000; i++) {
                 SXSSFRow row = sheet.createRow(i);
                 SXSSFCell cell = row.createCell(0);
@@ -107,18 +112,19 @@ public class TempWriteTest {
             workbook.write(fileOutputStream);
         }
     }
-    
+
     @Test
     public void tep(@TempDir Path tempDir) throws Exception {
         String file = tempDir.resolve(System.currentTimeMillis() + ".xlsx").toString();
         try (SXSSFWorkbook workbook = new SXSSFWorkbook();
-                FileOutputStream fileOutputStream = new FileOutputStream(file);) {
+             FileOutputStream fileOutputStream = new FileOutputStream(file);
+        ) {
             SXSSFSheet sheet = workbook.createSheet("测试");
             CreationHelper helper = workbook.getCreationHelper();
             SXSSFDrawing sxssfDrawin = sheet.createDrawingPatriarch();
-            
+
             byte[] imagebyte = FileUtils.readFileToByteArray(new File("src/test/resources/converter/img.jpg"));
-            
+
             for (int i = 0; i < 1 * 10000; i++) {
                 SXSSFRow row = sheet.createRow(i);
                 SXSSFCell cell = row.createCell(0);
@@ -135,21 +141,23 @@ public class TempWriteTest {
             workbook.write(fileOutputStream);
         }
     }
-    
+
     @Test
     public void large(@TempDir Path tempDir) throws Exception {
         String file = tempDir.resolve(System.currentTimeMillis() + ".xlsx").toString();
-        SXSSFWorkbook workbook = new SXSSFWorkbook(new XSSFWorkbook(new File("src/test/resources/large/large07.xlsx")));
+        SXSSFWorkbook workbook = new SXSSFWorkbook(new XSSFWorkbook(
+            new File(
+                "src/test/resources/large/large07.xlsx")));
         SXSSFSheet sheet = workbook.createSheet("测试");
-        
+
         SXSSFRow row = sheet.createRow(500000);
         SXSSFCell cell = row.createCell(0);
         cell.setCellValue("test");
-        
+
         FileOutputStream fileOutputStream = new FileOutputStream(file);
         workbook.write(fileOutputStream);
         fileOutputStream.flush();
         workbook.close();
-        
+
     }
 }

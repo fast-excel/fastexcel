@@ -1,56 +1,56 @@
 package cn.idev.excel.test.core.template;
 
-import cn.idev.excel.EasyExcel;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
 import cn.idev.excel.test.util.TestFileUtil;
+import cn.idev.excel.EasyExcel;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Jiaju Zhuang
  */
 @TestMethodOrder(MethodOrderer.MethodName.class)
 public class TemplateDataTest {
-    
+
     private static File file07;
-    
     private static File file03;
-    
+
     @BeforeAll
     public static void init() {
         file07 = TestFileUtil.createNewFile("template07.xlsx");
         file03 = TestFileUtil.createNewFile("template03.xls");
     }
-    
+
     @Test
     public void t01ReadAndWrite07() {
         readAndWrite07(file07);
     }
-    
+
     @Test
     public void t02ReadAndWrite03() {
         readAndWrite03(file03);
     }
-    
+
     private void readAndWrite07(File file) {
         EasyExcel.write(file, TemplateData.class)
-                .withTemplate(TestFileUtil.readFile("template" + File.separator + "template07.xlsx")).sheet()
-                .doWrite(data());
+            .withTemplate(TestFileUtil.readFile("template" + File.separator + "template07.xlsx")).sheet()
+            .doWrite(data());
         EasyExcel.read(file, TemplateData.class, new TemplateDataListener()).headRowNumber(3).sheet().doRead();
     }
-    
+
     private void readAndWrite03(File file) {
         EasyExcel.write(file, TemplateData.class)
-                .withTemplate(TestFileUtil.readFile("template" + File.separator + "template03.xls")).sheet()
-                .doWrite(data());
+            .withTemplate(TestFileUtil.readFile("template" + File.separator + "template03.xls")).sheet()
+            .doWrite(data());
         EasyExcel.read(file, TemplateData.class, new TemplateDataListener()).headRowNumber(3).sheet().doRead();
     }
-    
+
     private List<TemplateData> data() {
         List<TemplateData> list = new ArrayList<TemplateData>();
         TemplateData data = new TemplateData();

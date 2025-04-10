@@ -1,10 +1,10 @@
 package cn.idev.excel.test.demo.fill;
 
+import java.util.Date;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.Date;
 
 /**
  * @author Jiaju Zhuang
@@ -13,11 +13,8 @@ import java.util.Date;
 @Setter
 @EqualsAndHashCode
 public class FillData {
-    
     private String name;
-    
     private double number;
-    
     private Date date;
-    
+
 }

@@ -1,13 +1,14 @@
 package cn.idev.excel.metadata.data;
 
+import java.math.BigDecimal;
+
 import cn.idev.excel.enums.CellDataTypeEnum;
 import cn.idev.excel.metadata.AbstractCell;
 import cn.idev.excel.util.StringUtils;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.math.BigDecimal;
 
 /**
  * Excel internal cell data.
@@ -20,37 +21,33 @@ import java.math.BigDecimal;
 @Setter
 @EqualsAndHashCode
 public class CellData<T> extends AbstractCell {
-    
     /**
      * cell type
      */
     private CellDataTypeEnum type;
-    
     /**
      * {@link CellDataTypeEnum#NUMBER}
      */
     private BigDecimal numberValue;
-    
     /**
      * {@link CellDataTypeEnum#STRING} and{@link CellDataTypeEnum#ERROR}
      */
     private String stringValue;
-    
     /**
      * {@link CellDataTypeEnum#BOOLEAN}
      */
     private Boolean booleanValue;
-    
+
     /**
      * The resulting converted data.
      */
     private T data;
-    
+
     /**
      * formula
      */
     private FormulaData formulaData;
-    
+
     /**
      * Ensure that the object does not appear null
      */
@@ -79,5 +76,5 @@ public class CellData<T> extends AbstractCell {
             default:
         }
     }
-    
+
 }

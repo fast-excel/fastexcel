@@ -1,8 +1,8 @@
 package cn.idev.excel.analysis;
 
-import cn.idev.excel.read.metadata.ReadSheet;
-
 import java.util.List;
+
+import cn.idev.excel.read.metadata.ReadSheet;
 
 /**
  * Excel file Executor
@@ -10,14 +10,14 @@ import java.util.List;
  * @author Jiaju Zhuang
  */
 public interface ExcelReadExecutor {
-    
+
     /**
      * Returns the actual sheet in excel
      *
      * @return Actual sheet in excel
      */
     List<ReadSheet> sheetList();
-    
+
     /**
      * Read the sheet.
      */

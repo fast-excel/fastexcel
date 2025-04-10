@@ -12,7 +12,7 @@ import cn.idev.excel.read.listener.ReadListener;
  */
 @Deprecated
 public abstract class AbstractIgnoreExceptionReadListener<T> implements ReadListener<T> {
-    
+
     /**
      * All listeners receive this method when any one Listener does an error report. If an exception is thrown here, the
      * entire read will terminate.
@@ -21,9 +21,8 @@ public abstract class AbstractIgnoreExceptionReadListener<T> implements ReadList
      * @param context
      */
     @Override
-    public void onException(Exception exception, AnalysisContext context) {
-    }
-    
+    public void onException(Exception exception, AnalysisContext context) {}
+
     /**
      * The current method is called when extra information is returned
      *
@@ -31,9 +30,8 @@ public abstract class AbstractIgnoreExceptionReadListener<T> implements ReadList
      * @param context analysis context
      */
     @Override
-    public void extra(CellExtra extra, AnalysisContext context) {
-    }
-    
+    public void extra(CellExtra extra, AnalysisContext context) {}
+
     @Override
     public boolean hasNext(AnalysisContext context) {
         return true;

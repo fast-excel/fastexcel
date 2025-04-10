@@ -13,12 +13,10 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode
 public class CommentData extends ClientAnchorData {
-    
     /**
      * Name of the original comment author
      */
     private String author;
-    
     /**
      * rich text string
      */

@@ -1,9 +1,13 @@
 package cn.idev.excel.write.metadata.holder;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import cn.idev.excel.enums.HolderEnum;
 import cn.idev.excel.enums.WriteLastRowTypeEnum;
 import cn.idev.excel.util.StringUtils;
 import cn.idev.excel.write.metadata.WriteSheet;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,9 +16,6 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * sheet holder
@@ -26,12 +27,10 @@ import java.util.Map;
 @EqualsAndHashCode
 @NoArgsConstructor
 public class WriteSheetHolder extends AbstractWriteHolder {
-    
     /**
      * current param
      */
     private WriteSheet writeSheet;
-    
     /***
      * Current poi Sheet.This is only for writing, and there may be no data in version 07 when template data needs to be
      * read.
@@ -41,7 +40,6 @@ public class WriteSheetHolder extends AbstractWriteHolder {
      * </ul>
      */
     private Sheet sheet;
-    
     /***
      * Current poi Sheet.Be sure to use and this method when reading template data.
      * <ul>
@@ -50,27 +48,23 @@ public class WriteSheetHolder extends AbstractWriteHolder {
      * </ul>
      */
     private Sheet cachedSheet;
-    
     /***
      * sheetNo
      */
     private Integer sheetNo;
-    
     /***
      * sheetName
      */
     private String sheetName;
-    
     /***
      * poi sheet
      */
     private WriteWorkbookHolder parentWriteWorkbookHolder;
-    
     /***
      * has been initialized table
      */
     private Map<Integer, WriteTableHolder> hasBeenInitializedTable;
-    
+
     /**
      * last column type
      *
@@ -78,18 +72,18 @@ public class WriteSheetHolder extends AbstractWriteHolder {
      * @param writeWorkbookHolder
      */
     private WriteLastRowTypeEnum writeLastRowTypeEnum;
-    
+
     /**
      * last row index
      */
     private Integer lastRowIndex;
-    
+
     public WriteSheetHolder(WriteSheet writeSheet, WriteWorkbookHolder writeWorkbookHolder) {
         super(writeSheet, writeWorkbookHolder);
-        
+
         // init handler
         initHandler(writeSheet, writeWorkbookHolder);
-        
+
         this.writeSheet = writeSheet;
         if (writeSheet.getSheetNo() == null && StringUtils.isEmpty(writeSheet.getSheetName())) {
             this.sheetNo = 0;
@@ -106,7 +100,7 @@ public class WriteSheetHolder extends AbstractWriteHolder {
         }
         lastRowIndex = 0;
     }
-    
+
     /**
      * Get the last line of index, you have to make sure that the data is written next
      *
@@ -132,7 +126,7 @@ public class WriteSheetHolder extends AbstractWriteHolder {
         writeLastRowTypeEnum = WriteLastRowTypeEnum.HAS_DATA;
         return newRowIndex;
     }
-    
+
     @Override
     public HolderEnum holderType() {
         return HolderEnum.SHEET;

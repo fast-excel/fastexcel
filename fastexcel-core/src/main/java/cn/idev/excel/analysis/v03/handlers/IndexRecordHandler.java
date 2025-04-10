@@ -11,12 +11,11 @@ import org.apache.poi.hssf.record.Record;
  * @author Jiaju Zhuang
  */
 public class IndexRecordHandler extends AbstractXlsRecordHandler implements IgnorableXlsRecordHandler {
-    
     @Override
     public void processRecord(XlsReadContext xlsReadContext, Record record) {
         if (xlsReadContext.readSheetHolder() == null) {
             return;
         }
-        xlsReadContext.readSheetHolder().setApproximateTotalRowNumber(((IndexRecord) record).getLastRowAdd1());
+        xlsReadContext.readSheetHolder().setApproximateTotalRowNumber(((IndexRecord)record).getLastRowAdd1());
     }
 }

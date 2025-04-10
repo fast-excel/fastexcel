@@ -1,13 +1,14 @@
 package cn.idev.excel.metadata.csv;
 
-import cn.idev.excel.constant.BuiltinFormats;
-import cn.idev.excel.util.ListUtils;
-import cn.idev.excel.util.MapUtils;
-import org.apache.poi.ss.usermodel.DataFormat;
-
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import cn.idev.excel.util.ListUtils;
+import cn.idev.excel.util.MapUtils;
+import cn.idev.excel.constant.BuiltinFormats;
+
+import org.apache.poi.ss.usermodel.DataFormat;
 
 /**
  * format data
@@ -15,28 +16,25 @@ import java.util.Map;
  * @author Jiaju Zhuang
  */
 public class CsvDataFormat implements DataFormat {
-    
     /**
      * It is stored in both map and list for easy retrieval
      */
     private final Map<String, Short> formatMap;
-    
     private final List<String> formatList;
-    
+
     /**
      * Excel's built-in format conversion.
      */
     private final Map<String, Short> builtinFormatsMap;
-    
     private final String[] builtinFormats;
-    
+
     public CsvDataFormat(Locale locale) {
         formatMap = MapUtils.newHashMap();
         formatList = ListUtils.newArrayList();
         builtinFormatsMap = BuiltinFormats.switchBuiltinFormatsMap(locale);
         builtinFormats = BuiltinFormats.switchBuiltinFormats(locale);
     }
-    
+
     @Override
     public short getFormat(String format) {
         Short index = builtinFormatsMap.get(format);
@@ -47,13 +45,13 @@ public class CsvDataFormat implements DataFormat {
         if (index != null) {
             return index;
         }
-        short indexPrimitive = (short) (formatList.size() + BuiltinFormats.MIN_CUSTOM_DATA_FORMAT_INDEX);
+        short indexPrimitive = (short)(formatList.size() + BuiltinFormats.MIN_CUSTOM_DATA_FORMAT_INDEX);
         index = indexPrimitive;
         formatList.add(format);
         formatMap.put(format, index);
         return indexPrimitive;
     }
-    
+
     @Override
     public String getFormat(short index) {
         if (index < BuiltinFormats.MIN_CUSTOM_DATA_FORMAT_INDEX) {

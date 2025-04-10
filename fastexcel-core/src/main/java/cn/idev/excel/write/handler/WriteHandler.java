@@ -7,6 +7,4 @@ import cn.idev.excel.event.Handler;
  *
  * @author Jiaju Zhuang
  */
-public interface WriteHandler extends Handler {
-
-}
+public interface WriteHandler extends Handler {}

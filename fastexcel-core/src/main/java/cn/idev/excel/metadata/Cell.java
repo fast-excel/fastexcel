@@ -6,14 +6,13 @@ package cn.idev.excel.metadata;
  * @author Jiaju Zhuang
  **/
 public interface Cell {
-    
     /**
      * Row index
      *
      * @return
      */
     Integer getRowIndex();
-    
+
     /**
      * Column index
      *

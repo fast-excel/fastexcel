@@ -1,32 +1,31 @@
 package cn.idev.excel.test.core.annotation;
 
-import cn.idev.excel.context.AnalysisContext;
-import cn.idev.excel.event.AnalysisEventListener;
-import cn.idev.excel.exception.ExcelCommonException;
-import cn.idev.excel.util.DateUtils;
-import com.alibaba.fastjson2.JSON;
-import org.junit.jupiter.api.Assertions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.idev.excel.event.AnalysisEventListener;
+import cn.idev.excel.util.DateUtils;
+import cn.idev.excel.context.AnalysisContext;
+import cn.idev.excel.exception.ExcelCommonException;
+import com.alibaba.fastjson2.JSON;
+
+import org.junit.jupiter.api.Assertions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Jiaju Zhuang
  */
 public class AnnotationDataListener extends AnalysisEventListener<AnnotationData> {
-    
     private static final Logger LOGGER = LoggerFactory.getLogger(AnnotationDataListener.class);
-    
     List<AnnotationData> list = new ArrayList<AnnotationData>();
-    
+
     @Override
     public void invoke(AnnotationData data, AnalysisContext context) {
         list.add(data);
     }
-    
+
     @Override
     public void doAfterAllAnalysed(AnalysisContext context) {
         Assertions.assertEquals(list.size(), 1);

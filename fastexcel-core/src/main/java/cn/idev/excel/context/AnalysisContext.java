@@ -1,5 +1,8 @@
 package cn.idev.excel.context;
 
+import java.io.InputStream;
+import java.util.List;
+
 import cn.idev.excel.event.AnalysisEventListener;
 import cn.idev.excel.read.metadata.ReadSheet;
 import cn.idev.excel.read.metadata.holder.ReadHolder;
@@ -9,87 +12,87 @@ import cn.idev.excel.read.metadata.holder.ReadWorkbookHolder;
 import cn.idev.excel.read.processor.AnalysisEventProcessor;
 import cn.idev.excel.support.ExcelTypeEnum;
 
-import java.io.InputStream;
-import java.util.List;
-
 /**
+ *
  * A context is the main anchorage point of a excel reader.
  *
  * @author jipengfei
  */
 public interface AnalysisContext {
-    
     /**
      * Select the current table
      *
-     * @param readSheet sheet to read
+     * @param readSheet
+     *            sheet to read
      */
     void currentSheet(ReadSheet readSheet);
-    
+
     /**
      * All information about the workbook you are currently working on
      *
      * @return Current workbook holder
      */
     ReadWorkbookHolder readWorkbookHolder();
-    
+
     /**
      * All information about the sheet you are currently working on
      *
      * @return Current sheet holder
      */
     ReadSheetHolder readSheetHolder();
-    
+
     /**
      * Set row of currently operated cell
      *
-     * @param readRowHolder Current row holder
+     * @param readRowHolder
+     *            Current row holder
      */
     void readRowHolder(ReadRowHolder readRowHolder);
-    
+
     /**
      * Row of currently operated cell
      *
      * @return Current row holder
      */
     ReadRowHolder readRowHolder();
-    
+
     /**
      * The current read operation corresponds to the <code>readSheetHolder</code> or <code>readWorkbookHolder</code>
      *
      * @return Current holder
      */
     ReadHolder currentReadHolder();
-    
+
     /**
      * Custom attribute
      *
      * @return
      */
     Object getCustom();
-    
+
     /**
      * Event processor
      *
      * @return
      */
     AnalysisEventProcessor analysisEventProcessor();
-    
+
     /**
      * Data that the customer needs to read
      *
      * @return
      */
     List<ReadSheet> readSheetList();
-    
+
     /**
      * Data that the customer needs to read
      *
      * @param readSheetList
      */
     void readSheetList(List<ReadSheet> readSheetList);
-    
+
     /**
+     *
      * get excel type
      *
      * @return excel type
@@ -97,7 +100,7 @@ public interface AnalysisContext {
      */
     @Deprecated
     ExcelTypeEnum getExcelType();
-    
+
     /**
      * get in io
      *
@@ -106,7 +109,7 @@ public interface AnalysisContext {
      */
     @Deprecated
     InputStream getInputStream();
-    
+
     /**
      * get current row
      *
@@ -115,7 +118,7 @@ public interface AnalysisContext {
      */
     @Deprecated
     Integer getCurrentRowNum();
-    
+
     /**
      * get total row ,Data may be inaccurate
      *
@@ -124,7 +127,7 @@ public interface AnalysisContext {
      */
     @Deprecated
     Integer getTotalCount();
-    
+
     /**
      * get current result
      *
@@ -133,7 +136,7 @@ public interface AnalysisContext {
      */
     @Deprecated
     Object getCurrentRowAnalysisResult();
-    
+
     /**
      * Interrupt execution
      *

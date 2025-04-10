@@ -9,13 +9,12 @@ import org.apache.poi.openxml4j.opc.PackagePart;
  * @author Jiaju Zhuang
  **/
 public class EternalReadCacheSelector implements ReadCacheSelector {
-    
     private ReadCache readCache;
-    
+
     public EternalReadCacheSelector(ReadCache readCache) {
         this.readCache = readCache;
     }
-    
+
     @Override
     public ReadCache readCache(PackagePart sharedStringsTablePackagePart) {
         return readCache;

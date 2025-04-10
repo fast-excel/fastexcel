@@ -16,35 +16,35 @@ import java.util.Map;
  */
 @Slf4j
 public class DemoCompatibleHeaderDataListener extends AnalysisEventListener<DemoCompatibleHeaderData> {
-    
+
     /**
-     * Store data in batches of 100. In practice, you can adjust this number based on your needs. After storing, clear
-     * the list to facilitate memory recovery.
+     * Store data in batches of 100. In practice, you can adjust this number based on your needs.
+     * After storing, clear the list to facilitate memory recovery.
      */
     private static final int BATCH_COUNT = 100;
-    
+
     /**
      * Map various header names to their corresponding annotation header information.
      */
     private final Map<String, String> headerMapping = new HashMap<>(8);
-    
+
     /**
      * Cache data in a list.
      */
     private List<DemoCompatibleHeaderData> cachedDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
-    
+
     {
         // Initialize the header mapping with examples.
         headerMapping.put("字符串标题", "String");
         headerMapping.put("日期标题", "Date");
         headerMapping.put("数字标题", "DoubleData");
     }
-    
+
     /**
      * This method will be called for each row of headers.
      *
-     * @param headMap A map containing the header information.
-     * @param context The analysis context.
+     * @param headMap  A map containing the header information.
+     * @param context  The analysis context.
      */
     @Override
     public void invokeHead(Map<Integer, ReadCellData<?>> headMap, AnalysisContext context) {
@@ -56,7 +56,7 @@ public class DemoCompatibleHeaderDataListener extends AnalysisEventListener<Demo
             value.setStringValue(headerMapping.getOrDefault(stringValue, stringValue));
         });
     }
-    
+
     /**
      * This method is called for each parsed data row.
      *
@@ -74,7 +74,7 @@ public class DemoCompatibleHeaderDataListener extends AnalysisEventListener<Demo
             cachedDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
         }
     }
-    
+
     /**
      * Called when all data has been analyzed.
      *
@@ -85,7 +85,7 @@ public class DemoCompatibleHeaderDataListener extends AnalysisEventListener<Demo
         saveData();
         log.info("All data parsing completed!");
     }
-    
+
     /**
      * Simulates saving data to a database.
      */
@@ -93,5 +93,5 @@ public class DemoCompatibleHeaderDataListener extends AnalysisEventListener<Demo
         log.info("{} rows of data, starting to save to the database!", cachedDataList.size());
         log.info("Data saved successfully to the database!");
     }
-    
+
 }

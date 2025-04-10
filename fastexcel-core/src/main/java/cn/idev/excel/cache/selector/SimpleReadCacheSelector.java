@@ -1,5 +1,7 @@
 package cn.idev.excel.cache.selector;
 
+import java.io.IOException;
+
 import cn.idev.excel.cache.Ehcache;
 import cn.idev.excel.cache.MapCache;
 import cn.idev.excel.cache.ReadCache;
@@ -10,8 +12,6 @@ import org.apache.poi.openxml4j.opc.PackagePart;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-
 /**
  * Simple cache selector
  *
@@ -21,29 +21,27 @@ import java.io.IOException;
 @Setter
 @EqualsAndHashCode
 public class SimpleReadCacheSelector implements ReadCacheSelector {
-    
     private static final Logger LOGGER = LoggerFactory.getLogger(SimpleReadCacheSelector.class);
-    
     /**
      * Convert bytes to megabytes
      */
     private static final long B2M = 1000 * 1000L;
-    
     /**
      * If it's less than 5M, use map cache, or use ehcache.unit MB.
      */
     private static final long DEFAULT_MAX_USE_MAP_CACHE_SIZE = 5;
-    
+
     /**
-     * Maximum batch of `SharedStrings` stored in memory. The batch size is 100.{@link Ehcache#BATCH_COUNT}
+     * Maximum batch of `SharedStrings` stored in memory.
+     * The batch size is 100.{@link Ehcache#BATCH_COUNT}
      */
     private static final int DEFAULT_MAX_EHCACHE_ACTIVATE_BATCH_COUNT = 20;
-    
+
     /**
      * Shared strings exceeding this value will use {@link Ehcache},or use {@link MapCache}.unit MB.
      */
     private Long maxUseMapCacheSize;
-    
+
     /**
      * Maximum size of cache activation.unit MB.
      *
@@ -51,15 +49,16 @@ public class SimpleReadCacheSelector implements ReadCacheSelector {
      */
     @Deprecated
     private Integer maxCacheActivateSize;
-    
+
     /**
-     * Maximum batch of `SharedStrings` stored in memory. The batch size is 100.{@link Ehcache#BATCH_COUNT}
+     * Maximum batch of `SharedStrings` stored in memory.
+     * The batch size is 100.{@link Ehcache#BATCH_COUNT}
      */
     private Integer maxCacheActivateBatchCount;
-    
+
     public SimpleReadCacheSelector() {
     }
-    
+
     /**
      * Parameter maxCacheActivateSize has already been abandoned
      *
@@ -71,7 +70,7 @@ public class SimpleReadCacheSelector implements ReadCacheSelector {
         this.maxUseMapCacheSize = maxUseMapCacheSize;
         this.maxCacheActivateSize = maxCacheActivateSize;
     }
-    
+
     @Override
     public ReadCache readCache(PackagePart sharedStringsTablePackagePart) {
         long size = sharedStringsTablePackagePart.getSize();
@@ -95,7 +94,7 @@ public class SimpleReadCacheSelector implements ReadCacheSelector {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Use ehcache.size:{}", size);
         }
-        
+
         // In order to be compatible with the code
         // If the user set up `maxCacheActivateSize`, then continue using it
         if (maxCacheActivateSize != null) {
@@ -106,6 +105,6 @@ public class SimpleReadCacheSelector implements ReadCacheSelector {
             }
             return new Ehcache(maxCacheActivateSize, maxCacheActivateBatchCount);
         }
-        
+
     }
 }

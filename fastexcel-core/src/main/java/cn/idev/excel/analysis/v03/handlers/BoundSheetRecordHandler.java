@@ -11,10 +11,10 @@ import org.apache.poi.hssf.record.Record;
  * @author Dan Zheng
  */
 public class BoundSheetRecordHandler extends AbstractXlsRecordHandler implements IgnorableXlsRecordHandler {
-    
+
     @Override
     public void processRecord(XlsReadContext xlsReadContext, Record record) {
-        BoundSheetRecord bsr = (BoundSheetRecord) record;
+        BoundSheetRecord bsr = (BoundSheetRecord)record;
         xlsReadContext.xlsReadWorkbookHolder().getBoundSheetRecordList().add(bsr);
     }
 }

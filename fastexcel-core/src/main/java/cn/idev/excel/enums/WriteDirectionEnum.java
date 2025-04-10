@@ -13,6 +13,5 @@ public enum WriteDirectionEnum {
     /**
      * Horizontal write.
      */
-    HORIZONTAL,
-    ;
+    HORIZONTAL,;
 }

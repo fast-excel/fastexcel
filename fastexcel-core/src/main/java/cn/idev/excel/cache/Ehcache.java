@@ -1,8 +1,13 @@
 package cn.idev.excel.cache;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.UUID;
+
 import cn.idev.excel.context.AnalysisContext;
 import cn.idev.excel.util.FileUtils;
 import cn.idev.excel.util.ListUtils;
+
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.ehcache.CacheManager;
@@ -13,10 +18,6 @@ import org.ehcache.config.builders.ResourcePoolsBuilder;
 import org.ehcache.config.units.EntryUnit;
 import org.ehcache.config.units.MemoryUnit;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.UUID;
-
 /**
  * Default cache
  *
@@ -24,76 +25,68 @@ import java.util.UUID;
  */
 @Slf4j
 public class Ehcache implements ReadCache {
-    
     public static final int BATCH_COUNT = 100;
-    
     /**
      * Key index
      */
     private int activeIndex = 0;
-    
     public static final int DEBUG_CACHE_MISS_SIZE = 1000;
-    
     public static final int DEBUG_WRITE_SIZE = 100 * 10000;
-    
     private ArrayList<String> dataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
-    
     private static final CacheManager FILE_CACHE_MANAGER;
-    
     private static final CacheConfiguration<Integer, ArrayList> FILE_CACHE_CONFIGURATION;
-    
     private static final CacheManager ACTIVE_CACHE_MANAGER;
-    
     private static final File CACHE_PATH_FILE;
-    
+
     private final CacheConfiguration<Integer, ArrayList> activeCacheConfiguration;
-    
     /**
      * Bulk storage data
      */
     private org.ehcache.Cache<Integer, ArrayList> fileCache;
-    
     /**
      * Currently active cache
      */
     private org.ehcache.Cache<Integer, ArrayList> activeCache;
-    
     private String cacheAlias;
-    
     /**
      * Count the number of cache misses
      */
     private int cacheMiss = 0;
-    
+
     @Deprecated
     public Ehcache(Integer maxCacheActivateSize) {
         this(maxCacheActivateSize, null);
     }
-    
+
     public Ehcache(Integer maxCacheActivateSize, Integer maxCacheActivateBatchCount) {
         // In order to be compatible with the code
         // If the user set up `maxCacheActivateSize`, then continue using it
         if (maxCacheActivateSize != null) {
-            this.activeCacheConfiguration = CacheConfigurationBuilder.newCacheConfigurationBuilder(Integer.class,
-                    ArrayList.class,
-                    ResourcePoolsBuilder.newResourcePoolsBuilder().heap(maxCacheActivateSize, MemoryUnit.MB)).build();
+            this.activeCacheConfiguration = CacheConfigurationBuilder
+                .newCacheConfigurationBuilder(Integer.class, ArrayList.class,
+                    ResourcePoolsBuilder.newResourcePoolsBuilder()
+                        .heap(maxCacheActivateSize, MemoryUnit.MB))
+                .build();
         } else {
-            this.activeCacheConfiguration = CacheConfigurationBuilder.newCacheConfigurationBuilder(Integer.class,
-                            ArrayList.class,
-                            ResourcePoolsBuilder.newResourcePoolsBuilder().heap(maxCacheActivateBatchCount, EntryUnit.ENTRIES))
-                    .build();
+            this.activeCacheConfiguration = CacheConfigurationBuilder
+                .newCacheConfigurationBuilder(Integer.class, ArrayList.class,
+                    ResourcePoolsBuilder.newResourcePoolsBuilder()
+                        .heap(maxCacheActivateBatchCount, EntryUnit.ENTRIES))
+                .build();
         }
     }
-    
+
     static {
         CACHE_PATH_FILE = FileUtils.createCacheTmpFile();
-        FILE_CACHE_MANAGER = CacheManagerBuilder.newCacheManagerBuilder()
-                .with(CacheManagerBuilder.persistence(CACHE_PATH_FILE)).build(true);
+        FILE_CACHE_MANAGER =
+            CacheManagerBuilder.newCacheManagerBuilder().with(CacheManagerBuilder.persistence(CACHE_PATH_FILE)).build(
+                true);
         ACTIVE_CACHE_MANAGER = CacheManagerBuilder.newCacheManagerBuilder().build(true);
-        FILE_CACHE_CONFIGURATION = CacheConfigurationBuilder.newCacheConfigurationBuilder(Integer.class,
-                ArrayList.class, ResourcePoolsBuilder.newResourcePoolsBuilder().disk(20, MemoryUnit.GB)).build();
+        FILE_CACHE_CONFIGURATION = CacheConfigurationBuilder
+            .newCacheConfigurationBuilder(Integer.class, ArrayList.class, ResourcePoolsBuilder.newResourcePoolsBuilder()
+                .disk(20, MemoryUnit.GB)).build();
     }
-    
+
     @Override
     public void init(AnalysisContext analysisContext) {
         cacheAlias = UUID.randomUUID().toString();
@@ -117,7 +110,7 @@ public class Ehcache implements ReadCache {
         }
         activeCache = ACTIVE_CACHE_MANAGER.createCache(cacheAlias, activeCacheConfiguration);
     }
-    
+
     @Override
     public void put(String value) {
         dataList.add(value);
@@ -133,7 +126,7 @@ public class Ehcache implements ReadCache {
             }
         }
     }
-    
+
     @Override
     public String get(Integer key) {
         if (key == null || key < 0) {
@@ -152,7 +145,7 @@ public class Ehcache implements ReadCache {
         }
         return dataList.get(key % BATCH_COUNT);
     }
-    
+
     @Override
     public void putFinished() {
         if (CollectionUtils.isEmpty(dataList)) {
@@ -160,11 +153,11 @@ public class Ehcache implements ReadCache {
         }
         fileCache.put(activeIndex, dataList);
     }
-    
+
     @Override
     public void destroy() {
         FILE_CACHE_MANAGER.removeCache(cacheAlias);
         ACTIVE_CACHE_MANAGER.removeCache(cacheAlias);
     }
-    
+
 }

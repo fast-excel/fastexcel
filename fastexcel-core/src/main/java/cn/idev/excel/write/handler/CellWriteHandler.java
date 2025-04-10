@@ -1,15 +1,16 @@
 package cn.idev.excel.write.handler;
 
+import java.util.List;
+
 import cn.idev.excel.metadata.Head;
 import cn.idev.excel.metadata.data.WriteCellData;
 import cn.idev.excel.write.handler.context.CellWriteHandlerContext;
 import cn.idev.excel.write.metadata.holder.WriteSheetHolder;
 import cn.idev.excel.write.metadata.holder.WriteTableHolder;
+
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
-
-import java.util.List;
 
 /**
  * intercepts handle cell creation
@@ -17,7 +18,7 @@ import java.util.List;
  * @author Jiaju Zhuang
  */
 public interface CellWriteHandler extends WriteHandler {
-    
+
     /**
      * Called before create the cell
      *
@@ -25,9 +26,9 @@ public interface CellWriteHandler extends WriteHandler {
      */
     default void beforeCellCreate(CellWriteHandlerContext context) {
         beforeCellCreate(context.getWriteSheetHolder(), context.getWriteTableHolder(), context.getRow(),
-                context.getHeadData(), context.getColumnIndex(), context.getRelativeRowIndex(), context.getHead());
+            context.getHeadData(), context.getColumnIndex(), context.getRelativeRowIndex(), context.getHead());
     }
-    
+
     /**
      * Called before create the cell
      *
@@ -40,9 +41,8 @@ public interface CellWriteHandler extends WriteHandler {
      * @param isHead           It will always be false when fill data.
      */
     default void beforeCellCreate(WriteSheetHolder writeSheetHolder, WriteTableHolder writeTableHolder, Row row,
-            Head head, Integer columnIndex, Integer relativeRowIndex, Boolean isHead) {
-    }
-    
+        Head head, Integer columnIndex, Integer relativeRowIndex, Boolean isHead) {}
+
     /**
      * Called after the cell is created
      *
@@ -50,9 +50,9 @@ public interface CellWriteHandler extends WriteHandler {
      */
     default void afterCellCreate(CellWriteHandlerContext context) {
         afterCellCreate(context.getWriteSheetHolder(), context.getWriteTableHolder(), context.getCell(),
-                context.getHeadData(), context.getRelativeRowIndex(), context.getHead());
+            context.getHeadData(), context.getRelativeRowIndex(), context.getHead());
     }
-    
+
     /**
      * Called after the cell is created
      *
@@ -64,21 +64,20 @@ public interface CellWriteHandler extends WriteHandler {
      * @param isHead           It will always be false when fill data.
      */
     default void afterCellCreate(WriteSheetHolder writeSheetHolder, WriteTableHolder writeTableHolder, Cell cell,
-            Head head, Integer relativeRowIndex, Boolean isHead) {
-    }
-    
+        Head head, Integer relativeRowIndex, Boolean isHead) {}
+
     /**
      * Called after the cell data is converted
      *
      * @param context
      */
     default void afterCellDataConverted(CellWriteHandlerContext context) {
-        WriteCellData<?> writeCellData =
-                CollectionUtils.isNotEmpty(context.getCellDataList()) ? context.getCellDataList().get(0) : null;
+        WriteCellData<?> writeCellData = CollectionUtils.isNotEmpty(context.getCellDataList()) ? context
+            .getCellDataList().get(0) : null;
         afterCellDataConverted(context.getWriteSheetHolder(), context.getWriteTableHolder(), writeCellData,
-                context.getCell(), context.getHeadData(), context.getRelativeRowIndex(), context.getHead());
+            context.getCell(), context.getHeadData(), context.getRelativeRowIndex(), context.getHead());
     }
-    
+
     /**
      * Called after the cell data is converted
      *
@@ -91,9 +90,8 @@ public interface CellWriteHandler extends WriteHandler {
      * @param isHead           It will always be false when fill data.
      */
     default void afterCellDataConverted(WriteSheetHolder writeSheetHolder, WriteTableHolder writeTableHolder,
-            WriteCellData<?> cellData, Cell cell, Head head, Integer relativeRowIndex, Boolean isHead) {
-    }
-    
+        WriteCellData<?> cellData, Cell cell, Head head, Integer relativeRowIndex, Boolean isHead) {}
+
     /**
      * Called after all operations on the cell have been completed
      *
@@ -101,9 +99,9 @@ public interface CellWriteHandler extends WriteHandler {
      */
     default void afterCellDispose(CellWriteHandlerContext context) {
         afterCellDispose(context.getWriteSheetHolder(), context.getWriteTableHolder(), context.getCellDataList(),
-                context.getCell(), context.getHeadData(), context.getRelativeRowIndex(), context.getHead());
+            context.getCell(), context.getHeadData(), context.getRelativeRowIndex(), context.getHead());
     }
-    
+
     /**
      * Called after all operations on the cell have been completed
      *
@@ -116,6 +114,5 @@ public interface CellWriteHandler extends WriteHandler {
      * @param isHead           It will always be false when fill data.
      */
     default void afterCellDispose(WriteSheetHolder writeSheetHolder, WriteTableHolder writeTableHolder,
-            List<WriteCellData<?>> cellDataList, Cell cell, Head head, Integer relativeRowIndex, Boolean isHead) {
-    }
+        List<WriteCellData<?>> cellDataList, Cell cell, Head head, Integer relativeRowIndex, Boolean isHead) {}
 }

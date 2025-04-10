@@ -11,8 +11,8 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode
 public class ExtraData {
-    
+
     private String row1;
-    
+
     private String row2;
 }

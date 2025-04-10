@@ -1,5 +1,9 @@
 package cn.idev.excel.analysis.v07.handlers.sax;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import cn.idev.excel.constant.ExcelXmlConstants;
 import cn.idev.excel.analysis.v07.handlers.CellFormulaTagHandler;
 import cn.idev.excel.analysis.v07.handlers.CellInlineStringValueTagHandler;
 import cn.idev.excel.analysis.v07.handlers.CellTagHandler;
@@ -9,26 +13,21 @@ import cn.idev.excel.analysis.v07.handlers.HyperlinkTagHandler;
 import cn.idev.excel.analysis.v07.handlers.MergeCellTagHandler;
 import cn.idev.excel.analysis.v07.handlers.RowTagHandler;
 import cn.idev.excel.analysis.v07.handlers.XlsxTagHandler;
-import cn.idev.excel.constant.ExcelXmlConstants;
 import cn.idev.excel.context.xlsx.XlsxReadContext;
+
 import lombok.extern.slf4j.Slf4j;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author jipengfei
  */
 @Slf4j
 public class XlsxRowHandler extends DefaultHandler {
-    
     private final XlsxReadContext xlsxReadContext;
-    
     private static final Map<String, XlsxTagHandler> XLSX_CELL_HANDLER_MAP = new HashMap<>(64);
-    
+
     static {
         CellFormulaTagHandler cellFormulaTagHandler = new CellFormulaTagHandler();
         XLSX_CELL_HANDLER_MAP.put(ExcelXmlConstants.CELL_FORMULA_TAG, cellFormulaTagHandler);
@@ -63,11 +62,11 @@ public class XlsxRowHandler extends DefaultHandler {
         XLSX_CELL_HANDLER_MAP.put(ExcelXmlConstants.X_ROW_TAG, rowTagHandler);
         XLSX_CELL_HANDLER_MAP.put(ExcelXmlConstants.NS2_ROW_TAG, rowTagHandler);
     }
-    
+
     public XlsxRowHandler(XlsxReadContext xlsxReadContext) {
         this.xlsxReadContext = xlsxReadContext;
     }
-    
+
     @Override
     public void startElement(String uri, String localName, String name, Attributes attributes) throws SAXException {
         XlsxTagHandler handler = XLSX_CELL_HANDLER_MAP.get(name);
@@ -77,7 +76,7 @@ public class XlsxRowHandler extends DefaultHandler {
         xlsxReadContext.xlsxReadSheetHolder().getTagDeque().push(name);
         handler.startElement(xlsxReadContext, name, attributes);
     }
-    
+
     @Override
     public void characters(char[] ch, int start, int length) throws SAXException {
         String currentTag = xlsxReadContext.xlsxReadSheetHolder().getTagDeque().peek();
@@ -90,7 +89,7 @@ public class XlsxRowHandler extends DefaultHandler {
         }
         handler.characters(xlsxReadContext, ch, start, length);
     }
-    
+
     @Override
     public void endElement(String uri, String localName, String name) throws SAXException {
         XlsxTagHandler handler = XLSX_CELL_HANDLER_MAP.get(name);
@@ -100,5 +99,5 @@ public class XlsxRowHandler extends DefaultHandler {
         handler.endElement(xlsxReadContext, name);
         xlsxReadContext.xlsxReadSheetHolder().getTagDeque().pop();
     }
-    
+
 }

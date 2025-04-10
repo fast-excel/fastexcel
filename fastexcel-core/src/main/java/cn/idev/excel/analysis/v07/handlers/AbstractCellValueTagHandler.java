@@ -8,10 +8,10 @@ import cn.idev.excel.context.xlsx.XlsxReadContext;
  * @author jipengfei
  */
 public abstract class AbstractCellValueTagHandler extends AbstractXlsxTagHandler {
-    
+
     @Override
     public void characters(XlsxReadContext xlsxReadContext, char[] ch, int start, int length) {
         xlsxReadContext.xlsxReadSheetHolder().getTempData().append(ch, start, length);
     }
-    
+
 }

@@ -21,14 +21,15 @@ import java.math.RoundingMode;
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 public @interface NumberFormat {
-    
+
     /**
+     *
      * Specific format reference {@link java.text.DecimalFormat}
      *
      * @return Format pattern
      */
     String value() default "";
-    
+
     /**
      * Rounded by default
      *

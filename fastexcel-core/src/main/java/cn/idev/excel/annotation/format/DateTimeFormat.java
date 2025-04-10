@@ -1,12 +1,12 @@
 package cn.idev.excel.annotation.format;
 
-import cn.idev.excel.enums.BooleanEnum;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+
+import cn.idev.excel.enums.BooleanEnum;
 
 /**
  * Convert date format.
@@ -22,14 +22,15 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 public @interface DateTimeFormat {
-    
+
     /**
+     *
      * Specific format reference {@link java.text.SimpleDateFormat}
      *
      * @return Format pattern
      */
     String value() default "";
-    
+
     /**
      * True if date uses 1904 windowing, or false if using 1900 date windowing.
      *

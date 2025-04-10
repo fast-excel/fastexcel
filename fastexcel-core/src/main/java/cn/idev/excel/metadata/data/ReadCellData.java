@@ -1,13 +1,14 @@
 package cn.idev.excel.metadata.data;
 
-import cn.idev.excel.constant.EasyExcelConstants;
+import java.math.BigDecimal;
+
 import cn.idev.excel.enums.CellDataTypeEnum;
+import cn.idev.excel.constant.EasyExcelConstants;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.math.BigDecimal;
 
 /**
  * read cell data
@@ -20,7 +21,7 @@ import java.math.BigDecimal;
 @EqualsAndHashCode
 @NoArgsConstructor
 public class ReadCellData<T> extends CellData<T> {
-    
+
     /**
      * originalNumberValue vs numberValue
      * <ol>
@@ -42,12 +43,12 @@ public class ReadCellData<T> extends CellData<T> {
      * {@link CellDataTypeEnum#NUMBER} {@link CellDataTypeEnum#DATE}
      */
     private BigDecimal originalNumberValue;
-    
+
     /**
      * data format.
      */
     private DataFormatData dataFormatData;
-    
+
     public ReadCellData(CellDataTypeEnum type) {
         super();
         if (type == null) {
@@ -55,16 +56,16 @@ public class ReadCellData<T> extends CellData<T> {
         }
         setType(type);
     }
-    
+
     public ReadCellData(T data) {
         super();
         setData(data);
     }
-    
+
     public ReadCellData(String stringValue) {
         this(CellDataTypeEnum.STRING, stringValue);
     }
-    
+
     public ReadCellData(CellDataTypeEnum type, String stringValue) {
         super();
         if (type != CellDataTypeEnum.STRING && type != CellDataTypeEnum.ERROR) {
@@ -76,7 +77,7 @@ public class ReadCellData<T> extends CellData<T> {
         setType(type);
         setStringValue(stringValue);
     }
-    
+
     public ReadCellData(BigDecimal numberValue) {
         super();
         if (numberValue == null) {
@@ -85,7 +86,7 @@ public class ReadCellData<T> extends CellData<T> {
         setType(CellDataTypeEnum.NUMBER);
         setNumberValue(numberValue);
     }
-    
+
     public ReadCellData(Boolean booleanValue) {
         super();
         if (booleanValue == null) {
@@ -94,43 +95,43 @@ public class ReadCellData<T> extends CellData<T> {
         setType(CellDataTypeEnum.BOOLEAN);
         setBooleanValue(booleanValue);
     }
-    
+
     public static ReadCellData<?> newEmptyInstance() {
         return newEmptyInstance(null, null);
     }
-    
+
     public static ReadCellData<?> newEmptyInstance(Integer rowIndex, Integer columnIndex) {
         ReadCellData<?> cellData = new ReadCellData<>(CellDataTypeEnum.EMPTY);
         cellData.setRowIndex(rowIndex);
         cellData.setColumnIndex(columnIndex);
         return cellData;
     }
-    
+
     public static ReadCellData<?> newInstance(Boolean booleanValue) {
         return newInstance(booleanValue, null, null);
     }
-    
+
     public static ReadCellData<?> newInstance(Boolean booleanValue, Integer rowIndex, Integer columnIndex) {
         ReadCellData<?> cellData = new ReadCellData<>(booleanValue);
         cellData.setRowIndex(rowIndex);
         cellData.setColumnIndex(columnIndex);
         return cellData;
     }
-    
+
     public static ReadCellData<?> newInstance(String stringValue, Integer rowIndex, Integer columnIndex) {
         ReadCellData<?> cellData = new ReadCellData<>(stringValue);
         cellData.setRowIndex(rowIndex);
         cellData.setColumnIndex(columnIndex);
         return cellData;
     }
-    
+
     public static ReadCellData<?> newInstance(BigDecimal numberValue, Integer rowIndex, Integer columnIndex) {
         ReadCellData<?> cellData = new ReadCellData<>(numberValue);
         cellData.setRowIndex(rowIndex);
         cellData.setColumnIndex(columnIndex);
         return cellData;
     }
-    
+
     public static ReadCellData<?> newInstanceOriginal(BigDecimal numberValue, Integer rowIndex, Integer columnIndex) {
         ReadCellData<?> cellData = new ReadCellData<>(numberValue);
         cellData.setRowIndex(rowIndex);
@@ -139,7 +140,7 @@ public class ReadCellData<T> extends CellData<T> {
         cellData.setNumberValue(numberValue.round(EasyExcelConstants.EXCEL_MATH_CONTEXT));
         return cellData;
     }
-    
+
     @Override
     public ReadCellData<Object> clone() {
         ReadCellData<Object> readCellData = new ReadCellData<>();
