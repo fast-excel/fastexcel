@@ -3,7 +3,7 @@ name: Publish package to the Maven Central Repository
 on:
   release:
     types: [created]
-
+  workflow_dispatch:
 jobs:
   publish:
     runs-on: ubuntu-24.04
