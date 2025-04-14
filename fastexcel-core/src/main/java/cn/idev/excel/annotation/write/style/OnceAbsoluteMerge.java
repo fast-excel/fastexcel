@@ -15,28 +15,27 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 public @interface OnceAbsoluteMerge {
-    
     /**
      * First row
      *
      * @return
      */
     int firstRowIndex() default -1;
-    
+
     /**
      * Last row
      *
      * @return
      */
     int lastRowIndex() default -1;
-    
+
     /**
      * First column
      *
      * @return
      */
     int firstColumnIndex() default -1;
-    
+
     /**
      * Last row
      *

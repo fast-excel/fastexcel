@@ -45,14 +45,14 @@ FastExcel 将始终坚持免费开源，并采用商业友好的 Apache 协议�
 <dependency>
     <groupId>cn.idev.excel</groupId>
     <artifactId>fastexcel</artifactId>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
 </dependency>
 ```
 ### Gradle
 如果您使用 Gradle 进行项目构建，请在 `build.gradle` 文件中引入以下配置：
 ```gradle
 dependencies {
-    implementation 'cn.idev.excel:fastexcel:1.1.0'
+    implementation 'cn.idev.excel:fastexcel:1.2.0'
 }
 ```
 ## EasyExcel 与 FastExcel 的区别
@@ -77,7 +77,7 @@ dependencies {
 <dependency>
     <groupId>cn.idev.excel</groupId>
     <artifactId>fastexcel</artifactId>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
 </dependency>
 ```
 

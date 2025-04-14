@@ -1,29 +1,28 @@
 package cn.idev.excel.test.core.simple;
 
-import cn.idev.excel.context.AnalysisContext;
+import java.util.ArrayList;
+import java.util.List;
+
 import cn.idev.excel.event.AnalysisEventListener;
+import cn.idev.excel.context.AnalysisContext;
 import com.alibaba.fastjson2.JSON;
+
 import org.junit.jupiter.api.Assertions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Jiaju Zhuang
  */
 public class SimpleDataSheetNameListener extends AnalysisEventListener<SimpleData> {
-    
     private static final Logger LOGGER = LoggerFactory.getLogger(SimpleDataSheetNameListener.class);
-    
     List<SimpleData> list = new ArrayList<SimpleData>();
-    
+
     @Override
     public void invoke(SimpleData data, AnalysisContext context) {
         list.add(data);
     }
-    
+
     @Override
     public void doAfterAllAnalysed(AnalysisContext context) {
         Assertions.assertEquals(list.size(), 1);

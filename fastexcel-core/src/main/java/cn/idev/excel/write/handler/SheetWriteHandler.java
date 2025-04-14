@@ -10,7 +10,7 @@ import cn.idev.excel.write.metadata.holder.WriteWorkbookHolder;
  * @author Jiaju Zhuang
  */
 public interface SheetWriteHandler extends WriteHandler {
-    
+
     /**
      * Called before create the sheet
      *
@@ -19,16 +19,15 @@ public interface SheetWriteHandler extends WriteHandler {
     default void beforeSheetCreate(SheetWriteHandlerContext context) {
         beforeSheetCreate(context.getWriteWorkbookHolder(), context.getWriteSheetHolder());
     }
-    
+
     /**
      * Called before create the sheet
      *
      * @param writeWorkbookHolder
      * @param writeSheetHolder
      */
-    default void beforeSheetCreate(WriteWorkbookHolder writeWorkbookHolder, WriteSheetHolder writeSheetHolder) {
-    }
-    
+    default void beforeSheetCreate(WriteWorkbookHolder writeWorkbookHolder, WriteSheetHolder writeSheetHolder) {}
+
     /**
      * Called after the sheet is created
      *
@@ -37,13 +36,12 @@ public interface SheetWriteHandler extends WriteHandler {
     default void afterSheetCreate(SheetWriteHandlerContext context) {
         afterSheetCreate(context.getWriteWorkbookHolder(), context.getWriteSheetHolder());
     }
-    
+
     /**
      * Called after the sheet is created
      *
      * @param writeWorkbookHolder
      * @param writeSheetHolder
      */
-    default void afterSheetCreate(WriteWorkbookHolder writeWorkbookHolder, WriteSheetHolder writeSheetHolder) {
-    }
+    default void afterSheetCreate(WriteWorkbookHolder writeWorkbookHolder, WriteSheetHolder writeSheetHolder) {}
 }

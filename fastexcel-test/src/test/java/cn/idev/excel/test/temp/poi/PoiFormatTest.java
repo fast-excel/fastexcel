@@ -1,5 +1,8 @@
 package cn.idev.excel.test.temp.poi;
 
+import java.io.IOException;
+import java.util.Locale;
+
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.xssf.streaming.SXSSFRow;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
@@ -12,9 +15,6 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-import java.util.Locale;
-
 /**
  * 测试poi
  *
@@ -22,9 +22,8 @@ import java.util.Locale;
  **/
 
 public class PoiFormatTest {
-    
     private static final Logger LOGGER = LoggerFactory.getLogger(PoiFormatTest.class);
-    
+
     @Test
     public void lastRowNum() throws IOException {
         String file = "src/test/resources/poi/last_row_number_test.xlsx";
@@ -36,7 +35,7 @@ public class PoiFormatTest {
         xssfSheet.createRow(20);
         LOGGER.info("一共行数:{}", xssfSheet.getLastRowNum());
     }
-    
+
     @Test
     public void lastRowNumXSSF() throws IOException {
         String file = "src/test/resources/poi/last_row_number_xssf_test.xlsx";
@@ -48,6 +47,6 @@ public class PoiFormatTest {
         XSSFCell xssfCell = row.getCell(0);
         DataFormatter d = new DataFormatter(Locale.CHINA);
         LOGGER.info("fo:{}", d.formatCellValue(xssfCell));
-        
+
     }
 }

@@ -1,15 +1,5 @@
 package cn.idev.excel.test.core.converter;
 
-import cn.idev.excel.EasyExcel;
-import cn.idev.excel.metadata.data.WriteCellData;
-import cn.idev.excel.test.util.TestFileUtil;
-import cn.idev.excel.test.util.TestUtil;
-import cn.idev.excel.util.FileUtils;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
-
 import java.io.File;
 import java.io.InputStream;
 import java.math.BigDecimal;
@@ -17,22 +7,29 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.idev.excel.util.FileUtils;
+import cn.idev.excel.test.util.TestFileUtil;
+import cn.idev.excel.test.util.TestUtil;
+import cn.idev.excel.EasyExcel;
+import cn.idev.excel.metadata.data.WriteCellData;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+
 /**
  * @author Jiaju Zhuang
  */
 @TestMethodOrder(MethodOrderer.MethodName.class)
 public class ConverterDataTest {
-    
+
     private static File file07;
-    
     private static File file03;
-    
     private static File fileCsv;
-    
     private static File fileImage07;
-    
     private static File fileImage03;
-    
+
     @BeforeAll
     public static void init() {
         file07 = TestFileUtil.createNewFile("converter07.xlsx");
@@ -41,52 +38,52 @@ public class ConverterDataTest {
         fileImage07 = TestFileUtil.createNewFile("converterImage07.xlsx");
         fileImage03 = TestFileUtil.createNewFile("converterImage03.xls");
     }
-    
+
     @Test
     public void t01ReadAndWrite07() throws Exception {
         readAndWrite(file07);
     }
-    
+
     @Test
     public void t02ReadAndWrite03() throws Exception {
         readAndWrite(file03);
     }
-    
+
     @Test
     public void t03ReadAndWriteCsv() throws Exception {
         readAndWrite(fileCsv);
     }
-    
+
     private void readAndWrite(File file) throws Exception {
         EasyExcel.write(file, ConverterWriteData.class).sheet().doWrite(data());
         EasyExcel.read(file, ConverterReadData.class, new ConverterDataListener()).sheet().doRead();
     }
-    
+
     @Test
     public void t11ReadAllConverter07() {
         readAllConverter("converter" + File.separator + "converter07.xlsx");
     }
-    
+
     @Test
     public void t12ReadAllConverter03() {
         readAllConverter("converter" + File.separator + "converter03.xls");
     }
-    
+
     @Test
     public void t13ReadAllConverterCsv() {
         readAllConverter("converter" + File.separator + "converterCsv.csv");
     }
-    
+
     @Test
     public void t21WriteImage07() throws Exception {
         writeImage(fileImage07);
     }
-    
+
     @Test
     public void t22WriteImage03() throws Exception {
         writeImage(fileImage03);
     }
-    
+
     private void writeImage(File file) throws Exception {
         InputStream inputStream = null;
         try {
@@ -106,12 +103,12 @@ public class ConverterDataTest {
             }
         }
     }
-    
+
     private void readAllConverter(String fileName) {
         EasyExcel.read(TestFileUtil.readFile(fileName), ReadAllConverterData.class, new ReadAllConverterDataListener())
-                .sheet().doRead();
+            .sheet().doRead();
     }
-    
+
     private List<ConverterWriteData> data() throws Exception {
         List<ConverterWriteData> list = new ArrayList<ConverterWriteData>();
         ConverterWriteData converterWriteData = new ConverterWriteData();
@@ -123,10 +120,10 @@ public class ConverterDataTest {
         converterWriteData.setBigInteger(BigInteger.ONE);
         converterWriteData.setLongData(1L);
         converterWriteData.setIntegerData(1);
-        converterWriteData.setShortData((short) 1);
-        converterWriteData.setByteData((byte) 1);
+        converterWriteData.setShortData((short)1);
+        converterWriteData.setByteData((byte)1);
         converterWriteData.setDoubleData(1.0);
-        converterWriteData.setFloatData((float) 1.0);
+        converterWriteData.setFloatData((float)1.0);
         converterWriteData.setString("测试");
         converterWriteData.setCellData(new WriteCellData<>("自定义"));
         list.add(converterWriteData);

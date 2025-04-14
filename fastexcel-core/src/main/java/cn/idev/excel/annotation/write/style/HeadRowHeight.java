@@ -15,7 +15,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 public @interface HeadRowHeight {
-    
     /**
      * Set the header height
      * <p>

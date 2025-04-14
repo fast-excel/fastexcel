@@ -28,9 +28,8 @@ import java.nio.file.Path;
  **/
 
 public class Poi3Test {
-    
     private static final Logger LOGGER = LoggerFactory.getLogger(Poi3Test.class);
-    
+
     @Test
     public void Encryption(@TempDir Path tempDir) throws Exception {
         // Write out the encrypted version
@@ -48,7 +47,7 @@ public class Poi3Test {
             fs.writeFilesystem(fos);
         }
     }
-    
+
     @Test
     public void Encryption2() throws Exception {
         Biff8EncryptionKey.setCurrentUserPassword("incorrect pwd");
@@ -59,5 +58,7 @@ public class Poi3Test {
                 new POIFSFileSystem(new File("src/test/resources/demo/pwd_123.xls"), true).getRoot(), true);
         Assertions.assertEquals("Sheet1", hwb.getSheetAt(0).getSheetName());
         Biff8EncryptionKey.setCurrentUserPassword(null);
+        System.out.println(hwb.getSheetAt(0).getSheetName());
+
     }
 }

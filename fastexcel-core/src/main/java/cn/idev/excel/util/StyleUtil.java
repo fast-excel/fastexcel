@@ -1,5 +1,7 @@
 package cn.idev.excel.util;
 
+import java.util.Optional;
+
 import cn.idev.excel.constant.BuiltinFormats;
 import cn.idev.excel.metadata.data.DataFormatData;
 import cn.idev.excel.metadata.data.HyperlinkData;
@@ -8,6 +10,7 @@ import cn.idev.excel.support.ExcelTypeEnum;
 import cn.idev.excel.write.metadata.holder.WriteWorkbookHolder;
 import cn.idev.excel.write.metadata.style.WriteCellStyle;
 import cn.idev.excel.write.metadata.style.WriteFont;
+
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.poi.common.usermodel.HyperlinkType;
@@ -23,17 +26,14 @@ import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFRichTextString;
 
-import java.util.Optional;
-
 /**
  * @author jipengfei
  */
 @Slf4j
 public class StyleUtil {
-    
-    private StyleUtil() {
-    }
-    
+
+    private StyleUtil() {}
+
     /**
      * Build  cell style
      *
@@ -43,7 +43,7 @@ public class StyleUtil {
      * @return
      */
     public static CellStyle buildCellStyle(Workbook workbook, CellStyle originCellStyle,
-            WriteCellStyle writeCellStyle) {
+        WriteCellStyle writeCellStyle) {
         CellStyle cellStyle = workbook.createCellStyle();
         if (originCellStyle != null) {
             cellStyle.cloneStyleFrom(originCellStyle);
@@ -54,7 +54,7 @@ public class StyleUtil {
         buildCellStyle(cellStyle, writeCellStyle);
         return cellStyle;
     }
-    
+
     private static void buildCellStyle(CellStyle cellStyle, WriteCellStyle writeCellStyle) {
         if (writeCellStyle.getHidden() != null) {
             cellStyle.setHidden(writeCellStyle.getHidden());
@@ -117,7 +117,7 @@ public class StyleUtil {
             cellStyle.setShrinkToFit(writeCellStyle.getShrinkToFit());
         }
     }
-    
+
     public static short buildDataFormat(Workbook workbook, DataFormatData dataFormatData) {
         if (dataFormatData == null) {
             return BuiltinFormats.GENERAL;
@@ -134,7 +134,7 @@ public class StyleUtil {
         }
         return BuiltinFormats.GENERAL;
     }
-    
+
     public static Font buildFont(Workbook workbook, Font originFont, WriteFont writeFont) {
         if (log.isDebugEnabled()) {
             log.info("create new font:{},{}", writeFont, originFont);
@@ -175,23 +175,26 @@ public class StyleUtil {
         }
         return font;
     }
-    
+
     private static Font createFont(Workbook workbook, Font originFont, WriteFont writeFont) {
         Font font = workbook.createFont();
         if (originFont == null) {
             return font;
         }
         if (originFont instanceof XSSFFont) {
-            XSSFFont xssfFont = (XSSFFont) font;
-            XSSFFont xssfOriginFont = ((XSSFFont) originFont);
+            XSSFFont xssfFont = (XSSFFont)font;
+            XSSFFont xssfOriginFont = ((XSSFFont)originFont);
             xssfFont.setFontName(xssfOriginFont.getFontName());
             xssfFont.setFontHeightInPoints(xssfOriginFont.getFontHeightInPoints());
             xssfFont.setItalic(xssfOriginFont.getItalic());
             xssfFont.setStrikeout(xssfOriginFont.getStrikeout());
             // Colors cannot be overwritten
             if (writeFont == null || writeFont.getColor() == null) {
-                xssfFont.setColor(Optional.of(xssfOriginFont).map(XSSFFont::getXSSFColor).map(XSSFColor::getRGB)
-                        .map(rgb -> new XSSFColor(rgb, null)).orElse(null));
+                xssfFont.setColor(Optional.of(xssfOriginFont)
+                    .map(XSSFFont::getXSSFColor)
+                    .map(XSSFColor::getRGB)
+                    .map(rgb -> new XSSFColor(rgb, null))
+                    .orElse(null));
             }
             xssfFont.setTypeOffset(xssfOriginFont.getTypeOffset());
             xssfFont.setUnderline(xssfOriginFont.getUnderline());
@@ -199,8 +202,8 @@ public class StyleUtil {
             xssfFont.setBold(xssfOriginFont.getBold());
             return xssfFont;
         } else if (originFont instanceof HSSFFont) {
-            HSSFFont hssfFont = (HSSFFont) font;
-            HSSFFont hssfOriginFont = (HSSFFont) originFont;
+            HSSFFont hssfFont = (HSSFFont)font;
+            HSSFFont hssfOriginFont = (HSSFFont)originFont;
             hssfFont.setFontName(hssfOriginFont.getFontName());
             hssfFont.setFontHeightInPoints(hssfOriginFont.getFontHeightInPoints());
             hssfFont.setItalic(hssfOriginFont.getItalic());
@@ -214,9 +217,9 @@ public class StyleUtil {
         }
         return font;
     }
-    
+
     public static RichTextString buildRichTextString(WriteWorkbookHolder writeWorkbookHolder,
-            RichTextStringData richTextStringData) {
+                                                     RichTextStringData richTextStringData) {
         if (richTextStringData == null) {
             return null;
         }
@@ -232,28 +235,28 @@ public class StyleUtil {
         if (CollectionUtils.isNotEmpty(richTextStringData.getIntervalFontList())) {
             for (RichTextStringData.IntervalFont intervalFont : richTextStringData.getIntervalFontList()) {
                 richTextString.applyFont(intervalFont.getStartIndex(), intervalFont.getEndIndex(),
-                        writeWorkbookHolder.createFont(intervalFont.getWriteFont(), null, true));
+                    writeWorkbookHolder.createFont(intervalFont.getWriteFont(), null, true));
             }
         }
         return richTextString;
     }
-    
+
     public static HyperlinkType getHyperlinkType(HyperlinkData.HyperlinkType hyperlinkType) {
         if (hyperlinkType == null) {
             return HyperlinkType.NONE;
         }
         return hyperlinkType.getValue();
     }
-    
+
     public static int getCoordinate(Integer coordinate) {
         if (coordinate == null) {
             return 0;
         }
         return Units.toEMU(coordinate);
     }
-    
+
     public static int getCellCoordinate(Integer currentCoordinate, Integer absoluteCoordinate,
-            Integer relativeCoordinate) {
+        Integer relativeCoordinate) {
         if (absoluteCoordinate != null && absoluteCoordinate > 0) {
             return absoluteCoordinate;
         }
@@ -262,7 +265,7 @@ public class StyleUtil {
         }
         return currentCoordinate;
     }
-    
+
 }
 
 

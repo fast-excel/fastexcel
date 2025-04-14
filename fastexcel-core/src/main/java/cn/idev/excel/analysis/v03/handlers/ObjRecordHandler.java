@@ -13,13 +13,12 @@ import org.apache.poi.hssf.record.SubRecord;
  * @author Jiaju Zhuang
  */
 public class ObjRecordHandler extends AbstractXlsRecordHandler implements IgnorableXlsRecordHandler {
-    
     @Override
     public void processRecord(XlsReadContext xlsReadContext, Record record) {
-        ObjRecord or = (ObjRecord) record;
+        ObjRecord or = (ObjRecord)record;
         for (SubRecord subRecord : or.getSubRecords()) {
             if (subRecord instanceof CommonObjectDataSubRecord) {
-                CommonObjectDataSubRecord codsr = (CommonObjectDataSubRecord) subRecord;
+                CommonObjectDataSubRecord codsr = (CommonObjectDataSubRecord)subRecord;
                 if (CommonObjectDataSubRecord.OBJECT_TYPE_COMMENT == codsr.getObjectType()) {
                     xlsReadContext.xlsReadSheetHolder().setTempObjectIndex(codsr.getObjectId());
                 }

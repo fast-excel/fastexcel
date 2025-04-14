@@ -10,19 +10,19 @@ import cn.idev.excel.write.metadata.holder.WriteWorkbookHolder;
  **/
 @Deprecated
 public abstract class AbstractWorkbookWriteHandler implements WorkbookWriteHandler {
-    
+
     @Override
     public void beforeWorkbookCreate() {
-    
+
     }
-    
+
     @Override
     public void afterWorkbookCreate(WriteWorkbookHolder writeWorkbookHolder) {
-    
+
     }
-    
+
     @Override
     public void afterWorkbookDispose(WriteWorkbookHolder writeWorkbookHolder) {
-    
+
     }
 }

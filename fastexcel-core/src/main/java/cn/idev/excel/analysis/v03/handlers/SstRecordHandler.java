@@ -12,9 +12,8 @@ import org.apache.poi.hssf.record.SSTRecord;
  * @author Dan Zheng
  */
 public class SstRecordHandler extends AbstractXlsRecordHandler implements IgnorableXlsRecordHandler {
-    
     @Override
     public void processRecord(XlsReadContext xlsReadContext, Record record) {
-        xlsReadContext.readWorkbookHolder().setReadCache(new XlsCache((SSTRecord) record));
+        xlsReadContext.readWorkbookHolder().setReadCache(new XlsCache((SSTRecord)record));
     }
 }
