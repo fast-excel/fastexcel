@@ -5,10 +5,7 @@ import cn.idev.excel.ExcelReader;
 import cn.idev.excel.read.metadata.ReadSheet;
 import cn.idev.excel.test.temp.LockData;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -21,7 +18,6 @@ import java.nio.file.Paths;
 
 public class RepeatTest {
     
-    private static final Logger LOGGER = LoggerFactory.getLogger(RepeatTest.class);
     
     @Test
     public void xlsTest1() throws IOException {
