@@ -162,7 +162,7 @@ public class WriteCellStyle {
         }
         if (source.getWriteFont() != null) {
             if (target.getWriteFont() == null) {
-                target.setWriteFont(source.getWriteFont());
+                target.setWriteFont(source.getWriteFont().clone());
             } else {
                 WriteFont.merge(source.getWriteFont(), target.getWriteFont());
             }
