@@ -1,0 +1,12 @@
+name: Suggest
+title: 'Suggest: '
+description: suggest template
+labels: [suggest]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the Suggest
+      description: |
+        If you have any suggestions for Fastexcel, please describe your suggestions.
+        如果你对Fastexcel有什么建议，请描述你的建议。
