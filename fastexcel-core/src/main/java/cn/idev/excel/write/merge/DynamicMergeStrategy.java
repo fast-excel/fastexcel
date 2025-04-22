@@ -60,24 +60,22 @@ public class DynamicMergeStrategy implements RowWriteHandler {
                 MergeRow lastRow  = rowStack.pop();
                 while (!rowStack.isEmpty()){
                     MergeRow prevRow = rowStack.pop();
-                    if(prevRow.getRelativeRowIndex().equals(0)){
-                        if(prevRow.getRow().getCell(columnIndex).getStringCellValue().equals(lastRow.getRow().getCell(columnIndex).getStringCellValue())){
+
+                    if (!prevRow.getRow().getCell(columnIndex).getStringCellValue().equals(lastRow.getRow().getCell(columnIndex).getStringCellValue())) {
+                        if(lastRow.getRow().getRowNum()!=(prevRow.getRow().getRowNum()+1)){
+                            CellRangeAddress cellRangeAddress = new CellRangeAddress(prevRow.getRow().getRowNum()+1,
+                                lastRow.getRow().getRowNum(), columnIndex, columnIndex + columnExtend - 1);
+                            context.getWriteSheetHolder().getSheet().addMergedRegionUnsafe(cellRangeAddress);
+                        }
+                        rowStack.push(prevRow);
+                        break;
+                    }else {
+                        if(prevRow.getRelativeRowIndex().equals(0)){
                             CellRangeAddress cellRangeAddress = new CellRangeAddress(prevRow.getRow().getRowNum(),
                                 lastRow.getRow().getRowNum(), columnIndex, columnIndex + columnExtend - 1);
                             context.getWriteSheetHolder().getSheet().addMergedRegionUnsafe(cellRangeAddress);
                         }
-                    }else {
-                        if (!prevRow.getRow().getCell(columnIndex).getStringCellValue().equals(lastRow.getRow().getCell(columnIndex).getStringCellValue())) {
-                            if(lastRow.getRow().getRowNum()!=(prevRow.getRow().getRowNum()+1)){
-                                CellRangeAddress cellRangeAddress = new CellRangeAddress(prevRow.getRow().getRowNum()+1,
-                                    lastRow.getRow().getRowNum(), columnIndex, columnIndex + columnExtend - 1);
-                                context.getWriteSheetHolder().getSheet().addMergedRegionUnsafe(cellRangeAddress);
-                            }
-                            rowStack.push(prevRow);
-                            break;
-                        }
                     }
-
                 }
 
             }
