@@ -1,0 +1,70 @@
+name: Bug report
+title: "[Bug] "
+description: Problems with the software
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you very much for your feedback!
+
+        For suggestions or help, please consider:
+        1. [WeChat User Group](https://github.com/user-attachments/assets/b40aebe8-0552-4fb2-b184-4cb64a5b1229);
+        2. [Github Discussion](https://github.com/fast-excel/fastexcel/discussions).
+  - type: checkboxes
+    attributes:
+      label: Search before asking
+      description: >
+        Please search [issues](https://github.com/fast-excel/fastexcel/issues) to check if your issue has already been reported.
+      options:
+        - label: >
+            I searched in the [issues](https://github.com/fast-excel/fastexcel/issues) and found nothing similar.
+          required: true
+  - type: input
+    id: version
+    attributes:
+      label: Fastexcel version
+      placeholder: Please provide the Fastexcel version you are using.
+    validations:
+      required: true
+  - type: input
+    id: jdk-version
+    attributes:
+      label: JDK version
+      placeholder: Please provide the JDK version you are using (e.g., OpenJDK 11.0.15).
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: Operating system
+      placeholder: Please provide the JDK version you are using (Ubuntu 20.04, macOS 13.4, Windows 10, etc.)
+  - type: textarea
+    attributes:
+      label: Minimal reproduce step
+      description: Please try to give reproducing steps to facilitate quick location of the problem.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: What did you expect to see?
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: What did you see instead?
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Anything else?
+  - type: checkboxes
+    attributes:
+      label: Are you willing to submit a PR?
+      description: >
+        We look forward to the community of developers or users helping solve Fastexcel problems together. If you are willing to submit a PR to fix this problem, please check the box.
+      options:
+        - label: I'm willing to submit a PR!
+  - type: markdown
+    attributes:
+      value: "Thanks for completing our form!"
