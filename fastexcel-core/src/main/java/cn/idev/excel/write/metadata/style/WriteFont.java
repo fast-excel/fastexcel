@@ -115,4 +115,20 @@ public class WriteFont {
             target.setBold(source.getBold());
         }
     }
+
+
+    @Override
+    public WriteFont clone() {
+        WriteFont writeFont = new WriteFont();
+        writeFont.setFontName(getFontName());
+        writeFont.setFontHeightInPoints(getFontHeightInPoints());
+        writeFont.setItalic(getItalic());
+        writeFont.setStrikeout(getStrikeout());
+        writeFont.setColor(getColor());
+        writeFont.setTypeOffset(getTypeOffset());
+        writeFont.setUnderline(getUnderline());
+        writeFont.setCharset(getCharset());
+        writeFont.setBold(getBold());
+        return writeFont;
+    }
 }
