@@ -1,5 +1,6 @@
 package cn.idev.excel.read.listener;
 
+import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Map;
@@ -148,6 +149,21 @@ public class ModelBuildEventListener implements IgnoreExceptionReadListener<Map<
                 context.readRowHolder().getRowIndex(), index);
             if (value != null) {
                 dataMap.put(fieldName, value);
+
+                // 规避由于实体类 setter 不规范导致无法赋值的问题
+                // fix https://github.com/alibaba/easyexcel/issues/3524
+                if (dataMap.get(fieldName) == null) {
+                    Object bean = dataMap.getBean();
+                    try {
+                        Field field = bean.getClass().getDeclaredField(fieldName);
+                        field.setAccessible(true);
+                        field.set(bean, value);
+                    } catch (NoSuchFieldException ignore) {
+                        // ignore
+                    } catch (IllegalAccessException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
             }
         }
         return resultModel;
