@@ -10,14 +10,10 @@ import org.junit.jupiter.api.io.TempDir;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.math.BigDecimal;
-import java.net.URL;
 import java.nio.file.Path;
-import java.util.regex.Pattern;
 
 /**
  * 测试poi
@@ -82,42 +78,6 @@ public class PoiWriteTest {
             byteNum[ix] = (byte) ((num >> offset) & 0xff);
         }
         return byteNum;
-    }
-    
-    private static final Pattern FILL_PATTERN = Pattern.compile("^.*?\\$\\{[^}]+}.*?$");
-    
-    @Test
-    public void part() {
-        LOGGER.info("test:{}", FILL_PATTERN.matcher("${name今年${number}岁了").matches());
-        LOGGER.info("test:{}", FILL_PATTERN.matcher("${name}今年${number}岁了").matches());
-        LOGGER.info("test:{}", FILL_PATTERN.matcher("${name}").matches());
-        LOGGER.info("test:{}", FILL_PATTERN.matcher("${number}").matches());
-        LOGGER.info("test:{}", FILL_PATTERN.matcher("${name}今年").matches());
-        LOGGER.info("test:{}", FILL_PATTERN.matcher("今年${number}岁了").matches());
-        LOGGER.info("test:{}", FILL_PATTERN.matcher("今年${number岁了").matches());
-        LOGGER.info("test:{}", FILL_PATTERN.matcher("${}").matches());
-        LOGGER.info("test:{}", FILL_PATTERN.matcher("胜多负少").matches());
-    }
-    
-    private static final Pattern FILL_PATTERN2 = Pattern.compile("测试");
-    
-    @Test
-    public void part2() {
-        LOGGER.info("test:{}", FILL_PATTERN2.matcher("我是测试呀").find());
-        LOGGER.info("test:{}", FILL_PATTERN2.matcher("测试u").matches());
-        LOGGER.info("test:{}", FILL_PATTERN2.matcher("我是测试").matches());
-        
-    }
-    
-    @Test
-    public void part4() throws IOException {
-        //URL url=new URL("http://120.55.161.4/group1/M00/00/00/i8QJ8WFfwMiAXKYrAAACqC1MFiY641.png");
-        URL url = new URL(
-                "https://img-blog.csdn.net/20160729002743309?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T"
-                        + "/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center");
-        
-        InputStream in = new BufferedInputStream(url.openStream());
-        
     }
     
 }
