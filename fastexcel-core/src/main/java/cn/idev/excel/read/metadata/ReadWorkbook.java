@@ -1,12 +1,5 @@
 package cn.idev.excel.read.metadata;
 
-import java.io.File;
-import java.io.InputStream;
-import java.nio.charset.Charset;
-import java.util.Set;
-
-import javax.xml.parsers.SAXParserFactory;
-
 import cn.idev.excel.cache.ReadCache;
 import cn.idev.excel.cache.selector.ReadCacheSelector;
 import cn.idev.excel.cache.selector.SimpleReadCacheSelector;
@@ -19,6 +12,12 @@ import cn.idev.excel.support.ExcelTypeEnum;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.xml.parsers.SAXParserFactory;
+import java.io.File;
+import java.io.InputStream;
+import java.nio.charset.Charset;
+import java.util.Set;
 
 /**
  * Workbook
@@ -119,4 +118,9 @@ public class ReadWorkbook extends ReadBasicParameter {
      * The number of rows to read, the default is all, start with 0.
      */
     private Integer numRows;
+
+    /**
+     * Ignore hidden sheet.
+     */
+    private Boolean ignoreHiddenSheet;
 }

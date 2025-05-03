@@ -1,16 +1,16 @@
 package cn.idev.excel.analysis.v03.handlers;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import cn.idev.excel.context.xls.XlsReadContext;
 import cn.idev.excel.exception.ExcelAnalysisStopException;
 import cn.idev.excel.read.metadata.ReadSheet;
 import cn.idev.excel.read.metadata.holder.xls.XlsReadWorkbookHolder;
 import cn.idev.excel.util.SheetUtils;
-import cn.idev.excel.context.xls.XlsReadContext;
 import org.apache.poi.hssf.record.BOFRecord;
 import org.apache.poi.hssf.record.BoundSheetRecord;
 import org.apache.poi.hssf.record.Record;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Record handler
@@ -59,11 +59,15 @@ public class BofRecordHandler extends AbstractXlsRecordHandler {
         }
         BoundSheetRecord[] boundSheetRecords =
             BoundSheetRecord.orderByBofPosition(xlsReadWorkbookHolder.getBoundSheetRecordList());
-        List<ReadSheet> readSheetDataList = new ArrayList<ReadSheet>();
+        List<ReadSheet> readSheetDataList = new ArrayList<>();
         for (int i = 0; i < boundSheetRecords.length; i++) {
             BoundSheetRecord boundSheetRecord = boundSheetRecords[i];
-            ReadSheet readSheet = new ReadSheet(i, boundSheetRecord.getSheetname());
-            readSheetDataList.add(readSheet);
+            boolean isHidden = boundSheetRecord.isHidden();
+            if (Boolean.FALSE.equals(xlsReadWorkbookHolder.getIgnoreHiddenSheet()) || !isHidden) {
+                ReadSheet readSheet = new ReadSheet(i, boundSheetRecord.getSheetname(),
+                    boundSheetRecord.isHidden(), boundSheetRecord.isVeryHidden());
+                readSheetDataList.add(readSheet);
+            }
         }
         xlsReadWorkbookHolder.setActualSheetDataList(readSheetDataList);
         // Just need to get the list of sheets
