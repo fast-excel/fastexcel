@@ -39,12 +39,14 @@ public class HiddenSheetsTest {
 
     @Test
     public void t03Read07All() {
-        readAll(file07);
+        readAll(file07, Boolean.FALSE);
+        readAll(file07, Boolean.TRUE);
     }
 
     @Test
     public void t04Read03All() {
-        readAll(file03);
+        readAll(file03, Boolean.FALSE);
+        readAll(file03, Boolean.TRUE);
     }
 
     private void read(File file, Boolean ignoreHidden) {
@@ -59,10 +61,15 @@ public class HiddenSheetsTest {
         }
     }
 
-    private void readAll(File file) {
-        FastExcel.read(file, HiddenSheetsData.class, new HiddenSheetsListener())
-            .ignoreHiddenSheet(Boolean.TRUE)
-            .doReadAll();
+    private void readAll(File file, Boolean ignoreHidden) {
+        List<HiddenSheetsData> dataList = FastExcel.read(file, HiddenSheetsData.class, new HiddenSheetsListener())
+            .ignoreHiddenSheet(ignoreHidden)
+            .doReadAllSync();
+        if (ignoreHidden) {
+            Assertions.assertEquals(3, dataList.size());
+        } else {
+            Assertions.assertEquals(6, dataList.size());
+        }
     }
 
 }

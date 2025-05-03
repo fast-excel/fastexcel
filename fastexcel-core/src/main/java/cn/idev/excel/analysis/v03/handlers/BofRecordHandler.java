@@ -62,12 +62,10 @@ public class BofRecordHandler extends AbstractXlsRecordHandler {
         List<ReadSheet> readSheetDataList = new ArrayList<>();
         for (int i = 0; i < boundSheetRecords.length; i++) {
             BoundSheetRecord boundSheetRecord = boundSheetRecords[i];
-            boolean isHidden = boundSheetRecord.isHidden();
-            if (Boolean.FALSE.equals(xlsReadWorkbookHolder.getIgnoreHiddenSheet()) || !isHidden) {
-                ReadSheet readSheet = new ReadSheet(i, boundSheetRecord.getSheetname(),
-                    boundSheetRecord.isHidden(), boundSheetRecord.isVeryHidden());
-                readSheetDataList.add(readSheet);
-            }
+            ReadSheet readSheet = new ReadSheet(i, boundSheetRecord.getSheetname());
+            readSheet.setHidden(boundSheetRecord.isHidden());
+            readSheet.setVeryHidden(boundSheetRecord.isVeryHidden());
+            readSheetDataList.add(readSheet);
         }
         xlsReadWorkbookHolder.setActualSheetDataList(readSheetDataList);
         // Just need to get the list of sheets
