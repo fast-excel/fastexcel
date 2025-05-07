@@ -1,13 +1,5 @@
 package cn.idev.excel.read.builder;
 
-import java.io.File;
-import java.io.InputStream;
-import java.nio.charset.Charset;
-import java.util.HashSet;
-import java.util.List;
-
-import javax.xml.parsers.SAXParserFactory;
-
 import cn.idev.excel.ExcelReader;
 import cn.idev.excel.cache.ReadCache;
 import cn.idev.excel.cache.selector.ReadCacheSelector;
@@ -20,6 +12,14 @@ import cn.idev.excel.event.SyncReadListener;
 import cn.idev.excel.read.listener.ModelBuildEventListener;
 import cn.idev.excel.read.metadata.ReadWorkbook;
 import cn.idev.excel.support.ExcelTypeEnum;
+import org.apache.commons.csv.CSVFormat;
+
+import javax.xml.parsers.SAXParserFactory;
+import java.io.File;
+import java.io.InputStream;
+import java.nio.charset.Charset;
+import java.util.HashSet;
+import java.util.List;
 
 /**
  * Build ExcelReader
@@ -238,7 +238,7 @@ public class ExcelReaderBuilder extends AbstractExcelReaderParameterBuilder<Exce
             excelReader.readAll();
             excelReader.finish();
         }
-        return (List<T>)syncReadListener.getList();
+        return (List<T>) syncReadListener.getList();
     }
 
     public ExcelReaderSheetBuilder sheet() {
@@ -262,6 +262,19 @@ public class ExcelReaderBuilder extends AbstractExcelReaderParameterBuilder<Exce
             excelReaderSheetBuilder.sheetName(sheetName);
         }
         return excelReaderSheetBuilder;
+    }
+
+    /**
+     * Sets the CSVFormat for reading CSV files.
+     * This method also ensures that the Excel type is set to CSV.
+     *
+     * @param csvFormat The CSVFormat instance
+     * @return his ExcelReaderBuilder instance for method chaining
+     */
+    public ExcelReaderBuilder csvFormat(CSVFormat csvFormat) {
+        excelType(ExcelTypeEnum.CSV);
+        readWorkbook.setCsvFormat(csvFormat);
+        return this;
     }
 
     @Override
