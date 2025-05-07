@@ -16,9 +16,13 @@ import cn.idev.excel.test.util.TestFileUtil;
 import cn.idev.excel.util.ListUtils;
 import com.alibaba.fastjson2.JSON;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.springframework.core.io.ClassPathResource;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -357,24 +361,47 @@ public class ReadTest {
     /**
      * Custom modification of CSV configuration
      */
-    @Test
-    public void csvFormat() {
-        String fileName = TestFileUtil.getPath() + "demo" + File.separator + "demo.csv";
-        try (ExcelReader excelReader = EasyExcel.read(fileName, DemoData.class, new DemoDataListener()).build()) {
-            // Check if it is a CSV file
-            if (excelReader.analysisContext().readWorkbookHolder() instanceof CsvReadWorkbookHolder) {
-                CsvReadWorkbookHolder csvReadWorkbookHolder = (CsvReadWorkbookHolder) excelReader.analysisContext()
-                        .readWorkbookHolder();
-                // Set to comma-separated (default is also comma-separated)
-                // Note: `withDelimiter` will regenerate the format, so it needs to be set back.
-                csvReadWorkbookHolder.setCsvFormat(csvReadWorkbookHolder.getCsvFormat().withDelimiter(','));
-            }
+    @Nested
+    class ReadCsvFormat {
 
-            // Get all sheets
-            List<ReadSheet> readSheetList = excelReader.excelExecutor().sheetList();
-            // If you only want to read the first sheet, you can pass the parameter accordingly.
-            //ReadSheet readSheet = EasyExcel.readSheet(0).build();
-            excelReader.read(readSheetList);
+        @Test
+        void asNormalJavaBean() {
+            String fileName = TestFileUtil.getPath() + "demo" + File.separator + "demo.csv";
+            try (ExcelReader excelReader = EasyExcel.read(fileName, DemoData.class, new DemoDataListener()).build()) {
+                // Check if it is a CSV file
+                if (excelReader.analysisContext().readWorkbookHolder() instanceof CsvReadWorkbookHolder) {
+                    CsvReadWorkbookHolder csvReadWorkbookHolder = (CsvReadWorkbookHolder) excelReader.analysisContext()
+                        .readWorkbookHolder();
+                    // Set to comma-separated (default is also comma-separated)
+                    // Note: `withDelimiter` will regenerate the format, so it needs to be set back.
+                    csvReadWorkbookHolder.setCsvFormat(csvReadWorkbookHolder.getCsvFormat().withDelimiter(','));
+                }
+
+                // Get all sheets
+                List<ReadSheet> readSheetList = excelReader.excelExecutor().sheetList();
+                // If you only want to read the first sheet, you can pass the parameter accordingly.
+                //ReadSheet readSheet = EasyExcel.readSheet(0).build();
+                excelReader.read(readSheetList);
+            }
+        }
+
+        @Test
+        void asChainedAccessorsJavaBean() {
+            String fileName = TestFileUtil.getPath() + "demo" + File.separator + "demo.csv";
+            try (ExcelReader excelReader = EasyExcel.read(fileName, DemoChainAccessorsData.class, new ReadListener<DemoChainAccessorsData>() {
+                @Override
+                public void invoke(DemoChainAccessorsData data, AnalysisContext context) {
+                    Assertions.assertNotNull(data.getString());
+                    Assertions.assertNotNull(data.getDate());
+                    Assertions.assertNotNull(data.getDoubleData());
+                }
+
+                @Override
+                public void doAfterAllAnalysed(AnalysisContext context) {
+                }
+            }).build()) {
+                excelReader.readAll();
+            }
         }
     }
 }
