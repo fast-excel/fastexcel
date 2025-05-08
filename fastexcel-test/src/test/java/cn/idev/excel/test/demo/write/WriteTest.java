@@ -8,6 +8,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.Map;
+import java.util.HashMap;
 
 import cn.idev.excel.EasyExcel;
 import cn.idev.excel.ExcelWriter;
@@ -18,6 +20,7 @@ import cn.idev.excel.util.FileUtils;
 import cn.idev.excel.util.ListUtils;
 import cn.idev.excel.write.handler.CellWriteHandler;
 import cn.idev.excel.write.handler.context.CellWriteHandlerContext;
+import cn.idev.excel.write.merge.DynamicMergeStrategy;
 import cn.idev.excel.write.merge.LoopMergeStrategy;
 import cn.idev.excel.write.style.HorizontalCellStyleStrategy;
 import cn.idev.excel.write.style.column.LongestMatchColumnWidthStyleStrategy;
@@ -615,6 +618,148 @@ public class WriteTest {
             .doWrite(data());
     }
 
+    /**
+     * 动态头，实时生成头写入
+     * 指定列值相同时合并
+     */
+    @Test
+    public void customHeadReadAndDynamicMergeStrategy() {
+        List<Map<Integer, String>> maps = yearData();
+        EasyExcel.write(TestFileUtil.getPath() + "customHeadRead" + System.currentTimeMillis() + ".xlsx")
+            .head(yearHead())
+            .sheet("模板")
+            .registerWriteHandler(new DynamicMergeStrategy(0,maps.size()))
+            .registerWriteHandler(new DynamicMergeStrategy(2,maps.size()))
+            .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
+            .doWrite(maps);
+
+        List<Map<Integer, String>> maps1 = yearData1();
+        EasyExcel.write(TestFileUtil.getPath() + "customHeadRead" + System.currentTimeMillis() + ".xlsx")
+            .head(yearHead())
+            .sheet("模板")
+            .registerWriteHandler(new DynamicMergeStrategy(0,maps1.size()))
+            .registerWriteHandler(new DynamicMergeStrategy(2,maps1.size()))
+            .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
+            .doWrite(maps1);
+        List<Map<Integer, String>> maps2 = yearData2();
+        EasyExcel.write(TestFileUtil.getPath() + "customHeadRead" + System.currentTimeMillis() + ".xlsx")
+            .head(yearHead())
+            .sheet("模板")
+            .registerWriteHandler(new DynamicMergeStrategy(0,maps2.size()))
+            .registerWriteHandler(new DynamicMergeStrategy(2,maps2.size()))
+            .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
+            .doWrite(maps2);
+        List<Map<Integer, String>> maps3 = yearData3();
+        EasyExcel.write(TestFileUtil.getPath() + "customHeadRead" + System.currentTimeMillis() + ".xlsx")
+            .head(yearHead())
+            .sheet("模板")
+            .registerWriteHandler(new DynamicMergeStrategy(0,maps3.size()))
+            .registerWriteHandler(new DynamicMergeStrategy(2,maps3.size()))
+            .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
+            .doWrite(maps3);
+
+        List<Map<Integer, String>> maps4 = yearData4();
+        EasyExcel.write(TestFileUtil.getPath() + "customHeadRead" + System.currentTimeMillis() + ".xlsx")
+            .head(yearHead())
+            .sheet("模板")
+            .registerWriteHandler(new DynamicMergeStrategy(0,maps4.size()))
+            .registerWriteHandler(new DynamicMergeStrategy(2,maps4.size()))
+            .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
+            .doWrite(maps4);
+    }
+
+    public List<List<String>> yearHead() {
+        List<List<String>> head = new ArrayList<>();
+        for (int i = 0; i < 12; i++) {
+            List<String> h = new ArrayList<>();
+            if(i<3){
+                h.add("第一季度");
+            }
+            if(i>=3&&i<6){
+                h.add("第二季度");
+            }
+            if(i>=6&&i<9){
+                h.add("第三季度");
+            }
+            if(i>=9){
+                h.add("第四季度");
+            }
+            h.add("第" + (i + 1) + "月");
+            head.add(h);
+        }
+        return head;
+    }
+    public List<Map<Integer, String>> yearData() {
+        List<Map<Integer, String>> data = new ArrayList<>();
+        for (int i = 0; i < 100; i++) {
+            Map<Integer, String> map = new HashMap<>();
+            for (int j = 0; j < 12; j++) {
+                if(i<20){
+                    map.put( j , "第" + (j + 1) + "月"+"前20条数据");
+                }else {
+                    map.put( j , "第" + (j + 1) + "月");
+                }
+
+            }
+            data.add(map);
+        }
+        return data;
+    }
+    public List<Map<Integer, String>> yearData1() {
+        List<Map<Integer, String>> data = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            Map<Integer, String> map = new HashMap<>();
+            for (int j = 0; j < 12; j++) {
+                if(i>0){
+                    map.put( j ,  (j + 1) + "");
+                }else {
+                   map.put(j,i+"");
+                }
+
+            }
+            data.add(map);
+        }
+        return data;
+    }
+    public List<Map<Integer, String>> yearData4() {
+        List<Map<Integer, String>> data = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            Map<Integer, String> map = new HashMap<>();
+            for (int j = 0; j < 12; j++) {
+                if(i<2){
+                    map.put( j ,  (j + 1) + "");
+                }else {
+                    map.put(j,i+"");
+                }
+
+            }
+            data.add(map);
+        }
+        return data;
+    }
+    public List<Map<Integer, String>> yearData3() {
+        List<Map<Integer, String>> data = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            Map<Integer, String> map = new HashMap<>();
+            for (int j = 0; j < 12; j++) {
+                map.put(j,j+"");
+
+            }
+            data.add(map);
+        }
+        return data;
+    }
+    public List<Map<Integer, String>> yearData2() {
+        List<Map<Integer, String>> data = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            Map<Integer, String> map = new HashMap<>();
+            for (int j = 0; j < 12; j++) {
+                map.put(j,i+"");
+            }
+            data.add(map);
+        }
+        return data;
+    }
     /**
      * 自动列宽(不太精确)
      * <p>
