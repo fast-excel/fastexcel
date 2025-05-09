@@ -1,30 +1,29 @@
 package cn.idev.excel.read.metadata.holder;
 
+import cn.idev.excel.cache.ReadCache;
+import cn.idev.excel.cache.selector.EternalReadCacheSelector;
+import cn.idev.excel.cache.selector.ReadCacheSelector;
+import cn.idev.excel.cache.selector.SimpleReadCacheSelector;
+import cn.idev.excel.context.AnalysisContext;
+import cn.idev.excel.enums.CellExtraTypeEnum;
+import cn.idev.excel.enums.HolderEnum;
+import cn.idev.excel.enums.ReadDefaultReturnEnum;
+import cn.idev.excel.event.AnalysisEventListener;
+import cn.idev.excel.exception.ExcelAnalysisException;
+import cn.idev.excel.read.metadata.ReadSheet;
+import cn.idev.excel.read.metadata.ReadWorkbook;
+import cn.idev.excel.support.ExcelTypeEnum;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.io.File;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import cn.idev.excel.cache.ReadCache;
-import cn.idev.excel.cache.selector.EternalReadCacheSelector;
-import cn.idev.excel.cache.selector.ReadCacheSelector;
-import cn.idev.excel.cache.selector.SimpleReadCacheSelector;
-import cn.idev.excel.enums.CellExtraTypeEnum;
-import cn.idev.excel.enums.HolderEnum;
-import cn.idev.excel.enums.ReadDefaultReturnEnum;
-import cn.idev.excel.event.AnalysisEventListener;
-import cn.idev.excel.read.metadata.ReadSheet;
-import cn.idev.excel.context.AnalysisContext;
-import cn.idev.excel.exception.ExcelAnalysisException;
-import cn.idev.excel.read.metadata.ReadWorkbook;
-import cn.idev.excel.support.ExcelTypeEnum;
-
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 /**
  * Workbook holder
@@ -131,6 +130,10 @@ public class ReadWorkbookHolder extends AbstractReadHolder {
      * Prevent repeating sheet
      */
     private Set<Integer> hasReadSheet;
+    /**
+     * Ignore hidden sheet.Default is false.
+     */
+    private Boolean ignoreHiddenSheet;
 
     public ReadWorkbookHolder(ReadWorkbook readWorkbook) {
         super(readWorkbook, null);
@@ -185,6 +188,11 @@ public class ReadWorkbookHolder extends AbstractReadHolder {
             this.extraReadSet = new HashSet<CellExtraTypeEnum>();
         } else {
             this.extraReadSet = readWorkbook.getExtraReadSet();
+        }
+        if (readWorkbook.getIgnoreHiddenSheet() == null) {
+            this.ignoreHiddenSheet = Boolean.FALSE;
+        } else {
+            this.ignoreHiddenSheet = readWorkbook.getIgnoreHiddenSheet();
         }
         this.hasReadSheet = new HashSet<Integer>();
         this.password = readWorkbook.getPassword();

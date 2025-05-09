@@ -1,13 +1,5 @@
 package cn.idev.excel.read.builder;
 
-import java.io.File;
-import java.io.InputStream;
-import java.nio.charset.Charset;
-import java.util.HashSet;
-import java.util.List;
-
-import javax.xml.parsers.SAXParserFactory;
-
 import cn.idev.excel.ExcelReader;
 import cn.idev.excel.cache.ReadCache;
 import cn.idev.excel.cache.selector.ReadCacheSelector;
@@ -20,6 +12,13 @@ import cn.idev.excel.event.SyncReadListener;
 import cn.idev.excel.read.listener.ModelBuildEventListener;
 import cn.idev.excel.read.metadata.ReadWorkbook;
 import cn.idev.excel.support.ExcelTypeEnum;
+
+import javax.xml.parsers.SAXParserFactory;
+import java.io.File;
+import java.io.InputStream;
+import java.nio.charset.Charset;
+import java.util.HashSet;
+import java.util.List;
 
 /**
  * Build ExcelReader
@@ -238,7 +237,7 @@ public class ExcelReaderBuilder extends AbstractExcelReaderParameterBuilder<Exce
             excelReader.readAll();
             excelReader.finish();
         }
-        return (List<T>)syncReadListener.getList();
+        return (List<T>) syncReadListener.getList();
     }
 
     public ExcelReaderSheetBuilder sheet() {
@@ -267,5 +266,16 @@ public class ExcelReaderBuilder extends AbstractExcelReaderParameterBuilder<Exce
     @Override
     protected ReadWorkbook parameter() {
         return readWorkbook;
+    }
+
+    /**
+     * Ignore hiddene sheet.Default is false.
+     *
+     * @param ignoreHiddenSheet
+     * @return
+     */
+    public ExcelReaderBuilder ignoreHiddenSheet(Boolean ignoreHiddenSheet) {
+        readWorkbook.setIgnoreHiddenSheet(ignoreHiddenSheet);
+        return this;
     }
 }
