@@ -1,33 +1,72 @@
 package cn.idev.excel.test.temp.read;
 
-import java.io.File;
-import java.util.List;
-import java.util.Map;
-
-import cn.idev.excel.EasyExcel;
-import cn.idev.excel.metadata.data.CellData;
+import cn.idev.excel.FastExcel;
+import cn.idev.excel.context.AnalysisContext;
+import cn.idev.excel.enums.CellExtraTypeEnum;
+import cn.idev.excel.metadata.CellExtra;
+import cn.idev.excel.read.listener.ReadListener;
+import cn.idev.excel.support.ExcelTypeEnum;
 import com.alibaba.fastjson2.JSON;
-
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.util.Arrays;
+import java.util.List;
+
 /**
- * 临时测试
- *
- * @author Jiaju Zhuang
+ * @author Zhe Zhang
  **/
 
 public class CommentTest {
+    
     private static final Logger LOGGER = LoggerFactory.getLogger(CommentTest.class);
-
+    
+    private final List<String> commentList = Arrays.asList("测试", "comment");
+    
     @Test
-    public void comment() throws Exception {
-        File file = new File("D:\\test\\d1.xlsx");
-        List<Map<Integer, CellData>> datas = EasyExcel.read(file).doReadAllSync();
-        for (Map<Integer, CellData> data : datas) {
-            LOGGER.info("数据:{}", JSON.toJSONString(data));
-        }
+    public void xlsxCommentTest() throws Exception {
+        File file = new File("src/test/resources/comment/comment.xlsx");
+        FastExcel.read(file, new ReadListener() {
+            @Override
+            public void invoke(Object data, AnalysisContext context) {
+            }
+            
+            @Override
+            public void doAfterAllAnalysed(AnalysisContext context) {
+            }
+            
+            @Override
+            public void extra(CellExtra extra, AnalysisContext context) {
+                LOGGER.info("读取到了一条额外信息:{}", JSON.toJSONString(extra));
+                if (extra.getType().equals(CellExtraTypeEnum.COMMENT)) {
+                    commentList.contains(extra.getText());
+                }
+            }
+        }).excelType(ExcelTypeEnum.XLSX).extraRead(CellExtraTypeEnum.COMMENT).sheet().doRead();
     }
-
+    
+    @Test
+    public void xlsCommentTest() throws Exception {
+        File file = new File("src/test/resources/comment/comment.xls");
+        FastExcel.read(file, new ReadListener() {
+            @Override
+            public void invoke(Object data, AnalysisContext context) {
+            }
+            
+            @Override
+            public void doAfterAllAnalysed(AnalysisContext context) {
+            }
+            
+            @Override
+            public void extra(CellExtra extra, AnalysisContext context) {
+                LOGGER.info("读取到了一条额外信息:{}", JSON.toJSONString(extra));
+                if (extra.getType().equals(CellExtraTypeEnum.COMMENT)) {
+                    commentList.contains(extra.getText());
+                }
+            }
+        }).excelType(ExcelTypeEnum.XLS).extraRead(CellExtraTypeEnum.COMMENT).sheet().doRead();
+    }
+    
 }
