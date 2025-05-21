@@ -47,6 +47,7 @@
         <jcl-over-slf4j.version>1.7.36</jcl-over-slf4j.version>
         <log4j-over-slf4j.version>1.7.36</log4j-over-slf4j.version>
         <logback-classic.version>1.5.6</logback-classic.version>
+        <mockserver.version>5.15.0</mockserver.version>
     </properties>
 
     <scm>
@@ -185,6 +186,13 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-test</artifactId>
                 <version>${spring-boot-starter-test.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mock-server</groupId>
+                <artifactId>mockserver-netty</artifactId>
+                <version>${mockserver.version}</version>
+                <scope>test</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
