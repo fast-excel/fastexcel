@@ -136,7 +136,7 @@ public class XlsSaxAnalyser implements HSSFListener, ExcelReadExecutor {
         List<ReadSheet> actualSheetDataList = xlsReadContext.readWorkbookHolder().getActualSheetDataList();
         if (xlsReadContext.readWorkbookHolder().getIgnoreHiddenSheet()) {
             return actualSheetDataList.stream()
-                .filter(readSheet -> !readSheet.isHidden())
+                .filter(readSheet -> (!readSheet.isHidden() && !readSheet.isVeryHidden()))
                 .collect(Collectors.toList());
         }
         return actualSheetDataList;

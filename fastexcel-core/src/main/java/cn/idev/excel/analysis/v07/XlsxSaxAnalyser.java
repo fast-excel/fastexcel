@@ -112,7 +112,7 @@ public class XlsxSaxAnalyser implements ExcelReadExecutor {
         xlsxReadWorkbookHolder.setPackageRelationshipCollectionMap(packageRelationshipCollectionMap);
         // analysis CTSheet
         analysisCtSheetMap(xssfReader, xlsxReadWorkbookHolder);
-        
+
         XSSFReader.SheetIterator ite = (XSSFReader.SheetIterator) xssfReader.getSheetsData();
         int index = 0;
         if (!ite.hasNext()) {
@@ -199,7 +199,8 @@ public class XlsxSaxAnalyser implements ExcelReadExecutor {
         throws Exception {
         CTWorkbook wb = WorkbookDocument.Factory.parse(xssfReader.getWorkbookData()).getWorkbook();
         for (CTSheet ctSheet : wb.getSheets().getSheetList()) {
-            boolean isHidden = ctSheet.getState() == STSheetState.HIDDEN;
+            boolean isHidden = (ctSheet.getState() == STSheetState.HIDDEN)
+                || (ctSheet.getState() == STSheetState.VERY_HIDDEN);
             if (Boolean.FALSE.equals(xlsxReadWorkbookHolder.getIgnoreHiddenSheet())
                 || !isHidden) {
                 ctSheetMap.put(ctSheet.getName(), ctSheet);

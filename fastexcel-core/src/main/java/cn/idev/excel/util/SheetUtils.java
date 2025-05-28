@@ -26,7 +26,8 @@ public class SheetUtils {
      */
     public static ReadSheet match(ReadSheet readSheet, AnalysisContext analysisContext) {
         ReadWorkbookHolder readWorkbookHolder = analysisContext.readWorkbookHolder();
-        if (analysisContext.readWorkbookHolder().getIgnoreHiddenSheet() && readSheet.isHidden()) {
+        if (analysisContext.readWorkbookHolder().getIgnoreHiddenSheet()
+            && (readSheet.isHidden() || readSheet.isVeryHidden())) {
             return null;
         }
         if (readWorkbookHolder.getReadAll()) {
