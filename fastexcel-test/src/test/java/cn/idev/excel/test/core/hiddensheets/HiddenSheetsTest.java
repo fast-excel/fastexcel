@@ -27,33 +27,53 @@ public class HiddenSheetsTest {
 
     @Test
     public void t01Read07() {
+        read(file07, null);
         read(file07, Boolean.FALSE);
         read(file07, Boolean.TRUE);
     }
 
     @Test
     public void t02Read03() {
+        read(file03, null);
         read(file03, Boolean.FALSE);
         read(file03, Boolean.TRUE);
     }
 
     @Test
     public void t03Read07All() {
+        readAll(file07, null);
         readAll(file07, Boolean.FALSE);
         readAll(file07, Boolean.TRUE);
     }
 
     @Test
     public void t04Read03All() {
+        readAll(file03, null);
         readAll(file03, Boolean.FALSE);
         readAll(file03, Boolean.TRUE);
+    }
+
+    @Test
+    public void t05ReadHiddenList() {
+        readHiddenList(file03);
+        readHiddenList(file07);
+    }
+    
+    private void readHiddenList(File file) {
+        try (ExcelReader excelReader = FastExcel.read(file, HiddenSheetsData.class, new HiddenSheetsListener()).build()) {
+            List<ReadSheet> allSheetList = excelReader.excelExecutor().sheetList();
+            Assertions.assertEquals(2, allSheetList.stream().filter(ReadSheet::isHidden).count());
+            Assertions.assertEquals(1, allSheetList.stream().filter(ReadSheet::isVeryHidden).count());
+            Assertions.assertEquals("Sheet5", allSheetList.stream().filter(ReadSheet::isVeryHidden)
+                .findFirst().get().getSheetName());
+        }
     }
 
     private void read(File file, Boolean ignoreHidden) {
         try (ExcelReader excelReader = FastExcel.read(file, HiddenSheetsData.class, new HiddenSheetsListener())
             .ignoreHiddenSheet(ignoreHidden).build()) {
             List<ReadSheet> sheets = excelReader.excelExecutor().sheetList();
-            if (ignoreHidden) {
+            if (Boolean.TRUE.equals(ignoreHidden)) {
                 Assertions.assertEquals(3, sheets.size());
             } else {
                 Assertions.assertEquals(6, sheets.size());
@@ -65,7 +85,7 @@ public class HiddenSheetsTest {
         List<HiddenSheetsData> dataList = FastExcel.read(file, HiddenSheetsData.class, new HiddenSheetsListener())
             .ignoreHiddenSheet(ignoreHidden)
             .doReadAllSync();
-        if (ignoreHidden) {
+        if (Boolean.TRUE.equals(ignoreHidden)) {
             Assertions.assertEquals(3, dataList.size());
         } else {
             Assertions.assertEquals(6, dataList.size());
