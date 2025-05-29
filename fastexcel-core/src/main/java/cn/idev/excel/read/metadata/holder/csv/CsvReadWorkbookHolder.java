@@ -25,10 +25,6 @@ public class CsvReadWorkbookHolder extends ReadWorkbookHolder {
     public CsvReadWorkbookHolder(ReadWorkbook readWorkbook) {
         super(readWorkbook);
         setExcelType(ExcelTypeEnum.CSV);
-        if (readWorkbook.getCsvFormat() == null) {
-            this.csvFormat = CSVFormat.DEFAULT;
-        } else {
-            this.csvFormat = readWorkbook.getCsvFormat();
-        }
+        this.csvFormat = readWorkbook.getCsvFormat() == null ? CSVFormat.DEFAULT : readWorkbook.getCsvFormat();
     }
 }
