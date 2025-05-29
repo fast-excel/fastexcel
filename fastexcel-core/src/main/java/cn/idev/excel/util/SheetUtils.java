@@ -1,11 +1,10 @@
 package cn.idev.excel.util;
 
+import cn.idev.excel.context.AnalysisContext;
 import cn.idev.excel.read.metadata.ReadSheet;
 import cn.idev.excel.read.metadata.holder.ReadWorkbookHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import cn.idev.excel.context.AnalysisContext;
 
 /**
  * Sheet utils
@@ -15,7 +14,8 @@ import cn.idev.excel.context.AnalysisContext;
 public class SheetUtils {
     private static final Logger LOGGER = LoggerFactory.getLogger(SheetUtils.class);
 
-    private SheetUtils() {}
+    private SheetUtils() {
+    }
 
     /**
      * Match the parameters to the actual sheet
@@ -26,6 +26,10 @@ public class SheetUtils {
      */
     public static ReadSheet match(ReadSheet readSheet, AnalysisContext analysisContext) {
         ReadWorkbookHolder readWorkbookHolder = analysisContext.readWorkbookHolder();
+        if (analysisContext.readWorkbookHolder().getIgnoreHiddenSheet()
+            && (readSheet.isHidden() || readSheet.isVeryHidden())) {
+            return null;
+        }
         if (readWorkbookHolder.getReadAll()) {
             return readSheet;
         }

@@ -14,13 +14,21 @@ public class ReadSheet extends ReadBasicParameter {
      * sheet name
      */
     private String sheetName;
-
+    /**
+     * sheet hidden state
+     */
+    private boolean sheetHidden;
+    /**
+     * sheet very hidden state
+     */
+    private boolean sheetVeryHidden;
     /**
      * The number of rows to read, the default is all, start with 0.
      */
     public Integer numRows;
 
-    public ReadSheet() {}
+    public ReadSheet() {
+    }
 
     public ReadSheet(Integer sheetNo) {
         this.sheetNo = sheetNo;
@@ -61,6 +69,22 @@ public class ReadSheet extends ReadBasicParameter {
         this.numRows = numRows;
     }
 
+    public boolean isHidden() {
+        return sheetHidden;
+    }
+
+    public void setHidden(boolean sheetHidden) {
+        this.sheetHidden = sheetHidden;
+    }
+
+    public boolean isVeryHidden() {
+        return sheetVeryHidden;
+    }
+
+    public void setVeryHidden(boolean sheetVeryHidden) {
+        this.sheetVeryHidden = sheetVeryHidden;
+    }
+
     public void copyBasicParameter(ReadSheet other) {
         if (other == null) {
             return;
@@ -73,10 +97,13 @@ public class ReadSheet extends ReadBasicParameter {
         this.setAutoTrim(other.getAutoTrim());
         this.setUse1904windowing(other.getUse1904windowing());
         this.setNumRows(other.getNumRows());
+        this.setHidden(other.isHidden());
+        this.setVeryHidden(other.isVeryHidden());
     }
 
     @Override
     public String toString() {
-        return "ReadSheet{" + "sheetNo=" + sheetNo + ", sheetName='" + sheetName + '\'' + "} " + super.toString();
+        return "ReadSheet{" + "sheetNo=" + sheetNo + ", sheetName='" + sheetName
+            + ", sheetHidden='" + sheetHidden + ", sheetVeryHidden='" + sheetVeryHidden + '\'' + "} " + super.toString();
     }
 }

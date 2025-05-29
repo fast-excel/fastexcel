@@ -21,6 +21,13 @@ import java.nio.charset.Charset;
 import java.util.HashSet;
 import java.util.List;
 
+import javax.xml.parsers.SAXParserFactory;
+import java.io.File;
+import java.io.InputStream;
+import java.nio.charset.Charset;
+import java.util.HashSet;
+import java.util.List;
+
 /**
  * Build ExcelReader
  *
@@ -280,5 +287,16 @@ public class ExcelReaderBuilder extends AbstractExcelReaderParameterBuilder<Exce
     @Override
     protected ReadWorkbook parameter() {
         return readWorkbook;
+    }
+
+    /**
+     * Ignore hiddene sheet.Default is false.
+     *
+     * @param ignoreHiddenSheet
+     * @return
+     */
+    public ExcelReaderBuilder ignoreHiddenSheet(Boolean ignoreHiddenSheet) {
+        readWorkbook.setIgnoreHiddenSheet(ignoreHiddenSheet);
+        return this;
     }
 }

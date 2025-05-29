@@ -12,7 +12,6 @@ import cn.idev.excel.support.ExcelTypeEnum;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.commons.csv.CSVFormat;
 
 import javax.xml.parsers.SAXParserFactory;
 import java.io.File;
@@ -121,8 +120,7 @@ public class ReadWorkbook extends ReadBasicParameter {
     private Integer numRows;
 
     /**
-     * Specifies CSVFormat for parsing.
-     * Only work on the CSV file.
+     * Ignore hidden sheet.
      */
-    private CSVFormat csvFormat;
+    private Boolean ignoreHiddenSheet;
 }
