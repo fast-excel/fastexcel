@@ -1,16 +1,16 @@
-<div style="align: center">
+<p align="center">
     <img src="img/readme/logo.svg"/>
-</div>
+</p>
 
-<div style="align: center">
+<p align="center">
     <a href="README.md">中文</a> | <a href="README_EN.md">English</a> | <a href="README_JP.md">日本語</a>
-</div>
+</p>
 
-<div style="align: center">
+<p align="center">
     <a href="https://github.com/fast-excel/fastexcel/actions/workflows/ci.yml"><img alt="GitHub Actions Workflow Status" src="https://img.shields.io/github/actions/workflow/status/fast-excel/fastexcel/ci.yml?style=flat-square&logo=github"></a>
     <a href="https://github.com/fast-excel/fastexcel/blob/main/LICENSE"><img alt="GitHub License" src="https://img.shields.io/github/license/fast-excel/fastexcel?logo=apache&style=flat-square"></a>
     <a href="https://mvnrepository.com/artifact/cn.idev.excel/fastexcel"><img alt="Maven Central Version" src="https://img.shields.io/maven-central/v/cn.idev.excel/fastexcel?logo=apachemaven&style=flat-square"></a>
-</div>
+</p>
 
 ## What is FastExcel
 
@@ -46,7 +46,7 @@ We strongly recommend using the latest version of FastExcel, as performance opti
 > Currently, FastExcel uses POI as its underlying package. If your project already includes POI-related components, you will need to manually exclude POI-related jar files.
 
 ### Version Update
-For detailed update logs, refer to [Details of version updates](CHANGELOG.md). You can also find all available versions in the [Maven Central Repository](https://mvnrepository.com/artifact/cn.idev.excel/fastexcel).
+For detailed update logs, refer to [Details of version updates](./CHANGELOG.md). You can also find all available versions in the [Maven Central Repository](https://mvnrepository.com/artifact/cn.idev.excel/fastexcel).
 
 
 ### Maven
@@ -86,7 +86,7 @@ Replace the EasyExcel dependency with the FastExcel dependency, as follows:
 <dependency>
     <groupId>com.alibaba</groupId>
     <artifactId>easyexcel</artifactId>
-    <version>xxxx</version>
+    <version>xxx</version>
 </dependency>
 ```
 Replace with:
@@ -94,7 +94,7 @@ Replace with:
 <dependency>
     <groupId>cn.idev.excel</groupId>
     <artifactId>fastexcel</artifactId>
-    <version>1.2.0</version>
+    <version>xxx</version>
 </dependency>
 ```
 #### Update Code
@@ -180,20 +180,21 @@ public static void main(String[] args) {
 ```
 
 ## Contributing
-Contributors are welcomed to join the FastExcel project. Please check [Contributing Guide](CONTRIBUTING.md) about how to contribute to this project.
+Contributors are welcomed to join the FastExcel project. Please check [Contributing Guide](./CONTRIBUTING.md) about how to contribute to this project.
 
 Thank you to all the people who already contributed to FastExcel!
 
 <a href="https://github.com/fast-excel/fastexcel/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=fast-excel/fastexcel" />
+  <img src="https://contrib.rocks/image?repo=fast-excel/fastexcel"/>
 </a>
-<sub>_Note: Showing the first 100 contributors only due to GitHub image size limitations_</sub>
 
-## Github Star History
+> Note: Showing the first 100 contributors only due to GitHub image size limitations
+
+## Star History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=fast-excel/fastexcel&type=Date)](https://www.star-history.com/#fast-excel/fastexcel&Date)
 
 ## License
 
-FastExcel project is licensed under the [Apache License 2.0](https://github.com/fast-excel/fastexcel/blob/main/LICENSE).
+The project is licensed under the [Apache License 2.0](https://github.com/fast-excel/fastexcel/blob/main/LICENSE).
 
