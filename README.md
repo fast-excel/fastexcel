@@ -16,14 +16,13 @@
 
 FastExcel 是由原 EasyExcel 作者创建的新项目。2023 年我已从阿里离职，近期阿里宣布停止更新EasyExcel，我决定继续维护和升级这个项目。在重新开始时，我选择为它起名为 FastExcel，以突出这个框架在处理 Excel 文件时的高性能表现，而不仅仅是简单易用。
 
-FastExcel 将始终坚持免费开源，并采用商业友好的 Apache 协议，使其适用于任何商业化场景。这为开发者和企业提供了极大的自由度和灵活性。FastExcel 的一些显著特点包括：
+FastExcel 将始终坚持免费开源，并采用商业友好的 Apache 协议，使其适用于任何商业化场景。这为开发者和企业提供了极大的自由度和灵活性。其中的一些显著特点包括：
 
 - 完全兼容原 EasyExcel 的所有功能和特性，这使得用户可以无缝过渡。
 - 从 EasyExcel 迁移到 FastExcel 只需简单地更换包名和 Maven 依赖即可完成升级。
 - 在功能上，比 EasyExcel 提供更多新的特性和改进。
 
-我们计划在未来推出更多新特性，以不断提升用户体验和工具实用性。欢迎大家关注 程序员小懒的公众号 关注FastExcel的发展。FastExcel
-致力于成为您处理 Excel 文件的最佳选择。
+我们计划在未来推出更多新特性，以不断提升用户体验和工具实用性。欢迎大家关注FastExcel的发展，FastExcel 致力于成为您处理 Excel 文件的最佳选择。
 
 ## 主要特性
 
@@ -187,8 +186,7 @@ import cn.idev.excel.*;
 
 ### 直接依赖 FastExcel
 
-如果由于种种原因您不想修改代码，可以直接依赖 FastExcel ，然后在 `pom.xml` 文件中直接依赖 FastExcel。
-EasyExcel 与 FastExcel 可以共存，但是长期建议替换为 FastExcel。
+如果由于种种原因您不想修改代码，可以直接在 `pom.xml` 文件中直接依赖 FastExcel。EasyExcel 与 FastExcel 可以共存，但是长期建议替换为 FastExcel。
 
 ### 使用建议
 
