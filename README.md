@@ -195,9 +195,28 @@ EasyExcel 与 FastExcel 可以共存，但是长期建议替换为 FastExcel。
 为了兼容性考虑保留了 EasyExcel 类，但是建议以后使用 FastExcel 类，FastExcel 类是FastExcel 的入口类，功能包含了 EasyExcel
 类的所有功能，以后新特性仅在 FastExcel 类中添加。
 
+## 参与贡献
+
+欢迎社区的每一位用户和开发者成为贡献者。无论是报告问题、改进文档、提交代码，还是提供技术支持，您的参与都将帮助 FastExcel 变得更好。请先查阅[贡献指南](CONTRIBUTING.md)来参与贡献。
+
+感谢所有的 FastExcel 贡献者们!
+
+<a href="https://github.com/fast-excel/fastexcel/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=fast-excel/fastexcel" />
+</a>
+
+> 备注: 由于图片大小的限制，我们默认暂只显示前100名贡献者
+
 ## 关注我们
+
+### 公众号
 
 关注作者“程序员小懒“的公众号加入技术交流群，获取更多技术干货和最新动态。
 
 <a><img src="https://github.com/user-attachments/assets/b40aebe8-0552-4fb2-b184-4cb64a5b1229" width="30%"/></a>
+
+### Github Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=fast-excel/fastexcel&type=Date)](https://www.star-history.com/#fast-excel/fastexcel&Date)
+
 

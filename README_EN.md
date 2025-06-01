@@ -179,6 +179,21 @@ public static void main(String[] args) {
 }
 ```
 
+## Contributing
+Contributors are welcomed to join the FastExcel project. Please check [Contributing Guide](CONTRIBUTING.md) about how to contribute to this project.
+
+Thank you to all the people who already contributed to FastExcel!
+
+<a href="https://github.com/fast-excel/fastexcel/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=fast-excel/fastexcel" />
+</a>
+<sub>_Note: Showing the first 100 contributors only due to GitHub image size limitations_</sub>
+
+## Github Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=fast-excel/fastexcel&type=Date)](https://www.star-history.com/#fast-excel/fastexcel&Date)
+
 ## License
 
 FastExcel project is licensed under the [Apache License 2.0](https://github.com/fast-excel/fastexcel/blob/main/LICENSE).
+
