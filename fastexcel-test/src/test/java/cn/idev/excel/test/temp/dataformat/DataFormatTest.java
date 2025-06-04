@@ -10,10 +10,8 @@ import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.DateUtil;
-import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +22,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.regex.Pattern;
 
 /**
@@ -131,38 +128,6 @@ public class DataFormatTest {
             list1 = new ArrayList<String>(3000);
         }
         System.out.println("end:" + (System.currentTimeMillis() - start));
-    }
-    
-    @Disabled
-    @Test
-    public void test355() throws IOException, InvalidFormatException {
-        File file = TestFileUtil.readFile(
-                "dataformat" + File.separator + "dataformat.xlsx");
-        XSSFWorkbook xssfWorkbook = new XSSFWorkbook(file);
-        Sheet xssfSheet = xssfWorkbook.getSheetAt(0);
-        DataFormatter d = new DataFormatter(Locale.CHINA);
-        
-        for (int i = 0; i < xssfSheet.getLastRowNum(); i++) {
-            Row row = xssfSheet.getRow(i);
-            System.out.println(d.formatCellValue(row.getCell(0)));
-        }
-        
-    }
-    
-    @Disabled
-    @Test
-    public void test3556() throws IOException, InvalidFormatException {
-        File file = TestFileUtil.readFile(
-                "dataformat" + File.separator + "dataformat.xlsx");
-        XSSFWorkbook xssfWorkbook = new XSSFWorkbook(file);
-        Sheet xssfSheet = xssfWorkbook.getSheetAt(0);
-        DataFormatter d = new DataFormatter(Locale.CHINA);
-        
-        for (int i = 0; i < xssfSheet.getLastRowNum(); i++) {
-            Row row = xssfSheet.getRow(i);
-            System.out.println(d.formatCellValue(row.getCell(0)));
-        }
-        
     }
     
     @Test
