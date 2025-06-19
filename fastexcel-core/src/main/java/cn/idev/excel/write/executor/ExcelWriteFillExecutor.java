@@ -338,7 +338,7 @@ public class ExcelWriteFillExecutor extends AbstractExcelWriteExecutor {
                     collectionLastIndexMap.put(analysisCell, lastRowIndex);
                     isOriginalCell = true;
                 } else {
-                    collectionLastIndexMap.put(analysisCell, ++lastRowIndex);
+                    collectionLastIndexMap.put(analysisCell, lastRowIndex = lastRowIndex + fillConfig.getLineRows());
                 }
                 lastColumnIndex = analysisCell.getColumnIndex();
                 break;
@@ -350,7 +350,7 @@ public class ExcelWriteFillExecutor extends AbstractExcelWriteExecutor {
                     collectionLastIndexMap.put(analysisCell, lastColumnIndex);
                     isOriginalCell = true;
                 } else {
-                    collectionLastIndexMap.put(analysisCell, ++lastColumnIndex);
+                    collectionLastIndexMap.put(analysisCell, lastColumnIndex = lastColumnIndex + fillConfig.getLineRows());
                 }
                 break;
             default:
