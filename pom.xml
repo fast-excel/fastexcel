@@ -36,17 +36,17 @@
         <poi.version>5.4.1</poi.version>
         <poi-ooxml.version>5.4.1</poi-ooxml.version>
         <ehcache.version>3.9.11</ehcache.version>
-        <commons-io.version>2.16.1</commons-io.version>
+        <commons-io.version>2.19.0</commons-io.version>
         <slf4j-api.version>1.7.36</slf4j-api.version>
-        <lombok.version>1.18.32</lombok.version>
-        <spring-core.version>5.3.37</spring-core.version>
-        <fastjson2.version>2.0.51</fastjson2.version>
+        <lombok.version>1.18.38</lombok.version>
+        <spring-core.version>5.3.39</spring-core.version>
+        <fastjson2.version>2.0.57</fastjson2.version>
         <spring-boot-starter-web.version>2.7.18</spring-boot-starter-web.version>
         <spring-boot-starter-test.version>2.7.18</spring-boot-starter-test.version>
-        <slf4j-simple.version>1.7.36</slf4j-simple.version>
-        <jcl-over-slf4j.version>1.7.36</jcl-over-slf4j.version>
-        <log4j-over-slf4j.version>1.7.36</log4j-over-slf4j.version>
-        <logback-classic.version>1.5.6</logback-classic.version>
+        <slf4j-simple.version>2.0.17</slf4j-simple.version>
+        <jcl-over-slf4j.version>2.0.17</jcl-over-slf4j.version>
+        <log4j-over-slf4j.version>2.0.17</log4j-over-slf4j.version>
+        <logback-classic.version>1.5.18</logback-classic.version>
         <mockserver.version>5.15.0</mockserver.version>
     </properties>
 
