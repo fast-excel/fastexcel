@@ -71,7 +71,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
                     <includes>
-                        <include>/cn/idev/excel/test/core/**/*.java</include>
+                        <include>/cn/idev/excel/test/**/*.java</include>
                     </includes>
                     <testFailureIgnore>false</testFailureIgnore>
                 </configuration>
