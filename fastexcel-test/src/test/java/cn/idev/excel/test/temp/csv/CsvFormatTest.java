@@ -137,20 +137,8 @@ public class CsvFormatTest {
 
     @Test
     public void testHolder() {
-        CSVFormat csvFormat = CSVFormat.DEFAULT.builder().setDelimiter("#").build();
-
-        // https://github.com/alibaba/easyexcel/issues/3868
-        csvFile = TestFileUtil.readFile(CSV_BASE + "simple-delimiter.csv");
-        try (ExcelReader excelReader = FastExcel.read(csvFile, CsvData.class, new CsvDataListener()).build()) {
-            ReadWorkbookHolder readWorkbookHolder = excelReader.analysisContext().readWorkbookHolder();
-            if (readWorkbookHolder instanceof CsvReadWorkbookHolder) {
-                CsvReadWorkbookHolder csvReadWorkbookHolder = (CsvReadWorkbookHolder) readWorkbookHolder;
-                csvReadWorkbookHolder.setCsvFormat(csvFormat);
-            }
-            ReadSheet readSheet = FastExcel.readSheet(0).build();
-            excelReader.read(readSheet);
-        }
-
+        CSVFormat csvFormat = CSVFormat.DEFAULT.builder().setDelimiter(CsvConstant.AT).build();
+        
         csvFile = TestFileUtil.createNewFile(CSV_BASE + "csv-delimiter.csv");
         try (ExcelWriter excelWriter = FastExcel.write(csvFile, CsvData.class).excelType(ExcelTypeEnum.CSV).build()) {
             WriteWorkbookHolder writeWorkbookHolder = excelWriter.writeContext().writeWorkbookHolder();
@@ -163,6 +151,19 @@ public class CsvFormatTest {
             WriteSheet writeSheet = FastExcel.writerSheet(0).build();
             excelWriter.write(csvDataList, writeSheet);
         }
+
+        // https://github.com/alibaba/easyexcel/issues/3868
+        csvFile = TestFileUtil.readFile(CSV_BASE + "csv-delimiter.csv");
+        try (ExcelReader excelReader = FastExcel.read(csvFile, CsvData.class, new CsvDataListener()).build()) {
+            ReadWorkbookHolder readWorkbookHolder = excelReader.analysisContext().readWorkbookHolder();
+            if (readWorkbookHolder instanceof CsvReadWorkbookHolder) {
+                CsvReadWorkbookHolder csvReadWorkbookHolder = (CsvReadWorkbookHolder) readWorkbookHolder;
+                csvReadWorkbookHolder.setCsvFormat(csvFormat);
+            }
+            ReadSheet readSheet = FastExcel.readSheet(0).build();
+            excelReader.read(readSheet);
+        }
+
     }
 
     @Test
