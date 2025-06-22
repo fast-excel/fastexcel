@@ -38,6 +38,10 @@ jobs:
         if: ${{ matrix.java != '8' }}
         run: ./mvnw test -B -Dmaven.test.skip=false -DargLine="--add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/sun.reflect.annotation=ALL-UNNAMED"
       - name: Maven Build
+        if: ${{ matrix.java == '8' }}
         run: ./mvnw install -B -V
+      - name: Maven Build
+        if: ${{ matrix.java != '8' }}
+        run: ./mvnw install -B -V -DargLine="--add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/sun.reflect.annotation=ALL-UNNAMED"
       - name: Java Doc
         run: ./mvnw javadoc:javadoc
