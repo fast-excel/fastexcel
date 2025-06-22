@@ -1,15 +1,15 @@
 package cn.idev.excel.write.metadata;
 
+import cn.idev.excel.support.ExcelTypeEnum;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import org.apache.commons.csv.CSVFormat;
+
 import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
-
-import cn.idev.excel.support.ExcelTypeEnum;
-
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * Workbook
@@ -86,4 +86,9 @@ public class WriteWorkbook extends WriteBasicParameter {
      * Excel is also written in the event of an exception being thrown.The default false.
      */
     private Boolean writeExcelOnException;
+    /**
+     * Specifies CSVFormat for parsing.
+     * Only work on the CSV file.
+     */
+    private CSVFormat csvFormat;
 }

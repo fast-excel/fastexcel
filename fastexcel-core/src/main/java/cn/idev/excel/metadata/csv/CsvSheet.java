@@ -1,13 +1,6 @@
 package cn.idev.excel.metadata.csv;
 
-import java.io.Closeable;
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
+import cn.idev.excel.constant.BuiltinFormats;
 import cn.idev.excel.enums.ByteOrderMarkEnum;
 import cn.idev.excel.enums.NumericCellTypeEnum;
 import cn.idev.excel.exception.ExcelGenerateException;
@@ -15,8 +8,6 @@ import cn.idev.excel.util.DateUtils;
 import cn.idev.excel.util.ListUtils;
 import cn.idev.excel.util.NumberDataFormatterUtils;
 import cn.idev.excel.util.StringUtils;
-import cn.idev.excel.constant.BuiltinFormats;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -44,6 +35,14 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellAddress;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.PaneInformation;
+
+import java.io.Closeable;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 /**
  * csv sheet
@@ -90,7 +89,7 @@ public class CsvSheet implements Sheet, Closeable {
         this.csvWorkbook = csvWorkbook;
         this.out = out;
         this.rowCacheCount = 100;
-        this.csvFormat = CSVFormat.DEFAULT;
+        this.csvFormat = csvWorkbook.getCsvFormat() == null ? CSVFormat.DEFAULT : csvWorkbook.getCsvFormat();
         this.lastRowIndex = -1;
     }
 
@@ -290,7 +289,7 @@ public class CsvSheet implements Sheet, Closeable {
 
     @Override
     public Iterator<Row> rowIterator() {
-        return (Iterator<Row>)(Iterator<? extends Row>)rowCache.iterator();
+        return (Iterator<Row>) (Iterator<? extends Row>) rowCache.iterator();
     }
 
     @Override
@@ -761,7 +760,7 @@ public class CsvSheet implements Sheet, Closeable {
                 Iterator<Cell> cellIterator = row.cellIterator();
                 int columnIndex = 0;
                 while (cellIterator.hasNext()) {
-                    CsvCell csvCell = (CsvCell)cellIterator.next();
+                    CsvCell csvCell = (CsvCell) cellIterator.next();
                     while (csvCell.getColumnIndex() > columnIndex++) {
                         csvPrinter.print(null);
                     }
@@ -807,7 +806,7 @@ public class CsvSheet implements Sheet, Closeable {
                     if (csvCell.getNumberValue() == null) {
                         return null;
                     }
-                    //number
+                    // number
                     if (dataFormat == null) {
                         dataFormat = BuiltinFormats.GENERAL;
                         dataFormatString = csvWorkbook.createDataFormat().getFormat(dataFormat);

@@ -1,15 +1,10 @@
 package cn.idev.excel.util;
 
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-
 import cn.idev.excel.metadata.csv.CsvWorkbook;
 import cn.idev.excel.metadata.data.DataFormatData;
 import cn.idev.excel.metadata.data.WriteCellData;
 import cn.idev.excel.write.metadata.holder.WriteWorkbookHolder;
 import cn.idev.excel.write.metadata.style.WriteCellStyle;
-
 import org.apache.poi.hssf.record.crypto.Biff8EncryptionKey;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
@@ -21,12 +16,17 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+
 /**
  * @author jipengfei
  */
 public class WorkBookUtil {
 
-    private WorkBookUtil() {}
+    private WorkBookUtil() {
+    }
 
     public static void createWorkBook(WriteWorkbookHolder writeWorkbookHolder) throws IOException {
         switch (writeWorkbookHolder.getExcelType()) {
@@ -73,6 +73,9 @@ public class WorkBookUtil {
                     writeWorkbookHolder.getGlobalConfiguration().getUseScientificFormat(),
                     writeWorkbookHolder.getCharset(),
                     writeWorkbookHolder.getWithBom());
+                if (writeWorkbookHolder.getWriteWorkbook().getCsvFormat() != null) {
+                    csvWorkbook.setCsvFormat(writeWorkbookHolder.getWriteWorkbook().getCsvFormat());
+                }
                 writeWorkbookHolder.setCachedWorkbook(csvWorkbook);
                 writeWorkbookHolder.setWorkbook(csvWorkbook);
                 return;
