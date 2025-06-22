@@ -45,6 +45,16 @@ public class CsvWriterBuilder extends AbstractExcelWriterParameterBuilder<CsvWri
     /**
      * Sets the quote character
      *
+     * @param quote the quote character
+     * @return Returns a CsvWriterBuilder object, enabling method chaining
+     */
+    public CsvWriterBuilder quote(Character quote) {
+        return quote(quote, QuoteMode.MINIMAL);
+    }
+
+    /**
+     * Sets the quote character and the quoting behavior
+     *
      * @param quote     the quote character
      * @param quoteMode defines the quoting behavior
      * @return Returns a CsvWriterBuilder object, enabling method chaining
@@ -108,7 +118,7 @@ public class CsvWriterBuilder extends AbstractExcelWriterParameterBuilder<CsvWri
         this.writeWorkbook.setCsvFormat(this.csvFormatBuilder.build());
         return new ExcelWriter(this.writeWorkbook);
     }
-    
+
     public void doWrite(Collection<?> data) {
         if (writeWorkbook == null) {
             throw new ExcelGenerateException("Must use 'FastExcelFactory.write().csv()' to call this method");

@@ -45,6 +45,16 @@ public class CsvReaderBuilder extends AbstractExcelReaderParameterBuilder<CsvRea
     /**
      * Sets the quote character
      *
+     * @param quote the quote character
+     * @return Returns a CsvReaderBuilder object, enabling method chaining
+     */
+    public CsvReaderBuilder quote(Character quote) {
+        return quote(quote, QuoteMode.MINIMAL);
+    }
+
+    /**
+     * Sets the quote character and the quoting behavior
+     *
      * @param quote     the quote character
      * @param quoteMode defines the quoting behavior
      * @return Returns a CsvReaderBuilder object, enabling method chaining
@@ -54,7 +64,7 @@ public class CsvReaderBuilder extends AbstractExcelReaderParameterBuilder<CsvRea
             this.csvFormatBuilder.setQuote(quote);
         }
         if (quoteMode != null) {
-            this.csvFormatBuilder.setQuoteMode(QuoteMode.MINIMAL);
+            this.csvFormatBuilder.setQuoteMode(quoteMode);
         }
         return this;
     }
