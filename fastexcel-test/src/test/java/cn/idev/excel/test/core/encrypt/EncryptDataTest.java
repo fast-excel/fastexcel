@@ -27,15 +27,19 @@ public class EncryptDataTest {
     private static final String PASSWORD = "123456";
     private static File file07;
     private static File file03;
+    private static File fileCsv;
     private static File file07OutputStream;
     private static File file03OutputStream;
+    private static File fileCsvOutputStream;
 
     @BeforeAll
     public static void init() {
         file07 = TestFileUtil.createNewFile("encrypt07.xlsx");
         file03 = TestFileUtil.createNewFile("encrypt03.xls");
+        fileCsv = TestFileUtil.createNewFile("encryptCsv.csv");
         file07OutputStream = TestFileUtil.createNewFile("encryptOutputStream07.xlsx");
         file03OutputStream = TestFileUtil.createNewFile("encryptOutputStream03.xls");
+        fileCsvOutputStream = TestFileUtil.createNewFile("encryptOutputStreamCsv.csv");
     }
 
     @Test
@@ -62,6 +66,19 @@ public class EncryptDataTest {
         readAndWrite(file03OutputStream, null, true, true);
         readAndWrite(file03OutputStream, ExcelTypeEnum.XLSX, false, true);
         readAndWrite(file03OutputStream, ExcelTypeEnum.XLSX, true, true);
+    }
+
+    @Test
+    public void t03ReadAndWriteCSV() throws Exception {
+        readAndWrite(fileCsv, null, false, false);
+        readAndWrite(fileCsv, null, true, false);
+        readAndWrite(fileCsv, ExcelTypeEnum.CSV, false, false);
+        readAndWrite(fileCsv, ExcelTypeEnum.CSV, true, false);
+
+        readAndWrite(fileCsvOutputStream, null, false, true);
+        readAndWrite(fileCsvOutputStream, null, true, true);
+        readAndWrite(fileCsvOutputStream, ExcelTypeEnum.CSV, false, true);
+        readAndWrite(fileCsvOutputStream, ExcelTypeEnum.CSV, true, true);
     }
 
     private void readAndWrite(File file, ExcelTypeEnum excelType, boolean hasPassword, boolean isStream)
