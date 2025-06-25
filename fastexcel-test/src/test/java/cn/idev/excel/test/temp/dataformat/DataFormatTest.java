@@ -1,6 +1,7 @@
 package cn.idev.excel.test.temp.dataformat;
 
 import cn.idev.excel.EasyExcel;
+import cn.idev.excel.metadata.data.FormulaData;
 import cn.idev.excel.test.core.dataformat.DateFormatData;
 import cn.idev.excel.test.temp.Lock2Test;
 import cn.idev.excel.test.util.TestFileUtil;
@@ -9,7 +10,6 @@ import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.DateUtil;
-import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.jupiter.api.Test;
@@ -22,7 +22,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.regex.Pattern;
 
 /**
@@ -37,21 +36,22 @@ public class DataFormatTest {
     
     @Test
     public void test() throws Exception {
-        File file = new File("D:\\test\\dataformat.xlsx");
         
-        List<DataFormatData> list = EasyExcel.read(file, DataFormatData.class, null).sheet().headRowNumber(0)
+        File file = TestFileUtil.readFile("dataformat" + File.separator + "dataformat.xlsx");
+        
+        List<DataFormatData> list = EasyExcel.read(file, DataFormatData.class, null).sheet().headRowNumber(1)
                 .doReadSync();
         LOGGER.info("数据：{}", list.size());
         for (DataFormatData data : list) {
-            Short dataFormat = data.getDate().getDataFormatData().getIndex();
+            cn.idev.excel.metadata.data.DataFormatData dataFormat = data.getDate().getDataFormatData();
             
-            String dataFormatString = data.getDate().getFormulaData().getFormulaValue();
+            FormulaData dataFormatString = data.getDate().getFormulaData();
             
             if (dataFormat == null || dataFormatString == null) {
             
             } else {
-                LOGGER.info("格式化：{};{}：{}", dataFormat, dataFormatString,
-                        DateUtil.isADateFormat(dataFormat, dataFormatString));
+                LOGGER.info("格式化：{};{}：{}", dataFormat.getIndex(), dataFormatString.getFormulaValue(),
+                        DateUtil.isADateFormat(dataFormat.getIndex(), dataFormatString.getFormulaValue()));
             }
             
             LOGGER.info("返回数据：{}", JSON.toJSONString(data));
@@ -60,21 +60,21 @@ public class DataFormatTest {
     
     @Test
     public void testxls() throws Exception {
-        File file = new File("D:\\test\\dataformat.xls");
+        File file = TestFileUtil.readFile("dataformat" + File.separator + "dataformat.xls");
         
-        List<DataFormatData> list = EasyExcel.read(file, DataFormatData.class, null).sheet().headRowNumber(0)
+        List<DataFormatData> list = EasyExcel.read(file, DataFormatData.class, null).sheet().headRowNumber(1)
                 .doReadSync();
         LOGGER.info("数据：{}", list.size());
         for (DataFormatData data : list) {
-            Short dataFormat = data.getDate().getDataFormatData().getIndex();
+            cn.idev.excel.metadata.data.DataFormatData dataFormat = data.getDate().getDataFormatData();
             
-            String dataFormatString = data.getDate().getFormulaData().getFormulaValue();
+            FormulaData dataFormatString = data.getDate().getFormulaData();
             
             if (dataFormat == null || dataFormatString == null) {
             
             } else {
-                LOGGER.info("格式化：{};{}：{}", dataFormat, dataFormatString,
-                        DateUtil.isADateFormat(dataFormat, dataFormatString));
+                LOGGER.info("格式化：{};{}：{}", dataFormat.getIndex(), dataFormatString.getFormulaValue(),
+                        DateUtil.isADateFormat(dataFormat.getIndex(), dataFormatString.getFormulaValue()));
             }
             
             LOGGER.info("返回数据：{}", JSON.toJSONString(data));
@@ -83,8 +83,9 @@ public class DataFormatTest {
     
     @Test
     public void test3() throws IOException {
-        String file = "D:\\test\\dataformat1.xlsx";
-        XSSFWorkbook xssfWorkbook = new XSSFWorkbook(file);
+        
+        File file = TestFileUtil.readFile("dataformat" + File.separator + "dataformat.xlsx");
+        XSSFWorkbook xssfWorkbook = new XSSFWorkbook(file.getAbsoluteFile().getAbsolutePath());
         Sheet xssfSheet = xssfWorkbook.getSheetAt(0);
         Cell cell = xssfSheet.getRow(0).getCell(0);
         DataFormatter d = new DataFormatter();
@@ -130,34 +131,6 @@ public class DataFormatTest {
     }
     
     @Test
-    public void test355() throws IOException, InvalidFormatException {
-        File file = TestFileUtil.readFile("dataformat" + File.separator + "dataformat.xlsx");
-        XSSFWorkbook xssfWorkbook = new XSSFWorkbook(file);
-        Sheet xssfSheet = xssfWorkbook.getSheetAt(0);
-        DataFormatter d = new DataFormatter(Locale.CHINA);
-        
-        for (int i = 0; i < xssfSheet.getLastRowNum(); i++) {
-            Row row = xssfSheet.getRow(i);
-            System.out.println(d.formatCellValue(row.getCell(0)));
-        }
-        
-    }
-    
-    @Test
-    public void test3556() throws IOException, InvalidFormatException {
-        String file = "D://test/dataformat1.xlsx";
-        XSSFWorkbook xssfWorkbook = new XSSFWorkbook(file);
-        Sheet xssfSheet = xssfWorkbook.getSheetAt(0);
-        DataFormatter d = new DataFormatter(Locale.CHINA);
-        
-        for (int i = 0; i < xssfSheet.getLastRowNum(); i++) {
-            Row row = xssfSheet.getRow(i);
-            System.out.println(d.formatCellValue(row.getCell(0)));
-        }
-        
-    }
-    
-    @Test
     public void tests() throws IOException, InvalidFormatException {
         SimpleDateFormat s1 = new SimpleDateFormat("yyyy\"5E74\"m\"6708\"d\"65E5\"");
         System.out.println(s1.format(new Date()));
@@ -167,7 +140,8 @@ public class DataFormatTest {
     
     @Test
     public void tests1() throws IOException, InvalidFormatException {
-        String file = "D://test/dataformat1.xlsx";
+        
+        File file = TestFileUtil.readFile("dataformat" + File.separator + "dataformat.xlsx");
         List<DateFormatData> list = EasyExcel.read(file, DateFormatData.class, null).sheet().doReadSync();
         for (DateFormatData data : list) {
             LOGGER.info("返回:{}", JSON.toJSONString(data));

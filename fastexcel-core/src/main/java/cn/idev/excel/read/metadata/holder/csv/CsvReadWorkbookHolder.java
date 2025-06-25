@@ -18,14 +18,13 @@ import org.apache.commons.csv.CSVParser;
 @Setter
 @EqualsAndHashCode
 public class CsvReadWorkbookHolder extends ReadWorkbookHolder {
-    
+
     private CSVFormat csvFormat;
-    
     private CSVParser csvParser;
-    
+
     public CsvReadWorkbookHolder(ReadWorkbook readWorkbook) {
         super(readWorkbook);
         setExcelType(ExcelTypeEnum.CSV);
-        this.csvFormat = CSVFormat.DEFAULT;
+        this.csvFormat = readWorkbook.getCsvFormat() == null ? CSVFormat.DEFAULT : readWorkbook.getCsvFormat();
     }
 }

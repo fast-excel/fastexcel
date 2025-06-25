@@ -17,7 +17,6 @@ import org.apache.poi.xssf.streaming.SXSSFDrawing;
 import org.apache.poi.xssf.streaming.SXSSFRow;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -136,20 +135,4 @@ public class TempWriteTest {
         }
     }
     
-    @Test
-    public void large(@TempDir Path tempDir) throws Exception {
-        String file = tempDir.resolve(System.currentTimeMillis() + ".xlsx").toString();
-        SXSSFWorkbook workbook = new SXSSFWorkbook(new XSSFWorkbook(new File("src/test/resources/large/large07.xlsx")));
-        SXSSFSheet sheet = workbook.createSheet("测试");
-        
-        SXSSFRow row = sheet.createRow(500000);
-        SXSSFCell cell = row.createCell(0);
-        cell.setCellValue("test");
-        
-        FileOutputStream fileOutputStream = new FileOutputStream(file);
-        workbook.write(fileOutputStream);
-        fileOutputStream.flush();
-        workbook.close();
-        
-    }
 }

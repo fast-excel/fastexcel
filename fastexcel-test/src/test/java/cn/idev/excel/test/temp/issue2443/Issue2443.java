@@ -8,8 +8,6 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode
 public class Issue2443 {
-    
     private int a;
-    
     private int b;
 }

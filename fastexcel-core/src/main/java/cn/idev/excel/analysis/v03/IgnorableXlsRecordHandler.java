@@ -5,6 +5,4 @@ package cn.idev.excel.analysis.v03;
  *
  * @author Jiaju Zhuang
  */
-public interface IgnorableXlsRecordHandler extends XlsRecordHandler {
-
-}
+public interface IgnorableXlsRecordHandler extends XlsRecordHandler {}

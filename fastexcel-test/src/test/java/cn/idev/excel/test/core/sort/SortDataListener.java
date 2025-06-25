@@ -1,28 +1,28 @@
 package cn.idev.excel.test.core.sort;
 
-import cn.idev.excel.context.AnalysisContext;
+import java.util.ArrayList;
+import java.util.List;
+
 import cn.idev.excel.event.AnalysisEventListener;
+import cn.idev.excel.context.AnalysisContext;
+
 import org.junit.jupiter.api.Assertions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Jiaju Zhuang
  */
 public class SortDataListener extends AnalysisEventListener<SortData> {
-    
+
     private static final Logger LOGGER = LoggerFactory.getLogger(SortDataListener.class);
-    
     List<SortData> list = new ArrayList<SortData>();
-    
+
     @Override
     public void invoke(SortData data, AnalysisContext context) {
         list.add(data);
     }
-    
+
     @Override
     public void doAfterAllAnalysed(AnalysisContext context) {
         Assertions.assertEquals(list.size(), 1);

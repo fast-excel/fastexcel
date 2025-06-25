@@ -7,7 +7,7 @@ import lombok.Setter;
 import java.util.Date;
 
 /**
- * 基础数据类.这里的排序和excel里面的排序一致
+ * Basic data class. The order here is consistent with the order in the Excel file.
  *
  * @author Jiaju Zhuang
  **/
@@ -15,9 +15,9 @@ import java.util.Date;
 @Setter
 @EqualsAndHashCode
 public class ExceptionDemoData {
-    
+
     /**
-     * 用日期去接字符串 肯定报错
+     * Using a Date to receive a string will definitely cause an error.
      */
     private Date date;
 }

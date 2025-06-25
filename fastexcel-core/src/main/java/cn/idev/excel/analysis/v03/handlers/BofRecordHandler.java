@@ -18,7 +18,7 @@ import java.util.List;
  * @author Dan Zheng
  */
 public class BofRecordHandler extends AbstractXlsRecordHandler {
-    
+
     @Override
     public void processRecord(XlsReadContext xlsReadContext, Record record) {
         BOFRecord br = (BOFRecord) record;
@@ -52,17 +52,19 @@ public class BofRecordHandler extends AbstractXlsRecordHandler {
         // Go read the next one
         xlsReadWorkbookHolder.setReadSheetIndex(xlsReadWorkbookHolder.getReadSheetIndex() + 1);
     }
-    
+
     private void initReadSheetDataList(XlsReadWorkbookHolder xlsReadWorkbookHolder) {
         if (xlsReadWorkbookHolder.getActualSheetDataList() != null) {
             return;
         }
-        BoundSheetRecord[] boundSheetRecords = BoundSheetRecord.orderByBofPosition(
-                xlsReadWorkbookHolder.getBoundSheetRecordList());
-        List<ReadSheet> readSheetDataList = new ArrayList<ReadSheet>();
+        BoundSheetRecord[] boundSheetRecords =
+            BoundSheetRecord.orderByBofPosition(xlsReadWorkbookHolder.getBoundSheetRecordList());
+        List<ReadSheet> readSheetDataList = new ArrayList<>();
         for (int i = 0; i < boundSheetRecords.length; i++) {
             BoundSheetRecord boundSheetRecord = boundSheetRecords[i];
             ReadSheet readSheet = new ReadSheet(i, boundSheetRecord.getSheetname());
+            readSheet.setHidden(boundSheetRecord.isHidden());
+            readSheet.setVeryHidden(boundSheetRecord.isVeryHidden());
             readSheetDataList.add(readSheet);
         }
         xlsReadWorkbookHolder.setActualSheetDataList(readSheetDataList);

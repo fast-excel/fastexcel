@@ -21,6 +21,7 @@ import cn.idev.excel.util.BooleanUtils;
 import cn.idev.excel.util.FileUtils;
 import cn.idev.excel.util.ListUtils;
 import cn.idev.excel.write.handler.CellWriteHandler;
+import cn.idev.excel.write.handler.EscapeHexCellWriteHandler;
 import cn.idev.excel.write.handler.context.CellWriteHandlerContext;
 import cn.idev.excel.write.merge.LoopMergeStrategy;
 import cn.idev.excel.write.metadata.WriteSheet;
@@ -88,6 +89,15 @@ public class WriteTest {
             WriteSheet writeSheet = EasyExcel.writerSheet("模板").build();
             excelWriter.write(data(), writeSheet);
         }
+    }
+    
+    @Test
+    public void testEscapeHex() {
+        String fileName = TestFileUtil.getPath() + "simpleWrite" + System.currentTimeMillis() + ".xlsx";
+        EasyExcel.write(fileName, DemoData.class).sheet("template")
+                .registerWriteHandler(new EscapeHexCellWriteHandler()).doWrite(() -> {
+                    return dataHex();
+                });
     }
     
     /**
@@ -251,8 +261,7 @@ public class WriteTest {
             imageDemoData.setFile(new File(imagePath));
             imageDemoData.setString(imagePath);
             imageDemoData.setInputStream(inputStream);
-            imageDemoData.setUrl(
-                    new URL("https://raw.githubusercontent.com/fast-excel/fastexcel/master/src/test/resources/converter/img.jpg"));
+            imageDemoData.setUrl(new URL("https://poi.apache.org/images/project-header.png"));
             
             // 这里演示
             // 需要额外放入文字
@@ -303,6 +312,9 @@ public class WriteTest {
             
             // 写入数据
             EasyExcel.write(fileName, ImageDemoData.class).sheet().doWrite(list);
+            // 如果图片资源不可访问，XLSX格式会报错 SXSSFWorkbook - Failed to dispose sheet
+            // 也可以考虑声明为XLS格式
+            // EasyExcel.write(fileName, ImageDemoData.class).excelType(ExcelTypeEnum.XLS).sheet().doWrite(list);
         }
     }
     
@@ -749,7 +761,19 @@ public class WriteTest {
         List<DemoData> list = ListUtils.newArrayList();
         for (int i = 0; i < 10; i++) {
             DemoData data = new DemoData();
-            data.setString("字符串" + i);
+            data.setString("STRING" + i);
+            data.setDate(new Date());
+            data.setDoubleData(0.56);
+            list.add(data);
+        }
+        return list;
+    }
+    
+    private List<DemoData> dataHex() {
+        List<DemoData> list = ListUtils.newArrayList();
+        for (int i = 0; i < 10; i++) {
+            DemoData data = new DemoData();
+            data.setString("_xB9f0_");
             data.setDate(new Date());
             data.setDoubleData(0.56);
             list.add(data);

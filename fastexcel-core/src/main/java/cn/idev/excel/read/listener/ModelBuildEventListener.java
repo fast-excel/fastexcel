@@ -1,5 +1,10 @@
 package cn.idev.excel.read.listener;
 
+import java.lang.reflect.Field;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.Map;
+
 import cn.idev.excel.context.AnalysisContext;
 import cn.idev.excel.enums.CellDataTypeEnum;
 import cn.idev.excel.enums.HeadKindEnum;
@@ -17,29 +22,26 @@ import cn.idev.excel.util.ConverterUtils;
 import cn.idev.excel.util.DateUtils;
 import cn.idev.excel.util.MapUtils;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.Map;
-
 /**
  * Convert to the object the user needs
  *
  * @author jipengfei
  */
 public class ModelBuildEventListener implements IgnoreExceptionReadListener<Map<Integer, ReadCellData<?>>> {
-    
+
     @Override
     public void invoke(Map<Integer, ReadCellData<?>> cellDataMap, AnalysisContext context) {
         ReadSheetHolder readSheetHolder = context.readSheetHolder();
         if (HeadKindEnum.CLASS.equals(readSheetHolder.excelReadHeadProperty().getHeadKind())) {
-            context.readRowHolder().setCurrentRowAnalysisResult(buildUserModel(cellDataMap, readSheetHolder, context));
+            context.readRowHolder()
+                .setCurrentRowAnalysisResult(buildUserModel(cellDataMap, readSheetHolder, context));
             return;
         }
         context.readRowHolder().setCurrentRowAnalysisResult(buildNoModel(cellDataMap, readSheetHolder, context));
     }
-    
+
     private Object buildNoModel(Map<Integer, ReadCellData<?>> cellDataMap, ReadSheetHolder readSheetHolder,
-            AnalysisContext context) {
+        AnalysisContext context) {
         int index = 0;
         Map<Integer, Object> map = MapUtils.newLinkedHashMapWithExpectedSize(cellDataMap.size());
         for (Map.Entry<Integer, ReadCellData<?>> entry : cellDataMap.entrySet()) {
@@ -50,16 +52,17 @@ public class ModelBuildEventListener implements IgnoreExceptionReadListener<Map<
                 index++;
             }
             index++;
-            
+
             ReadDefaultReturnEnum readDefaultReturn = context.readWorkbookHolder().getReadDefaultReturn();
             if (readDefaultReturn == ReadDefaultReturnEnum.STRING) {
                 // string
-                map.put(key, (String) ConverterUtils.convertToJavaObject(cellData, null, null,
-                        readSheetHolder.converterMap(), context, context.readRowHolder().getRowIndex(), key));
+                map.put(key,
+                    (String)ConverterUtils.convertToJavaObject(cellData, null, null, readSheetHolder.converterMap(),
+                        context, context.readRowHolder().getRowIndex(), key));
             } else {
                 // return ReadCellData
                 ReadCellData<?> convertedReadCellData = convertReadCellData(cellData,
-                        context.readWorkbookHolder().getReadDefaultReturn(), readSheetHolder, context, key);
+                    context.readWorkbookHolder().getReadDefaultReturn(), readSheetHolder, context, key);
                 if (readDefaultReturn == ReadDefaultReturnEnum.READ_CELL_DATA) {
                     map.put(key, convertedReadCellData);
                 } else {
@@ -76,9 +79,9 @@ public class ModelBuildEventListener implements IgnoreExceptionReadListener<Map<
         }
         return map;
     }
-    
+
     private ReadCellData convertReadCellData(ReadCellData<?> cellData, ReadDefaultReturnEnum readDefaultReturn,
-            ReadSheetHolder readSheetHolder, AnalysisContext context, Integer columnIndex) {
+        ReadSheetHolder readSheetHolder, AnalysisContext context, Integer columnIndex) {
         Class<?> classGeneric;
         switch (cellData.getType()) {
             case STRING:
@@ -93,7 +96,7 @@ public class ModelBuildEventListener implements IgnoreExceptionReadListener<Map<
             case NUMBER:
                 DataFormatData dataFormatData = cellData.getDataFormatData();
                 if (dataFormatData != null && DateUtils.isADateFormat(dataFormatData.getIndex(),
-                        dataFormatData.getFormat())) {
+                    dataFormatData.getFormat())) {
                     classGeneric = LocalDateTime.class;
                 } else {
                     classGeneric = BigDecimal.class;
@@ -103,11 +106,12 @@ public class ModelBuildEventListener implements IgnoreExceptionReadListener<Map<
                 classGeneric = ConverterUtils.defaultClassGeneric;
                 break;
         }
-        
-        return (ReadCellData) ConverterUtils.convertToJavaObject(cellData, null, ReadCellData.class, classGeneric, null,
-                readSheetHolder.converterMap(), context, context.readRowHolder().getRowIndex(), columnIndex);
+
+        return (ReadCellData)ConverterUtils.convertToJavaObject(cellData, null, ReadCellData.class,
+            classGeneric, null, readSheetHolder.converterMap(), context, context.readRowHolder().getRowIndex(),
+            columnIndex);
     }
-    
+
     private int calculateHeadSize(ReadSheetHolder readSheetHolder) {
         if (readSheetHolder.excelReadHeadProperty().getHeadMap().size() > 0) {
             return readSheetHolder.excelReadHeadProperty().getHeadMap().size();
@@ -117,17 +121,17 @@ public class ModelBuildEventListener implements IgnoreExceptionReadListener<Map<
         }
         return 0;
     }
-    
+
     private Object buildUserModel(Map<Integer, ReadCellData<?>> cellDataMap, ReadSheetHolder readSheetHolder,
-            AnalysisContext context) {
+        AnalysisContext context) {
         ExcelReadHeadProperty excelReadHeadProperty = readSheetHolder.excelReadHeadProperty();
         Object resultModel;
         try {
             resultModel = excelReadHeadProperty.getHeadClazz().newInstance();
         } catch (Exception e) {
             throw new ExcelDataConvertException(context.readRowHolder().getRowIndex(), 0,
-                    new ReadCellData<>(CellDataTypeEnum.EMPTY), null,
-                    "Can not instance class: " + excelReadHeadProperty.getHeadClazz().getName(), e);
+                new ReadCellData<>(CellDataTypeEnum.EMPTY), null,
+                "Can not instance class: " + excelReadHeadProperty.getHeadClazz().getName(), e);
         }
         Map<Integer, Head> headMap = excelReadHeadProperty.getHeadMap();
         BeanMap dataMap = BeanMapUtils.create(resultModel);
@@ -140,17 +144,31 @@ public class ModelBuildEventListener implements IgnoreExceptionReadListener<Map<
             }
             ReadCellData<?> cellData = cellDataMap.get(index);
             Object value = ConverterUtils.convertToJavaObject(cellData, head.getField(),
-                    ClassUtils.declaredExcelContentProperty(dataMap,
-                            readSheetHolder.excelReadHeadProperty().getHeadClazz(), fieldName, readSheetHolder),
-                    readSheetHolder.converterMap(), context, context.readRowHolder().getRowIndex(), index);
+                ClassUtils.declaredExcelContentProperty(dataMap, readSheetHolder.excelReadHeadProperty().getHeadClazz(),
+                    fieldName, readSheetHolder), readSheetHolder.converterMap(), context,
+                context.readRowHolder().getRowIndex(), index);
             if (value != null) {
                 dataMap.put(fieldName, value);
+
+                // 规避由于实体类 setter 不规范导致无法赋值的问题
+                // fix https://github.com/alibaba/easyexcel/issues/3524
+                if (dataMap.get(fieldName) == null) {
+                    Object bean = dataMap.getBean();
+                    try {
+                        Field field = bean.getClass().getDeclaredField(fieldName);
+                        field.setAccessible(true);
+                        field.set(bean, value);
+                    } catch (NoSuchFieldException ignore) {
+                        // ignore
+                    } catch (IllegalAccessException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
             }
         }
         return resultModel;
     }
-    
+
     @Override
-    public void doAfterAllAnalysed(AnalysisContext context) {
-    }
+    public void doAfterAllAnalysed(AnalysisContext context) {}
 }

@@ -28,8 +28,10 @@ import org.apache.poi.xssf.eventusermodel.XSSFReader;
 import org.apache.poi.xssf.model.Comments;
 import org.apache.poi.xssf.model.CommentsTable;
 import org.apache.poi.xssf.usermodel.XSSFComment;
+import org.openxmlformats.schemas.spreadsheetml.x2006.main.CTSheet;
 import org.openxmlformats.schemas.spreadsheetml.x2006.main.CTWorkbook;
 import org.openxmlformats.schemas.spreadsheetml.x2006.main.CTWorkbookPr;
+import org.openxmlformats.schemas.spreadsheetml.x2006.main.STSheetState;
 import org.openxmlformats.schemas.spreadsheetml.x2006.main.WorkbookDocument;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.InputSource;
@@ -55,12 +57,12 @@ import java.util.UUID;
  */
 @Slf4j
 public class XlsxSaxAnalyser implements ExcelReadExecutor {
-    
+
     /**
      * Storage sheet SharedStrings
      */
     public static final PackagePartName SHARED_STRINGS_PART_NAME;
-    
+
     static {
         try {
             SHARED_STRINGS_PART_NAME = PackagingURIHelper.createPartName("/xl/sharedStrings.xml");
@@ -69,48 +71,48 @@ public class XlsxSaxAnalyser implements ExcelReadExecutor {
             throw new ExcelAnalysisException("Initialize the XlsxSaxAnalyser failure", e);
         }
     }
-    
+
     private final XlsxReadContext xlsxReadContext;
-    
     private final List<ReadSheet> sheetList;
-    
     private final Map<Integer, InputStream> sheetMap;
-    
+    private final Map<String, CTSheet> ctSheetMap;
     /**
      * excel comments key: sheetNo value: CommentsTable
      */
     private final Map<Integer, CommentsTable> commentsTableMap;
-    
+
     public XlsxSaxAnalyser(XlsxReadContext xlsxReadContext, InputStream decryptedStream) throws Exception {
         this.xlsxReadContext = xlsxReadContext;
         // Initialize cache
         XlsxReadWorkbookHolder xlsxReadWorkbookHolder = xlsxReadContext.xlsxReadWorkbookHolder();
-        
+
         OPCPackage pkg = readOpcPackage(xlsxReadWorkbookHolder, decryptedStream);
         xlsxReadWorkbookHolder.setOpcPackage(pkg);
-        
+
         // Read the Shared information Strings
         PackagePart sharedStringsTablePackagePart = pkg.getPart(SHARED_STRINGS_PART_NAME);
         if (sharedStringsTablePackagePart != null) {
             // Specify default cache
             defaultReadCache(xlsxReadWorkbookHolder, sharedStringsTablePackagePart);
-            
+
             // Analysis sharedStringsTable.xml
             analysisSharedStringsTable(sharedStringsTablePackagePart.getInputStream(), xlsxReadWorkbookHolder);
         }
-        
+
         XSSFReader xssfReader = new XSSFReader(pkg);
         analysisUse1904WindowDate(xssfReader, xlsxReadWorkbookHolder);
-        
         // set style table
         setStylesTable(xlsxReadWorkbookHolder, xssfReader);
-        
+
         sheetList = new ArrayList<>();
         sheetMap = new HashMap<>();
         commentsTableMap = new HashMap<>();
+        ctSheetMap = new HashMap<>();
         Map<Integer, PackageRelationshipCollection> packageRelationshipCollectionMap = MapUtils.newHashMap();
         xlsxReadWorkbookHolder.setPackageRelationshipCollectionMap(packageRelationshipCollectionMap);
-        
+        // analysis CTSheet
+        analysisCtSheetMap(xssfReader, xlsxReadWorkbookHolder);
+
         XSSFReader.SheetIterator ite = (XSSFReader.SheetIterator) xssfReader.getSheetsData();
         int index = 0;
         if (!ite.hasNext()) {
@@ -118,7 +120,15 @@ public class XlsxSaxAnalyser implements ExcelReadExecutor {
         }
         while (ite.hasNext()) {
             InputStream inputStream = ite.next();
-            sheetList.add(new ReadSheet(index, ite.getSheetName()));
+            String sheetName = ite.getSheetName();
+            CTSheet ctSheet = ctSheetMap.get(sheetName);
+            if (ctSheet == null) {
+                continue;
+            }
+            ReadSheet readSheet = new ReadSheet(index, sheetName);
+            readSheet.setHidden(ctSheet.getState() == STSheetState.HIDDEN);
+            readSheet.setVeryHidden(ctSheet.getState() == STSheetState.VERY_HIDDEN);
+            sheetList.add(readSheet);
             sheetMap.put(index, inputStream);
             if (xlsxReadContext.readWorkbookHolder().getExtraReadSet().contains(CellExtraTypeEnum.COMMENT)) {
                 Comments comments = ite.getSheetComments();
@@ -128,14 +138,14 @@ public class XlsxSaxAnalyser implements ExcelReadExecutor {
             }
             if (xlsxReadContext.readWorkbookHolder().getExtraReadSet().contains(CellExtraTypeEnum.HYPERLINK)) {
                 PackageRelationshipCollection packageRelationshipCollection = Optional.ofNullable(ite.getSheetPart())
-                        .map(packagePart -> {
-                            try {
-                                return packagePart.getRelationships();
-                            } catch (InvalidFormatException e) {
-                                log.warn("Reading the Relationship failed", e);
-                                return null;
-                            }
-                        }).orElse(null);
+                    .map(packagePart -> {
+                        try {
+                            return packagePart.getRelationships();
+                        } catch (InvalidFormatException e) {
+                            log.warn("Reading the Relationship failed", e);
+                            return null;
+                        }
+                    }).orElse(null);
                 if (packageRelationshipCollection != null) {
                     packageRelationshipCollectionMap.put(index, packageRelationshipCollection);
                 }
@@ -143,26 +153,27 @@ public class XlsxSaxAnalyser implements ExcelReadExecutor {
             index++;
         }
     }
-    
+
     private void setStylesTable(XlsxReadWorkbookHolder xlsxReadWorkbookHolder, XSSFReader xssfReader) {
         try {
             xlsxReadWorkbookHolder.setStylesTable(xssfReader.getStylesTable());
         } catch (Exception e) {
             log.warn(
-                    "Currently excel cannot get style information, but it doesn't affect the data analysis.You can try to"
-                            + " save the file with office again or ignore the current error.", e);
+                "Currently excel cannot get style information, but it doesn't affect the data analysis.You can try to"
+                    + " save the file with office again or ignore the current error.",
+                e);
         }
     }
-    
+
     private void defaultReadCache(XlsxReadWorkbookHolder xlsxReadWorkbookHolder,
-            PackagePart sharedStringsTablePackagePart) {
+                                  PackagePart sharedStringsTablePackagePart) {
         ReadCache readCache = xlsxReadWorkbookHolder.getReadCacheSelector().readCache(sharedStringsTablePackagePart);
         xlsxReadWorkbookHolder.setReadCache(readCache);
         readCache.init(xlsxReadContext);
     }
-    
+
     private void analysisUse1904WindowDate(XSSFReader xssfReader, XlsxReadWorkbookHolder xlsxReadWorkbookHolder)
-            throws Exception {
+        throws Exception {
         if (xlsxReadWorkbookHolder.globalConfiguration().getUse1904windowing() != null) {
             return;
         }
@@ -176,16 +187,29 @@ public class XlsxSaxAnalyser implements ExcelReadExecutor {
             xlsxReadWorkbookHolder.getGlobalConfiguration().setUse1904windowing(Boolean.FALSE);
         }
     }
-    
+
     private void analysisSharedStringsTable(InputStream sharedStringsTableInputStream,
-            XlsxReadWorkbookHolder xlsxReadWorkbookHolder) {
+                                            XlsxReadWorkbookHolder xlsxReadWorkbookHolder) {
         ContentHandler handler = new SharedStringsTableHandler(xlsxReadWorkbookHolder.getReadCache());
         parseXmlSource(sharedStringsTableInputStream, handler);
         xlsxReadWorkbookHolder.getReadCache().putFinished();
     }
-    
+
+    private void analysisCtSheetMap(XSSFReader xssfReader, XlsxReadWorkbookHolder xlsxReadWorkbookHolder)
+        throws Exception {
+        CTWorkbook wb = WorkbookDocument.Factory.parse(xssfReader.getWorkbookData()).getWorkbook();
+        for (CTSheet ctSheet : wb.getSheets().getSheetList()) {
+            boolean isHidden = (ctSheet.getState() == STSheetState.HIDDEN)
+                || (ctSheet.getState() == STSheetState.VERY_HIDDEN);
+            if (Boolean.FALSE.equals(xlsxReadWorkbookHolder.getIgnoreHiddenSheet())
+                || !isHidden) {
+                ctSheetMap.put(ctSheet.getName(), ctSheet);
+            }
+        }
+    }
+
     private OPCPackage readOpcPackage(XlsxReadWorkbookHolder xlsxReadWorkbookHolder, InputStream decryptedStream)
-            throws Exception {
+        throws Exception {
         if (decryptedStream == null && xlsxReadWorkbookHolder.getFile() != null) {
             return OPCPackage.open(xlsxReadWorkbookHolder.getFile());
         }
@@ -203,16 +227,16 @@ public class XlsxSaxAnalyser implements ExcelReadExecutor {
             FileUtils.writeToFile(tempFile, decryptedStream, false);
         } else {
             FileUtils.writeToFile(tempFile, xlsxReadWorkbookHolder.getInputStream(),
-                    xlsxReadWorkbookHolder.getAutoCloseStream());
+                xlsxReadWorkbookHolder.getAutoCloseStream());
         }
         return OPCPackage.open(tempFile, PackageAccess.READ);
     }
-    
+
     @Override
     public List<ReadSheet> sheetList() {
         return sheetList;
     }
-    
+
     private void parseXmlSource(InputStream inputStream, ContentHandler handler) {
         InputSource inputSource = new InputSource(inputStream);
         try {
@@ -252,7 +276,7 @@ public class XlsxSaxAnalyser implements ExcelReadExecutor {
             }
         }
     }
-    
+
     @Override
     public void execute() {
         for (ReadSheet readSheet : sheetList) {
@@ -273,7 +297,7 @@ public class XlsxSaxAnalyser implements ExcelReadExecutor {
             }
         }
     }
-    
+
     private void readComments(ReadSheet readSheet) {
         if (!xlsxReadContext.readWorkbookHolder().getExtraReadSet().contains(CellExtraTypeEnum.COMMENT)) {
             return;
@@ -287,7 +311,7 @@ public class XlsxSaxAnalyser implements ExcelReadExecutor {
             CellAddress cellAddress = cellAddresses.next();
             XSSFComment cellComment = commentsTable.findCellComment(cellAddress);
             CellExtra cellExtra = new CellExtra(CellExtraTypeEnum.COMMENT, cellComment.getString().toString(),
-                    cellAddress.getRow(), cellAddress.getColumn());
+                cellAddress.getRow(), cellAddress.getColumn());
             xlsxReadContext.readSheetHolder().setCellExtra(cellExtra);
             xlsxReadContext.analysisEventProcessor().extra(xlsxReadContext);
         }

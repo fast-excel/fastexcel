@@ -11,6 +11,5 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode
 public class FillData2 {
-    
     private String test;
 }

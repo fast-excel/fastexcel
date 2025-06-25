@@ -1,14 +1,14 @@
 package cn.idev.excel.annotation;
 
-import cn.idev.excel.annotation.format.DateTimeFormat;
-import cn.idev.excel.converters.AutoConverter;
-import cn.idev.excel.converters.Converter;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+
+import cn.idev.excel.converters.AutoConverter;
+import cn.idev.excel.converters.Converter;
+import cn.idev.excel.annotation.format.DateTimeFormat;
 
 /**
  * @author jipengfei
@@ -32,9 +32,9 @@ public @interface ExcelProperty {
 
     /**
      * Index of column
-     * <p>
+     *
      * Read or write it on the index of column, If it's equal to -1, it's sorted by Java class.
-     * <p>
+     *
      * priority: index &gt; order &gt; default sort
      *
      * @return Index of column
@@ -43,7 +43,7 @@ public @interface ExcelProperty {
 
     /**
      * Defines the sort order for an column.
-     * <p>
+     *
      * priority: index &gt; order &gt; default sort
      *
      * @return Order of column
@@ -58,6 +58,7 @@ public @interface ExcelProperty {
     Class<? extends Converter<?>> converter() default AutoConverter.class;
 
     /**
+     *
      * default @see cn.idev.excel.util.TypeUtil if default is not meet you can set format
      *
      * @return Format string

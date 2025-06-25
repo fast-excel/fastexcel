@@ -6,17 +6,14 @@ import java.util.regex.Pattern;
  * @author jipengfei
  */
 public class PositionUtils {
-    
+
     private static final Pattern CELL_REF_PATTERN = Pattern.compile("(\\$?[A-Z]+)?" + "(\\$?[0-9]+)?",
-            Pattern.CASE_INSENSITIVE);
-    
+        Pattern.CASE_INSENSITIVE);
     private static final char SHEET_NAME_DELIMITER = '!';
-    
     private static final char REDUNDANT_CHARACTERS = '$';
-    
-    private PositionUtils() {
-    }
-    
+
+    private PositionUtils() {}
+
     public static int getRowByRowTagt(String rowTagt, Integer before) {
         int row;
         if (rowTagt != null) {
@@ -29,7 +26,7 @@ public class PositionUtils {
             return before + 1;
         }
     }
-    
+
     public static int getRow(String currentCellIndex) {
         if (currentCellIndex == null) {
             return -1;
@@ -43,7 +40,7 @@ public class PositionUtils {
         }
         return Integer.parseUnsignedInt(currentCellIndex.substring(firstNumber + 1)) - 1;
     }
-    
+
     public static int getCol(String currentCellIndex, Integer before) {
         if (currentCellIndex == null) {
             if (before == null) {
@@ -63,5 +60,5 @@ public class PositionUtils {
         }
         return col - 1;
     }
-    
+
 }

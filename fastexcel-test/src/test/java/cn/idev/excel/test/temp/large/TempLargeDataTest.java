@@ -11,15 +11,14 @@ import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.lang.reflect.Field;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -59,8 +58,8 @@ public class TempLargeDataTest {
     @Test
     public void read() throws Exception {
         long start = System.currentTimeMillis();
-        EasyExcel.read(new FileInputStream("D:\\test\\MRP生产视图(1).xlsx"), LargeData.class, new LargeDataListener())
-                .headRowNumber(2).sheet().doRead();
+        EasyExcel.read(Files.newInputStream(Paths.get("src/test/resources/simple/LargeData.xlsx")), LargeData.class,
+                new LargeDataListener()).headRowNumber(2).sheet().doRead();
         LOGGER.info("Large data total time spent:{}", System.currentTimeMillis() - start);
     }
     
@@ -68,22 +67,8 @@ public class TempLargeDataTest {
     public void noModelRead() throws Exception {
         ZipSecureFile.setMaxEntrySize(Long.MAX_VALUE);
         long start = System.currentTimeMillis();
-        EasyExcel.read(TestFileUtil.readUserHomeFile("test/ld.xlsx"), new NoModelLargeDataListener()).sheet().doRead();
-        LOGGER.info("Large data total time spent:{}", System.currentTimeMillis() - start);
-    }
-    
-    // temp disabled for post file generator
-    @Disabled
-    @Test
-    public void noModelRead2() throws Exception {
-        Field field = ZipSecureFile.class.getDeclaredField("MAX_ENTRY_SIZE");
-        field.setAccessible(true);
-        field.set(null, Long.MAX_VALUE);
-        
-        long start = System.currentTimeMillis();
-        EasyExcel.read(
-                new File("/Users/zhuangjiaju/IdeaProjects/easyexcel/target/test-classes/large1617887262709.xlsx"),
-                new NoModelLargeDataListener()).sheet().doRead();
+        EasyExcel.read("src/test/resources/simple/no_model_10000_rows.xlsx", new NoModelLargeDataListener()).sheet()
+                .doRead();
         LOGGER.info("Large data total time spent:{}", System.currentTimeMillis() - start);
     }
     
@@ -122,7 +107,6 @@ public class TempLargeDataTest {
                 }
             }
             workbook.write(fileOutputStream);
-            workbook.dispose();
             workbook.close();
         }
         long costPoi = System.currentTimeMillis() - start;
@@ -132,15 +116,16 @@ public class TempLargeDataTest {
     }
     
     @Test
-    public void t04WriteExcel() throws Exception {
+    public void t04WriteExcel() {
         IntStream.rangeClosed(0, 100).forEach(index -> {
-            ExcelWriter excelWriter = EasyExcel.write(fileWriteTemp07, cn.idev.excel.test.core.large.LargeData.class)
-                    .build();
-            WriteSheet writeSheet = EasyExcel.writerSheet().build();
-            for (int j = 0; j < 5000; j++) {
-                excelWriter.write(data(), writeSheet);
+            try (ExcelWriter excelWriter = EasyExcel.write(fileWriteTemp07,
+                    cn.idev.excel.test.core.large.LargeData.class).build()) {
+                WriteSheet writeSheet = EasyExcel.writerSheet().build();
+                for (int j = 0; j < 5000; j++) {
+                    excelWriter.write(data(), writeSheet);
+                }
+                excelWriter.finish();
             }
-            excelWriter.finish();
             LOGGER.info("{} 完成", index);
         });
     }
@@ -148,13 +133,14 @@ public class TempLargeDataTest {
     @Test
     public void t04WriteExcelNo() throws Exception {
         IntStream.rangeClosed(0, 10000).forEach(index -> {
-            ExcelWriter excelWriter = EasyExcel.write(fileWriteTemp07, cn.idev.excel.test.core.large.LargeData.class)
-                    .build();
-            WriteSheet writeSheet = EasyExcel.writerSheet().build();
-            for (int j = 0; j < 50; j++) {
-                excelWriter.write(data(), writeSheet);
+            try (ExcelWriter excelWriter = EasyExcel.write(fileWriteTemp07,
+                    cn.idev.excel.test.core.large.LargeData.class).build()) {
+                WriteSheet writeSheet = EasyExcel.writerSheet().build();
+                for (int j = 0; j < 50; j++) {
+                    excelWriter.write(data(), writeSheet);
+                }
+                excelWriter.finish();
             }
-            excelWriter.finish();
             LOGGER.info("{} 完成", index);
         });
     }
@@ -181,10 +167,9 @@ public class TempLargeDataTest {
                     }
                 }
                 workbook.write(fileOutputStream);
-                workbook.dispose();
                 workbook.close();
             } catch (Exception e) {
-                e.printStackTrace();
+                LOGGER.error(e.getMessage(), e);
             }
             LOGGER.info("{} 完成", index);
         });

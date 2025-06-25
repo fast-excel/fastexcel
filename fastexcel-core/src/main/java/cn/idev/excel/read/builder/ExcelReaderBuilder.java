@@ -25,24 +25,17 @@ import java.nio.charset.Charset;
 import java.util.HashSet;
 import java.util.List;
 
-import javax.xml.parsers.SAXParserFactory;
-import java.io.File;
-import java.io.InputStream;
-import java.nio.charset.Charset;
-import java.util.HashSet;
-import java.util.List;
-
 /**
  * Build ExcelReader
  *
  * @author Jiaju Zhuang
  */
 public class ExcelReaderBuilder extends AbstractExcelReaderParameterBuilder<ExcelReaderBuilder, ReadWorkbook> {
-
     /**
      * Workbook
      */
     private final ReadWorkbook readWorkbook;
+
     @Getter
     private ValidateErrorHandler<?> errorHandler;
     @Getter
@@ -87,7 +80,8 @@ public class ExcelReaderBuilder extends AbstractExcelReaderParameterBuilder<Exce
     }
 
     /**
-     * charset. Only work on the CSV file
+     * charset.
+     * Only work on the CSV file
      */
     public ExcelReaderBuilder charset(Charset charset) {
         readWorkbook.setCharset(charset);
@@ -216,8 +210,8 @@ public class ExcelReaderBuilder extends AbstractExcelReaderParameterBuilder<Exce
     }
 
     /**
-     * Read not to {@code cn.idev.excel.metadata.BasicParameter#clazz} value, the default will return type. Is only
-     * effective when set `useDefaultListener=true` or `useDefaultListener=null`.
+     * Read not to {@code cn.idev.excel.metadata.BasicParameter#clazz} value, the default will return type.
+     * Is only effective when set `useDefaultListener=true` or `useDefaultListener=null`.
      *
      * @see ReadDefaultReturnEnum
      */
@@ -279,9 +273,25 @@ public class ExcelReaderBuilder extends AbstractExcelReaderParameterBuilder<Exce
         return excelReaderSheetBuilder;
     }
 
+    public CsvReaderBuilder csv() {
+        excelType(ExcelTypeEnum.CSV);
+        return new CsvReaderBuilder(parameter());
+    }
+
     @Override
     protected ReadWorkbook parameter() {
         return readWorkbook;
+    }
+
+    /**
+     * Ignore hiddene sheet.Default is false.
+     *
+     * @param ignoreHiddenSheet
+     * @return
+     */
+    public ExcelReaderBuilder ignoreHiddenSheet(Boolean ignoreHiddenSheet) {
+        readWorkbook.setIgnoreHiddenSheet(ignoreHiddenSheet);
+        return this;
     }
 
 

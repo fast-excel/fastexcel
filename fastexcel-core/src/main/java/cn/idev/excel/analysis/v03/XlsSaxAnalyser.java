@@ -59,6 +59,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * A text extractor for Excel files.
@@ -72,20 +73,16 @@ import java.util.Map;
  * </p>
  *
  * @author jipengfei
- * @see <a
- * href="http://svn.apache.org/repos/asf/poi/trunk/src/examples/src/org/apache/poi/hssf/eventusermodel/examples/XLS2CSVmra.java">XLS2CSVmra</a>
+ * @see <a href="http://svn.apache.org/repos/asf/poi/trunk/src/examples/src/org/apache/poi/hssf/eventusermodel/examples/XLS2CSVmra.java">XLS2CSVmra</a>
  */
 @Slf4j
 public class XlsSaxAnalyser implements HSSFListener, ExcelReadExecutor {
-    
+
     private static final Logger LOGGER = LoggerFactory.getLogger(XlsSaxAnalyser.class);
-    
     private static final short DUMMY_RECORD_SID = -1;
-    
     private final XlsReadContext xlsReadContext;
-    
     private static final Map<Short, XlsRecordHandler> XLS_RECORD_HANDLER_MAP = new HashMap<Short, XlsRecordHandler>(32);
-    
+
     static {
         // Initialize a map of record handlers to process different types of Excel records.
         XLS_RECORD_HANDLER_MAP.put(BlankRecord.sid, new BlankRecordHandler());
@@ -108,7 +105,7 @@ public class XlsSaxAnalyser implements HSSFListener, ExcelReadExecutor {
         XLS_RECORD_HANDLER_MAP.put(StringRecord.sid, new StringRecordHandler());
         XLS_RECORD_HANDLER_MAP.put(TextObjectRecord.sid, new TextObjectRecordHandler());
     }
-    
+
     /**
      * Constructor to initialize the XlsSaxAnalyser with the given context.
      *
@@ -117,7 +114,7 @@ public class XlsSaxAnalyser implements HSSFListener, ExcelReadExecutor {
     public XlsSaxAnalyser(XlsReadContext xlsReadContext) {
         this.xlsReadContext = xlsReadContext;
     }
-    
+
     /**
      * Retrieves the list of sheets in the workbook.
      * <p>
@@ -136,9 +133,15 @@ public class XlsSaxAnalyser implements HSSFListener, ExcelReadExecutor {
                 LOGGER.debug("Custom stop!");
             }
         }
-        return xlsReadContext.readWorkbookHolder().getActualSheetDataList();
+        List<ReadSheet> actualSheetDataList = xlsReadContext.readWorkbookHolder().getActualSheetDataList();
+        if (xlsReadContext.readWorkbookHolder().getIgnoreHiddenSheet()) {
+            return actualSheetDataList.stream()
+                .filter(readSheet -> (!readSheet.isHidden() && !readSheet.isVeryHidden()))
+                .collect(Collectors.toList());
+        }
+        return actualSheetDataList;
     }
-    
+
     /**
      * Executes the parsing process for the Excel file.
      * <p>
@@ -149,7 +152,8 @@ public class XlsSaxAnalyser implements HSSFListener, ExcelReadExecutor {
         XlsReadWorkbookHolder xlsReadWorkbookHolder = xlsReadContext.xlsReadWorkbookHolder();
         MissingRecordAwareHSSFListener listener = new MissingRecordAwareHSSFListener(this);
         xlsReadWorkbookHolder.setFormatTrackingHSSFListener(new FormatTrackingHSSFListener(listener));
-        EventWorkbookBuilder.SheetRecordCollectingListener workbookBuildingListener = new EventWorkbookBuilder.SheetRecordCollectingListener(
+        EventWorkbookBuilder.SheetRecordCollectingListener workbookBuildingListener =
+            new EventWorkbookBuilder.SheetRecordCollectingListener(
                 xlsReadWorkbookHolder.getFormatTrackingHSSFListener());
         xlsReadWorkbookHolder.setHssfWorkbook(workbookBuildingListener.getStubHSSFWorkbook());
         HSSFEventFactory factory = new HSSFEventFactory();
@@ -160,16 +164,16 @@ public class XlsSaxAnalyser implements HSSFListener, ExcelReadExecutor {
         } catch (IOException e) {
             throw new ExcelAnalysisException(e);
         }
-        
+
         // There are some special xls that do not have the terminator "[EOF]", so an additional
         xlsReadContext.analysisEventProcessor().endSheet(xlsReadContext);
     }
-    
+
     /**
      * Processes a single Excel record.
      * <p>
-     * This method retrieves the appropriate handler for the given record and processes it. If the record is ignorable
-     * or unsupported, it skips processing.
+     * This method retrieves the appropriate handler for the given record and processes it. If the record is ignorable or
+     * unsupported, it skips processing.
      *
      * @param record The Excel record to be processed.
      */
@@ -179,8 +183,8 @@ public class XlsSaxAnalyser implements HSSFListener, ExcelReadExecutor {
         if (handler == null) {
             return;
         }
-        boolean ignoreRecord = (handler instanceof IgnorableXlsRecordHandler) && xlsReadContext.xlsReadWorkbookHolder()
-                .getIgnoreRecord();
+        boolean ignoreRecord =
+            (handler instanceof IgnorableXlsRecordHandler) && xlsReadContext.xlsReadWorkbookHolder().getIgnoreRecord();
         if (ignoreRecord) {
             // No need to read the current sheet
             return;
@@ -188,7 +192,7 @@ public class XlsSaxAnalyser implements HSSFListener, ExcelReadExecutor {
         if (!handler.support(xlsReadContext, record)) {
             return;
         }
-        
+
         try {
             handler.processRecord(xlsReadContext, record);
         } catch (ExcelAnalysisStopSheetException e) {
@@ -199,5 +203,5 @@ public class XlsSaxAnalyser implements HSSFListener, ExcelReadExecutor {
             xlsReadContext.xlsReadWorkbookHolder().setCurrentSheetStopped(Boolean.TRUE);
         }
     }
-    
+
 }

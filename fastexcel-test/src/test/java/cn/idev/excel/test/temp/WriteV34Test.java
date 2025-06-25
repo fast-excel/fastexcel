@@ -63,13 +63,9 @@ public class WriteV34Test {
         head1.add("数字" + System.currentTimeMillis());
         List<String> head2 = new ArrayList<String>();
         head2.add("日期" + System.currentTimeMillis());
-        List<String> head3 = new ArrayList<String>();
-        head3.add("日期" + System.currentTimeMillis());
         list.add(head0);
         list.add(head1);
         list.add(head2);
-        list.add(head3);
-        
         return list;
     }
     

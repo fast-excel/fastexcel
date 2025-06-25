@@ -12,70 +12,70 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 读取转换异常
+ * Read and convert exceptions.
  *
  * @author Jiaju Zhuang
  */
 @Slf4j
 public class DemoExceptionListener implements ReadListener<ExceptionDemoData> {
-    
+
     /**
-     * 每隔5条存储数据库，实际使用中可以100条，然后清理list ，方便内存回收
+     * Save to the database every 5 records. In actual use, it can be set to 100 records, and then clear the list to facilitate memory recycling.
      */
     private static final int BATCH_COUNT = 5;
-    
+
     private List<ExceptionDemoData> cachedDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
-    
+
     /**
-     * 在转换异常 获取其他异常下会调用本接口。抛出异常则停止读取。如果这里不抛出异常则 继续读取下一行。
+     * This interface will be called in case of conversion exceptions or other exceptions. If an exception is thrown here, reading will be stopped. If no exception is thrown, the next line will continue to be read.
      *
-     * @param exception
-     * @param context
-     * @throws Exception
+     * @param exception The exception that occurred.
+     * @param context The analysis context.
+     * @throws Exception If an exception needs to be propagated.
      */
     @Override
     public void onException(Exception exception, AnalysisContext context) {
-        log.error("解析失败，但是继续解析下一行:{}", exception.getMessage());
-        // 如果是某一个单元格的转换异常 能获取到具体行号
-        // 如果要获取头的信息 配合invokeHeadMap使用
+        log.error("Parsing failed, but continue parsing the next line: {}", exception.getMessage());
+        // If it is a cell conversion exception, the specific row number can be obtained.
+        // If the header information is needed, use it in conjunction with invokeHeadMap.
         if (exception instanceof ExcelDataConvertException) {
             ExcelDataConvertException excelDataConvertException = (ExcelDataConvertException) exception;
-            log.error("第{}行，第{}列解析异常，数据为:{}", excelDataConvertException.getRowIndex(),
+            log.error("Parsing exception in row {}, column {}, data: {}", excelDataConvertException.getRowIndex(),
                     excelDataConvertException.getColumnIndex(), excelDataConvertException.getCellData());
         }
     }
-    
+
     /**
-     * 这里会一行行的返回头
+     * This method will return the header row line by line.
      *
-     * @param headMap
-     * @param context
+     * @param headMap The header map containing column index and cell data.
+     * @param context The analysis context.
      */
     @Override
     public void invokeHead(Map<Integer, ReadCellData<?>> headMap, AnalysisContext context) {
-        log.info("解析到一条头数据:{}", JSON.toJSONString(headMap));
+        log.info("Parsed a header row: {}", JSON.toJSONString(headMap));
     }
-    
+
     @Override
     public void invoke(ExceptionDemoData data, AnalysisContext context) {
-        log.info("解析到一条数据:{}", JSON.toJSONString(data));
+        log.info("Parsed a data row: {}", JSON.toJSONString(data));
         if (cachedDataList.size() >= BATCH_COUNT) {
             saveData();
             cachedDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
         }
     }
-    
+
     @Override
     public void doAfterAllAnalysed(AnalysisContext context) {
         saveData();
-        log.info("所有数据解析完成！");
+        log.info("All data parsing completed!");
     }
-    
+
     /**
-     * 加上存储数据库
+     * Save data to the database.
      */
     private void saveData() {
-        log.info("{}条数据，开始存储数据库！", cachedDataList.size());
-        log.info("存储数据库成功！");
+        log.info("{} records, starting to save to the database!", cachedDataList.size());
+        log.info("Data saved to the database successfully!");
     }
 }
