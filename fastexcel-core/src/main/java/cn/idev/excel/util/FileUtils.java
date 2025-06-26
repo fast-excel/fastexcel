@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.Files;
 import java.util.UUID;
 
 import cn.idev.excel.exception.ExcelAnalysisException;
@@ -33,6 +34,8 @@ import org.apache.poi.util.TempFile;
 public class FileUtils {
     public static final String POI_FILES = "poifiles";
     public static final String EX_CACHE = "excache";
+
+    public static final String ERROR_FILES = "errorfiles";
     /**
      * If a server has multiple projects in use at the same time, a directory with the same name will be created under
      * the temporary directory, but each project is run by a different user, so there is a permission problem, so each
@@ -49,6 +52,12 @@ public class FileUtils {
      */
     private static String cachePath = tempFilePrefix + EX_CACHE + File.separator;
 
+
+    /**
+     * Used to store error temporary files
+     */
+    private static String errorFilePath = tempFilePrefix + ERROR_FILES + File.separator;
+
     private static final int WRITE_BUFF_SIZE = 8192;
 
     private FileUtils() {}
@@ -61,6 +70,10 @@ public class FileUtils {
         // Initialize the cache directory
         File cacheFile = new File(cachePath);
         createDirectory(cacheFile);
+        // Initialize the error file directory
+        File errorFile = new File(errorFilePath);
+        createDirectory(errorFile);
+        errorFile.deleteOnExit();
     }
 
     /**
@@ -197,6 +210,18 @@ public class FileUtils {
             }
             file.delete();
         }
+    }
+
+
+
+    /**
+     * Generate a temporary error file based on the source file
+     * @param sourceFile sourceFile
+     */
+    public static File createErrorTempleFile(File sourceFile) throws IOException {
+        File tempFile = new File(errorFilePath, UUID.randomUUID() + ".xlsx");
+        writeToFile(tempFile, Files.newInputStream(sourceFile.toPath()));
+        return tempFile;
     }
 
     public static String getTempFilePrefix() {
