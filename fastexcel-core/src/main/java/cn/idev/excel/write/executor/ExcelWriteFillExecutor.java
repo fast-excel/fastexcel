@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import cn.idev.excel.context.WriteContext;
 import cn.idev.excel.enums.CellDataTypeEnum;
@@ -42,6 +43,7 @@ import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.util.CellRangeAddress;
 
 /**
  * Fill the data into excel
@@ -69,6 +71,10 @@ public class ExcelWriteFillExecutor extends AbstractExcelWriteExecutor {
      */
     private final Map<UniqueDataFlagKey, Map<AnalysisCell, CellStyle>> collectionFieldStyleCache
         = MapUtils.newHashMap();
+    /**
+     * Record the merged region information of the initial row, to be used for setting the merged regions for newly added rows
+     */
+    private final Map<AnalysisCell,List<CellRangeAddress>> originalMergeRegionMap = MapUtils.newHashMap();
     /**
      * Row height cache for collection
      */
@@ -124,6 +130,17 @@ public class ExcelWriteFillExecutor extends AbstractExcelWriteExecutor {
             }
             while (iterator.hasNext()) {
                 doFill(analysisCellList, iterator.next(), fillConfig, getRelativeRowIndex());
+            }
+            // handle merge
+            if (!originalMergeRegionMap.isEmpty()) {
+                Sheet cachedSheet = writeContext.writeSheetHolder().getCachedSheet();
+                originalMergeRegionMap.forEach((analysisCell, regionList) -> {
+                    for (int index = analysisCell.getRowIndex(); index < analysisCell.getRowIndex() + collectionData.size(); index++) {
+                        for (CellRangeAddress cellAddresses : regionList) {
+                            cachedSheet.addMergedRegionUnsafe(new CellRangeAddress(index, index, cellAddresses.getFirstColumn(), cellAddresses.getLastColumn()));
+                        }
+                    }
+                });
             }
         } else {
             doFill(readTemplateData(templateAnalysisCache), realData, fillConfig, null);
@@ -370,6 +387,17 @@ public class ExcelWriteFillExecutor extends AbstractExcelWriteExecutor {
             Map<AnalysisCell, CellStyle> collectionFieldStyleMap = collectionFieldStyleCache.computeIfAbsent(
                 currentUniqueDataFlag, key -> MapUtils.newHashMap());
             collectionFieldStyleMap.put(analysisCell, cell.getCellStyle());
+
+            List<CellRangeAddress> mergedRegions = cachedSheet.getMergedRegions();
+
+            if (WriteDirectionEnum.VERTICAL.equals(fillConfig.getDirection()) && fillConfig.getForceNewRow()) {
+                // Find the column merges in the initial row, and if the merge spans across rows, do not process it
+                List<CellRangeAddress> oneRowRegionList = mergedRegions.stream().filter(region -> region.getFirstRow() == region.getLastRow())
+                    .filter(region -> region.getFirstRow() == row.getRowNum()).collect(Collectors.toList());
+                if (!CollectionUtils.isEmpty(oneRowRegionList)) {
+                    originalMergeRegionMap.put(analysisCell, oneRowRegionList);
+                }
+            }
         }
     }
 
