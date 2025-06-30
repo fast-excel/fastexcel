@@ -263,6 +263,11 @@ public class ExcelReaderBuilder extends AbstractExcelReaderParameterBuilder<Exce
         return excelReaderSheetBuilder;
     }
 
+    public CsvReaderBuilder csv() {
+        excelType(ExcelTypeEnum.CSV);
+        return new CsvReaderBuilder(parameter());
+    }
+
     @Override
     protected ReadWorkbook parameter() {
         return readWorkbook;

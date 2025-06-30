@@ -1,16 +1,10 @@
 package cn.idev.excel.metadata.csv;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.charset.Charset;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.compress.utils.Lists;
+import org.apache.commons.csv.CSVFormat;
 import org.apache.poi.ss.SpreadsheetVersion;
 import org.apache.poi.ss.formula.EvaluationWorkbook;
 import org.apache.poi.ss.formula.udf.UDFFinder;
@@ -25,6 +19,13 @@ import org.apache.poi.ss.usermodel.Row.MissingCellPolicy;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.SheetVisibility;
 import org.apache.poi.ss.usermodel.Workbook;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.charset.Charset;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * csv workbook
@@ -44,7 +45,6 @@ public class CsvWorkbook implements Workbook {
      * true if date uses 1904 windowing, or false if using 1900 date windowing.
      * <p>
      * default is false
-     *
      */
     private Boolean use1904windowing;
 
@@ -83,9 +83,14 @@ public class CsvWorkbook implements Workbook {
      * Default true.
      */
     private Boolean withBom;
+    
+    /**
+     * Specifies CSVFormat for parsing.
+     */
+    private CSVFormat csvFormat;
 
     public CsvWorkbook(Appendable out, Locale locale, Boolean use1904windowing, Boolean useScientificFormat,
-        Charset charset, Boolean withBom) {
+                       Charset charset, Boolean withBom) {
         this.out = out;
         this.locale = locale;
         this.use1904windowing = use1904windowing;
@@ -196,7 +201,7 @@ public class CsvWorkbook implements Workbook {
 
     @Override
     public Font findFont(boolean bold, short color, short fontHeight, String name, boolean italic, boolean strikeout,
-        short typeOffset, byte underline) {
+                         short typeOffset, byte underline) {
         return null;
     }
 
@@ -220,7 +225,7 @@ public class CsvWorkbook implements Workbook {
         if (csvCellStyleList == null) {
             csvCellStyleList = Lists.newArrayList();
         }
-        CsvCellStyle csvCellStyle = new CsvCellStyle((short)csvCellStyleList.size());
+        CsvCellStyle csvCellStyle = new CsvCellStyle((short) csvCellStyleList.size());
         csvCellStyleList.add(csvCellStyle);
         return csvCellStyle;
     }
