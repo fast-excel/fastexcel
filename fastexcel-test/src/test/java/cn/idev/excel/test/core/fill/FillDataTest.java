@@ -50,6 +50,8 @@ public class FillDataTest {
     private static File compositeFillTemplate07;
     private static File fileComposite03;
     private static File compositeFillTemplate03;
+    private static File fileMoreRowOrCell;
+    private static File moreRowOrCellTemplate;
 
     @BeforeAll
     public static void init() {
@@ -75,6 +77,8 @@ public class FillDataTest {
         compositeFillTemplate07 = TestFileUtil.readFile("fill" + File.separator + "composite.xlsx");
         fileComposite03 = TestFileUtil.createNewFile("fileComposite03.xls");
         compositeFillTemplate03 = TestFileUtil.readFile("fill" + File.separator + "composite.xls");
+        fileMoreRowOrCell = TestFileUtil.createNewFile("fileMoreRowOrCell.xls");
+        moreRowOrCellTemplate = TestFileUtil.readFile("fill" + File.separator + "moreRowOrCell.xls");
     }
 
     @Test
@@ -133,7 +137,10 @@ public class FillDataTest {
     public void t10CompositeFill03() {
         compositeFill(fileComposite03, compositeFillTemplate03);
     }
-
+    @Test
+    public void t11MoreRowOrCell() {
+        moreRowOrCell(fileMoreRowOrCell, moreRowOrCellTemplate);
+    }
     private void byNameFill(File file, File template) {
         FillData fillData = new FillData();
         fillData.setName("Zhang San");
@@ -199,6 +206,18 @@ public class FillDataTest {
         Assertions.assertEquals(list.size(), 21L);
         Map<String, String> map19 = (Map<String, String>)list.get(19);
         Assertions.assertEquals("Zhang San", map19.get(0));
+    }
+
+    private void moreRowOrCell(File file, File template) {
+        try (ExcelWriter excelWriter = EasyExcel.write(file).withTemplate(template).build()) {
+            WriteSheet writeSheet = EasyExcel.writerSheet().build();
+            FillConfig fillConfig = FillConfig.builder().lineRows(4).build();
+            excelWriter.fill(data().subList(0,3), fillConfig, writeSheet);
+        }
+        List<Object> list = EasyExcel.read(file).sheet().doReadSync();
+        Assertions.assertEquals(list.size(), 11L);
+        Map<String, String> map19 = (Map<String, String>)list.get(10);
+        Assertions.assertEquals("5", map19.get(1));
     }
 
     private void fill(File file, File template) {
