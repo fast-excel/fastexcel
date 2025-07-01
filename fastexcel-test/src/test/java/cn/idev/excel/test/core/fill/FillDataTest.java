@@ -77,8 +77,8 @@ public class FillDataTest {
         compositeFillTemplate07 = TestFileUtil.readFile("fill" + File.separator + "composite.xlsx");
         fileComposite03 = TestFileUtil.createNewFile("fileComposite03.xls");
         compositeFillTemplate03 = TestFileUtil.readFile("fill" + File.separator + "composite.xls");
-        fileMoreRowOrCell = TestFileUtil.createNewFile("fileMoreRowOrCell.xls");
-        moreRowOrCellTemplate = TestFileUtil.readFile("fill" + File.separator + "moreRowOrCell.xls");
+        fileMoreRowOrCell = TestFileUtil.createNewFile("fileMoreRowOrCell.xlsx");
+        moreRowOrCellTemplate = TestFileUtil.readFile("fill" + File.separator + "moreRowOrCell.xlsx");
     }
 
     @Test
