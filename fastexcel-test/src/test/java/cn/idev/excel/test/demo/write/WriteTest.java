@@ -460,7 +460,7 @@ public class WriteTest {
         // 背景设置为红色
         headWriteCellStyle.setFillForegroundColor(IndexedColors.RED.getIndex());
         WriteFont headWriteFont = new WriteFont();
-        headWriteFont.setFontHeightInPoints((short)20);
+        headWriteFont.setFontHeightInPoints((short) 20);
         headWriteCellStyle.setWriteFont(headWriteFont);
         // 内容的策略
         WriteCellStyle contentWriteCellStyle = new WriteCellStyle();
@@ -470,7 +470,7 @@ public class WriteTest {
         contentWriteCellStyle.setFillForegroundColor(IndexedColors.GREEN.getIndex());
         WriteFont contentWriteFont = new WriteFont();
         // 字体大小
-        contentWriteFont.setFontHeightInPoints((short)20);
+        contentWriteFont.setFontHeightInPoints((short) 20);
         contentWriteCellStyle.setWriteFont(contentWriteFont);
         // 这个策略是 头是头的样式 内容是内容的样式 其他的策略可以自己实现
         HorizontalCellStyleStrategy horizontalCellStyleStrategy =
@@ -626,8 +626,8 @@ public class WriteTest {
         EasyExcel.write(TestFileUtil.getPath() + "customHeadRead" + System.currentTimeMillis() + ".xlsx")
             .head(yearHead())
             .sheet("模板")
-            .registerWriteHandler(new DynamicMergeStrategy(0,maps.size()))
-            .registerWriteHandler(new DynamicMergeStrategy(2,maps.size()))
+            .registerWriteHandler(new DynamicMergeStrategy(0, maps.size()))
+            .registerWriteHandler(new DynamicMergeStrategy(2, maps.size()))
             .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
             .doWrite(maps);
 
@@ -635,24 +635,24 @@ public class WriteTest {
         EasyExcel.write(TestFileUtil.getPath() + "customHeadRead" + System.currentTimeMillis() + ".xlsx")
             .head(yearHead())
             .sheet("模板")
-            .registerWriteHandler(new DynamicMergeStrategy(0,maps1.size()))
-            .registerWriteHandler(new DynamicMergeStrategy(2,maps1.size()))
+            .registerWriteHandler(new DynamicMergeStrategy(0, maps1.size()))
+            .registerWriteHandler(new DynamicMergeStrategy(2, maps1.size()))
             .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
             .doWrite(maps1);
         List<Map<Integer, String>> maps2 = yearData2();
         EasyExcel.write(TestFileUtil.getPath() + "customHeadRead" + System.currentTimeMillis() + ".xlsx")
             .head(yearHead())
             .sheet("模板")
-            .registerWriteHandler(new DynamicMergeStrategy(0,maps2.size()))
-            .registerWriteHandler(new DynamicMergeStrategy(2,maps2.size()))
+            .registerWriteHandler(new DynamicMergeStrategy(0, maps2.size()))
+            .registerWriteHandler(new DynamicMergeStrategy(2, maps2.size()))
             .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
             .doWrite(maps2);
         List<Map<Integer, String>> maps3 = yearData3();
         EasyExcel.write(TestFileUtil.getPath() + "customHeadRead" + System.currentTimeMillis() + ".xlsx")
             .head(yearHead())
             .sheet("模板")
-            .registerWriteHandler(new DynamicMergeStrategy(0,maps3.size()))
-            .registerWriteHandler(new DynamicMergeStrategy(2,maps3.size()))
+            .registerWriteHandler(new DynamicMergeStrategy(0, maps3.size()))
+            .registerWriteHandler(new DynamicMergeStrategy(2, maps3.size()))
             .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
             .doWrite(maps3);
 
@@ -660,8 +660,8 @@ public class WriteTest {
         EasyExcel.write(TestFileUtil.getPath() + "customHeadRead" + System.currentTimeMillis() + ".xlsx")
             .head(yearHead())
             .sheet("模板")
-            .registerWriteHandler(new DynamicMergeStrategy(0,maps4.size()))
-            .registerWriteHandler(new DynamicMergeStrategy(2,maps4.size()))
+            .registerWriteHandler(new DynamicMergeStrategy(0, maps4.size()))
+            .registerWriteHandler(new DynamicMergeStrategy(2, maps4.size()))
             .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
             .doWrite(maps4);
     }
@@ -670,16 +670,16 @@ public class WriteTest {
         List<List<String>> head = new ArrayList<>();
         for (int i = 0; i < 12; i++) {
             List<String> h = new ArrayList<>();
-            if(i<3){
+            if (i < 3) {
                 h.add("第一季度");
             }
-            if(i>=3&&i<6){
+            if (i >= 3 && i < 6) {
                 h.add("第二季度");
             }
-            if(i>=6&&i<9){
+            if (i >= 6 && i < 9) {
                 h.add("第三季度");
             }
-            if(i>=9){
+            if (i >= 9) {
                 h.add("第四季度");
             }
             h.add("第" + (i + 1) + "月");
@@ -687,15 +687,16 @@ public class WriteTest {
         }
         return head;
     }
+
     public List<Map<Integer, String>> yearData() {
         List<Map<Integer, String>> data = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
             Map<Integer, String> map = new HashMap<>();
             for (int j = 0; j < 12; j++) {
-                if(i<20){
-                    map.put( j , "第" + (j + 1) + "月"+"前20条数据");
-                }else {
-                    map.put( j , "第" + (j + 1) + "月");
+                if (i < 20) {
+                    map.put(j, "第" + (j + 1) + "月" + "前20条数据");
+                } else {
+                    map.put(j, "第" + (j + 1) + "月");
                 }
 
             }
@@ -703,15 +704,16 @@ public class WriteTest {
         }
         return data;
     }
+
     public List<Map<Integer, String>> yearData1() {
         List<Map<Integer, String>> data = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
             Map<Integer, String> map = new HashMap<>();
             for (int j = 0; j < 12; j++) {
-                if(i>0){
-                    map.put( j ,  (j + 1) + "");
-                }else {
-                   map.put(j,i+"");
+                if (i > 0) {
+                    map.put(j, (j + 1) + "");
+                } else {
+                    map.put(j, i + "");
                 }
 
             }
@@ -719,15 +721,16 @@ public class WriteTest {
         }
         return data;
     }
+
     public List<Map<Integer, String>> yearData4() {
         List<Map<Integer, String>> data = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
             Map<Integer, String> map = new HashMap<>();
             for (int j = 0; j < 12; j++) {
-                if(i<2){
-                    map.put( j ,  (j + 1) + "");
-                }else {
-                    map.put(j,i+"");
+                if (i < 2) {
+                    map.put(j, (j + 1) + "");
+                } else {
+                    map.put(j, i + "");
                 }
 
             }
@@ -735,29 +738,32 @@ public class WriteTest {
         }
         return data;
     }
+
     public List<Map<Integer, String>> yearData3() {
         List<Map<Integer, String>> data = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
             Map<Integer, String> map = new HashMap<>();
             for (int j = 0; j < 12; j++) {
-                map.put(j,j+"");
+                map.put(j, j + "");
 
             }
             data.add(map);
         }
         return data;
     }
+
     public List<Map<Integer, String>> yearData2() {
         List<Map<Integer, String>> data = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
             Map<Integer, String> map = new HashMap<>();
             for (int j = 0; j < 12; j++) {
-                map.put(j,i+"");
+                map.put(j, i + "");
             }
             data.add(map);
         }
         return data;
     }
+
     /**
      * 自动列宽(不太精确)
      * <p>
