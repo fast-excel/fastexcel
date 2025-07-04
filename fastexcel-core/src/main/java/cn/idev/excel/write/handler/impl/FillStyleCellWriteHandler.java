@@ -36,6 +36,9 @@ public class FillStyleCellWriteHandler implements CellWriteHandler {
         }
         WriteCellStyle writeCellStyle = cellData.getWriteCellStyle();
         CellStyle originCellStyle = cellData.getOriginCellStyle();
+        if (originCellStyle == null && writeCellStyle != null && writeCellStyle.getDataFormatData() != null) {
+            originCellStyle = context.getCell().getCellStyle();
+        }
         if (writeCellStyle == null && originCellStyle == null) {
             return;
         }
