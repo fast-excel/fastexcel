@@ -49,4 +49,11 @@ public class SheetHandlerExecutionChain {
         }
         context.next = new SheetHandlerExecutionChain(handler);
     }
+
+    public void afterSheetDispose(SheetWriteHandlerContext context) {
+        this.handler.afterSheetDispose(context);
+        if (this.next != null) {
+            this.next.afterSheetDispose(context);
+        }
+    }
 }
