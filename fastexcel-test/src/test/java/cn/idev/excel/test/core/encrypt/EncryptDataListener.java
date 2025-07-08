@@ -5,8 +5,6 @@ import cn.idev.excel.event.AnalysisEventListener;
 import com.alibaba.fastjson2.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +14,6 @@ import java.util.List;
  */
 @Slf4j
 public class EncryptDataListener extends AnalysisEventListener<EncryptData> {
-    private static final Logger LOGGER = LoggerFactory.getLogger(EncryptDataListener.class);
     List<EncryptData> list = new ArrayList<EncryptData>();
 
     @Override
@@ -32,6 +29,6 @@ public class EncryptDataListener extends AnalysisEventListener<EncryptData> {
         Assertions.assertEquals((int) (context.readSheetHolder().getSheetNo()), 0);
         Assertions.assertEquals(
             context.readSheetHolder().getExcelReadHeadProperty().getHeadMap().get(0).getHeadNameList().get(0), "姓名");
-        LOGGER.debug("First row:{}", JSON.toJSONString(list.get(0)));
+        log.debug("First row:{}", JSON.toJSONString(list.get(0)));
     }
 }
