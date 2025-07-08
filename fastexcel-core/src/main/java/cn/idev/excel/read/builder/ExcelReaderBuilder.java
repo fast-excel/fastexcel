@@ -10,8 +10,13 @@ import cn.idev.excel.enums.ReadDefaultReturnEnum;
 import cn.idev.excel.event.AnalysisEventListener;
 import cn.idev.excel.event.SyncReadListener;
 import cn.idev.excel.read.listener.ModelBuildEventListener;
+import cn.idev.excel.read.listener.ValidateReadListener;
 import cn.idev.excel.read.metadata.ReadWorkbook;
+import cn.idev.excel.read.metadata.holder.ValidateErrorHolder;
+import cn.idev.excel.read.processor.TextErrorHandler;
+import cn.idev.excel.read.processor.ValidateErrorHandler;
 import cn.idev.excel.support.ExcelTypeEnum;
+import lombok.Getter;
 
 import javax.xml.parsers.SAXParserFactory;
 import java.io.File;
@@ -30,6 +35,11 @@ public class ExcelReaderBuilder extends AbstractExcelReaderParameterBuilder<Exce
      * Workbook
      */
     private final ReadWorkbook readWorkbook;
+
+    @Getter
+    private ValidateErrorHandler<?> errorHandler;
+    @Getter
+    private ValidateErrorHolder errorHolder;
 
     public ExcelReaderBuilder() {
         this.readWorkbook = new ReadWorkbook();
@@ -282,5 +292,31 @@ public class ExcelReaderBuilder extends AbstractExcelReaderParameterBuilder<Exce
     public ExcelReaderBuilder ignoreHiddenSheet(Boolean ignoreHiddenSheet) {
         readWorkbook.setIgnoreHiddenSheet(ignoreHiddenSheet);
         return this;
+    }
+
+
+    public ExcelReaderBuilder setErrorHandler(ValidateErrorHandler<?> validateErrorHandler) {
+        this.errorHandler = validateErrorHandler;
+        return this;
+    }
+
+
+    /**
+     * enable validate,
+     * Note: The default {@link TextErrorHandler} is used here.
+     * If a replacement is needed, call {@link ExcelReaderBuilder#setErrorHandler} after this method.
+     *
+     * @return
+     */
+    public ExcelReaderBuilder validate() {
+        ValidateReadListener<?> validateReadListener = new ValidateReadListener<>();
+        registerReadListener(validateReadListener);
+        errorHolder = validateReadListener;
+        setErrorHandler(TextErrorHandler.INSTANCE);
+        return this;
+    }
+
+    public <T> T handleError() {
+        return (T) getErrorHandler().handleError(getErrorHolder());
     }
 }
