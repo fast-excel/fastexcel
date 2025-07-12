@@ -31,4 +31,9 @@ public class OrderConstant {
      * Sorting of styles written to cells.
      */
     public static int FILL_STYLE = 50000;
+
+    /**
+     * Sorting of sheets
+     */
+    public static int SHEET_ORDER = 60000;
 }
