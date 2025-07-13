@@ -8,9 +8,9 @@ import cn.idev.excel.write.metadata.holder.WriteWorkbookHolder;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.poi.ss.usermodel.Workbook;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Set the order of each worksheet after completing workbook processing.
@@ -33,8 +33,7 @@ public class WriteSheetWorkbookWriteHandler implements WorkbookWriteHandler {
         }
         Workbook workbook = writeWorkbookHolder.getWorkbook();
         // sort by sheetNo.
-        ArrayList<Integer> sheetNoSortList = new ArrayList<>(writeSheetHolderMap.keySet());
-        Collections.sort(sheetNoSortList);
+        List<Integer> sheetNoSortList = writeSheetHolderMap.keySet().stream().sorted().collect(Collectors.toList());
 
         int pos = 0;
         for (Integer key : sheetNoSortList) {
