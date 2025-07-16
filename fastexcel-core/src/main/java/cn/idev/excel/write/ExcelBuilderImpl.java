@@ -1,21 +1,21 @@
 package cn.idev.excel.write;
 
-import java.util.Collection;
-
 import cn.idev.excel.context.WriteContext;
 import cn.idev.excel.context.WriteContextImpl;
 import cn.idev.excel.enums.WriteTypeEnum;
 import cn.idev.excel.exception.ExcelGenerateException;
 import cn.idev.excel.support.ExcelTypeEnum;
 import cn.idev.excel.util.FileUtils;
+import cn.idev.excel.util.WriteHandlerUtils;
 import cn.idev.excel.write.executor.ExcelWriteAddExecutor;
 import cn.idev.excel.write.executor.ExcelWriteFillExecutor;
 import cn.idev.excel.write.metadata.WriteSheet;
 import cn.idev.excel.write.metadata.WriteTable;
 import cn.idev.excel.write.metadata.WriteWorkbook;
 import cn.idev.excel.write.metadata.fill.FillConfig;
-
 import org.apache.poi.ss.util.CellRangeAddress;
+
+import java.util.Collection;
 
 /**
  * @author jipengfei
@@ -57,6 +57,8 @@ public class ExcelBuilderImpl implements ExcelBuilder {
                 excelWriteAddExecutor = new ExcelWriteAddExecutor(context);
             }
             excelWriteAddExecutor.add(data);
+            // execute callback after the sheet is written
+            WriteHandlerUtils.afterSheetDispose(context);
         } catch (RuntimeException e) {
             finishOnException();
             throw e;
@@ -80,6 +82,8 @@ public class ExcelBuilderImpl implements ExcelBuilder {
                 excelWriteFillExecutor = new ExcelWriteFillExecutor(context);
             }
             excelWriteFillExecutor.fill(data, fillConfig);
+            // execute callback after the sheet is written
+            WriteHandlerUtils.afterSheetDispose(context);
         } catch (RuntimeException e) {
             finishOnException();
             throw e;
