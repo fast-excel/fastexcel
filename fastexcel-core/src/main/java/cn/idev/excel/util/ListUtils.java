@@ -1,4 +1,24 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package cn.idev.excel.util;
+
+import lombok.NonNull;
+import org.apache.commons.compress.utils.Iterators;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -6,27 +26,9 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import lombok.NonNull;
-import org.apache.commons.compress.utils.Iterators;
-
-/**
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- * @author Apache Software Foundation (ASF)
- */
 public class ListUtils {
-    private ListUtils() {}
+    private ListUtils() {
+    }
 
     /**
      * Creates a <i>mutable</i>, empty {@code ArrayList} instance (for Java 6 and earlier).
@@ -41,7 +43,6 @@ public class ListUtils {
 
     /**
      * Creates a <i>mutable</i> {@code ArrayList} instance containing the given elements.
-     *
      */
     public static <E> ArrayList<E> newArrayList(E... elements) {
         checkNotNull(elements);
@@ -56,7 +57,6 @@ public class ListUtils {
     /**
      * Creates a <i>mutable</i> {@code ArrayList} instance containing the given elements; a very thin
      * shortcut for creating an empty list and then calling {@link Iterators#addAll}.
-     *
      */
     public static <E> ArrayList<E> newArrayList(Iterator<? extends E> elements) {
         ArrayList<E> list = newArrayList();
@@ -77,7 +77,7 @@ public class ListUtils {
         checkNotNull(elements); // for GWT
         // Let ArrayList's sizing logic work, if possible
         return (elements instanceof Collection)
-            ? new ArrayList<>((Collection<? extends E>)elements)
+            ? new ArrayList<>((Collection<? extends E>) elements)
             : newArrayList(elements.iterator());
     }
 

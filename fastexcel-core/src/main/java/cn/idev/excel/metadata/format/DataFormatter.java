@@ -1,21 +1,29 @@
 /*
- * ==================================================================== Licensed to the Apache Software Foundation (ASF)
- * under one or more contributor license agreements. See the NOTICE file distributed with this work for additional
- * information regarding copyright ownership. The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
- * License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *    http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
- * specific language governing permissions and limitations under the License.
- *
- * 2012 - Alfresco Software, Ltd. Alfresco Software has modified source of this file The details of changes as svn diff
- * can be found in svn at location root/projects/3rd-party/src
- * ====================================================================
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
+
 package cn.idev.excel.metadata.format;
+
+import cn.idev.excel.util.DateUtils;
+import org.apache.poi.ss.format.CellFormat;
+import org.apache.poi.ss.format.CellFormatResult;
+import org.apache.poi.ss.usermodel.ExcelStyleDateFormatter;
+import org.apache.poi.ss.usermodel.FractionFormat;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -33,15 +41,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import cn.idev.excel.util.DateUtils;
-
-import org.apache.poi.ss.format.CellFormat;
-import org.apache.poi.ss.format.CellFormatResult;
-import org.apache.poi.ss.usermodel.ExcelStyleDateFormatter;
-import org.apache.poi.ss.usermodel.FractionFormat;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Written with reference to {@link org.apache.poi.ss.usermodel.DataFormatter}.Made some optimizations for date
@@ -122,7 +121,9 @@ public class DataFormatter {
 
     static {
         StringBuilder buf = new StringBuilder();
-        for (int i = 0; i < 255; i++) {buf.append('#');}
+        for (int i = 0; i < 255; i++) {
+            buf.append('#');
+        }
         invalidDateTimeString = buf.toString();
     }
 
@@ -150,7 +151,7 @@ public class DataFormatter {
     private Locale locale;
     /**
      * true if date uses 1904 windowing, or false if using 1900 date windowing.
-     *
+     * <p>
      * default is false
      *
      * @return
@@ -158,7 +159,7 @@ public class DataFormatter {
     private Boolean use1904windowing;
     /**
      * Whether to use scientific Format.
-     *
+     * <p>
      * default is false
      */
     private Boolean useScientificFormat;
@@ -245,7 +246,6 @@ public class DataFormatter {
     }
 
 
-
     private Format createFormat(Short dataFormat, String dataFormatString) {
         String formatStr = dataFormatString;
 
@@ -261,9 +261,13 @@ public class DataFormatter {
 
             // Paranoid replacement...
             int at = formatStr.indexOf(colour);
-            if (at == -1) {break;}
+            if (at == -1) {
+                break;
+            }
             String nFormatStr = formatStr.substring(0, at) + formatStr.substring(at + colour.length());
-            if (nFormatStr.equals(formatStr)) {break;}
+            if (nFormatStr.equals(formatStr)) {
+                break;
+            }
 
             // Try again in case there's multiple
             formatStr = nFormatStr;
@@ -534,7 +538,7 @@ public class DataFormatter {
                 for (int i = 0; i < commas.length(); ++i) {
                     temp = temp.multiply(ONE_THOUSAND);
                 }
-                for (int i = 0; i < cnt ; i++) {
+                for (int i = 0; i < cnt; i++) {
                     temp = temp.multiply(TEN);
                 }
                 divider = temp;
@@ -546,9 +550,9 @@ public class DataFormatter {
         private Object scaleInput(Object obj) {
             if (divider != null) {
                 if (obj instanceof BigDecimal) {
-                    obj = ((BigDecimal)obj).divide(divider, RoundingMode.HALF_UP);
+                    obj = ((BigDecimal) obj).divide(divider, RoundingMode.HALF_UP);
                 } else if (obj instanceof Double) {
-                    obj = (Double)obj / divider.doubleValue();
+                    obj = (Double) obj / divider.doubleValue();
                 } else {
                     throw new UnsupportedOperationException();
                 }
@@ -635,7 +639,7 @@ public class DataFormatter {
         Format dateFormat = getFormat(data, dataFormat, dataFormatString);
         if (dateFormat instanceof ExcelStyleDateFormatter) {
             // Hint about the raw excel value
-            ((ExcelStyleDateFormatter)dateFormat).setDateToBeFormatted(data);
+            ((ExcelStyleDateFormatter) dateFormat).setDateToBeFormatted(data);
         }
         return performDateFormatting(DateUtils.getJavaDate(data, use1904windowing), dateFormat);
     }
@@ -764,7 +768,7 @@ public class DataFormatter {
 
         @Override
         public StringBuffer format(Object obj, StringBuffer toAppendTo, FieldPosition pos) {
-            return toAppendTo.append(format((Number)obj));
+            return toAppendTo.append(format((Number) obj));
         }
 
         @Override
@@ -796,7 +800,7 @@ public class DataFormatter {
 
         @Override
         public StringBuffer format(Object obj, StringBuffer toAppendTo, FieldPosition pos) {
-            return toAppendTo.append(format((Number)obj));
+            return toAppendTo.append(format((Number) obj));
         }
 
         @Override
@@ -846,7 +850,7 @@ public class DataFormatter {
 
         @Override
         public StringBuffer format(Object obj, StringBuffer toAppendTo, FieldPosition pos) {
-            return toAppendTo.append(format((Number)obj));
+            return toAppendTo.append(format((Number) obj));
         }
 
         @Override

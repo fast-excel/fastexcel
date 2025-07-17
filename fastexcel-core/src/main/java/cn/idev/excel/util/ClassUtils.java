@@ -1,19 +1,21 @@
-package cn.idev.excel.util;
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.concurrent.ConcurrentHashMap;
+package cn.idev.excel.util;
 
 import cn.idev.excel.annotation.ExcelIgnore;
 import cn.idev.excel.annotation.ExcelIgnoreUnannotated;
@@ -35,7 +37,6 @@ import cn.idev.excel.metadata.property.NumberFormatProperty;
 import cn.idev.excel.metadata.property.StyleProperty;
 import cn.idev.excel.support.cglib.beans.BeanMap;
 import cn.idev.excel.write.metadata.holder.WriteHolder;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -43,22 +44,21 @@ import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.collections4.CollectionUtils;
 
-/**
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- * <p>
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- * @author Apache Software Foundation (ASF)
- */
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.concurrent.ConcurrentHashMap;
+
 public class ClassUtils {
 
     /**
@@ -103,11 +103,11 @@ public class ClassUtils {
      * @return
      */
     public static ExcelContentProperty declaredExcelContentProperty(Map<?, ?> dataMap, Class<?> headClazz,
-        String fieldName,
-        ConfigurationHolder configurationHolder) {
+                                                                    String fieldName,
+                                                                    ConfigurationHolder configurationHolder) {
         Class<?> clazz = null;
         if (dataMap instanceof BeanMap) {
-            Object bean = ((BeanMap)dataMap).getBean();
+            Object bean = ((BeanMap) dataMap).getBean();
             if (bean != null) {
                 clazz = bean.getClass();
             }
@@ -116,7 +116,7 @@ public class ClassUtils {
     }
 
     private static ExcelContentProperty getExcelContentProperty(Class<?> clazz, Class<?> headClass, String fieldName,
-        ConfigurationHolder configurationHolder) {
+                                                                ConfigurationHolder configurationHolder) {
         switch (configurationHolder.globalConfiguration().getFiledCacheLocation()) {
             case THREAD_LOCAL:
                 Map<ContentPropertyKey, ExcelContentProperty> contentCacheMap = CONTENT_THREAD_LOCAL.get();
@@ -139,8 +139,8 @@ public class ClassUtils {
     }
 
     private static ExcelContentProperty doGetExcelContentProperty(Class<?> clazz, Class<?> headClass,
-        String fieldName,
-        ConfigurationHolder configurationHolder) {
+                                                                  String fieldName,
+                                                                  ConfigurationHolder configurationHolder) {
         ExcelContentProperty excelContentProperty = Optional.ofNullable(
                 declaredFieldContentMap(clazz, configurationHolder))
             .map(map -> map.get(fieldName))
@@ -159,7 +159,7 @@ public class ClassUtils {
     }
 
     public static void combineExcelContentProperty(ExcelContentProperty combineExcelContentProperty,
-        ExcelContentProperty excelContentProperty) {
+                                                   ExcelContentProperty excelContentProperty) {
         if (excelContentProperty == null) {
             return;
         }
@@ -188,7 +188,7 @@ public class ClassUtils {
     }
 
     private static Map<String, ExcelContentProperty> declaredFieldContentMap(Class<?> clazz,
-        ConfigurationHolder configurationHolder) {
+                                                                             ConfigurationHolder configurationHolder) {
         if (clazz == null) {
             return null;
         }
@@ -325,7 +325,7 @@ public class ClassUtils {
             return fieldCache;
         }
 
-        WriteHolder writeHolder = (WriteHolder)configurationHolder;
+        WriteHolder writeHolder = (WriteHolder) configurationHolder;
 
         boolean needIgnore = !CollectionUtils.isEmpty(writeHolder.excludeColumnFieldNames())
             || !CollectionUtils.isEmpty(writeHolder.excludeColumnIndexes())
@@ -428,7 +428,7 @@ public class ClassUtils {
     }
 
     private static Map<Integer, FieldWrapper> buildSortedAllFieldMap(Map<Integer, List<FieldWrapper>> orderFieldMap,
-        Map<Integer, FieldWrapper> indexFieldMap) {
+                                                                     Map<Integer, FieldWrapper> indexFieldMap) {
 
         Map<Integer, FieldWrapper> sortedAllFieldMap = new HashMap<>(
             (orderFieldMap.size() + indexFieldMap.size()) * 4 / 3 + 1);
@@ -451,8 +451,8 @@ public class ClassUtils {
     }
 
     private static void declaredOneField(Field field, Map<Integer, List<FieldWrapper>> orderFieldMap,
-        Map<Integer, FieldWrapper> indexFieldMap, Set<String> ignoreSet,
-        ExcelIgnoreUnannotated excelIgnoreUnannotated) {
+                                         Map<Integer, FieldWrapper> indexFieldMap, Set<String> ignoreSet,
+                                         ExcelIgnoreUnannotated excelIgnoreUnannotated) {
         String fieldName = FieldUtils.resolveCglibFieldName(field);
         FieldWrapper fieldWrapper = new FieldWrapper();
         fieldWrapper.setField(field);
@@ -565,7 +565,7 @@ public class ClassUtils {
         FieldCacheKey(Class<?> clazz, ConfigurationHolder configurationHolder) {
             this.clazz = clazz;
             if (configurationHolder instanceof WriteHolder) {
-                WriteHolder writeHolder = (WriteHolder)configurationHolder;
+                WriteHolder writeHolder = (WriteHolder) configurationHolder;
                 this.excludeColumnFieldNames = writeHolder.excludeColumnFieldNames();
                 this.excludeColumnIndexes = writeHolder.excludeColumnIndexes();
                 this.includeColumnFieldNames = writeHolder.includeColumnFieldNames();

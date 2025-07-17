@@ -1,21 +1,24 @@
-/* ====================================================================
-   Licensed to the Apache Software Foundation (ASF) under one or more
-   contributor license agreements.  See the NOTICE file distributed with
-   this work for additional information regarding copyright ownership.
-   The ASF licenses this file to You under the Apache License, Version 2.0
-   (the "License"); you may not use this file except in compliance with
-   the License.  You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
-==================================================================== */
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package cn.idev.excel.util;
+
+import org.apache.poi.ss.usermodel.DateUtil;
+import org.apache.poi.util.LocaleUtil;
 
 import java.math.BigDecimal;
 import java.text.DateFormat;
@@ -31,9 +34,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 import java.util.regex.Pattern;
-
-import org.apache.poi.ss.usermodel.DateUtil;
-import org.apache.poi.util.LocaleUtil;
 
 /**
  * Date utils
@@ -87,10 +87,11 @@ public class DateUtils {
     public static final int SECONDS_PER_DAY = (HOURS_PER_DAY * MINUTES_PER_HOUR * SECONDS_PER_MINUTE);
 
     // used to specify that date is invalid
-    private static final int BAD_DATE         = -1;
+    private static final int BAD_DATE = -1;
     public static final long DAY_MILLISECONDS = SECONDS_PER_DAY * 1000L;
 
-    private DateUtils() {}
+    private DateUtils() {
+    }
 
     /**
      * convert string to date
@@ -316,7 +317,7 @@ public class DateUtils {
     /**
      * Given an Excel date with either 1900 or 1904 date windowing,
      * converts it to a java.util.Date.
-     *
+     * <p>
      * Excel Dates and Times are stored without any timezone
      * information. If you know (through other means) that your file
      * uses a different TimeZone to the system default, you can use
@@ -334,19 +335,20 @@ public class DateUtils {
 
     /**
      * Get EXCEL date as Java Calendar with given time zone.
-     * @param date  The Excel date.
-     * @param use1904windowing  true if date uses 1904 windowing,
-     *  or false if using 1900 date windowing.
-     * @param timeZone The TimeZone to evaluate the date in
-     * @param roundSeconds round to closest second
+     *
+     * @param date             The Excel date.
+     * @param use1904windowing true if date uses 1904 windowing,
+     *                         or false if using 1900 date windowing.
+     * @param timeZone         The TimeZone to evaluate the date in
+     * @param roundSeconds     round to closest second
      * @return Java representation of the date, or null if date is not a valid Excel date
      */
     public static Calendar getJavaCalendar(double date, boolean use1904windowing, TimeZone timeZone, boolean roundSeconds) {
         if (!isValidExcelDate(date)) {
             return null;
         }
-        int wholeDays = (int)Math.floor(date);
-        int millisecondsInDay = (int)((date - wholeDays) * DAY_MILLISECONDS + 0.5);
+        int wholeDays = (int) Math.floor(date);
+        int millisecondsInDay = (int) ((date - wholeDays) * DAY_MILLISECONDS + 0.5);
         Calendar calendar;
         if (timeZone != null) {
             calendar = LocaleUtil.getLocaleCalendar(timeZone);
@@ -359,14 +361,13 @@ public class DateUtils {
 
 
     public static void setCalendar(Calendar calendar, int wholeDays,
-        int millisecondsInDay, boolean use1904windowing, boolean roundSeconds) {
+                                   int millisecondsInDay, boolean use1904windowing, boolean roundSeconds) {
         int startYear = 1900;
         int dayAdjust = -1; // Excel thinks 2/29/1900 is a valid date, which it isn't
         if (use1904windowing) {
             startYear = 1904;
             dayAdjust = 1; // 1904 date windowing uses 1/2/1904 as the first day
-        }
-        else if (wholeDays < 61) {
+        } else if (wholeDays < 61) {
             // Date is prior to 3/1/1900, so adjust because Excel thinks 2/29/1900 exists
             // If Excel date == 2/29/1900, will become 3/1/1900 in Java representation
             dayAdjust = 0;
@@ -387,12 +388,11 @@ public class DateUtils {
     /**
      * Given a double, checks if it is a valid Excel date.
      *
+     * @param value the double value
      * @return true if valid
-     * @param  value the double value
      */
 
-    public static boolean isValidExcelDate(double value)
-    {
+    public static boolean isValidExcelDate(double value) {
         return (value > -Double.MIN_VALUE);
     }
 
@@ -400,7 +400,7 @@ public class DateUtils {
     /**
      * Given an Excel date with either 1900 or 1904 date windowing,
      * converts it to a java.time.LocalDateTime.
-     *
+     * <p>
      * Excel Dates and Times are stored without any timezone
      * information. If you know (through other means) that your file
      * uses a different TimeZone to the system default, you can use
@@ -418,7 +418,7 @@ public class DateUtils {
     /**
      * Given an Excel date with either 1900 or 1904 date windowing,
      * converts it to a java.time.LocalDate.
-     *
+     * <p>
      * Excel Dates and Times are stored without any timezone
      * information. If you know (through other means) that your file
      * uses a different TimeZone to the system default, you can use
@@ -559,7 +559,7 @@ public class DateUtils {
             case 0x14:
             case 0x15:
             case 0x16:
-            // 45-47
+                // 45-47
             case 0x2d:
             case 0x2e:
             case 0x2f:

@@ -1,28 +1,29 @@
-package cn.idev.excel.util;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.util.Map;
-
-import cn.idev.excel.metadata.NullObject;
-import cn.idev.excel.support.cglib.beans.BeanMap;
-
-/**
+/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+ * the License.  You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * @author Apache Software Foundation (ASF)
  */
+
+package cn.idev.excel.util;
+
+import cn.idev.excel.metadata.NullObject;
+import cn.idev.excel.support.cglib.beans.BeanMap;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.Map;
+
 public class FieldUtils {
 
     public static Class<?> nullObjectClass = NullObject.class;
@@ -31,7 +32,7 @@ public class FieldUtils {
 
     public static Class<?> getFieldClass(Map dataMap, String fieldName, Object value) {
         if (dataMap instanceof BeanMap) {
-            Class<?> fieldClass = ((BeanMap)dataMap).getPropertyType(fieldName);
+            Class<?> fieldClass = ((BeanMap) dataMap).getPropertyType(fieldName);
             if (fieldClass != null) {
                 return fieldClass;
             }
@@ -109,9 +110,9 @@ public class FieldUtils {
      *                    only
      *                    match {@code public} fields.
      * @return the Field object
-     * @throws NullPointerException if the class is {@code null}
+     * @throws NullPointerException     if the class is {@code null}
      * @throws IllegalArgumentException if the field name is blank or empty or is matched at multiple places
-     * in the inheritance hierarchy
+     *                                  in the inheritance hierarchy
      */
     public static Field getField(final Class<?> cls, final String fieldName, final boolean forceAccess) {
         Validate.isTrue(cls != null, "The class must not be null");
