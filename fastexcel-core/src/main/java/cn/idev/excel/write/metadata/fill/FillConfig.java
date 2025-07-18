@@ -32,12 +32,15 @@ public class FillConfig {
 
     /**
      * Automatically inherit style
-     *
      * default true.
      */
     private Boolean autoStyle;
 
     private boolean hasInit;
+    /**
+     *The number of rows per piece of data in the list
+     */
+    private int lineRows;
 
     public void init() {
         if (hasInit) {
@@ -51,6 +54,9 @@ public class FillConfig {
         }
         if (autoStyle == null) {
             autoStyle = Boolean.TRUE;
+        }
+        if (lineRows == 0) {
+            lineRows = 1;
         }
         hasInit = true;
     }
