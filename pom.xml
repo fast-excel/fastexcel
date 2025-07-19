@@ -29,9 +29,10 @@
         <java.version>1.8</java.version>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
+        <maven-surefire-plugin.version>3.5.3</maven-surefire-plugin.version>
         <gpg.skip>true</gpg.skip>
         <maven.javadoc.skip>true</maven.javadoc.skip>
-        <maven.test.skip>true</maven.test.skip>
+        <maven.test.skip>false</maven.test.skip>
         <commons-csv.version>1.11.0</commons-csv.version>
         <poi.version>5.4.1</poi.version>
         <poi-ooxml.version>5.4.1</poi-ooxml.version>
@@ -48,6 +49,7 @@
         <log4j-over-slf4j.version>1.7.36</log4j-over-slf4j.version>
         <logback-classic.version>1.5.6</logback-classic.version>
         <mockserver.version>5.15.0</mockserver.version>
+        <jacoco.version>0.8.13</jacoco.version>
     </properties>
 
     <scm>
@@ -225,7 +227,10 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>3.3.0</version>
+                    <version>${maven-surefire-plugin.version}</version>
+                    <configuration>
+                        <argLine>${argLine} -Dfile.encoding=UTF-8</argLine>
+                    </configuration>
                     <!--                    please add below configuration if you are using JDK 9 or higher-->
                     <!--                    <configuration>-->
                     <!--                        <argLine>-->
@@ -249,6 +254,36 @@
                     <groupId>org.sonatype.central</groupId>
                     <artifactId>central-publishing-maven-plugin</artifactId>
                     <version>0.4.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>${jacoco.version}</version>
+                    <executions>
+                        <!-- enable JaCoCo Agent  -->
+                        <execution>
+                            <id>prepare-agent</id>
+                            <goals>
+                                <goal>prepare-agent</goal>
+                            </goals>
+                        </execution>
+                        <!-- generate module report -->
+                        <execution>
+                            <id>generate-report</id>
+                            <phase>test</phase>
+                            <goals>
+                                <goal>report</goal>
+                            </goals>
+                        </execution>
+                        <!-- generate aggregate report -->
+                        <execution>
+                            <id>generate-aggregate-report</id>
+                            <phase>test</phase>
+                            <goals>
+                                <goal>report-aggregate</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
             </plugins>
         </pluginManagement>
