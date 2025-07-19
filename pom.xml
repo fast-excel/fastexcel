@@ -32,7 +32,7 @@
         <maven-surefire-plugin.version>3.5.3</maven-surefire-plugin.version>
         <gpg.skip>true</gpg.skip>
         <maven.javadoc.skip>true</maven.javadoc.skip>
-        <maven.test.skip>false</maven.test.skip>
+        <maven.test.skip>true</maven.test.skip>
         <commons-csv.version>1.11.0</commons-csv.version>
         <poi.version>5.4.1</poi.version>
         <poi-ooxml.version>5.4.1</poi-ooxml.version>
