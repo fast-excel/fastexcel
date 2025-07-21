@@ -66,4 +66,10 @@ public @interface ExcelProperty {
      */
     @Deprecated
     String format() default "";
+
+    /**
+     * use with {@link .ValidateReadListener} to verify whether a field is empty
+     * @return whether the field can be null
+     */
+    boolean notNull() default false;
 }
