@@ -467,7 +467,7 @@ public class ClassUtils {
         Map<Integer, FieldWrapper> indexFieldMap, Set<String> ignoreSet,
         ExcelIgnoreUnannotated excelIgnoreUnannotated) {
         String fieldName = FieldUtils.resolveCglibFieldName(field);
-        // skip while the field is in ignoreSet
+        // skip if the field is in ignoreSet
         if (ignoreSet.contains(fieldName)) {
             return;
         }
