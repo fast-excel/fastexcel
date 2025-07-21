@@ -302,7 +302,7 @@ public class ClassUtils {
         List<Field> tempFieldList = new ArrayList<>();
         Map<String, Field> fieldNameToField = new HashMap<>();
         Class<?> tempClass = clazz;
-        //  Prefer subclass fields, only process the bottom-most (subclass) definition for fields with the same name
+        // Prefer subclass fields, only process the bottom-most (subclass) definition for fields with the same name
         while (tempClass != null) {
             for (Field field : tempClass.getDeclaredFields()) {
                 String fieldName = FieldUtils.resolveCglibFieldName(field);
