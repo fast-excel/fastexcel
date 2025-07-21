@@ -18,9 +18,9 @@
     <inceptionYear>2024</inceptionYear>
 
     <modules>
+        <module>fastexcel</module>
         <module>fastexcel-support</module>
         <module>fastexcel-test</module>
-        <module>fastexcel</module>
     </modules>
 
     <properties>
