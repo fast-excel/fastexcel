@@ -1,20 +1,5 @@
 package cn.idev.excel.util;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.concurrent.ConcurrentHashMap;
-
 import cn.idev.excel.annotation.ExcelIgnore;
 import cn.idev.excel.annotation.ExcelIgnoreUnannotated;
 import cn.idev.excel.annotation.ExcelProperty;
@@ -35,13 +20,27 @@ import cn.idev.excel.metadata.property.NumberFormatProperty;
 import cn.idev.excel.metadata.property.StyleProperty;
 import cn.idev.excel.support.cglib.beans.BeanMap;
 import cn.idev.excel.write.metadata.holder.WriteHolder;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.collections4.CollectionUtils;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Licensed to the Apache Software Foundation (ASF) under one or more
@@ -301,21 +300,35 @@ public class ClassUtils {
 
     private static FieldCache doDeclaredFields(Class<?> clazz, ConfigurationHolder configurationHolder) {
         List<Field> tempFieldList = new ArrayList<>();
+        Map<String, Field> fieldNameToField = new HashMap<>();
         Class<?> tempClass = clazz;
-        // When the parent class is null, it indicates that the parent class (Object class) has reached the top
-        // level.
+        //  Prefer subclass fields, only process the bottom-most (subclass) definition for fields with the same name
         while (tempClass != null) {
-            Collections.addAll(tempFieldList, tempClass.getDeclaredFields());
-            // Get the parent class and give it to yourself
+            for (Field field : tempClass.getDeclaredFields()) {
+                String fieldName = FieldUtils.resolveCglibFieldName(field);
+                if (!fieldNameToField.containsKey(fieldName)) {
+                    fieldNameToField.put(fieldName, field);
+                    tempFieldList.add(field);
+                }
+            }
             tempClass = tempClass.getSuperclass();
         }
-        // Screening of field
+        ExcelIgnoreUnannotated excelIgnoreUnannotated = clazz.getAnnotation(ExcelIgnoreUnannotated.class);
+        Set<String> ignoreSet = new HashSet<>();
+        // First collect all field names annotated with ExcelIgnore (including subclass overrides)
+        for (Field field : tempFieldList) {
+            if (field.getAnnotation(ExcelIgnore.class) != null) {
+                ignoreSet.add(FieldUtils.resolveCglibFieldName(field));
+            }
+        }
         Map<Integer, List<FieldWrapper>> orderFieldMap = new TreeMap<>();
         Map<Integer, FieldWrapper> indexFieldMap = new TreeMap<>();
-        Set<String> ignoreSet = new HashSet<>();
-
-        ExcelIgnoreUnannotated excelIgnoreUnannotated = clazz.getAnnotation(ExcelIgnoreUnannotated.class);
         for (Field field : tempFieldList) {
+            String fieldName = FieldUtils.resolveCglibFieldName(field);
+            // Skip if ignored
+            if (ignoreSet.contains(fieldName)) {
+                continue;
+            }
             declaredOneField(field, orderFieldMap, indexFieldMap, ignoreSet, excelIgnoreUnannotated);
         }
         Map<Integer, FieldWrapper> sortedFieldMap = buildSortedAllFieldMap(orderFieldMap, indexFieldMap);
@@ -454,26 +467,20 @@ public class ClassUtils {
         Map<Integer, FieldWrapper> indexFieldMap, Set<String> ignoreSet,
         ExcelIgnoreUnannotated excelIgnoreUnannotated) {
         String fieldName = FieldUtils.resolveCglibFieldName(field);
+        // skip while the field is in ignoreSet
+        if (ignoreSet.contains(fieldName)) {
+            return;
+        }
         FieldWrapper fieldWrapper = new FieldWrapper();
         fieldWrapper.setField(field);
         fieldWrapper.setFieldName(fieldName);
 
-        ExcelIgnore excelIgnore = field.getAnnotation(ExcelIgnore.class);
-
-        if (excelIgnore != null) {
-            ignoreSet.add(fieldName);
-            return;
-        }
         ExcelProperty excelProperty = field.getAnnotation(ExcelProperty.class);
         boolean noExcelProperty = excelProperty == null && excelIgnoreUnannotated != null;
-        if (noExcelProperty) {
-            ignoreSet.add(fieldName);
-            return;
-        }
         boolean isStaticFinalOrTransient =
             (Modifier.isStatic(field.getModifiers()) && Modifier.isFinal(field.getModifiers()))
                 || Modifier.isTransient(field.getModifiers());
-        if (excelProperty == null && isStaticFinalOrTransient) {
+        if (noExcelProperty || (excelProperty == null && isStaticFinalOrTransient)) {
             ignoreSet.add(fieldName);
             return;
         }
@@ -481,7 +488,6 @@ public class ClassUtils {
         if (excelProperty != null) {
             fieldWrapper.setHeads(excelProperty.value());
         }
-
         if (excelProperty != null && excelProperty.index() >= 0) {
             if (indexFieldMap.containsKey(excelProperty.index())) {
                 throw new ExcelCommonException(
@@ -491,7 +497,6 @@ public class ClassUtils {
             indexFieldMap.put(excelProperty.index(), fieldWrapper);
             return;
         }
-
         int order = Integer.MAX_VALUE;
         if (excelProperty != null) {
             order = excelProperty.order();
@@ -580,4 +585,3 @@ public class ClassUtils {
         CONTENT_THREAD_LOCAL.remove();
     }
 }
-
