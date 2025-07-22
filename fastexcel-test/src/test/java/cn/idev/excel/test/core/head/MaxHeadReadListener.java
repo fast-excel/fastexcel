@@ -4,13 +4,12 @@ import cn.idev.excel.context.AnalysisContext;
 import cn.idev.excel.event.AnalysisEventListener;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONWriter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class MaxHeadReadListener extends AnalysisEventListener<Map<Integer, String>> {
     private static final Logger log = LoggerFactory.getLogger(MaxHeadReadListener.class);
@@ -30,8 +29,8 @@ public class MaxHeadReadListener extends AnalysisEventListener<Map<Integer, Stri
 
     @Override
     public void doAfterAllAnalysed(AnalysisContext context) {
-        log.info("origin head : {}",JSON.toJSONString(headTitleMap,JSONWriter.Feature.WriteMapNullValue));
-        log.info("max not empty head size : {}",context.readSheetHolder().getMaxNotEmptyDataHeadSize());
+        log.info("origin head : {}", JSON.toJSONString(headTitleMap, JSONWriter.Feature.WriteMapNullValue));
+        log.info("max not empty head size : {}", context.readSheetHolder().getMaxNotEmptyDataHeadSize());
     }
 
     @Override

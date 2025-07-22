@@ -3,7 +3,6 @@ package cn.idev.excel.test.demo.read;
 import cn.idev.excel.annotation.ExcelProperty;
 import cn.idev.excel.annotation.format.DateTimeFormat;
 import cn.idev.excel.annotation.format.NumberFormat;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;

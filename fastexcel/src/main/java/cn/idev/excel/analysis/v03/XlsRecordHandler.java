@@ -1,8 +1,7 @@
 package cn.idev.excel.analysis.v03;
 
-import org.apache.poi.hssf.record.Record;
-
 import cn.idev.excel.context.xls.XlsReadContext;
+import org.apache.poi.hssf.record.Record;
 
 /**
  * Intercepts handle xls reads.

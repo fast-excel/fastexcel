@@ -1,15 +1,13 @@
 package cn.idev.excel.write.style.column;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import cn.idev.excel.enums.CellDataTypeEnum;
 import cn.idev.excel.metadata.Head;
 import cn.idev.excel.metadata.data.WriteCellData;
 import cn.idev.excel.util.MapUtils;
 import cn.idev.excel.write.metadata.holder.WriteSheetHolder;
-
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.poi.ss.usermodel.Cell;
 
@@ -28,14 +26,19 @@ public class LongestMatchColumnWidthStyleStrategy extends AbstractColumnWidthSty
     private final Map<Integer, Map<Integer, Integer>> cache = MapUtils.newHashMapWithExpectedSize(8);
 
     @Override
-    protected void setColumnWidth(WriteSheetHolder writeSheetHolder, List<WriteCellData<?>> cellDataList, Cell cell,
-                                  Head head,
-                                  Integer relativeRowIndex, Boolean isHead) {
+    protected void setColumnWidth(
+            WriteSheetHolder writeSheetHolder,
+            List<WriteCellData<?>> cellDataList,
+            Cell cell,
+            Head head,
+            Integer relativeRowIndex,
+            Boolean isHead) {
         boolean needSetWidth = isHead || !CollectionUtils.isEmpty(cellDataList);
         if (!needSetWidth) {
             return;
         }
-        Map<Integer, Integer> maxColumnWidthMap = cache.computeIfAbsent(writeSheetHolder.getSheetNo(), key -> new HashMap<>(16));
+        Map<Integer, Integer> maxColumnWidthMap =
+                cache.computeIfAbsent(writeSheetHolder.getSheetNo(), key -> new HashMap<>(16));
         Integer columnWidth = dataLength(cellDataList, cell, isHead);
         if (columnWidth < 0) {
             return;

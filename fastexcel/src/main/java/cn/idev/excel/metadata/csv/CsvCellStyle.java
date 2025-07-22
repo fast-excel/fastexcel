@@ -1,7 +1,6 @@
 package cn.idev.excel.metadata.csv;
 
 import cn.idev.excel.metadata.data.DataFormatData;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -71,9 +70,7 @@ public class CsvCellStyle implements CellStyle {
     }
 
     @Override
-    public void setFont(Font font) {
-
-    }
+    public void setFont(Font font) {}
 
     @Override
     public int getFontIndex() {
@@ -86,9 +83,7 @@ public class CsvCellStyle implements CellStyle {
     }
 
     @Override
-    public void setHidden(boolean hidden) {
-
-    }
+    public void setHidden(boolean hidden) {}
 
     @Override
     public boolean getHidden() {
@@ -96,9 +91,7 @@ public class CsvCellStyle implements CellStyle {
     }
 
     @Override
-    public void setLocked(boolean locked) {
-
-    }
+    public void setLocked(boolean locked) {}
 
     @Override
     public boolean getLocked() {
@@ -106,9 +99,7 @@ public class CsvCellStyle implements CellStyle {
     }
 
     @Override
-    public void setQuotePrefixed(boolean quotePrefix) {
-
-    }
+    public void setQuotePrefixed(boolean quotePrefix) {}
 
     @Override
     public boolean getQuotePrefixed() {
@@ -116,9 +107,7 @@ public class CsvCellStyle implements CellStyle {
     }
 
     @Override
-    public void setAlignment(HorizontalAlignment align) {
-
-    }
+    public void setAlignment(HorizontalAlignment align) {}
 
     @Override
     public HorizontalAlignment getAlignment() {
@@ -126,9 +115,7 @@ public class CsvCellStyle implements CellStyle {
     }
 
     @Override
-    public void setWrapText(boolean wrapped) {
-
-    }
+    public void setWrapText(boolean wrapped) {}
 
     @Override
     public boolean getWrapText() {
@@ -136,9 +123,7 @@ public class CsvCellStyle implements CellStyle {
     }
 
     @Override
-    public void setVerticalAlignment(VerticalAlignment align) {
-
-    }
+    public void setVerticalAlignment(VerticalAlignment align) {}
 
     @Override
     public VerticalAlignment getVerticalAlignment() {
@@ -146,9 +131,7 @@ public class CsvCellStyle implements CellStyle {
     }
 
     @Override
-    public void setRotation(short rotation) {
-
-    }
+    public void setRotation(short rotation) {}
 
     @Override
     public short getRotation() {
@@ -156,9 +139,7 @@ public class CsvCellStyle implements CellStyle {
     }
 
     @Override
-    public void setIndention(short indent) {
-
-    }
+    public void setIndention(short indent) {}
 
     @Override
     public short getIndention() {
@@ -166,9 +147,7 @@ public class CsvCellStyle implements CellStyle {
     }
 
     @Override
-    public void setBorderLeft(BorderStyle border) {
-
-    }
+    public void setBorderLeft(BorderStyle border) {}
 
     @Override
     public BorderStyle getBorderLeft() {
@@ -176,9 +155,7 @@ public class CsvCellStyle implements CellStyle {
     }
 
     @Override
-    public void setBorderRight(BorderStyle border) {
-
-    }
+    public void setBorderRight(BorderStyle border) {}
 
     @Override
     public BorderStyle getBorderRight() {
@@ -186,9 +163,7 @@ public class CsvCellStyle implements CellStyle {
     }
 
     @Override
-    public void setBorderTop(BorderStyle border) {
-
-    }
+    public void setBorderTop(BorderStyle border) {}
 
     @Override
     public BorderStyle getBorderTop() {
@@ -196,9 +171,7 @@ public class CsvCellStyle implements CellStyle {
     }
 
     @Override
-    public void setBorderBottom(BorderStyle border) {
-
-    }
+    public void setBorderBottom(BorderStyle border) {}
 
     @Override
     public BorderStyle getBorderBottom() {
@@ -206,9 +179,7 @@ public class CsvCellStyle implements CellStyle {
     }
 
     @Override
-    public void setLeftBorderColor(short color) {
-
-    }
+    public void setLeftBorderColor(short color) {}
 
     @Override
     public short getLeftBorderColor() {
@@ -216,9 +187,7 @@ public class CsvCellStyle implements CellStyle {
     }
 
     @Override
-    public void setRightBorderColor(short color) {
-
-    }
+    public void setRightBorderColor(short color) {}
 
     @Override
     public short getRightBorderColor() {
@@ -226,9 +195,7 @@ public class CsvCellStyle implements CellStyle {
     }
 
     @Override
-    public void setTopBorderColor(short color) {
-
-    }
+    public void setTopBorderColor(short color) {}
 
     @Override
     public short getTopBorderColor() {
@@ -236,9 +203,7 @@ public class CsvCellStyle implements CellStyle {
     }
 
     @Override
-    public void setBottomBorderColor(short color) {
-
-    }
+    public void setBottomBorderColor(short color) {}
 
     @Override
     public short getBottomBorderColor() {
@@ -246,9 +211,7 @@ public class CsvCellStyle implements CellStyle {
     }
 
     @Override
-    public void setFillPattern(FillPatternType fp) {
-
-    }
+    public void setFillPattern(FillPatternType fp) {}
 
     @Override
     public FillPatternType getFillPattern() {
@@ -256,14 +219,10 @@ public class CsvCellStyle implements CellStyle {
     }
 
     @Override
-    public void setFillBackgroundColor(short bg) {
-
-    }
+    public void setFillBackgroundColor(short bg) {}
 
     @Override
-    public void setFillBackgroundColor(Color color) {
-
-    }
+    public void setFillBackgroundColor(Color color) {}
 
     @Override
     public short getFillBackgroundColor() {
@@ -276,14 +235,10 @@ public class CsvCellStyle implements CellStyle {
     }
 
     @Override
-    public void setFillForegroundColor(short bg) {
-
-    }
+    public void setFillForegroundColor(short bg) {}
 
     @Override
-    public void setFillForegroundColor(Color color) {
-
-    }
+    public void setFillForegroundColor(Color color) {}
 
     @Override
     public short getFillForegroundColor() {
@@ -296,14 +251,10 @@ public class CsvCellStyle implements CellStyle {
     }
 
     @Override
-    public void cloneStyleFrom(CellStyle source) {
-
-    }
+    public void cloneStyleFrom(CellStyle source) {}
 
     @Override
-    public void setShrinkToFit(boolean shrinkToFit) {
-
-    }
+    public void setShrinkToFit(boolean shrinkToFit) {}
 
     @Override
     public boolean getShrinkToFit() {

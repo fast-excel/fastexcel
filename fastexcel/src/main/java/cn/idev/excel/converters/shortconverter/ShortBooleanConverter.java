@@ -1,7 +1,7 @@
 package cn.idev.excel.converters.shortconverter;
 
-import cn.idev.excel.enums.CellDataTypeEnum;
 import cn.idev.excel.converters.Converter;
+import cn.idev.excel.enums.CellDataTypeEnum;
 import cn.idev.excel.metadata.GlobalConfiguration;
 import cn.idev.excel.metadata.data.ReadCellData;
 import cn.idev.excel.metadata.data.WriteCellData;
@@ -27,8 +27,8 @@ public class ShortBooleanConverter implements Converter<Short> {
     }
 
     @Override
-    public Short convertToJavaData(ReadCellData<?> cellData, ExcelContentProperty contentProperty,
-                                   GlobalConfiguration globalConfiguration) {
+    public Short convertToJavaData(
+            ReadCellData<?> cellData, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) {
         if (cellData.getBooleanValue()) {
             return ONE;
         }
@@ -36,12 +36,11 @@ public class ShortBooleanConverter implements Converter<Short> {
     }
 
     @Override
-    public WriteCellData<?> convertToExcelData(Short value, ExcelContentProperty contentProperty,
-                                               GlobalConfiguration globalConfiguration) {
+    public WriteCellData<?> convertToExcelData(
+            Short value, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) {
         if (ONE.equals(value)) {
             return new WriteCellData<>(Boolean.TRUE);
         }
         return new WriteCellData<>(Boolean.FALSE);
     }
-
 }

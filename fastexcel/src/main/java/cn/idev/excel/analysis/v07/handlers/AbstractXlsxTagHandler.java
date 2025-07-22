@@ -15,17 +15,11 @@ public abstract class AbstractXlsxTagHandler implements XlsxTagHandler {
     }
 
     @Override
-    public void startElement(XlsxReadContext xlsxReadContext, String name, Attributes attributes) {
-
-    }
+    public void startElement(XlsxReadContext xlsxReadContext, String name, Attributes attributes) {}
 
     @Override
-    public void endElement(XlsxReadContext xlsxReadContext, String name) {
-
-    }
+    public void endElement(XlsxReadContext xlsxReadContext, String name) {}
 
     @Override
-    public void characters(XlsxReadContext xlsxReadContext, char[] ch, int start, int length) {
-
-    }
+    public void characters(XlsxReadContext xlsxReadContext, char[] ch, int start, int length) {}
 }

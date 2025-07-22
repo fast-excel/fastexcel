@@ -12,6 +12,7 @@ public class ExcelXmlConstants {
      * When the data is "inlineStr" his tag is "t"
      */
     public static final String CELL_INLINE_STRING_VALUE_TAG = "t";
+
     public static final String CELL_TAG = "c";
     public static final String MERGE_CELL_TAG = "mergeCell";
     public static final String HYPERLINK_TAG = "hyperlink";
@@ -31,6 +32,7 @@ public class ExcelXmlConstants {
      * When the data is "inlineStr" his tag is "t"
      */
     public static final String X_CELL_INLINE_STRING_VALUE_TAG = "x:t";
+
     public static final String NS2_CELL_INLINE_STRING_VALUE_TAG = "ns2:t";
 
     public static final String X_CELL_TAG = "x:c";
@@ -77,23 +79,23 @@ public class ExcelXmlConstants {
      * text
      */
     public static final String SHAREDSTRINGS_T_TAG = "t";
+
     public static final String SHAREDSTRINGS_X_T_TAG = "x:t";
     public static final String SHAREDSTRINGS_NS2_T_TAG = "ns2:t";
-
 
     /**
      * SharedStringItem
      */
     public static final String SHAREDSTRINGS_SI_TAG = "si";
+
     public static final String SHAREDSTRINGS_X_SI_TAG = "x:si";
     public static final String SHAREDSTRINGS_NS2_SI_TAG = "ns2:si";
-
 
     /**
      * Mac 2016 2017 will have this extra field to ignore
      */
     public static final String SHAREDSTRINGS_RPH_TAG = "rPh";
+
     public static final String SHAREDSTRINGS_X_RPH_TAG = "x:rPh";
     public static final String SHAREDSTRINGS_NS2_RPH_TAG = "ns2:rPh";
-
 }

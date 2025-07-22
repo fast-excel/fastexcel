@@ -82,6 +82,6 @@ public class IoUtils {
         if (count > Integer.MAX_VALUE) {
             return -1;
         }
-        return (int)count;
+        return (int) count;
     }
 }

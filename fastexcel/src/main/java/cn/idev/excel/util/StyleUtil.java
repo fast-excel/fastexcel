@@ -1,7 +1,5 @@
 package cn.idev.excel.util;
 
-import java.util.Optional;
-
 import cn.idev.excel.constant.BuiltinFormats;
 import cn.idev.excel.metadata.data.DataFormatData;
 import cn.idev.excel.metadata.data.HyperlinkData;
@@ -10,7 +8,7 @@ import cn.idev.excel.support.ExcelTypeEnum;
 import cn.idev.excel.write.metadata.holder.WriteWorkbookHolder;
 import cn.idev.excel.write.metadata.style.WriteCellStyle;
 import cn.idev.excel.write.metadata.style.WriteFont;
-
+import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.poi.common.usermodel.HyperlinkType;
@@ -42,8 +40,8 @@ public class StyleUtil {
      * @param writeCellStyle
      * @return
      */
-    public static CellStyle buildCellStyle(Workbook workbook, CellStyle originCellStyle,
-        WriteCellStyle writeCellStyle) {
+    public static CellStyle buildCellStyle(
+            Workbook workbook, CellStyle originCellStyle, WriteCellStyle writeCellStyle) {
         CellStyle cellStyle = workbook.createCellStyle();
         if (originCellStyle != null) {
             cellStyle.cloneStyleFrom(originCellStyle);
@@ -182,8 +180,8 @@ public class StyleUtil {
             return font;
         }
         if (originFont instanceof XSSFFont) {
-            XSSFFont xssfFont = (XSSFFont)font;
-            XSSFFont xssfOriginFont = ((XSSFFont)originFont);
+            XSSFFont xssfFont = (XSSFFont) font;
+            XSSFFont xssfOriginFont = ((XSSFFont) originFont);
             xssfFont.setFontName(xssfOriginFont.getFontName());
             xssfFont.setFontHeightInPoints(xssfOriginFont.getFontHeightInPoints());
             xssfFont.setItalic(xssfOriginFont.getItalic());
@@ -191,10 +189,10 @@ public class StyleUtil {
             // Colors cannot be overwritten
             if (writeFont == null || writeFont.getColor() == null) {
                 xssfFont.setColor(Optional.of(xssfOriginFont)
-                    .map(XSSFFont::getXSSFColor)
-                    .map(XSSFColor::getRGB)
-                    .map(rgb -> new XSSFColor(rgb, null))
-                    .orElse(null));
+                        .map(XSSFFont::getXSSFColor)
+                        .map(XSSFColor::getRGB)
+                        .map(rgb -> new XSSFColor(rgb, null))
+                        .orElse(null));
             }
             xssfFont.setTypeOffset(xssfOriginFont.getTypeOffset());
             xssfFont.setUnderline(xssfOriginFont.getUnderline());
@@ -202,8 +200,8 @@ public class StyleUtil {
             xssfFont.setBold(xssfOriginFont.getBold());
             return xssfFont;
         } else if (originFont instanceof HSSFFont) {
-            HSSFFont hssfFont = (HSSFFont)font;
-            HSSFFont hssfOriginFont = (HSSFFont)originFont;
+            HSSFFont hssfFont = (HSSFFont) font;
+            HSSFFont hssfOriginFont = (HSSFFont) originFont;
             hssfFont.setFontName(hssfOriginFont.getFontName());
             hssfFont.setFontHeightInPoints(hssfOriginFont.getFontHeightInPoints());
             hssfFont.setItalic(hssfOriginFont.getItalic());
@@ -218,8 +216,8 @@ public class StyleUtil {
         return font;
     }
 
-    public static RichTextString buildRichTextString(WriteWorkbookHolder writeWorkbookHolder,
-                                                     RichTextStringData richTextStringData) {
+    public static RichTextString buildRichTextString(
+            WriteWorkbookHolder writeWorkbookHolder, RichTextStringData richTextStringData) {
         if (richTextStringData == null) {
             return null;
         }
@@ -234,8 +232,10 @@ public class StyleUtil {
         }
         if (CollectionUtils.isNotEmpty(richTextStringData.getIntervalFontList())) {
             for (RichTextStringData.IntervalFont intervalFont : richTextStringData.getIntervalFontList()) {
-                richTextString.applyFont(intervalFont.getStartIndex(), intervalFont.getEndIndex(),
-                    writeWorkbookHolder.createFont(intervalFont.getWriteFont(), null, true));
+                richTextString.applyFont(
+                        intervalFont.getStartIndex(),
+                        intervalFont.getEndIndex(),
+                        writeWorkbookHolder.createFont(intervalFont.getWriteFont(), null, true));
             }
         }
         return richTextString;
@@ -255,8 +255,8 @@ public class StyleUtil {
         return Units.toEMU(coordinate);
     }
 
-    public static int getCellCoordinate(Integer currentCoordinate, Integer absoluteCoordinate,
-        Integer relativeCoordinate) {
+    public static int getCellCoordinate(
+            Integer currentCoordinate, Integer absoluteCoordinate, Integer relativeCoordinate) {
         if (absoluteCoordinate != null && absoluteCoordinate > 0) {
             return absoluteCoordinate;
         }
@@ -265,7 +265,4 @@ public class StyleUtil {
         }
         return currentCoordinate;
     }
-
 }
-
-

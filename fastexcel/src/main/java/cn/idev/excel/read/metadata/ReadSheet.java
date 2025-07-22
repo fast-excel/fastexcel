@@ -27,8 +27,7 @@ public class ReadSheet extends ReadBasicParameter {
      */
     public Integer numRows;
 
-    public ReadSheet() {
-    }
+    public ReadSheet() {}
 
     public ReadSheet(Integer sheetNo) {
         this.sheetNo = sheetNo;
@@ -103,7 +102,7 @@ public class ReadSheet extends ReadBasicParameter {
 
     @Override
     public String toString() {
-        return "ReadSheet{" + "sheetNo=" + sheetNo + ", sheetName='" + sheetName
-            + ", sheetHidden='" + sheetHidden + ", sheetVeryHidden='" + sheetVeryHidden + '\'' + "} " + super.toString();
+        return "ReadSheet{" + "sheetNo=" + sheetNo + ", sheetName='" + sheetName + ", sheetHidden='" + sheetHidden
+                + ", sheetVeryHidden='" + sheetVeryHidden + '\'' + "} " + super.toString();
     }
 }

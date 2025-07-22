@@ -1,9 +1,8 @@
 package cn.idev.excel.event;
 
+import cn.idev.excel.context.AnalysisContext;
 import java.util.ArrayList;
 import java.util.List;
-
-import cn.idev.excel.context.AnalysisContext;
 
 /**
  * Synchronous data reading

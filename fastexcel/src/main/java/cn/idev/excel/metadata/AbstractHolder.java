@@ -1,11 +1,9 @@
 package cn.idev.excel.metadata;
 
-import java.util.List;
-import java.util.Map;
-
 import cn.idev.excel.converters.Converter;
 import cn.idev.excel.converters.ConverterKeyBuild;
-
+import java.util.List;
+import java.util.Map;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -60,7 +58,8 @@ public abstract class AbstractHolder implements ConfigurationHolder {
         this.globalConfiguration = new GlobalConfiguration();
         if (basicParameter.getAutoTrim() == null) {
             if (prentAbstractHolder != null) {
-                globalConfiguration.setAutoTrim(prentAbstractHolder.getGlobalConfiguration().getAutoTrim());
+                globalConfiguration.setAutoTrim(
+                        prentAbstractHolder.getGlobalConfiguration().getAutoTrim());
             }
         } else {
             globalConfiguration.setAutoTrim(basicParameter.getAutoTrim());
@@ -69,7 +68,7 @@ public abstract class AbstractHolder implements ConfigurationHolder {
         if (basicParameter.getUse1904windowing() == null) {
             if (prentAbstractHolder != null) {
                 globalConfiguration.setUse1904windowing(
-                    prentAbstractHolder.getGlobalConfiguration().getUse1904windowing());
+                        prentAbstractHolder.getGlobalConfiguration().getUse1904windowing());
             }
         } else {
             globalConfiguration.setUse1904windowing(basicParameter.getUse1904windowing());
@@ -77,7 +76,8 @@ public abstract class AbstractHolder implements ConfigurationHolder {
 
         if (basicParameter.getLocale() == null) {
             if (prentAbstractHolder != null) {
-                globalConfiguration.setLocale(prentAbstractHolder.getGlobalConfiguration().getLocale());
+                globalConfiguration.setLocale(
+                        prentAbstractHolder.getGlobalConfiguration().getLocale());
             }
         } else {
             globalConfiguration.setLocale(basicParameter.getLocale());
@@ -86,12 +86,11 @@ public abstract class AbstractHolder implements ConfigurationHolder {
         if (basicParameter.getFiledCacheLocation() == null) {
             if (prentAbstractHolder != null) {
                 globalConfiguration.setFiledCacheLocation(
-                    prentAbstractHolder.getGlobalConfiguration().getFiledCacheLocation());
+                        prentAbstractHolder.getGlobalConfiguration().getFiledCacheLocation());
             }
         } else {
             globalConfiguration.setFiledCacheLocation(basicParameter.getFiledCacheLocation());
         }
-
     }
 
     @Override
@@ -108,5 +107,4 @@ public abstract class AbstractHolder implements ConfigurationHolder {
     public boolean isNew() {
         return getNewInitialization();
     }
-
 }

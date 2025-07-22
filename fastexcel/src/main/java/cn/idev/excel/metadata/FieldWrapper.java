@@ -1,9 +1,7 @@
 package cn.idev.excel.metadata;
 
-import java.lang.reflect.Field;
-
 import cn.idev.excel.annotation.ExcelProperty;
-
+import java.lang.reflect.Field;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

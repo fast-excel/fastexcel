@@ -1,9 +1,8 @@
 package cn.idev.excel.test.demo.read;
 
 import cn.idev.excel.annotation.ExcelProperty;
-import lombok.Data;
-
 import java.util.Date;
+import lombok.Data;
 
 /**
  * Compatible header data class.
@@ -19,5 +18,4 @@ public class DemoCompatibleHeaderData {
 
     @ExcelProperty("DoubleData")
     private Double doubleData;
-
 }

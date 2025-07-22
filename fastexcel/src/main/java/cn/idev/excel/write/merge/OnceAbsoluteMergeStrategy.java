@@ -1,11 +1,10 @@
 package cn.idev.excel.write.merge;
 
-import cn.idev.excel.write.handler.SheetWriteHandler;
-import org.apache.poi.ss.util.CellRangeAddress;
-
 import cn.idev.excel.metadata.property.OnceAbsoluteMergeProperty;
+import cn.idev.excel.write.handler.SheetWriteHandler;
 import cn.idev.excel.write.metadata.holder.WriteSheetHolder;
 import cn.idev.excel.write.metadata.holder.WriteWorkbookHolder;
+import org.apache.poi.ss.util.CellRangeAddress;
 
 /**
  * It only merges once when create cell(firstRowIndex,lastRowIndex)
@@ -41,14 +40,17 @@ public class OnceAbsoluteMergeStrategy implements SheetWriteHandler {
     }
 
     public OnceAbsoluteMergeStrategy(OnceAbsoluteMergeProperty onceAbsoluteMergeProperty) {
-        this(onceAbsoluteMergeProperty.getFirstRowIndex(), onceAbsoluteMergeProperty.getLastRowIndex(),
-            onceAbsoluteMergeProperty.getFirstColumnIndex(), onceAbsoluteMergeProperty.getLastColumnIndex());
+        this(
+                onceAbsoluteMergeProperty.getFirstRowIndex(),
+                onceAbsoluteMergeProperty.getLastRowIndex(),
+                onceAbsoluteMergeProperty.getFirstColumnIndex(),
+                onceAbsoluteMergeProperty.getLastColumnIndex());
     }
 
     @Override
     public void afterSheetCreate(WriteWorkbookHolder writeWorkbookHolder, WriteSheetHolder writeSheetHolder) {
         CellRangeAddress cellRangeAddress =
-            new CellRangeAddress(firstRowIndex, lastRowIndex, firstColumnIndex, lastColumnIndex);
+                new CellRangeAddress(firstRowIndex, lastRowIndex, firstColumnIndex, lastColumnIndex);
         writeSheetHolder.getSheet().addMergedRegionUnsafe(cellRangeAddress);
     }
 }

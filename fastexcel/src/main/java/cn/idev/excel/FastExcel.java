@@ -5,6 +5,4 @@ package cn.idev.excel;
  *
  * @author jipengfei
  */
-public class FastExcel extends FastExcelFactory {
-
-}
+public class FastExcel extends FastExcelFactory {}

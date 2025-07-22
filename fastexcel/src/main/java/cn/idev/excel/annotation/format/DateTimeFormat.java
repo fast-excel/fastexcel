@@ -1,12 +1,11 @@
 package cn.idev.excel.annotation.format;
 
+import cn.idev.excel.enums.BooleanEnum;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-
-import cn.idev.excel.enums.BooleanEnum;
 
 /**
  * Convert date format.

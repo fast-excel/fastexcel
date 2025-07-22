@@ -24,7 +24,6 @@ public class MemberUtils {
 
     private static final int ACCESS_TEST = Modifier.PUBLIC | Modifier.PROTECTED | Modifier.PRIVATE;
 
-
     /**
      * XXX Default access superclass workaround.
      *
@@ -43,7 +42,9 @@ public class MemberUtils {
             return false;
         }
         final Member m = (Member) o;
-        if (!o.isAccessible() && Modifier.isPublic(m.getModifiers()) && isPackageAccess(m.getDeclaringClass().getModifiers())) {
+        if (!o.isAccessible()
+                && Modifier.isPublic(m.getModifiers())
+                && isPackageAccess(m.getDeclaringClass().getModifiers())) {
             try {
                 o.setAccessible(true);
                 return true;

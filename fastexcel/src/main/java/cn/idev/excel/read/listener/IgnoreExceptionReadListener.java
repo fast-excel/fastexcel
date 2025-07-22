@@ -19,5 +19,4 @@ public interface IgnoreExceptionReadListener<T> extends ReadListener<T> {
      */
     @Override
     default void onException(Exception exception, AnalysisContext context) throws Exception {}
-
 }

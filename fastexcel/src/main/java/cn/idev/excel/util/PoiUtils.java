@@ -1,13 +1,12 @@
 package cn.idev.excel.util;
 
+import java.lang.reflect.Field;
 import org.apache.poi.hssf.record.RowRecord;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.util.BitField;
 import org.apache.poi.util.BitFieldFactory;
 import org.apache.poi.xssf.usermodel.XSSFRow;
-
-import java.lang.reflect.Field;
 
 /**
  * utils
@@ -31,13 +30,13 @@ public class PoiUtils {
      */
     public static boolean customHeight(Row row) {
         if (row instanceof XSSFRow) {
-            XSSFRow xssfRow = (XSSFRow)row;
+            XSSFRow xssfRow = (XSSFRow) row;
             return xssfRow.getCTRow().getCustomHeight();
         }
         if (row instanceof HSSFRow) {
-            HSSFRow hssfRow = (HSSFRow)row;
+            HSSFRow hssfRow = (HSSFRow) row;
             try {
-                RowRecord record = (RowRecord)ROW_RECORD_FIELD.get(hssfRow);
+                RowRecord record = (RowRecord) ROW_RECORD_FIELD.get(hssfRow);
                 return CUSTOM_HEIGHT.getValue(record.getOptionFlags()) == 1;
             } catch (IllegalAccessException ignore) {
             }

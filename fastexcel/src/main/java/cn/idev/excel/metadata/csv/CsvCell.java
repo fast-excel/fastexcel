@@ -1,14 +1,12 @@
 package cn.idev.excel.metadata.csv;
 
+import cn.idev.excel.enums.NumericCellTypeEnum;
+import cn.idev.excel.metadata.data.FormulaData;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
-
-import cn.idev.excel.enums.NumericCellTypeEnum;
-import cn.idev.excel.metadata.data.FormulaData;
-
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -305,14 +303,10 @@ public class CsvCell extends CellBase {
     }
 
     @Override
-    public void setAsActiveCell() {
-
-    }
+    public void setAsActiveCell() {}
 
     @Override
-    public void setCellComment(Comment comment) {
-
-    }
+    public void setCellComment(Comment comment) {}
 
     @Override
     public Comment getCellComment() {
@@ -320,9 +314,7 @@ public class CsvCell extends CellBase {
     }
 
     @Override
-    public void removeCellComment() {
-
-    }
+    public void removeCellComment() {}
 
     @Override
     public Hyperlink getHyperlink() {
@@ -330,14 +322,10 @@ public class CsvCell extends CellBase {
     }
 
     @Override
-    public void setHyperlink(Hyperlink link) {
-
-    }
+    public void setHyperlink(Hyperlink link) {}
 
     @Override
-    public void removeHyperlink() {
-
-    }
+    public void removeHyperlink() {}
 
     @Override
     public CellRangeAddress getArrayFormulaRange() {

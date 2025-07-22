@@ -1,10 +1,8 @@
 package cn.idev.excel.metadata.data;
 
-import java.math.BigDecimal;
-
-import cn.idev.excel.enums.CellDataTypeEnum;
 import cn.idev.excel.constant.EasyExcelConstants;
-
+import cn.idev.excel.enums.CellDataTypeEnum;
+import java.math.BigDecimal;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

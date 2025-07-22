@@ -5,5 +5,4 @@ package cn.idev.excel.metadata;
  *
  * @author Jiaju Zhuang
  */
-public class NullObject {
-}
+public class NullObject {}

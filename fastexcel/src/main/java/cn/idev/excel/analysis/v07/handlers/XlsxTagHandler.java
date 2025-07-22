@@ -49,5 +49,4 @@ public interface XlsxTagHandler {
      * @param length
      */
     void characters(XlsxReadContext xlsxReadContext, char[] ch, int start, int length);
-
 }

@@ -1,5 +1,8 @@
 package cn.idev.excel.test.temp.csv;
 
+import cn.idev.excel.EasyExcel;
+import cn.idev.excel.test.util.TestFileUtil;
+import com.alibaba.fastjson2.JSON;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -7,11 +10,6 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
-
-import cn.idev.excel.EasyExcel;
-import cn.idev.excel.test.util.TestFileUtil;
-import com.alibaba.fastjson2.JSON;
-
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
@@ -26,9 +24,8 @@ public class CsvReadTest {
     @Test
     public void write() throws Exception {
         Appendable out = new PrintWriter(
-            new OutputStreamWriter(new FileOutputStream(TestFileUtil.createNewFile("csvWrite1.csv"))));
-        CSVPrinter printer = CSVFormat.DEFAULT.withHeader("userId", "userName")
-            .print(out);
+                new OutputStreamWriter(new FileOutputStream(TestFileUtil.createNewFile("csvWrite1.csv"))));
+        CSVPrinter printer = CSVFormat.DEFAULT.withHeader("userId", "userName").print(out);
         for (int i = 0; i < 10; i++) {
             printer.printRecord("userId" + i, "userName" + i);
         }
@@ -38,14 +35,14 @@ public class CsvReadTest {
 
     @Test
     public void read1() throws Exception {
-        Iterable<CSVRecord> records = CSVFormat.DEFAULT.withNullString("").parse(
-            new FileReader("src/test/resources/poi/last_row_number_xssf_date_test.csv"));
+        Iterable<CSVRecord> records = CSVFormat.DEFAULT
+                .withNullString("")
+                .parse(new FileReader("src/test/resources/poi/last_row_number_xssf_date_test.csv"));
         for (CSVRecord record : records) {
             String lastName = record.get(0);
             String firstName = record.get(1);
             log.info("row:{},{}", lastName, firstName);
         }
-
     }
 
     @Test
@@ -87,7 +84,7 @@ public class CsvReadTest {
         for (int i = 0; i < 10; i++) {
             CsvData data = new CsvData();
             data.setString("字符,串" + i);
-            //data.setDate(new Date());
+            // data.setDate(new Date());
             data.setDoubleData(0.56);
             data.setIgnore("忽略" + i);
             list.add(data);
@@ -98,13 +95,13 @@ public class CsvReadTest {
     @Test
     public void read() {
         //
-        //Iterable<CSVRecord> records = CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(in);
-        //for (CSVRecord record : records) {
+        // Iterable<CSVRecord> records = CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(in);
+        // for (CSVRecord record : records) {
         //    String lastName = record.get("id");
         //    String firstName = record.get("name");
         //    System.out.println(lastName);
         //    System.out.println(firstName);
-        //}
+        // }
 
     }
 }

@@ -1,12 +1,11 @@
 package cn.idev.excel.read.metadata.holder;
 
-import java.util.Map;
-
 import cn.idev.excel.enums.HolderEnum;
 import cn.idev.excel.enums.RowTypeEnum;
 import cn.idev.excel.metadata.Cell;
 import cn.idev.excel.metadata.GlobalConfiguration;
 import cn.idev.excel.metadata.Holder;
+import java.util.Map;
 
 /**
  * sheet holder
@@ -35,8 +34,11 @@ public class ReadRowHolder implements Holder {
      */
     private GlobalConfiguration globalConfiguration;
 
-    public ReadRowHolder(Integer rowIndex, RowTypeEnum rowType, GlobalConfiguration globalConfiguration,
-        Map<Integer, Cell> cellMap) {
+    public ReadRowHolder(
+            Integer rowIndex,
+            RowTypeEnum rowType,
+            GlobalConfiguration globalConfiguration,
+            Map<Integer, Cell> cellMap) {
         this.rowIndex = rowIndex;
         this.rowType = rowType;
         this.globalConfiguration = globalConfiguration;

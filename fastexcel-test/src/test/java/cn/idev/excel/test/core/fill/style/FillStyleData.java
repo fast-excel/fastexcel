@@ -1,7 +1,6 @@
 package cn.idev.excel.test.core.fill.style;
 
 import java.util.Date;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;

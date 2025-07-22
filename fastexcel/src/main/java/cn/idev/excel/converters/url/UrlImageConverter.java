@@ -1,15 +1,14 @@
 package cn.idev.excel.converters.url;
 
+import cn.idev.excel.converters.Converter;
+import cn.idev.excel.metadata.GlobalConfiguration;
+import cn.idev.excel.metadata.data.WriteCellData;
+import cn.idev.excel.metadata.property.ExcelContentProperty;
+import cn.idev.excel.util.IoUtils;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
-
-import cn.idev.excel.converters.Converter;
-import cn.idev.excel.util.IoUtils;
-import cn.idev.excel.metadata.GlobalConfiguration;
-import cn.idev.excel.metadata.data.WriteCellData;
-import cn.idev.excel.metadata.property.ExcelContentProperty;
 
 /**
  * Url and image converter
@@ -27,8 +26,9 @@ public class UrlImageConverter implements Converter<URL> {
     }
 
     @Override
-    public WriteCellData<?> convertToExcelData(URL value, ExcelContentProperty contentProperty,
-                                               GlobalConfiguration globalConfiguration) throws IOException {
+    public WriteCellData<?> convertToExcelData(
+            URL value, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration)
+            throws IOException {
         InputStream inputStream = null;
         try {
             URLConnection urlConnection = value.openConnection();
@@ -43,5 +43,4 @@ public class UrlImageConverter implements Converter<URL> {
             }
         }
     }
-
 }

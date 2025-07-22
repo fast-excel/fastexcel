@@ -1,11 +1,9 @@
 package cn.idev.excel.test.demo.write;
 
-import java.util.Date;
-
 import cn.idev.excel.annotation.ExcelProperty;
 import cn.idev.excel.annotation.format.DateTimeFormat;
 import cn.idev.excel.annotation.format.NumberFormat;
-
+import java.util.Date;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;

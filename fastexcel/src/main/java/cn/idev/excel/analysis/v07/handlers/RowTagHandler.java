@@ -1,8 +1,7 @@
 package cn.idev.excel.analysis.v07.handlers;
 
-import java.util.LinkedHashMap;
-
 import cn.idev.excel.constant.ExcelXmlConstants;
+import cn.idev.excel.context.xlsx.XlsxReadContext;
 import cn.idev.excel.enums.CellDataTypeEnum;
 import cn.idev.excel.enums.RowTypeEnum;
 import cn.idev.excel.metadata.Cell;
@@ -10,8 +9,7 @@ import cn.idev.excel.metadata.data.ReadCellData;
 import cn.idev.excel.read.metadata.holder.ReadRowHolder;
 import cn.idev.excel.read.metadata.holder.xlsx.XlsxReadSheetHolder;
 import cn.idev.excel.util.PositionUtils;
-import cn.idev.excel.context.xlsx.XlsxReadContext;
-
+import java.util.LinkedHashMap;
 import org.apache.commons.collections4.MapUtils;
 import org.xml.sax.Attributes;
 
@@ -25,12 +23,15 @@ public class RowTagHandler extends AbstractXlsxTagHandler {
     @Override
     public void startElement(XlsxReadContext xlsxReadContext, String name, Attributes attributes) {
         XlsxReadSheetHolder xlsxReadSheetHolder = xlsxReadContext.xlsxReadSheetHolder();
-        int rowIndex = PositionUtils.getRowByRowTagt(attributes.getValue(ExcelXmlConstants.ATTRIBUTE_R),
-            xlsxReadSheetHolder.getRowIndex());
+        int rowIndex = PositionUtils.getRowByRowTagt(
+                attributes.getValue(ExcelXmlConstants.ATTRIBUTE_R), xlsxReadSheetHolder.getRowIndex());
         Integer lastRowIndex = xlsxReadContext.readSheetHolder().getRowIndex();
         while (lastRowIndex + 1 < rowIndex) {
-            xlsxReadContext.readRowHolder(new ReadRowHolder(lastRowIndex + 1, RowTypeEnum.EMPTY,
-                xlsxReadSheetHolder.getGlobalConfiguration(), new LinkedHashMap<Integer, Cell>()));
+            xlsxReadContext.readRowHolder(new ReadRowHolder(
+                    lastRowIndex + 1,
+                    RowTypeEnum.EMPTY,
+                    xlsxReadSheetHolder.getGlobalConfiguration(),
+                    new LinkedHashMap<Integer, Cell>()));
             xlsxReadContext.analysisEventProcessor().endRow(xlsxReadContext);
             xlsxReadSheetHolder.setColumnIndex(null);
             xlsxReadSheetHolder.setCellMap(new LinkedHashMap<Integer, Cell>());
@@ -51,7 +52,7 @@ public class RowTagHandler extends AbstractXlsxTagHandler {
                     hasData = true;
                     break;
                 }
-                ReadCellData<?> readCellData = (ReadCellData<?>)cell;
+                ReadCellData<?> readCellData = (ReadCellData<?>) cell;
                 if (readCellData.getType() != CellDataTypeEnum.EMPTY) {
                     hasData = true;
                     break;
@@ -61,11 +62,13 @@ public class RowTagHandler extends AbstractXlsxTagHandler {
                 rowType = RowTypeEnum.EMPTY;
             }
         }
-        xlsxReadContext.readRowHolder(new ReadRowHolder(xlsxReadSheetHolder.getRowIndex(), rowType,
-            xlsxReadSheetHolder.getGlobalConfiguration(), xlsxReadSheetHolder.getCellMap()));
+        xlsxReadContext.readRowHolder(new ReadRowHolder(
+                xlsxReadSheetHolder.getRowIndex(),
+                rowType,
+                xlsxReadSheetHolder.getGlobalConfiguration(),
+                xlsxReadSheetHolder.getCellMap()));
         xlsxReadContext.analysisEventProcessor().endRow(xlsxReadContext);
         xlsxReadSheetHolder.setColumnIndex(null);
         xlsxReadSheetHolder.setCellMap(new LinkedHashMap<>());
     }
-
 }

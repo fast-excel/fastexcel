@@ -2,7 +2,6 @@ package cn.idev.excel.metadata.property;
 
 import cn.idev.excel.annotation.format.DateTimeFormat;
 import cn.idev.excel.util.BooleanUtils;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,7 +27,8 @@ public class DateTimeFormatProperty {
         if (dateTimeFormat == null) {
             return null;
         }
-        return new DateTimeFormatProperty(dateTimeFormat.value(),
-            BooleanUtils.isTrue(dateTimeFormat.use1904windowing().getBooleanValue()));
+        return new DateTimeFormatProperty(
+                dateTimeFormat.value(),
+                BooleanUtils.isTrue(dateTimeFormat.use1904windowing().getBooleanValue()));
     }
 }

@@ -1,9 +1,7 @@
 package cn.idev.excel.test.demo.read;
 
-import java.util.Date;
-
 import cn.idev.excel.annotation.ExcelProperty;
-
+import java.util.Date;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;

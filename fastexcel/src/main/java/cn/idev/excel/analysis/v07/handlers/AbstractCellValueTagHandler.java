@@ -13,5 +13,4 @@ public abstract class AbstractCellValueTagHandler extends AbstractXlsxTagHandler
     public void characters(XlsxReadContext xlsxReadContext, char[] ch, int start, int length) {
         xlsxReadContext.xlsxReadSheetHolder().getTempData().append(ch, start, length);
     }
-
 }

@@ -1,9 +1,8 @@
 package cn.idev.excel.write.merge;
 
+import cn.idev.excel.metadata.property.LoopMergeProperty;
 import cn.idev.excel.write.handler.RowWriteHandler;
 import cn.idev.excel.write.handler.context.RowWriteHandlerContext;
-import cn.idev.excel.metadata.property.LoopMergeProperty;
-
 import org.apache.poi.ss.util.CellRangeAddress;
 
 /**
@@ -57,11 +56,12 @@ public class LoopMergeStrategy implements RowWriteHandler {
             return;
         }
         if (context.getRelativeRowIndex() % eachRow == 0) {
-            CellRangeAddress cellRangeAddress = new CellRangeAddress(context.getRowIndex(),
-                context.getRowIndex() + eachRow - 1,
-                columnIndex, columnIndex + columnExtend - 1);
+            CellRangeAddress cellRangeAddress = new CellRangeAddress(
+                    context.getRowIndex(),
+                    context.getRowIndex() + eachRow - 1,
+                    columnIndex,
+                    columnIndex + columnExtend - 1);
             context.getWriteSheetHolder().getSheet().addMergedRegionUnsafe(cellRangeAddress);
         }
     }
-
 }

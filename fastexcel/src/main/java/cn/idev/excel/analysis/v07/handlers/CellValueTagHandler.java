@@ -5,6 +5,4 @@ package cn.idev.excel.analysis.v07.handlers;
  *
  * @author jipengfei
  */
-public class CellValueTagHandler extends AbstractCellValueTagHandler {
-
-}
+public class CellValueTagHandler extends AbstractCellValueTagHandler {}

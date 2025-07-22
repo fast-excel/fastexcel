@@ -1,10 +1,9 @@
 package cn.idev.excel.cache.selector;
 
-import java.io.IOException;
-
 import cn.idev.excel.cache.Ehcache;
 import cn.idev.excel.cache.MapCache;
 import cn.idev.excel.cache.ReadCache;
+import java.io.IOException;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -56,8 +55,7 @@ public class SimpleReadCacheSelector implements ReadCacheSelector {
      */
     private Integer maxCacheActivateBatchCount;
 
-    public SimpleReadCacheSelector() {
-    }
+    public SimpleReadCacheSelector() {}
 
     /**
      * Parameter maxCacheActivateSize has already been abandoned
@@ -105,6 +103,5 @@ public class SimpleReadCacheSelector implements ReadCacheSelector {
             }
             return new Ehcache(maxCacheActivateSize, maxCacheActivateBatchCount);
         }
-
     }
 }

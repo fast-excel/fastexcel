@@ -1,8 +1,7 @@
 package cn.idev.excel.metadata.property;
 
-import java.math.RoundingMode;
-
 import cn.idev.excel.annotation.format.NumberFormat;
+import java.math.RoundingMode;
 
 /**
  * Configuration from annotations

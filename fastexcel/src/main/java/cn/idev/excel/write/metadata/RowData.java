@@ -31,5 +31,4 @@ public interface RowData {
      * @return <code>true</code> if this collection contains no elements
      */
     boolean isEmpty();
-
 }

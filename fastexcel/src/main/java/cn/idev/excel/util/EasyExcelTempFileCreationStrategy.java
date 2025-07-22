@@ -17,6 +17,7 @@
 
 package cn.idev.excel.util;
 
+import static org.apache.poi.util.TempFile.JAVA_IO_TMPDIR;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -25,11 +26,8 @@ import java.nio.file.Paths;
 import java.nio.file.attribute.FileAttribute;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-
 import org.apache.poi.util.DefaultTempFileCreationStrategy;
 import org.apache.poi.util.TempFileCreationStrategy;
-
-import static org.apache.poi.util.TempFile.JAVA_IO_TMPDIR;
 
 /**
  * In the scenario where `poifiles` are cleaned up, the {@link DefaultTempFileCreationStrategy} will throw a
@@ -89,7 +87,7 @@ public class EasyExcelTempFileCreationStrategy implements TempFileCreationStrate
                     String tmpDir = System.getProperty(JAVA_IO_TMPDIR);
                     if (tmpDir == null) {
                         throw new IOException("System's temporary directory not defined - set the -D" + JAVA_IO_TMPDIR
-                            + " jvm property!");
+                                + " jvm property!");
                     }
                     Path dirPath = Paths.get(tmpDir, POIFILES);
                     dir = Files.createDirectories(dirPath).toFile();
@@ -127,7 +125,7 @@ public class EasyExcelTempFileCreationStrategy implements TempFileCreationStrate
         // Generate a unique new filename
         File newDirectory = Files.createTempDirectory(dir.toPath(), prefix).toFile();
 
-        //this method appears to be only used in tests, so it is probably ok to use deleteOnExit
+        // this method appears to be only used in tests, so it is probably ok to use deleteOnExit
         newDirectory.deleteOnExit();
 
         // All done

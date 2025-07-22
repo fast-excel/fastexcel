@@ -1,14 +1,13 @@
 package cn.idev.excel.converters.bigdecimal;
 
-import java.math.BigDecimal;
-
 import cn.idev.excel.converters.Converter;
 import cn.idev.excel.enums.CellDataTypeEnum;
-import cn.idev.excel.util.NumberUtils;
 import cn.idev.excel.metadata.GlobalConfiguration;
 import cn.idev.excel.metadata.data.ReadCellData;
 import cn.idev.excel.metadata.data.WriteCellData;
 import cn.idev.excel.metadata.property.ExcelContentProperty;
+import cn.idev.excel.util.NumberUtils;
+import java.math.BigDecimal;
 
 /**
  * Converter for handling the conversion between BigDecimal and Excel number types.
@@ -46,8 +45,8 @@ public class BigDecimalNumberConverter implements Converter<BigDecimal> {
      * @return                       The converted BigDecimal value from the cell data.
      */
     @Override
-    public BigDecimal convertToJavaData(ReadCellData<?> cellData, ExcelContentProperty contentProperty,
-                                        GlobalConfiguration globalConfiguration) {
+    public BigDecimal convertToJavaData(
+            ReadCellData<?> cellData, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) {
         return cellData.getNumberValue();
     }
 
@@ -60,8 +59,8 @@ public class BigDecimalNumberConverter implements Converter<BigDecimal> {
      * @return                       The WriteCellData object containing the formatted number.
      */
     @Override
-    public WriteCellData<?> convertToExcelData(BigDecimal value, ExcelContentProperty contentProperty,
-                                               GlobalConfiguration globalConfiguration) {
+    public WriteCellData<?> convertToExcelData(
+            BigDecimal value, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) {
         return NumberUtils.formatToCellData(value, contentProperty);
     }
 }

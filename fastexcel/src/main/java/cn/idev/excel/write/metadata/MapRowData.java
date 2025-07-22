@@ -29,5 +29,4 @@ public class MapRowData implements RowData {
     public boolean isEmpty() {
         return map.isEmpty();
     }
-
 }

@@ -14,7 +14,7 @@ public class BoundSheetRecordHandler extends AbstractXlsRecordHandler implements
 
     @Override
     public void processRecord(XlsReadContext xlsReadContext, Record record) {
-        BoundSheetRecord bsr = (BoundSheetRecord)record;
+        BoundSheetRecord bsr = (BoundSheetRecord) record;
         xlsReadContext.xlsReadWorkbookHolder().getBoundSheetRecordList().add(bsr);
     }
 }

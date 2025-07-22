@@ -26,6 +26,11 @@ import cn.idev.excel.exception.ExcelAnalysisStopException;
 import cn.idev.excel.exception.ExcelAnalysisStopSheetException;
 import cn.idev.excel.read.metadata.ReadSheet;
 import cn.idev.excel.read.metadata.holder.xls.XlsReadWorkbookHolder;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.hssf.eventusermodel.EventWorkbookBuilder;
 import org.apache.poi.hssf.eventusermodel.FormatTrackingHSSFListener;
@@ -54,12 +59,6 @@ import org.apache.poi.hssf.record.StringRecord;
 import org.apache.poi.hssf.record.TextObjectRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * A text extractor for Excel files.
@@ -133,11 +132,12 @@ public class XlsSaxAnalyser implements HSSFListener, ExcelReadExecutor {
                 LOGGER.debug("Custom stop!");
             }
         }
-        List<ReadSheet> actualSheetDataList = xlsReadContext.readWorkbookHolder().getActualSheetDataList();
+        List<ReadSheet> actualSheetDataList =
+                xlsReadContext.readWorkbookHolder().getActualSheetDataList();
         if (xlsReadContext.readWorkbookHolder().getIgnoreHiddenSheet()) {
             return actualSheetDataList.stream()
-                .filter(readSheet -> (!readSheet.isHidden() && !readSheet.isVeryHidden()))
-                .collect(Collectors.toList());
+                    .filter(readSheet -> (!readSheet.isHidden() && !readSheet.isVeryHidden()))
+                    .collect(Collectors.toList());
         }
         return actualSheetDataList;
     }
@@ -153,8 +153,8 @@ public class XlsSaxAnalyser implements HSSFListener, ExcelReadExecutor {
         MissingRecordAwareHSSFListener listener = new MissingRecordAwareHSSFListener(this);
         xlsReadWorkbookHolder.setFormatTrackingHSSFListener(new FormatTrackingHSSFListener(listener));
         EventWorkbookBuilder.SheetRecordCollectingListener workbookBuildingListener =
-            new EventWorkbookBuilder.SheetRecordCollectingListener(
-                xlsReadWorkbookHolder.getFormatTrackingHSSFListener());
+                new EventWorkbookBuilder.SheetRecordCollectingListener(
+                        xlsReadWorkbookHolder.getFormatTrackingHSSFListener());
         xlsReadWorkbookHolder.setHssfWorkbook(workbookBuildingListener.getStubHSSFWorkbook());
         HSSFEventFactory factory = new HSSFEventFactory();
         HSSFRequest request = new HSSFRequest();
@@ -183,8 +183,8 @@ public class XlsSaxAnalyser implements HSSFListener, ExcelReadExecutor {
         if (handler == null) {
             return;
         }
-        boolean ignoreRecord =
-            (handler instanceof IgnorableXlsRecordHandler) && xlsReadContext.xlsReadWorkbookHolder().getIgnoreRecord();
+        boolean ignoreRecord = (handler instanceof IgnorableXlsRecordHandler)
+                && xlsReadContext.xlsReadWorkbookHolder().getIgnoreRecord();
         if (ignoreRecord) {
             // No need to read the current sheet
             return;
@@ -203,5 +203,4 @@ public class XlsSaxAnalyser implements HSSFListener, ExcelReadExecutor {
             xlsReadContext.xlsReadWorkbookHolder().setCurrentSheetStopped(Boolean.TRUE);
         }
     }
-
 }

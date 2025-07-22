@@ -1,9 +1,7 @@
 package cn.idev.excel.metadata;
 
-import java.util.Locale;
-
 import cn.idev.excel.enums.CacheLocationEnum;
-
+import java.util.Locale;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;

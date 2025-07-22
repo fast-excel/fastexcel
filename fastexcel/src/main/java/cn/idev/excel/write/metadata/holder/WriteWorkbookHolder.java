@@ -1,5 +1,19 @@
 package cn.idev.excel.write.metadata.holder;
 
+import cn.idev.excel.enums.CellDataTypeEnum;
+import cn.idev.excel.enums.HolderEnum;
+import cn.idev.excel.exception.ExcelGenerateException;
+import cn.idev.excel.metadata.data.DataFormatData;
+import cn.idev.excel.support.ExcelTypeEnum;
+import cn.idev.excel.util.DateUtils;
+import cn.idev.excel.util.FileUtils;
+import cn.idev.excel.util.IoUtils;
+import cn.idev.excel.util.MapUtils;
+import cn.idev.excel.util.StyleUtil;
+import cn.idev.excel.write.handler.context.WorkbookWriteHandlerContext;
+import cn.idev.excel.write.metadata.WriteWorkbook;
+import cn.idev.excel.write.metadata.style.WriteCellStyle;
+import cn.idev.excel.write.metadata.style.WriteFont;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,22 +24,6 @@ import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
-
-import cn.idev.excel.enums.CellDataTypeEnum;
-import cn.idev.excel.enums.HolderEnum;
-import cn.idev.excel.exception.ExcelGenerateException;
-import cn.idev.excel.metadata.data.DataFormatData;
-import cn.idev.excel.support.ExcelTypeEnum;
-import cn.idev.excel.util.FileUtils;
-import cn.idev.excel.util.IoUtils;
-import cn.idev.excel.util.MapUtils;
-import cn.idev.excel.util.StyleUtil;
-import cn.idev.excel.util.DateUtils;
-import cn.idev.excel.write.handler.context.WorkbookWriteHandlerContext;
-import cn.idev.excel.write.metadata.WriteWorkbook;
-import cn.idev.excel.write.metadata.style.WriteCellStyle;
-import cn.idev.excel.write.metadata.style.WriteFont;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -198,14 +196,14 @@ public class WriteWorkbookHolder extends AbstractWriteHolder {
         }
         if (writeWorkbook.getExcelType() == null) {
             boolean isXls = (file != null && file.getName().endsWith(ExcelTypeEnum.XLS.getValue()))
-                || (writeWorkbook.getTemplateFile() != null
-                && writeWorkbook.getTemplateFile().getName().endsWith(ExcelTypeEnum.XLS.getValue()));
+                    || (writeWorkbook.getTemplateFile() != null
+                            && writeWorkbook.getTemplateFile().getName().endsWith(ExcelTypeEnum.XLS.getValue()));
             if (isXls) {
                 this.excelType = ExcelTypeEnum.XLS;
             } else {
                 boolean isCsv = (file != null && file.getName().endsWith(ExcelTypeEnum.CSV.getValue()))
-                    || (writeWorkbook.getTemplateFile() != null
-                    && writeWorkbook.getTemplateFile().getName().endsWith(ExcelTypeEnum.CSV.getValue()));
+                        || (writeWorkbook.getTemplateFile() != null
+                                && writeWorkbook.getTemplateFile().getName().endsWith(ExcelTypeEnum.CSV.getValue()));
                 if (isCsv) {
                     this.excelType = ExcelTypeEnum.CSV;
                 } else {
@@ -281,7 +279,8 @@ public class WriteWorkbookHolder extends AbstractWriteHolder {
      * @param originCellStyle
      * @return
      */
-    public CellStyle createCellStyle(WriteCellStyle writeCellStyle, CellStyle originCellStyle, CellDataTypeEnum cellDataType) {
+    public CellStyle createCellStyle(
+            WriteCellStyle writeCellStyle, CellStyle originCellStyle, CellDataTypeEnum cellDataType) {
         if (writeCellStyle == null) {
             return originCellStyle;
         }
@@ -292,13 +291,15 @@ public class WriteWorkbookHolder extends AbstractWriteHolder {
         if (originCellStyle != null) {
             styleIndex = originCellStyle.getIndex();
             if (originCellStyle instanceof XSSFCellStyle) {
-                originFont = ((XSSFCellStyle)originCellStyle).getFont();
+                originFont = ((XSSFCellStyle) originCellStyle).getFont();
             } else if (originCellStyle instanceof HSSFCellStyle) {
-                originFont = ((HSSFCellStyle)originCellStyle).getFont(workbook);
+                originFont = ((HSSFCellStyle) originCellStyle).getFont(workbook);
             }
             useCache = false;
 
-            if (CellDataTypeEnum.DATE.equals(cellDataType) && DateUtils.isADateFormat(originCellStyle.getDataFormat(), originCellStyle.getDataFormatString())) {
+            if (CellDataTypeEnum.DATE.equals(cellDataType)
+                    && DateUtils.isADateFormat(
+                            originCellStyle.getDataFormat(), originCellStyle.getDataFormatString())) {
                 DataFormatData dataFormatData = new DataFormatData();
                 dataFormatData.setIndex(originCellStyle.getDataFormat());
                 dataFormatData.setFormat(originCellStyle.getDataFormatString());
@@ -307,8 +308,8 @@ public class WriteWorkbookHolder extends AbstractWriteHolder {
             }
         }
 
-        Map<WriteCellStyle, CellStyle> cellStyleMap = cellStyleIndexMap.computeIfAbsent(styleIndex,
-            key -> MapUtils.newHashMap());
+        Map<WriteCellStyle, CellStyle> cellStyleMap =
+                cellStyleIndexMap.computeIfAbsent(styleIndex, key -> MapUtils.newHashMap());
         CellStyle cellStyle = cellStyleMap.get(writeCellStyle);
         if (cellStyle != null) {
             return cellStyle;
@@ -381,5 +382,4 @@ public class WriteWorkbookHolder extends AbstractWriteHolder {
         dataFormatMap.put(tempDataFormatData, dataFormat);
         return dataFormat;
     }
-
 }

@@ -4,14 +4,13 @@ import cn.idev.excel.exception.ExcelAnalysisException;
 import cn.idev.excel.exception.ExcelCommonException;
 import cn.idev.excel.read.metadata.ReadWorkbook;
 import cn.idev.excel.util.StringUtils;
-import lombok.Getter;
-import org.apache.poi.EmptyFileException;
-import org.apache.poi.util.IOUtils;
-
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import lombok.Getter;
+import org.apache.poi.EmptyFileException;
+import org.apache.poi.util.IOUtils;
 
 /**
  * @author jipengfei
@@ -22,17 +21,17 @@ public enum ExcelTypeEnum {
     /**
      * csv
      */
-    CSV(".csv", new byte[]{-27, -89, -109, -27}),
+    CSV(".csv", new byte[] {-27, -89, -109, -27}),
 
     /**
      * xls
      */
-    XLS(".xls", new byte[]{-48, -49, 17, -32, -95, -79, 26, -31}),
+    XLS(".xls", new byte[] {-48, -49, 17, -32, -95, -79, 26, -31}),
 
     /**
      * xlsx
      */
-    XLSX(".xlsx", new byte[]{80, 75, 3, 4});
+    XLSX(".xlsx", new byte[] {80, 75, 3, 4});
 
     final String value;
     final byte[] magic;
@@ -42,7 +41,7 @@ public enum ExcelTypeEnum {
         this.magic = magic;
     }
 
-    final static int MAX_PATTERN_LENGTH = 8;
+    static final int MAX_PATTERN_LENGTH = 8;
 
     public static ExcelTypeEnum valueOf(ReadWorkbook readWorkbook) {
         File file = readWorkbook.getFile();
@@ -92,8 +91,7 @@ public enum ExcelTypeEnum {
                 readWorkbook.setInputStream(inputStream);
             }
             recognitionType = recognitionExcelType(inputStream);
-            if (excelType == null
-                || (hasPassword && !excelType.equals(recognitionType))) {
+            if (excelType == null || (hasPassword && !excelType.equals(recognitionType))) {
                 return recognitionType;
             }
             return excelType;
@@ -103,7 +101,7 @@ public enum ExcelTypeEnum {
             throw new ExcelCommonException("The supplied file was empty (zero bytes long)");
         } catch (Exception e) {
             throw new ExcelCommonException(
-                "Convert excel format exception.You can try specifying the 'excelType' yourself", e);
+                    "Convert excel format exception.You can try specifying the 'excelType' yourself", e);
         }
     }
 
@@ -128,5 +126,4 @@ public enum ExcelTypeEnum {
         }
         return true;
     }
-
 }

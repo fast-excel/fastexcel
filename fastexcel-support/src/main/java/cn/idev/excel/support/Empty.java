@@ -5,5 +5,4 @@ package cn.idev.excel.support;
  *
  * @author Jiaju Zhuang
  */
-public class Empty {
-}
+public class Empty {}

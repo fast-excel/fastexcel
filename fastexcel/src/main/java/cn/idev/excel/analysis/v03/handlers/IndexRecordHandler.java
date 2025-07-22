@@ -16,6 +16,6 @@ public class IndexRecordHandler extends AbstractXlsRecordHandler implements Igno
         if (xlsReadContext.readSheetHolder() == null) {
             return;
         }
-        xlsReadContext.readSheetHolder().setApproximateTotalRowNumber(((IndexRecord)record).getLastRowAdd1());
+        xlsReadContext.readSheetHolder().setApproximateTotalRowNumber(((IndexRecord) record).getLastRowAdd1());
     }
 }

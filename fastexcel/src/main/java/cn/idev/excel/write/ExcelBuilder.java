@@ -1,12 +1,11 @@
 package cn.idev.excel.write;
 
-import java.util.Collection;
-
 import cn.idev.excel.context.WriteContext;
 import cn.idev.excel.write.merge.OnceAbsoluteMergeStrategy;
 import cn.idev.excel.write.metadata.WriteSheet;
 import cn.idev.excel.write.metadata.WriteTable;
 import cn.idev.excel.write.metadata.fill.FillConfig;
+import java.util.Collection;
 
 /**
  * @author jipengfei
@@ -75,5 +74,4 @@ public interface ExcelBuilder {
      * @param onException
      */
     void finish(boolean onException);
-
 }

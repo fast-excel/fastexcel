@@ -43,5 +43,4 @@ public interface ReadCache {
      * Called when the excel read is complete
      */
     void destroy();
-
 }

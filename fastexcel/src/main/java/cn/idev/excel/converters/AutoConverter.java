@@ -5,5 +5,4 @@ package cn.idev.excel.converters;
  *
  * @author Jiaju Zhuang
  */
-public class AutoConverter implements Converter<Object> {
-}
+public class AutoConverter implements Converter<Object> {}

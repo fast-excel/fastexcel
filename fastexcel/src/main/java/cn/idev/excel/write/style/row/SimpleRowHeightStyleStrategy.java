@@ -29,5 +29,4 @@ public class SimpleRowHeightStyleStrategy extends AbstractRowHeightStyleStrategy
             row.setHeightInPoints(contentRowHeight);
         }
     }
-
 }

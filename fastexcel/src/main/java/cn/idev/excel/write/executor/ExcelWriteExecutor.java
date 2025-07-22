@@ -5,5 +5,4 @@ package cn.idev.excel.write.executor;
  *
  * @author Jiaju Zhuang
  */
-public interface ExcelWriteExecutor {
-}
+public interface ExcelWriteExecutor {}

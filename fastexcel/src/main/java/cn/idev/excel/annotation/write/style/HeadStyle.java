@@ -1,17 +1,15 @@
 package cn.idev.excel.annotation.write.style;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Inherited;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-
 import cn.idev.excel.enums.BooleanEnum;
 import cn.idev.excel.enums.poi.BorderStyleEnum;
 import cn.idev.excel.enums.poi.FillPatternTypeEnum;
 import cn.idev.excel.enums.poi.HorizontalAlignmentEnum;
 import cn.idev.excel.enums.poi.VerticalAlignmentEnum;
-
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Inherited;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 import org.apache.poi.ss.usermodel.BuiltinFormats;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.IgnoredErrorType;
@@ -152,5 +150,4 @@ public @interface HeadStyle {
      * Controls if the Cell should be auto-sized to shrink to fit if the text is too long
      */
     BooleanEnum shrinkToFit() default BooleanEnum.DEFAULT;
-
 }

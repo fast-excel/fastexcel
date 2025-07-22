@@ -12,13 +12,12 @@ import cn.idev.excel.event.SyncReadListener;
 import cn.idev.excel.read.listener.ModelBuildEventListener;
 import cn.idev.excel.read.metadata.ReadWorkbook;
 import cn.idev.excel.support.ExcelTypeEnum;
-
-import javax.xml.parsers.SAXParserFactory;
 import java.io.File;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.HashSet;
 import java.util.List;
+import javax.xml.parsers.SAXParserFactory;
 
 /**
  * Build ExcelReader

@@ -17,13 +17,12 @@ public class BoxingByteArrayImageConverter implements Converter<Byte[]> {
     }
 
     @Override
-    public WriteCellData<?> convertToExcelData(Byte[] value, ExcelContentProperty contentProperty,
-                                               GlobalConfiguration globalConfiguration) {
+    public WriteCellData<?> convertToExcelData(
+            Byte[] value, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) {
         byte[] byteValue = new byte[value.length];
         for (int i = 0; i < value.length; i++) {
             byteValue[i] = value[i];
         }
         return new WriteCellData<>(byteValue);
     }
-
 }

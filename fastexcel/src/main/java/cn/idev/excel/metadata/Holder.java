@@ -16,5 +16,4 @@ public interface Holder {
      * @return Holder enum.
      */
     HolderEnum holderType();
-
 }

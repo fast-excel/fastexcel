@@ -1,10 +1,8 @@
 package cn.idev.excel.metadata.data;
 
-import java.util.List;
-
 import cn.idev.excel.util.ListUtils;
 import cn.idev.excel.write.metadata.style.WriteFont;
-
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -61,5 +59,4 @@ public class RichTextStringData {
     public void applyFont(WriteFont writeFont) {
         this.writeFont = writeFont;
     }
-
 }

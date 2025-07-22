@@ -1,13 +1,12 @@
 package cn.idev.excel.read.metadata.holder;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 import cn.idev.excel.enums.HolderEnum;
 import cn.idev.excel.metadata.Cell;
 import cn.idev.excel.metadata.CellExtra;
 import cn.idev.excel.metadata.data.ReadCellData;
 import cn.idev.excel.read.metadata.ReadSheet;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -96,5 +95,4 @@ public class ReadSheetHolder extends AbstractReadHolder {
     public HolderEnum holderType() {
         return HolderEnum.SHEET;
     }
-
 }

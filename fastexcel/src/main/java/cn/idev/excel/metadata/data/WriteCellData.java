@@ -1,15 +1,13 @@
 package cn.idev.excel.metadata.data;
 
+import cn.idev.excel.enums.CellDataTypeEnum;
+import cn.idev.excel.util.ListUtils;
+import cn.idev.excel.write.metadata.style.WriteCellStyle;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
-
-import cn.idev.excel.enums.CellDataTypeEnum;
-import cn.idev.excel.util.ListUtils;
-import cn.idev.excel.write.metadata.style.WriteCellStyle;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -163,7 +161,6 @@ public class WriteCellData<T> extends CellData<T> {
         setType(CellDataTypeEnum.DATE);
         this.dateValue = dateValue;
     }
-
 
     /**
      * Constructor for creating a WriteCellData object with image data.

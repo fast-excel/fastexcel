@@ -36,9 +36,8 @@ public class BooleanUtils {
         }
     }
 
-
     // boolean Boolean methods
-    //-----------------------------------------------------------------------
+    // -----------------------------------------------------------------------
     /**
      * <p>Checks if a {@code Boolean} value is {@code true},
      * handling {@code null} by returning {@code false}.</p>
@@ -110,5 +109,4 @@ public class BooleanUtils {
     public static boolean isNotFalse(final Boolean bool) {
         return !isFalse(bool);
     }
-
 }

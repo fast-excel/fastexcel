@@ -25,15 +25,14 @@ public class StringBooleanConverter implements Converter<String> {
     }
 
     @Override
-    public String convertToJavaData(ReadCellData<?> cellData, ExcelContentProperty contentProperty,
-                                    GlobalConfiguration globalConfiguration) {
+    public String convertToJavaData(
+            ReadCellData<?> cellData, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) {
         return cellData.getBooleanValue().toString();
     }
 
     @Override
-    public WriteCellData<?> convertToExcelData(String value, ExcelContentProperty contentProperty,
-                                               GlobalConfiguration globalConfiguration) {
+    public WriteCellData<?> convertToExcelData(
+            String value, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) {
         return new WriteCellData<>(Boolean.valueOf(value));
     }
-
 }

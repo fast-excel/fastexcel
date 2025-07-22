@@ -89,5 +89,4 @@ public enum HorizontalAlignmentEnum {
     HorizontalAlignmentEnum(HorizontalAlignment poiHorizontalAlignment) {
         this.poiHorizontalAlignment = poiHorizontalAlignment;
     }
-
 }

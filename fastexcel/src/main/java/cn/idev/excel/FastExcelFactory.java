@@ -1,15 +1,14 @@
 package cn.idev.excel;
 
-import java.io.File;
-import java.io.InputStream;
-import java.io.OutputStream;
-
 import cn.idev.excel.read.builder.ExcelReaderBuilder;
 import cn.idev.excel.read.builder.ExcelReaderSheetBuilder;
 import cn.idev.excel.read.listener.ReadListener;
 import cn.idev.excel.write.builder.ExcelWriterBuilder;
 import cn.idev.excel.write.builder.ExcelWriterSheetBuilder;
 import cn.idev.excel.write.builder.ExcelWriterTableBuilder;
+import java.io.File;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 /**
  * Reader and writer factory class
@@ -361,7 +360,7 @@ public class FastExcelFactory {
      * @param numRows The number of rows to read, the default is all, start with 0.
      * @return
      */
-    public static ExcelReaderSheetBuilder readSheet(Integer sheetNo, String sheetName,Integer numRows) {
+    public static ExcelReaderSheetBuilder readSheet(Integer sheetNo, String sheetName, Integer numRows) {
         ExcelReaderSheetBuilder excelReaderSheetBuilder = new ExcelReaderSheetBuilder();
         if (sheetNo != null) {
             excelReaderSheetBuilder.sheetNo(sheetNo);
@@ -369,7 +368,7 @@ public class FastExcelFactory {
         if (sheetName != null) {
             excelReaderSheetBuilder.sheetName(sheetName);
         }
-        if (numRows !=null) {
+        if (numRows != null) {
             excelReaderSheetBuilder.numRows(numRows);
         }
         return excelReaderSheetBuilder;

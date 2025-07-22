@@ -1,11 +1,9 @@
 package cn.idev.excel.metadata.data;
 
-import java.math.BigDecimal;
-
 import cn.idev.excel.enums.CellDataTypeEnum;
 import cn.idev.excel.metadata.AbstractCell;
 import cn.idev.excel.util.StringUtils;
-
+import java.math.BigDecimal;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -76,5 +74,4 @@ public class CellData<T> extends AbstractCell {
             default:
         }
     }
-
 }

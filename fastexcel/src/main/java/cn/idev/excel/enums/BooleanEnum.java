@@ -29,5 +29,4 @@ public enum BooleanEnum {
     BooleanEnum(Boolean booleanValue) {
         this.booleanValue = booleanValue;
     }
-
 }

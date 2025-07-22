@@ -24,15 +24,14 @@ public class StringErrorConverter implements Converter<String> {
     }
 
     @Override
-    public String convertToJavaData(ReadCellData<?> cellData, ExcelContentProperty contentProperty,
-                                    GlobalConfiguration globalConfiguration) {
+    public String convertToJavaData(
+            ReadCellData<?> cellData, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) {
         return cellData.getStringValue();
     }
 
     @Override
-    public WriteCellData<?> convertToExcelData(String value, ExcelContentProperty contentProperty,
-                                               GlobalConfiguration globalConfiguration) {
+    public WriteCellData<?> convertToExcelData(
+            String value, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) {
         return new WriteCellData<>(CellDataTypeEnum.ERROR, value);
     }
-
 }

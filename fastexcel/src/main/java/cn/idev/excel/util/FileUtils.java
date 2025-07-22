@@ -1,5 +1,7 @@
 package cn.idev.excel.util;
 
+import cn.idev.excel.exception.ExcelAnalysisException;
+import cn.idev.excel.exception.ExcelCommonException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -8,10 +10,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.UUID;
-
-import cn.idev.excel.exception.ExcelAnalysisException;
-import cn.idev.excel.exception.ExcelCommonException;
-
 import org.apache.poi.util.TempFile;
 
 /**
@@ -38,8 +36,10 @@ public class FileUtils {
      * the temporary directory, but each project is run by a different user, so there is a permission problem, so each
      * project creates a unique UUID as a separate Temporary Files.
      */
-    private static String tempFilePrefix =
-        System.getProperty(TempFile.JAVA_IO_TMPDIR) + File.separator + UUID.randomUUID().toString() + File.separator;
+    private static String tempFilePrefix = System.getProperty(TempFile.JAVA_IO_TMPDIR)
+            + File.separator
+            + UUID.randomUUID().toString()
+            + File.separator;
     /**
      * Used to store poi temporary files.
      */
@@ -74,7 +74,7 @@ public class FileUtils {
         InputStream in = openInputStream(file);
         try {
             final long fileLength = file.length();
-            return fileLength > 0 ? IoUtils.toByteArray(in, (int)fileLength) : IoUtils.toByteArray(in);
+            return fileLength > 0 ? IoUtils.toByteArray(in, (int) fileLength) : IoUtils.toByteArray(in);
         } finally {
             in.close();
         }

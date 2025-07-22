@@ -13,17 +13,16 @@ import cn.idev.excel.exception.ExcelAnalysisException;
 import cn.idev.excel.read.metadata.ReadSheet;
 import cn.idev.excel.read.metadata.ReadWorkbook;
 import cn.idev.excel.support.ExcelTypeEnum;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import java.io.File;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * Workbook holder

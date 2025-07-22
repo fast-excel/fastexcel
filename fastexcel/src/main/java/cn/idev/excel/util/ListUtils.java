@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-
 import lombok.NonNull;
 import org.apache.commons.compress.utils.Iterators;
 
@@ -52,7 +51,6 @@ public class ListUtils {
         return list;
     }
 
-
     /**
      * Creates a <i>mutable</i> {@code ArrayList} instance containing the given elements; a very thin
      * shortcut for creating an empty list and then calling {@link Iterators#addAll}.
@@ -77,8 +75,8 @@ public class ListUtils {
         checkNotNull(elements); // for GWT
         // Let ArrayList's sizing logic work, if possible
         return (elements instanceof Collection)
-            ? new ArrayList<>((Collection<? extends E>)elements)
-            : newArrayList(elements.iterator());
+                ? new ArrayList<>((Collection<? extends E>) elements)
+                : newArrayList(elements.iterator());
     }
 
     /**

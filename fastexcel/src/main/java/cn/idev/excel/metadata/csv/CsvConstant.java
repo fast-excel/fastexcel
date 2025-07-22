@@ -8,6 +8,7 @@ public class CsvConstant {
      * commonly used character
      */
     public static final char SPACE = ' ';
+
     public static final char BACKSLASH = '\\';
     public static final char BACKSPACE = '\b';
     public static final char PIPE = '|';
@@ -17,6 +18,7 @@ public class CsvConstant {
      * line break
      */
     public static final String CR = "\r";
+
     public static final String FF = "\f";
     public static final String LF = "\n";
     public static final String CRLF = "\r\n";
@@ -25,6 +27,7 @@ public class CsvConstant {
      * field related
      */
     public static final String TAB = "\t";
+
     public static final String COMMA = ",";
     public static final String EMPTY = "";
     public static final String AT = "@";
@@ -33,6 +36,7 @@ public class CsvConstant {
      * unicode
      */
     public static final String UNICODE_EMPTY = "\u0000";
+
     public static final String UNICODE_NEX_LINE = "\u0085";
     public static final String UNICODE_LINE_SEPARATOR = "\u2028";
 
@@ -41,6 +45,5 @@ public class CsvConstant {
      */
     public static final String SQL_NULL_STRING = "\\N";
 
-    private CsvConstant() {
-    }
+    private CsvConstant() {}
 }

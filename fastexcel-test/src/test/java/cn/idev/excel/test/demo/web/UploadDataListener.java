@@ -1,12 +1,10 @@
 package cn.idev.excel.test.demo.web;
 
-import java.util.List;
-
+import cn.idev.excel.context.AnalysisContext;
 import cn.idev.excel.read.listener.ReadListener;
 import cn.idev.excel.util.ListUtils;
-import cn.idev.excel.context.AnalysisContext;
 import com.alibaba.fastjson2.JSON;
-
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -21,6 +19,7 @@ public class UploadDataListener implements ReadListener<UploadData> {
      * 每隔5条存储数据库，实际使用中可以100条，然后清理list ，方便内存回收
      */
     private static final int BATCH_COUNT = 5;
+
     private List<UploadData> cachedDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
     /**
      * 假设这个是一个DAO，当然有业务逻辑这个也可以是一个service。当然如果不用存储这个对象没用。

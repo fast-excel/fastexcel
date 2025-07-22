@@ -45,5 +45,4 @@ public class CustomStringStringConverter implements Converter<String> {
     public WriteCellData<?> convertToExcelData(WriteConverterContext<String> context) {
         return new WriteCellData<>(context.getValue());
     }
-
 }

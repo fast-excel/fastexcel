@@ -19,11 +19,11 @@ public class DefaultCsvReadContext extends AnalysisContextImpl implements CsvRea
 
     @Override
     public CsvReadWorkbookHolder csvReadWorkbookHolder() {
-        return (CsvReadWorkbookHolder)readWorkbookHolder();
+        return (CsvReadWorkbookHolder) readWorkbookHolder();
     }
 
     @Override
     public CsvReadSheetHolder csvReadSheetHolder() {
-        return (CsvReadSheetHolder)readSheetHolder();
+        return (CsvReadSheetHolder) readSheetHolder();
     }
 }

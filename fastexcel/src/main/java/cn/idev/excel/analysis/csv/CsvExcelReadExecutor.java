@@ -1,16 +1,7 @@
 package cn.idev.excel.analysis.csv;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 import cn.idev.excel.analysis.ExcelReadExecutor;
+import cn.idev.excel.context.csv.CsvReadContext;
 import cn.idev.excel.enums.ByteOrderMarkEnum;
 import cn.idev.excel.enums.CellDataTypeEnum;
 import cn.idev.excel.enums.RowTypeEnum;
@@ -23,8 +14,15 @@ import cn.idev.excel.read.metadata.holder.ReadRowHolder;
 import cn.idev.excel.read.metadata.holder.csv.CsvReadWorkbookHolder;
 import cn.idev.excel.util.SheetUtils;
 import cn.idev.excel.util.StringUtils;
-import cn.idev.excel.context.csv.CsvReadContext;
-
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.csv.CSVFormat;
@@ -118,7 +116,7 @@ public class CsvExcelReadExecutor implements ExcelReadExecutor {
         CSVFormat csvFormat = csvReadWorkbookHolder.getCsvFormat();
         // Determine the ByteOrderMarkEnum based on the character set name.
         ByteOrderMarkEnum byteOrderMark = ByteOrderMarkEnum.valueOfByCharsetName(
-            csvReadContext.csvReadWorkbookHolder().getCharset().name());
+                csvReadContext.csvReadWorkbookHolder().getCharset().name());
 
         // If the configuration mandates the use of an input stream, build the CSV parser using the input stream.
         if (csvReadWorkbookHolder.getMandatoryUseInputStream()) {
@@ -127,8 +125,10 @@ public class CsvExcelReadExecutor implements ExcelReadExecutor {
 
         // If a file is provided in the configuration, build the CSV parser using the file's input stream.
         if (csvReadWorkbookHolder.getFile() != null) {
-            return buildCsvParser(csvFormat, Files.newInputStream(csvReadWorkbookHolder.getFile().toPath()),
-                byteOrderMark);
+            return buildCsvParser(
+                    csvFormat,
+                    Files.newInputStream(csvReadWorkbookHolder.getFile().toPath()),
+                    byteOrderMark);
         }
 
         // As a fallback, build the CSV parser using the input stream.
@@ -148,13 +148,14 @@ public class CsvExcelReadExecutor implements ExcelReadExecutor {
      * Byte Order Mark, ensuring proper decoding of the file content.
      */
     private CSVParser buildCsvParser(CSVFormat csvFormat, InputStream inputStream, ByteOrderMarkEnum byteOrderMark)
-        throws IOException {
+            throws IOException {
         if (byteOrderMark == null) {
-            return csvFormat.parse(
-                new InputStreamReader(inputStream, csvReadContext.csvReadWorkbookHolder().getCharset()));
+            return csvFormat.parse(new InputStreamReader(
+                    inputStream, csvReadContext.csvReadWorkbookHolder().getCharset()));
         }
-        return csvFormat.parse(new InputStreamReader(new BOMInputStream(inputStream, byteOrderMark.getByteOrderMark()),
-            csvReadContext.csvReadWorkbookHolder().getCharset()));
+        return csvFormat.parse(new InputStreamReader(
+                new BOMInputStream(inputStream, byteOrderMark.getByteOrderMark()),
+                csvReadContext.csvReadWorkbookHolder().getCharset()));
     }
 
     /**
@@ -178,7 +179,8 @@ public class CsvExcelReadExecutor implements ExcelReadExecutor {
         Map<Integer, Cell> cellMap = new LinkedHashMap<>();
         Iterator<String> cellIterator = record.iterator();
         int columnIndex = 0;
-        Boolean autoTrim = csvReadContext.currentReadHolder().globalConfiguration().getAutoTrim();
+        Boolean autoTrim =
+                csvReadContext.currentReadHolder().globalConfiguration().getAutoTrim();
         while (cellIterator.hasNext()) {
             String cellString = cellIterator.next();
             ReadCellData<String> readCellData = new ReadCellData<>();
@@ -196,8 +198,8 @@ public class CsvExcelReadExecutor implements ExcelReadExecutor {
         }
 
         RowTypeEnum rowType = MapUtils.isEmpty(cellMap) ? RowTypeEnum.EMPTY : RowTypeEnum.DATA;
-        ReadRowHolder readRowHolder = new ReadRowHolder(rowIndex, rowType,
-            csvReadContext.readWorkbookHolder().getGlobalConfiguration(), cellMap);
+        ReadRowHolder readRowHolder = new ReadRowHolder(
+                rowIndex, rowType, csvReadContext.readWorkbookHolder().getGlobalConfiguration(), cellMap);
         csvReadContext.readRowHolder(readRowHolder);
 
         csvReadContext.csvReadSheetHolder().setCellMap(cellMap);

@@ -20,11 +20,11 @@ public class DefaultXlsxReadContext extends AnalysisContextImpl implements XlsxR
 
     @Override
     public XlsxReadWorkbookHolder xlsxReadWorkbookHolder() {
-        return (XlsxReadWorkbookHolder)readWorkbookHolder();
+        return (XlsxReadWorkbookHolder) readWorkbookHolder();
     }
 
     @Override
     public XlsxReadSheetHolder xlsxReadSheetHolder() {
-        return (XlsxReadSheetHolder)readSheetHolder();
+        return (XlsxReadSheetHolder) readSheetHolder();
     }
 }

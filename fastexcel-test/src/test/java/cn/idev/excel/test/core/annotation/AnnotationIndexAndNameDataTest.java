@@ -1,12 +1,10 @@
 package cn.idev.excel.test.core.annotation;
 
+import cn.idev.excel.EasyExcel;
+import cn.idev.excel.test.util.TestFileUtil;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import cn.idev.excel.test.util.TestFileUtil;
-import cn.idev.excel.EasyExcel;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
@@ -48,8 +46,9 @@ public class AnnotationIndexAndNameDataTest {
 
     private void readAndWrite(File file) {
         EasyExcel.write(file, AnnotationIndexAndNameData.class).sheet().doWrite(data());
-        EasyExcel.read(file, AnnotationIndexAndNameData.class, new AnnotationIndexAndNameDataListener()).sheet()
-            .doRead();
+        EasyExcel.read(file, AnnotationIndexAndNameData.class, new AnnotationIndexAndNameDataListener())
+                .sheet()
+                .doRead();
     }
 
     private List<AnnotationIndexAndNameData> data() {

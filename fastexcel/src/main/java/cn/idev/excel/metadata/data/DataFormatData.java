@@ -1,7 +1,6 @@
 package cn.idev.excel.metadata.data;
 
 import cn.idev.excel.util.StringUtils;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;

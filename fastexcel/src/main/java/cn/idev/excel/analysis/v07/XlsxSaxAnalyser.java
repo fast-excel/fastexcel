@@ -15,6 +15,19 @@ import cn.idev.excel.util.FileUtils;
 import cn.idev.excel.util.MapUtils;
 import cn.idev.excel.util.SheetUtils;
 import cn.idev.excel.util.StringUtils;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.openxml4j.opc.OPCPackage;
@@ -37,20 +50,6 @@ import org.xml.sax.ContentHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
-
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
 
 /**
  * @author jipengfei
@@ -138,14 +137,15 @@ public class XlsxSaxAnalyser implements ExcelReadExecutor {
             }
             if (xlsxReadContext.readWorkbookHolder().getExtraReadSet().contains(CellExtraTypeEnum.HYPERLINK)) {
                 PackageRelationshipCollection packageRelationshipCollection = Optional.ofNullable(ite.getSheetPart())
-                    .map(packagePart -> {
-                        try {
-                            return packagePart.getRelationships();
-                        } catch (InvalidFormatException e) {
-                            log.warn("Reading the Relationship failed", e);
-                            return null;
-                        }
-                    }).orElse(null);
+                        .map(packagePart -> {
+                            try {
+                                return packagePart.getRelationships();
+                            } catch (InvalidFormatException e) {
+                                log.warn("Reading the Relationship failed", e);
+                                return null;
+                            }
+                        })
+                        .orElse(null);
                 if (packageRelationshipCollection != null) {
                     packageRelationshipCollectionMap.put(index, packageRelationshipCollection);
                 }
@@ -159,21 +159,21 @@ public class XlsxSaxAnalyser implements ExcelReadExecutor {
             xlsxReadWorkbookHolder.setStylesTable(xssfReader.getStylesTable());
         } catch (Exception e) {
             log.warn(
-                "Currently excel cannot get style information, but it doesn't affect the data analysis.You can try to"
-                    + " save the file with office again or ignore the current error.",
-                e);
+                    "Currently excel cannot get style information, but it doesn't affect the data analysis.You can try to"
+                            + " save the file with office again or ignore the current error.",
+                    e);
         }
     }
 
-    private void defaultReadCache(XlsxReadWorkbookHolder xlsxReadWorkbookHolder,
-                                  PackagePart sharedStringsTablePackagePart) {
+    private void defaultReadCache(
+            XlsxReadWorkbookHolder xlsxReadWorkbookHolder, PackagePart sharedStringsTablePackagePart) {
         ReadCache readCache = xlsxReadWorkbookHolder.getReadCacheSelector().readCache(sharedStringsTablePackagePart);
         xlsxReadWorkbookHolder.setReadCache(readCache);
         readCache.init(xlsxReadContext);
     }
 
     private void analysisUse1904WindowDate(XSSFReader xssfReader, XlsxReadWorkbookHolder xlsxReadWorkbookHolder)
-        throws Exception {
+            throws Exception {
         if (xlsxReadWorkbookHolder.globalConfiguration().getUse1904windowing() != null) {
             return;
         }
@@ -188,28 +188,28 @@ public class XlsxSaxAnalyser implements ExcelReadExecutor {
         }
     }
 
-    private void analysisSharedStringsTable(InputStream sharedStringsTableInputStream,
-                                            XlsxReadWorkbookHolder xlsxReadWorkbookHolder) {
+    private void analysisSharedStringsTable(
+            InputStream sharedStringsTableInputStream, XlsxReadWorkbookHolder xlsxReadWorkbookHolder) {
         ContentHandler handler = new SharedStringsTableHandler(xlsxReadWorkbookHolder.getReadCache());
         parseXmlSource(sharedStringsTableInputStream, handler);
         xlsxReadWorkbookHolder.getReadCache().putFinished();
     }
 
     private void analysisCtSheetMap(XSSFReader xssfReader, XlsxReadWorkbookHolder xlsxReadWorkbookHolder)
-        throws Exception {
-        CTWorkbook wb = WorkbookDocument.Factory.parse(xssfReader.getWorkbookData()).getWorkbook();
+            throws Exception {
+        CTWorkbook wb =
+                WorkbookDocument.Factory.parse(xssfReader.getWorkbookData()).getWorkbook();
         for (CTSheet ctSheet : wb.getSheets().getSheetList()) {
-            boolean isHidden = (ctSheet.getState() == STSheetState.HIDDEN)
-                || (ctSheet.getState() == STSheetState.VERY_HIDDEN);
-            if (Boolean.FALSE.equals(xlsxReadWorkbookHolder.getIgnoreHiddenSheet())
-                || !isHidden) {
+            boolean isHidden =
+                    (ctSheet.getState() == STSheetState.HIDDEN) || (ctSheet.getState() == STSheetState.VERY_HIDDEN);
+            if (Boolean.FALSE.equals(xlsxReadWorkbookHolder.getIgnoreHiddenSheet()) || !isHidden) {
                 ctSheetMap.put(ctSheet.getName(), ctSheet);
             }
         }
     }
 
     private OPCPackage readOpcPackage(XlsxReadWorkbookHolder xlsxReadWorkbookHolder, InputStream decryptedStream)
-        throws Exception {
+            throws Exception {
         if (decryptedStream == null && xlsxReadWorkbookHolder.getFile() != null) {
             return OPCPackage.open(xlsxReadWorkbookHolder.getFile());
         }
@@ -226,8 +226,8 @@ public class XlsxSaxAnalyser implements ExcelReadExecutor {
         if (decryptedStream != null) {
             FileUtils.writeToFile(tempFile, decryptedStream, false);
         } else {
-            FileUtils.writeToFile(tempFile, xlsxReadWorkbookHolder.getInputStream(),
-                xlsxReadWorkbookHolder.getAutoCloseStream());
+            FileUtils.writeToFile(
+                    tempFile, xlsxReadWorkbookHolder.getInputStream(), xlsxReadWorkbookHolder.getAutoCloseStream());
         }
         return OPCPackage.open(tempFile, PackageAccess.READ);
     }
@@ -241,7 +241,8 @@ public class XlsxSaxAnalyser implements ExcelReadExecutor {
         InputSource inputSource = new InputSource(inputStream);
         try {
             SAXParserFactory saxFactory;
-            String xlsxSAXParserFactoryName = xlsxReadContext.xlsxReadWorkbookHolder().getSaxParserFactoryName();
+            String xlsxSAXParserFactoryName =
+                    xlsxReadContext.xlsxReadWorkbookHolder().getSaxParserFactoryName();
             if (StringUtils.isEmpty(xlsxSAXParserFactoryName)) {
                 saxFactory = SAXParserFactory.newInstance();
             } else {
@@ -310,8 +311,11 @@ public class XlsxSaxAnalyser implements ExcelReadExecutor {
         while (cellAddresses.hasNext()) {
             CellAddress cellAddress = cellAddresses.next();
             XSSFComment cellComment = commentsTable.findCellComment(cellAddress);
-            CellExtra cellExtra = new CellExtra(CellExtraTypeEnum.COMMENT, cellComment.getString().toString(),
-                cellAddress.getRow(), cellAddress.getColumn());
+            CellExtra cellExtra = new CellExtra(
+                    CellExtraTypeEnum.COMMENT,
+                    cellComment.getString().toString(),
+                    cellAddress.getRow(),
+                    cellAddress.getColumn());
             xlsxReadContext.readSheetHolder().setCellExtra(cellExtra);
             xlsxReadContext.analysisEventProcessor().extra(xlsxReadContext);
         }

@@ -1,9 +1,8 @@
 package cn.idev.excel.write.metadata.holder;
 
-import java.util.Collection;
-
 import cn.idev.excel.metadata.ConfigurationHolder;
 import cn.idev.excel.write.property.ExcelWriteHeadProperty;
+import java.util.Collection;
 
 /**
  * Get the corresponding Holder
@@ -55,7 +54,6 @@ public interface WriteHolder extends ConfigurationHolder {
      *
      * @return
      */
-
     boolean orderByIncludeColumn();
 
     /**

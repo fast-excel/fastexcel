@@ -122,7 +122,6 @@ public class Validate {
         }
     }
 
-
     /**
      * <p>Validate that the specified argument is not {@code null};
      * otherwise throwing an exception.

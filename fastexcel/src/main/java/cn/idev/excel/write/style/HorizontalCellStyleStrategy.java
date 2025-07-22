@@ -1,12 +1,10 @@
 package cn.idev.excel.write.style;
 
-import java.util.List;
-
-import cn.idev.excel.write.handler.context.CellWriteHandlerContext;
 import cn.idev.excel.metadata.data.WriteCellData;
 import cn.idev.excel.util.ListUtils;
+import cn.idev.excel.write.handler.context.CellWriteHandlerContext;
 import cn.idev.excel.write.metadata.style.WriteCellStyle;
-
+import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,11 +23,10 @@ public class HorizontalCellStyleStrategy extends AbstractCellStyleStrategy {
     private WriteCellStyle headWriteCellStyle;
     private List<WriteCellStyle> contentWriteCellStyleList;
 
-    public HorizontalCellStyleStrategy() {
-    }
+    public HorizontalCellStyleStrategy() {}
 
-    public HorizontalCellStyleStrategy(WriteCellStyle headWriteCellStyle,
-        List<WriteCellStyle> contentWriteCellStyleList) {
+    public HorizontalCellStyleStrategy(
+            WriteCellStyle headWriteCellStyle, List<WriteCellStyle> contentWriteCellStyleList) {
         this.headWriteCellStyle = headWriteCellStyle;
         this.contentWriteCellStyleList = contentWriteCellStyleList;
     }
@@ -60,13 +57,12 @@ public class HorizontalCellStyleStrategy extends AbstractCellStyleStrategy {
             WriteCellStyle.merge(contentWriteCellStyleList.get(0), cellData.getOrCreateStyle());
         } else {
             WriteCellStyle.merge(
-                contentWriteCellStyleList.get(context.getRelativeRowIndex() % contentWriteCellStyleList.size()),
-                cellData.getOrCreateStyle());
+                    contentWriteCellStyleList.get(context.getRelativeRowIndex() % contentWriteCellStyleList.size()),
+                    cellData.getOrCreateStyle());
         }
     }
 
     protected boolean stopProcessing(CellWriteHandlerContext context) {
         return context.getFirstCellData() == null;
     }
-
 }

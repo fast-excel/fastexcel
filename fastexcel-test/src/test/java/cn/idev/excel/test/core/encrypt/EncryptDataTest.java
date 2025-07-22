@@ -6,17 +6,16 @@ import cn.idev.excel.support.ExcelTypeEnum;
 import cn.idev.excel.test.core.simple.SimpleData;
 import cn.idev.excel.test.util.TestFileUtil;
 import cn.idev.excel.write.builder.ExcelWriterBuilder;
+import java.io.File;
+import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
-
-import java.io.File;
-import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Jiaju Zhuang
@@ -82,15 +81,16 @@ public class EncryptDataTest {
     }
 
     private void readAndWrite(File file, ExcelTypeEnum excelType, boolean hasPassword, boolean isStream)
-        throws Exception {
-        log.info("file:{}, isStream:{}, excelType:{}, hasPassword:{}", file.getName(), isStream, excelType, hasPassword);
-        ExcelWriterBuilder excelWriterBuilder = isStream ?
-            FastExcel.write(Files.newOutputStream(file.toPath()), EncryptData.class) :
-            FastExcel.write(file, EncryptData.class);
+            throws Exception {
+        log.info(
+                "file:{}, isStream:{}, excelType:{}, hasPassword:{}", file.getName(), isStream, excelType, hasPassword);
+        ExcelWriterBuilder excelWriterBuilder = isStream
+                ? FastExcel.write(Files.newOutputStream(file.toPath()), EncryptData.class)
+                : FastExcel.write(file, EncryptData.class);
 
-        ExcelReaderBuilder readerBuilder = isStream ?
-            FastExcel.read(Files.newInputStream(file.toPath()), EncryptData.class, new EncryptDataListener()) :
-            FastExcel.read(file, EncryptData.class, new EncryptDataListener());
+        ExcelReaderBuilder readerBuilder = isStream
+                ? FastExcel.read(Files.newInputStream(file.toPath()), EncryptData.class, new EncryptDataListener())
+                : FastExcel.read(file, EncryptData.class, new EncryptDataListener());
         if (excelType != null) {
             excelWriterBuilder.excelType(excelType);
             readerBuilder.excelType(excelType);

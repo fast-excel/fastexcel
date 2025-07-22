@@ -1,16 +1,14 @@
 package cn.idev.excel.analysis.v07.handlers;
 
-import java.util.Optional;
-
+import cn.idev.excel.constant.ExcelXmlConstants;
+import cn.idev.excel.context.xlsx.XlsxReadContext;
 import cn.idev.excel.enums.CellExtraTypeEnum;
 import cn.idev.excel.metadata.CellExtra;
 import cn.idev.excel.util.StringUtils;
-import cn.idev.excel.context.xlsx.XlsxReadContext;
+import java.util.Optional;
 import org.apache.poi.openxml4j.opc.PackageRelationship;
 import org.apache.poi.openxml4j.opc.PackageRelationshipCollection;
 import org.xml.sax.Attributes;
-
-import cn.idev.excel.constant.ExcelXmlConstants;
 
 /**
  * Cell Handler
@@ -41,18 +39,17 @@ public class HyperlinkTagHandler extends AbstractXlsxTagHandler {
         }
         // case 2, In the 'r:id' tag, Then go to 'PackageRelationshipCollection' to get inside
         String rId = attributes.getValue(ExcelXmlConstants.ATTRIBUTE_RID);
-        PackageRelationshipCollection packageRelationshipCollection = xlsxReadContext.xlsxReadSheetHolder()
-            .getPackageRelationshipCollection();
+        PackageRelationshipCollection packageRelationshipCollection =
+                xlsxReadContext.xlsxReadSheetHolder().getPackageRelationshipCollection();
         if (rId == null || packageRelationshipCollection == null) {
             return;
         }
         Optional.ofNullable(packageRelationshipCollection.getRelationshipByID(rId))
-            .map(PackageRelationship::getTargetURI)
-            .ifPresent(uri -> {
-                CellExtra cellExtra = new CellExtra(CellExtraTypeEnum.HYPERLINK, uri.toString(), ref);
-                xlsxReadContext.readSheetHolder().setCellExtra(cellExtra);
-                xlsxReadContext.analysisEventProcessor().extra(xlsxReadContext);
-            });
+                .map(PackageRelationship::getTargetURI)
+                .ifPresent(uri -> {
+                    CellExtra cellExtra = new CellExtra(CellExtraTypeEnum.HYPERLINK, uri.toString(), ref);
+                    xlsxReadContext.readSheetHolder().setCellExtra(cellExtra);
+                    xlsxReadContext.analysisEventProcessor().extra(xlsxReadContext);
+                });
     }
-
 }

@@ -7,8 +7,8 @@ import java.util.regex.Pattern;
  */
 public class PositionUtils {
 
-    private static final Pattern CELL_REF_PATTERN = Pattern.compile("(\\$?[A-Z]+)?" + "(\\$?[0-9]+)?",
-        Pattern.CASE_INSENSITIVE);
+    private static final Pattern CELL_REF_PATTERN =
+            Pattern.compile("(\\$?[A-Z]+)?" + "(\\$?[0-9]+)?", Pattern.CASE_INSENSITIVE);
     private static final char SHEET_NAME_DELIMITER = '!';
     private static final char REDUNDANT_CHARACTERS = '$';
 
@@ -60,5 +60,4 @@ public class PositionUtils {
         }
         return col - 1;
     }
-
 }

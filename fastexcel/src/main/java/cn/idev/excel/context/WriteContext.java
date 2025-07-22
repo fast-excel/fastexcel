@@ -1,7 +1,5 @@
 package cn.idev.excel.context;
 
-import java.io.OutputStream;
-
 import cn.idev.excel.enums.WriteTypeEnum;
 import cn.idev.excel.write.metadata.WriteSheet;
 import cn.idev.excel.write.metadata.WriteTable;
@@ -9,6 +7,7 @@ import cn.idev.excel.write.metadata.holder.WriteHolder;
 import cn.idev.excel.write.metadata.holder.WriteSheetHolder;
 import cn.idev.excel.write.metadata.holder.WriteTableHolder;
 import cn.idev.excel.write.metadata.holder.WriteWorkbookHolder;
+import java.io.OutputStream;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 
@@ -105,5 +104,4 @@ public interface WriteContext {
      */
     @Deprecated
     Workbook getWorkbook();
-
 }

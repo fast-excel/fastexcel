@@ -3,11 +3,10 @@ package cn.idev.excel.test.core.encrypt;
 import cn.idev.excel.context.AnalysisContext;
 import cn.idev.excel.event.AnalysisEventListener;
 import com.alibaba.fastjson2.JSON;
-import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Assertions;
-
 import java.util.ArrayList;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Assertions;
 
 /**
  * @author Jiaju Zhuang
@@ -28,7 +27,13 @@ public class EncryptDataListener extends AnalysisEventListener<EncryptData> {
         Assertions.assertEquals(list.get(0).getName(), "Name0");
         Assertions.assertEquals((int) (context.readSheetHolder().getSheetNo()), 0);
         Assertions.assertEquals(
-            context.readSheetHolder().getExcelReadHeadProperty().getHeadMap().get(0).getHeadNameList().get(0), "姓名");
+                context.readSheetHolder()
+                        .getExcelReadHeadProperty()
+                        .getHeadMap()
+                        .get(0)
+                        .getHeadNameList()
+                        .get(0),
+                "姓名");
         log.debug("First row:{}", JSON.toJSONString(list.get(0)));
     }
 }

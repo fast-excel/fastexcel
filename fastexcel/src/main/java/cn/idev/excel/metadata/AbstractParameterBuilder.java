@@ -1,11 +1,10 @@
 package cn.idev.excel.metadata;
 
-import java.util.List;
-import java.util.Locale;
-
 import cn.idev.excel.converters.Converter;
 import cn.idev.excel.enums.CacheLocationEnum;
 import cn.idev.excel.util.ListUtils;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * ExcelBuilder
@@ -99,7 +98,7 @@ public abstract class AbstractParameterBuilder<T extends AbstractParameterBuilde
 
     @SuppressWarnings("unchecked")
     protected T self() {
-        return (T)this;
+        return (T) this;
     }
 
     /**

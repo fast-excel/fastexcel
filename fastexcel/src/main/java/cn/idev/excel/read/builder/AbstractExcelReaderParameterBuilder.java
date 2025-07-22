@@ -10,8 +10,9 @@ import cn.idev.excel.util.ListUtils;
  *
  * @author Jiaju Zhuang
  */
-public abstract class AbstractExcelReaderParameterBuilder<T extends AbstractExcelReaderParameterBuilder,
-    C extends ReadBasicParameter> extends AbstractParameterBuilder<T, C> {
+public abstract class AbstractExcelReaderParameterBuilder<
+                T extends AbstractExcelReaderParameterBuilder, C extends ReadBasicParameter>
+        extends AbstractParameterBuilder<T, C> {
     /**
      * Count the number of added heads when read sheet.
      *

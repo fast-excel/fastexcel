@@ -1,11 +1,10 @@
 package cn.idev.excel.util;
 
+import cn.idev.excel.metadata.NullObject;
+import cn.idev.excel.support.cglib.beans.BeanMap;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Map;
-
-import cn.idev.excel.metadata.NullObject;
-import cn.idev.excel.support.cglib.beans.BeanMap;
 
 /**
  * Licensed to the Apache Software Foundation (ASF) under one or more
@@ -31,7 +30,7 @@ public class FieldUtils {
 
     public static Class<?> getFieldClass(Map dataMap, String fieldName, Object value) {
         if (dataMap instanceof BeanMap) {
-            Class<?> fieldClass = ((BeanMap)dataMap).getPropertyType(fieldName);
+            Class<?> fieldClass = ((BeanMap) dataMap).getPropertyType(fieldName);
             if (fieldClass != null) {
                 return fieldClass;
             }
@@ -155,8 +154,12 @@ public class FieldUtils {
         for (final Class<?> class1 : ClassUtils.getAllInterfaces(cls)) {
             try {
                 final Field test = class1.getField(fieldName);
-                Validate.isTrue(match == null, "Reference to field %s is ambiguous relative to %s"
-                    + "; a matching field exists on two or more implemented interfaces.", fieldName, cls);
+                Validate.isTrue(
+                        match == null,
+                        "Reference to field %s is ambiguous relative to %s"
+                                + "; a matching field exists on two or more implemented interfaces.",
+                        fieldName,
+                        cls);
                 match = test;
             } catch (final NoSuchFieldException ex) { // NOPMD
                 // ignore
@@ -164,5 +167,4 @@ public class FieldUtils {
         }
         return match;
     }
-
 }

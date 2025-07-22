@@ -1,8 +1,5 @@
 package cn.idev.excel.context;
 
-import java.io.InputStream;
-import java.util.List;
-
 import cn.idev.excel.exception.ExcelAnalysisException;
 import cn.idev.excel.read.metadata.ReadSheet;
 import cn.idev.excel.read.metadata.ReadWorkbook;
@@ -19,7 +16,8 @@ import cn.idev.excel.read.metadata.holder.xlsx.XlsxReadWorkbookHolder;
 import cn.idev.excel.read.processor.AnalysisEventProcessor;
 import cn.idev.excel.read.processor.DefaultAnalysisEventProcessor;
 import cn.idev.excel.support.ExcelTypeEnum;
-
+import java.io.InputStream;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -138,9 +136,7 @@ public class AnalysisContextImpl implements AnalysisContext {
     }
 
     @Override
-    public void readSheetList(List<ReadSheet> readSheetList) {
-
-    }
+    public void readSheetList(List<ReadSheet> readSheetList) {}
 
     @Override
     public ExcelTypeEnum getExcelType() {

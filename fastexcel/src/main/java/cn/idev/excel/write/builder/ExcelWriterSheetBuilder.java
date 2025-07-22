@@ -1,12 +1,11 @@
 package cn.idev.excel.write.builder;
 
-import java.util.Collection;
-import java.util.function.Supplier;
-
 import cn.idev.excel.ExcelWriter;
 import cn.idev.excel.exception.ExcelGenerateException;
 import cn.idev.excel.write.metadata.WriteSheet;
 import cn.idev.excel.write.metadata.fill.FillConfig;
+import java.util.Collection;
+import java.util.function.Supplier;
 
 /**
  * Build sheet
@@ -103,5 +102,4 @@ public class ExcelWriterSheetBuilder extends AbstractExcelWriterParameterBuilder
     protected WriteSheet parameter() {
         return writeSheet;
     }
-
 }
