@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 /**
  * Converter for handling the conversion between BigDecimal and Excel number types.
  *
- * @author Jiaju Zhuang
+ *
  */
 public class BigDecimalNumberConverter implements Converter<BigDecimal> {
 

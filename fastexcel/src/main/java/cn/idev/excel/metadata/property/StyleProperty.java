@@ -18,7 +18,7 @@ import org.apache.poi.ss.usermodel.VerticalAlignment;
 /**
  * Configuration from annotations
  *
- * @author Jiaju Zhuang
+ *
  */
 @Getter
 @Setter

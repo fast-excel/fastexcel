@@ -10,7 +10,7 @@ import cn.idev.excel.metadata.property.ExcelContentProperty;
 /**
  * Long and boolean converter
  *
- * @author Jiaju Zhuang
+ *
  */
 public class LongBooleanConverter implements Converter<Long> {
     private static final Long ONE = 1L;

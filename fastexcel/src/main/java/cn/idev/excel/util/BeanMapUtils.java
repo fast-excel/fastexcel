@@ -6,7 +6,7 @@ import cn.idev.excel.support.cglib.core.DefaultNamingPolicy;
 /**
  * bean utils
  *
- * @author Jiaju Zhuang
+ *
  */
 public class BeanMapUtils {
 

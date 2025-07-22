@@ -37,7 +37,7 @@ import org.apache.poi.util.LocaleUtil;
 /**
  * Date utils
  *
- * @author Jiaju Zhuang
+ *
  **/
 public class DateUtils {
     /**

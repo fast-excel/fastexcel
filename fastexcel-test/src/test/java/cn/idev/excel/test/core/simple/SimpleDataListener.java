@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Define an AnalysisEventListener to handler the Analysis event
  *
- * @author Jiaju Zhuang
+ *
  */
 public class SimpleDataListener extends AnalysisEventListener<SimpleData> {
     private static final Logger LOGGER = LoggerFactory.getLogger(SimpleDataListener.class);

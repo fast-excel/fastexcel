@@ -1,7 +1,7 @@
 package cn.idev.excel.constant;
 
 /**
- * @author jipengfei
+ *
  */
 public class ExcelXmlConstants {
     public static final String DIMENSION_TAG = "dimension";

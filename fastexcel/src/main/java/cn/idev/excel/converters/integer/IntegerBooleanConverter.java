@@ -10,7 +10,7 @@ import cn.idev.excel.metadata.property.ExcelContentProperty;
 /**
  * Integer and boolean converter
  *
- * @author Jiaju Zhuang
+ *
  */
 public class IntegerBooleanConverter implements Converter<Integer> {
     private static final Integer ONE = 1;

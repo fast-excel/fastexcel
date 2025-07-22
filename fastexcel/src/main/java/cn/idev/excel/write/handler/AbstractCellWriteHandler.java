@@ -11,7 +11,7 @@ import org.apache.poi.ss.usermodel.Row;
 /**
  * Abstract cell write handler
  *
- * @author Jiaju Zhuang
+ *
  * @deprecated Please use it directly {@link CellWriteHandler}
  **/
 @Deprecated

@@ -8,7 +8,7 @@ import org.apache.poi.ss.usermodel.Row;
 /**
  * intercepts handle row creation
  *
- * @author Jiaju Zhuang
+ *
  */
 public interface RowWriteHandler extends WriteHandler {
 

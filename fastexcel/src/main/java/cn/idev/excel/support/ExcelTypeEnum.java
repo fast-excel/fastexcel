@@ -13,7 +13,7 @@ import org.apache.poi.EmptyFileException;
 import org.apache.poi.util.IOUtils;
 
 /**
- * @author jipengfei
+ *
  */
 @Getter
 public enum ExcelTypeEnum {

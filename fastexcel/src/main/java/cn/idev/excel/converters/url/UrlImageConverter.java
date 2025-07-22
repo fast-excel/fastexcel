@@ -13,7 +13,7 @@ import java.net.URLConnection;
 /**
  * Url and image converter
  *
- * @author Jiaju Zhuang
+ *
  * @since 2.1.1
  */
 public class UrlImageConverter implements Converter<URL> {

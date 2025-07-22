@@ -21,7 +21,7 @@ import lombok.Setter;
 /**
  * Read Holder
  *
- * @author Jiaju Zhuang
+ *
  */
 @Getter
 @Setter

@@ -10,7 +10,7 @@ import cn.idev.excel.metadata.property.ExcelContentProperty;
 /**
  * Double and boolean converter
  *
- * @author Jiaju Zhuang
+ *
  */
 public class DoubleBooleanConverter implements Converter<Double> {
     private static final Double ONE = 1.0;

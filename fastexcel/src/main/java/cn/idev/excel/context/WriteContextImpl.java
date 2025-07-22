@@ -53,7 +53,6 @@ import org.slf4j.LoggerFactory;
  * This class manages the context for writing workbooks, sheets, and tables, including initialization, handling,
  * and finishing the write process.
  *
- * @author jipengfei
  */
 public class WriteContextImpl implements WriteContext {
 

@@ -13,7 +13,6 @@ import java.io.OutputStream;
 /**
  * Reader and writer factory class
  *
- * @author jipengfei
  */
 public class FastExcelFactory {
 

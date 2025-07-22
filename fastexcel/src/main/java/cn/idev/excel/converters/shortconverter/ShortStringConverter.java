@@ -12,7 +12,7 @@ import java.text.ParseException;
 /**
  * Short and string converter
  *
- * @author Jiaju Zhuang
+ *
  */
 public class ShortStringConverter implements Converter<Short> {
 

@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 /**
  * LocalDateTime and string converter
  *
- * @author Jiaju Zhuang
+ *
  */
 public class LocalDateTimeStringConverter implements Converter<LocalDateTime> {
     @Override

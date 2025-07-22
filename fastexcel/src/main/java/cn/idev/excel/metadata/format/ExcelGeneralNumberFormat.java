@@ -16,7 +16,7 @@ import org.apache.poi.ss.usermodel.DataFormatter;
  * <p>
  * Supported Do not use scientific notation.
  *
- * @author JiaJu Zhuang
+ *
  **/
 public class ExcelGeneralNumberFormat extends Format {
 

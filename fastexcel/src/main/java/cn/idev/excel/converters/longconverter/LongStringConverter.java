@@ -12,7 +12,7 @@ import java.text.ParseException;
 /**
  * Long and string converter
  *
- * @author Jiaju Zhuang
+ *
  */
 public class LongStringConverter implements Converter<Long> {
 

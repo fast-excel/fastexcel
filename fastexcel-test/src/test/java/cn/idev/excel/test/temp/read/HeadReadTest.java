@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 /**
  * 临时测试
  *
- * @author Jiaju Zhuang
+ *
  **/
 public class HeadReadTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(HeadReadTest.class);

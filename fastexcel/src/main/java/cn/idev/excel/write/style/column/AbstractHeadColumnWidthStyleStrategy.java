@@ -9,7 +9,7 @@ import org.apache.poi.ss.usermodel.Cell;
 /**
  * Returns the column width according to each column header
  *
- * @author Jiaju Zhuang
+ *
  */
 public abstract class AbstractHeadColumnWidthStyleStrategy extends AbstractColumnWidthStyleStrategy {
 

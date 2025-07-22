@@ -7,7 +7,7 @@ import java.util.Map;
 /**
  * Get the corresponding holder
  *
- * @author Jiaju Zhuang
+ *
  **/
 public interface ConfigurationHolder extends Holder {
 

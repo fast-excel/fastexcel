@@ -11,7 +11,7 @@ import org.apache.poi.ss.usermodel.Cell;
 /**
  * Column width style strategy
  *
- * @author Jiaju Zhuang
+ *
  */
 public abstract class AbstractColumnWidthStyleStrategy implements CellWriteHandler {
 

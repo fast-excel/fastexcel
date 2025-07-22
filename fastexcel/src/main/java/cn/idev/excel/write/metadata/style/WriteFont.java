@@ -12,7 +12,6 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 /**
  * Font when writing
  *
- * @author jipengfei
  */
 @Getter
 @Setter

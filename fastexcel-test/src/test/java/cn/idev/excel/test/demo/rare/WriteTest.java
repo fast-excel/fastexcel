@@ -25,7 +25,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Record some uncommon cases
  *
- * @author Jiaju Zhuang
+ *
  */
 @Slf4j
 public class WriteTest {

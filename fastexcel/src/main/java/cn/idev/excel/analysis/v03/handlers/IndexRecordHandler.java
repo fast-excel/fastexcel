@@ -8,7 +8,7 @@ import org.apache.poi.hssf.record.Record;
 /**
  * Record handler
  *
- * @author Jiaju Zhuang
+ *
  */
 public class IndexRecordHandler extends AbstractXlsRecordHandler implements IgnorableXlsRecordHandler {
     @Override

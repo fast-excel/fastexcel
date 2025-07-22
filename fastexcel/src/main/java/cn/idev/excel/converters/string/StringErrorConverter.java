@@ -10,7 +10,7 @@ import cn.idev.excel.metadata.property.ExcelContentProperty;
 /**
  * String and error converter
  *
- * @author Jiaju Zhuang
+ *
  */
 public class StringErrorConverter implements Converter<String> {
     @Override

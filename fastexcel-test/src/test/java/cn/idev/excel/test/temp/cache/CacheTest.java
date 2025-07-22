@@ -17,7 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author Jiaju Zhuang
+ *
  **/
 public class CacheTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(Poi2Test.class);

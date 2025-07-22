@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Synchronous data reading
  *
- * @author Jiaju Zhuang
+ *
  */
 public class SyncReadListener extends AnalysisEventListener<Object> {
     private List<Object> list = new ArrayList<Object>();

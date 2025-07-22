@@ -12,7 +12,7 @@ import java.text.ParseException;
 /**
  * Float and string converter
  *
- * @author Jiaju Zhuang
+ *
  */
 public class FloatStringConverter implements Converter<Float> {
 

@@ -10,7 +10,7 @@ import org.apache.poi.hssf.record.SubRecord;
 /**
  * Record handler
  *
- * @author Jiaju Zhuang
+ *
  */
 public class ObjRecordHandler extends AbstractXlsRecordHandler implements IgnorableXlsRecordHandler {
     @Override

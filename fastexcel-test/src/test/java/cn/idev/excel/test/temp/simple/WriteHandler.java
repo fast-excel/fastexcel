@@ -6,7 +6,7 @@ import cn.idev.excel.write.metadata.holder.WriteWorkbookHolder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * @author Jiaju Zhuang
+ *
  */
 @Slf4j
 public class WriteHandler implements SheetWriteHandler {

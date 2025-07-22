@@ -13,7 +13,7 @@ import org.apache.poi.ss.usermodel.CellStyle;
 /**
  * fill cell style.
  *
- * @author Jiaju Zhuang
+ *
  */
 @Slf4j
 public class FillStyleCellWriteHandler implements CellWriteHandler {

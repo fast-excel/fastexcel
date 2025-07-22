@@ -7,7 +7,7 @@ import org.apache.poi.ss.usermodel.HorizontalAlignment;
  * The enumeration value indicating horizontal alignment of a cell,
  * i.e., whether it is aligned general, left, right, horizontally centered, filled (replicated),
  * justified, centered across multiple cells, or distributed.
- * @author Jiaju Zhuang
+ *
  */
 @Getter
 public enum HorizontalAlignmentEnum {

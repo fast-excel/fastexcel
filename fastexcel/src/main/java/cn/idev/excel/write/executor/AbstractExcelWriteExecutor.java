@@ -37,7 +37,7 @@ import org.apache.poi.xssf.usermodel.XSSFClientAnchor;
 /**
  * Excel write Executor
  *
- * @author Jiaju Zhuang
+ *
  */
 public abstract class AbstractExcelWriteExecutor implements ExcelWriteExecutor {
     protected WriteContext writeContext;

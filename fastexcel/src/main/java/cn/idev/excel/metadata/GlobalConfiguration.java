@@ -9,7 +9,7 @@ import lombok.Setter;
 /**
  * Global configuration
  *
- * @author Jiaju Zhuang
+ *
  */
 @Getter
 @Setter

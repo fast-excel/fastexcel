@@ -6,7 +6,7 @@ import org.xml.sax.Attributes;
 /**
  * Abstract tag handler
  *
- * @author Jiaju Zhuang
+ *
  */
 public abstract class AbstractXlsxTagHandler implements XlsxTagHandler {
     @Override

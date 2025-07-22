@@ -14,7 +14,7 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 /**
  * Custom header styles.
  *
- * @author Jiaju Zhuang
+ *
  */
 @Target({ElementType.FIELD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)

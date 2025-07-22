@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * Template reading class
  *
- * @author Jiaju Zhuang
+ *
  */
 @Slf4j
 public class IndexOrNameDataListener extends AnalysisEventListener<IndexOrNameData> {

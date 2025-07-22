@@ -10,7 +10,7 @@ import java.util.function.Supplier;
 /**
  * Build sheet
  *
- * @author Jiaju Zhuang
+ *
  */
 public class ExcelWriterTableBuilder extends AbstractExcelWriterParameterBuilder<ExcelWriterTableBuilder, WriteTable> {
 

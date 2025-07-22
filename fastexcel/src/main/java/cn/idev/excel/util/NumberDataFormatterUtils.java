@@ -8,7 +8,7 @@ import java.util.Locale;
 /**
  * Convert number data, including date.
  *
- * @author Jiaju Zhuang
+ *
  **/
 public class NumberDataFormatterUtils {
 

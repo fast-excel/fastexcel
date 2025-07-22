@@ -19,7 +19,7 @@ import org.openxmlformats.schemas.spreadsheetml.x2006.main.CTWorksheet;
  *
  * https://github.com/fast-excel/fastexcel/issues/1282
  *
- * @author Jiaju Zhuang
+ *
  */
 @Slf4j
 public class DimensionWorkbookWriteHandler implements WorkbookWriteHandler {

@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author Jiaju Zhuang
+ *
  */
 public class ComplexDataListener extends AnalysisEventListener<ComplexHeadData> {
     private static final Logger LOGGER = LoggerFactory.getLogger(ComplexHeadData.class);

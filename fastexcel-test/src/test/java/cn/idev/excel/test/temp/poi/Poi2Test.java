@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 /**
  * 测试poi
  *
- * @author Jiaju Zhuang
+ *
  **/
 public class Poi2Test {
     private static final Logger LOGGER = LoggerFactory.getLogger(Poi2Test.class);

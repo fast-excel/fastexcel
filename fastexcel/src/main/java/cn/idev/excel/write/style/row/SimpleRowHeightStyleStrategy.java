@@ -5,7 +5,7 @@ import org.apache.poi.ss.usermodel.Row;
 /**
  * Set the head column high and content column high
  *
- * @author Jiaju Zhuang
+ *
  */
 public class SimpleRowHeightStyleStrategy extends AbstractRowHeightStyleStrategy {
     private final Short headRowHeight;

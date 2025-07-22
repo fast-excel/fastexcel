@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Get the corresponding Holder
  *
- * @author Jiaju Zhuang
+ *
  **/
 public interface ReadHolder extends ConfigurationHolder {
     /**

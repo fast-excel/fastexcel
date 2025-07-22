@@ -12,7 +12,7 @@ import org.apache.poi.ss.usermodel.VerticalAlignment;
 /**
  * The default styles
  *
- * @author Jiaju Zhuang
+ *
  */
 public class DefaultStyle extends HorizontalCellStyleStrategy {
 

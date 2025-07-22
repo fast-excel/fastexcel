@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * Default row handler.
  *
- * @author Jiaju Zhuang
+ *
  */
 @Slf4j
 public class DefaultRowWriteHandler implements RowWriteHandler {

@@ -13,7 +13,7 @@ import java.text.ParseException;
 /**
  * Converter for handling the conversion between BigDecimal and Excel string types.
  *
- * @author Jiaju Zhuang
+ *
  */
 public class BigDecimalStringConverter implements Converter<BigDecimal> {
 

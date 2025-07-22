@@ -25,7 +25,6 @@ import org.slf4j.LoggerFactory;
 /**
  * Analysis event
  *
- * @author jipengfei
  */
 public class DefaultAnalysisEventProcessor implements AnalysisEventProcessor {
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultAnalysisEventProcessor.class);

@@ -9,7 +9,7 @@ import java.util.Collection;
 /**
  * Build ExcelBuilder
  *
- * @author Jiaju Zhuang
+ *
  */
 public abstract class AbstractExcelWriterParameterBuilder<
                 T extends AbstractExcelWriterParameterBuilder, C extends WriteBasicParameter>

@@ -49,7 +49,7 @@ import org.junit.jupiter.api.Test;
 /**
  * 写的常见写法
  *
- * @author Jiaju Zhuang
+ *
  */
 public class WriteTest {
 

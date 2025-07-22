@@ -8,7 +8,7 @@ import org.apache.poi.ss.util.CellRangeAddress;
 /**
  * The regions of the loop merge
  *
- * @author Jiaju Zhuang
+ *
  */
 public class LoopMergeStrategy implements RowWriteHandler {
     /**

@@ -6,7 +6,7 @@ import org.apache.poi.ss.usermodel.RichTextString;
 /**
  * rich text string
  *
- * @author Jiaju Zhuang
+ *
  */
 public class CsvRichTextString implements RichTextString {
     /**

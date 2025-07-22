@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author Jiaju Zhuang
+ *
  */
 public class AnnotationDataListener extends AnalysisEventListener<AnnotationData> {
     private static final Logger LOGGER = LoggerFactory.getLogger(AnnotationDataListener.class);

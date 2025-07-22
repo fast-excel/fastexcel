@@ -7,7 +7,6 @@ import java.util.List;
 /**
  * Excel file analyser
  *
- * @author jipengfei
  */
 public interface ExcelAnalyser {
     /**

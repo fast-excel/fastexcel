@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 /**
  * Ignore all unannotated fields.
  *
- * @author Jiaju Zhuang
+ *
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

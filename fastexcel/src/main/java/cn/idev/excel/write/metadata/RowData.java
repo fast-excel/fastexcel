@@ -3,7 +3,7 @@ package cn.idev.excel.write.metadata;
 /**
  * A row of data.
  *
- * @author Jiaju Zhuang
+ *
  */
 public interface RowData {
 

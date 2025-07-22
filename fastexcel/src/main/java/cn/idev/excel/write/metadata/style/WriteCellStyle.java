@@ -18,7 +18,7 @@ import org.apache.poi.ss.usermodel.VerticalAlignment;
 /**
  * Cell style when writing
  *
- * @author Jiaju Zhuang
+ *
  */
 @Getter
 @Setter

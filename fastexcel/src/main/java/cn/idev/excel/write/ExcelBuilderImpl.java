@@ -16,7 +16,7 @@ import java.util.Collection;
 import org.apache.poi.ss.util.CellRangeAddress;
 
 /**
- * @author jipengfei
+ *
  */
 public class ExcelBuilderImpl implements ExcelBuilder {
 

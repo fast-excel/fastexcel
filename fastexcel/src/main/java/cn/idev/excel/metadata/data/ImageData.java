@@ -7,7 +7,7 @@ import lombok.Setter;
 /**
  * image
  *
- * @author Jiaju Zhuang
+ *
  */
 @Getter
 @Setter

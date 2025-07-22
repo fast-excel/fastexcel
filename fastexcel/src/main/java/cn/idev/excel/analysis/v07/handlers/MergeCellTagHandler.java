@@ -10,7 +10,7 @@ import org.xml.sax.Attributes;
 /**
  * Cell Handler
  *
- * @author Jiaju Zhuang
+ *
  */
 public class MergeCellTagHandler extends AbstractXlsxTagHandler {
 

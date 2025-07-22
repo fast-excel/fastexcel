@@ -8,7 +8,7 @@ import lombok.Setter;
 /**
  * data format
  *
- * @author Jiaju Zhuang
+ *
  */
 @Getter
 @Setter

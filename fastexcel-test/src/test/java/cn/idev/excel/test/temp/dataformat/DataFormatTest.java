@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
 /**
  * 格式测试
  *
- * @author Jiaju Zhuang
+ *
  **/
 public class DataFormatTest {
 

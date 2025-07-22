@@ -7,7 +7,7 @@ import org.apache.poi.ss.util.CellReference;
 /**
  * Cell extra information.
  *
- * @author Jiaju Zhuang
+ *
  */
 public class CellExtra extends AbstractCell {
     /**

@@ -20,8 +20,6 @@ import org.apache.poi.ss.usermodel.CellType;
 
 /**
  * Record handler
- *
- * @author Dan Zheng
  */
 @Slf4j
 public class FormulaRecordHandler extends AbstractXlsRecordHandler implements IgnorableXlsRecordHandler {

@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
 /**
  * 临时测试
  *
- * @author Jiaju Zhuang
+ *
  **/
 @Slf4j
 public class Lock2Test {

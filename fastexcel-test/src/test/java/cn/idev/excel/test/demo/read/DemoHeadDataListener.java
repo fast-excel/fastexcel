@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * Reading headers
  *
- * @author Jiaju Zhuang
+ *
  */
 @Slf4j
 public class DemoHeadDataListener implements ReadListener<DemoData> {

@@ -11,7 +11,7 @@ import java.math.BigInteger;
 /**
  * BigInteger and boolean converter
  *
- * @author Jiaju Zhuang
+ *
  */
 public class BigIntegerBooleanConverter implements Converter<BigInteger> {
 

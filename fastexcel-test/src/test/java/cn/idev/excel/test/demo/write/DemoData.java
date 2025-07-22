@@ -10,7 +10,7 @@ import lombok.Setter;
 /**
  * Basic data class
  *
- * @author Jiaju Zhuang
+ *
  **/
 @Getter
 @Setter

@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Simple cache selector
  *
- * @author Jiaju Zhuang
+ *
  **/
 @Getter
 @Setter

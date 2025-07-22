@@ -14,7 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * Excel readers are all read in event mode.
  *
- * @author jipengfei
  */
 @Slf4j
 public class ExcelReader implements Closeable {

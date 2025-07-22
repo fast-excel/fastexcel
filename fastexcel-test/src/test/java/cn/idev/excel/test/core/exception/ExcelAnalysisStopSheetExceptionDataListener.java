@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 
 /**
- * @author Jiaju Zhuang
+ *
  */
 @Getter
 @Slf4j

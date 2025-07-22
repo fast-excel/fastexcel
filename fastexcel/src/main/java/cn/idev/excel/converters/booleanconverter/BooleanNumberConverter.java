@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 /**
  * Boolean and number converter
  *
- * @author Jiaju Zhuang
+ *
  */
 public class BooleanNumberConverter implements Converter<Boolean> {
     @Override

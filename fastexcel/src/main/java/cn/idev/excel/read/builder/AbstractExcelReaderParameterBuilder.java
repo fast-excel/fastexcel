@@ -8,7 +8,7 @@ import cn.idev.excel.util.ListUtils;
 /**
  * Build ExcelBuilder
  *
- * @author Jiaju Zhuang
+ *
  */
 public abstract class AbstractExcelReaderParameterBuilder<
                 T extends AbstractExcelReaderParameterBuilder, C extends ReadBasicParameter>

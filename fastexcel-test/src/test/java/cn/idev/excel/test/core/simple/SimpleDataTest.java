@@ -27,7 +27,7 @@ import org.junit.jupiter.api.TestMethodOrder;
  * <li>t1x: Synchronous reading tests</li>
  * <li>t2x: Specific feature tests (sheet name reading, pagination, etc.)</li>
  *
- * @author Jiaju Zhuang
+ *
  */
 @TestMethodOrder(MethodOrderer.MethodName.class)
 @Slf4j

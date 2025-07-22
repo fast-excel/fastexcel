@@ -13,7 +13,7 @@ import org.apache.poi.ss.usermodel.Row;
 /**
  * intercepts handle cell creation
  *
- * @author Jiaju Zhuang
+ *
  */
 public interface CellWriteHandler extends WriteHandler {
 

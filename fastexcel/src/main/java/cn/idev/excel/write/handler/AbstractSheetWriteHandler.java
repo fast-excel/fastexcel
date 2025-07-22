@@ -6,7 +6,7 @@ import cn.idev.excel.write.metadata.holder.WriteWorkbookHolder;
 /**
  * Abstract sheet write handler
  *
- * @author Jiaju Zhuang
+ *
  * @deprecated Please use it directly {@link SheetWriteHandler}
  **/
 @Deprecated

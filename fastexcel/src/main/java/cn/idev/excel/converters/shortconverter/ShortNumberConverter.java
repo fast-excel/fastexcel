@@ -12,7 +12,7 @@ import cn.idev.excel.util.NumberUtils;
 /**
  * Short and number converter
  *
- * @author Jiaju Zhuang
+ *
  */
 public class ShortNumberConverter implements Converter<Short> {
 

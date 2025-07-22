@@ -9,7 +9,7 @@ import lombok.Setter;
 /**
  * Configuration from annotations
  *
- * @author Jiaju Zhuang
+ *
  */
 @Getter
 @Setter

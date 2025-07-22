@@ -7,7 +7,7 @@ import java.util.Collection;
 /**
  * Get the corresponding Holder
  *
- * @author Jiaju Zhuang
+ *
  **/
 public interface WriteHolder extends ConfigurationHolder {
     /**

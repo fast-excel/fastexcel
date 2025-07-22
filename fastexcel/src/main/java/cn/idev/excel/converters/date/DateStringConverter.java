@@ -13,7 +13,7 @@ import java.util.Date;
 /**
  * Date and string converter
  *
- * @author Jiaju Zhuang
+ *
  */
 public class DateStringConverter implements Converter<Date> {
     @Override

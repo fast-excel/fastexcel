@@ -20,7 +20,7 @@ import org.apache.poi.hssf.record.Record;
 /**
  * In some cases, you need to know the number of sheets in advance and only read the file once in advance.
  *
- * @author Jiaju Zhuang
+ *
  */
 public class XlsListSheetListener implements HSSFListener {
     private final XlsReadContext xlsReadContext;

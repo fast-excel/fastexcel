@@ -11,7 +11,7 @@ import lombok.Setter;
  * Use ExcelProperty {@link ExcelProperty} to mark headers
  * </p>
  *
- * @author Jiaju Zhuang
+ *
  */
 @Getter
 @Setter

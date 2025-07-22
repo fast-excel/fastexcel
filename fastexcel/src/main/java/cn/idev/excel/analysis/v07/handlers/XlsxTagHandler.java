@@ -5,8 +5,6 @@ import org.xml.sax.Attributes;
 
 /**
  * Tag handler
- *
- * @author Dan Zheng
  */
 public interface XlsxTagHandler {
 

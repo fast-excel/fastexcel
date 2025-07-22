@@ -7,7 +7,7 @@ import java.util.Map;
 /**
  * excel internal data type
  *
- * @author Jiaju Zhuang
+ *
  */
 public enum CellDataTypeEnum {
     /**

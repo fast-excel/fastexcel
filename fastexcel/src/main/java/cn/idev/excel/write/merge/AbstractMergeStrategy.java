@@ -9,7 +9,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 /**
  * Merge strategy
  *
- * @author Jiaju Zhuang
+ *
  */
 public abstract class AbstractMergeStrategy implements CellWriteHandler {
 

@@ -22,7 +22,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 /**
  * bom test
  *
- * @author Jiaju Zhuang
+ *
  */
 @TestMethodOrder(MethodOrderer.MethodName.class)
 @Slf4j

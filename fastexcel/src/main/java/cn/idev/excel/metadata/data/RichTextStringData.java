@@ -12,7 +12,7 @@ import lombok.Setter;
 /**
  * rich text string
  *
- * @author Jiaju Zhuang
+ *
  */
 @Getter
 @Setter

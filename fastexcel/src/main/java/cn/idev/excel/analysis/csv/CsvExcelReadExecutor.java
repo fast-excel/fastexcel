@@ -32,8 +32,6 @@ import org.apache.commons.io.input.BOMInputStream;
 
 /**
  * CSV Excel Read Executor, responsible for reading and processing CSV files.
- *
- * @author zhuangjiaju
  */
 @Slf4j
 public class CsvExcelReadExecutor implements ExcelReadExecutor {

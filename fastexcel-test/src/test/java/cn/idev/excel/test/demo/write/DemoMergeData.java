@@ -10,7 +10,7 @@ import lombok.Setter;
 /**
  * 样式的数据类
  *
- * @author Jiaju Zhuang
+ *
  **/
 @Getter
 @Setter

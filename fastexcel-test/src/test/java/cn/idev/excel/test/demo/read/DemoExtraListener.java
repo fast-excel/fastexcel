@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Assertions;
 /**
  * Listener to read cell comments, hyperlinks, and merged cells.
  *
- * @author Jiaju Zhuang
+ *
  **/
 @Slf4j
 public class DemoExtraListener implements ReadListener<DemoExtraData> {

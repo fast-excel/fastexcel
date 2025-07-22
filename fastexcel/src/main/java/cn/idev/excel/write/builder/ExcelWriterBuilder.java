@@ -11,7 +11,7 @@ import java.nio.charset.Charset;
 /**
  * Build ExcelWriter
  *
- * @author Jiaju Zhuang
+ *
  */
 public class ExcelWriterBuilder extends AbstractExcelWriterParameterBuilder<ExcelWriterBuilder, WriteWorkbook> {
     /**

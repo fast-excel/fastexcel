@@ -8,7 +8,7 @@ import org.apache.poi.ss.usermodel.BorderStyle;
  * i.e., whether it is bordered dash dot, dash dot dot, dashed, dotted, double, hair, medium,
  * medium dash dot, medium dash dot dot, medium dashed, none, slant dash dot, thick or thin.
  *
- * @author Jiaju Zhuang
+ *
  */
 @Getter
 public enum BorderStyleEnum {

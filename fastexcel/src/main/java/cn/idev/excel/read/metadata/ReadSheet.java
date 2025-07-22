@@ -3,7 +3,6 @@ package cn.idev.excel.read.metadata;
 /**
  * Read sheet
  *
- * @author jipengfei
  */
 public class ReadSheet extends ReadBasicParameter {
     /**

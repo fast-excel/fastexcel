@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * Interface to listen for read results
  *
- * @author Jiaju Zhuang
+ *
  */
 public interface ReadListener<T> extends Listener {
     /**

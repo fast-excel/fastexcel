@@ -71,7 +71,6 @@ import org.slf4j.LoggerFactory;
  * To turn an excel file into a CSV or similar, then see the XLS2CSVmra example
  * </p>
  *
- * @author jipengfei
  * @see <a href="http://svn.apache.org/repos/asf/poi/trunk/src/examples/src/org/apache/poi/hssf/eventusermodel/examples/XLS2CSVmra.java">XLS2CSVmra</a>
  */
 @Slf4j

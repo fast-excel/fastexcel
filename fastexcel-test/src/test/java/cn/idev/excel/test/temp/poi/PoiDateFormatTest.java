@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 /**
  * 测试poi
  *
- * @author Jiaju Zhuang
+ *
  **/
 public class PoiDateFormatTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(PoiDateFormatTest.class);

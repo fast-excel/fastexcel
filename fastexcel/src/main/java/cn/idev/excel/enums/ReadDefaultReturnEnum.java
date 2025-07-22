@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 /**
  * Read not to {@code cn.idev.excel.metadata.BasicParameter#clazz} value, the default will return type.
  *
- * @author Jiaju Zhuang
+ *
  */
 public enum ReadDefaultReturnEnum {
     /**

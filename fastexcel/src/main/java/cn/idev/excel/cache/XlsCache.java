@@ -7,7 +7,7 @@ import org.apache.poi.hssf.record.SSTRecord;
  *
  * Use SSTRecord.
  *
- * @author Jiaju Zhuang
+ *
  */
 public class XlsCache implements ReadCache {
     private final SSTRecord sstRecord;

@@ -52,7 +52,7 @@ import java.util.Map;
 /**
  * Load default handler
  *
- * @author Jiaju Zhuang
+ *
  */
 public class DefaultConverterLoader {
     private static Map<ConverterKey, Converter<?>> defaultWriteConverter;

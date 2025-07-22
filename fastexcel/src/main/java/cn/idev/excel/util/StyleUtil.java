@@ -25,7 +25,7 @@ import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFRichTextString;
 
 /**
- * @author jipengfei
+ *
  */
 @Slf4j
 public class StyleUtil {

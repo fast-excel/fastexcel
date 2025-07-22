@@ -6,7 +6,7 @@ import java.math.RoundingMode;
 /**
  * Configuration from annotations
  *
- * @author Jiaju Zhuang
+ *
  */
 public class NumberFormatProperty {
     private String format;

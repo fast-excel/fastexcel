@@ -10,7 +10,7 @@ import lombok.Setter;
 /**
  * Basic data class. The order here is consistent with the order in the Excel file.
  *
- * @author Jiaju Zhuang
+ *
  **/
 @Getter
 @Setter

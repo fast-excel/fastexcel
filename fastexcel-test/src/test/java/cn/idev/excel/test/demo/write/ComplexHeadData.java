@@ -9,7 +9,7 @@ import lombok.Setter;
 /**
  * 复杂头数据.这里最终效果是第一行就一个主标题，第二行分类
  *
- * @author Jiaju Zhuang
+ *
  **/
 @Getter
 @Setter

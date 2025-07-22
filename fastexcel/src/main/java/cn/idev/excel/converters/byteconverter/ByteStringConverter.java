@@ -12,7 +12,7 @@ import java.text.ParseException;
 /**
  * Byte and string converter
  *
- * @author Jiaju Zhuang
+ *
  */
 public class ByteStringConverter implements Converter<Byte> {
 

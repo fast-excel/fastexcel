@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author Jiaju Zhuang
+ *
  */
 public class ExtraDataListener extends AnalysisEventListener<ExtraData> {
     private static final Logger LOGGER = LoggerFactory.getLogger(ExtraData.class);

@@ -8,9 +8,6 @@ import cn.idev.excel.metadata.property.ExcelContentProperty;
 
 /**
  * Convert between Java objects and excel objects
- *
- * @param <T>
- * @author Dan Zheng
  */
 public interface Converter<T> {
 

@@ -15,7 +15,6 @@ import java.util.List;
  *
  * A context is the main anchorage point of a excel reader.
  *
- * @author jipengfei
  */
 public interface AnalysisContext {
     /**

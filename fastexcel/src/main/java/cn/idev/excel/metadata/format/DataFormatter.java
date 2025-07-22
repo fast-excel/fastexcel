@@ -47,7 +47,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * This is a non-thread-safe class.
  *
- * @author Jiaju Zhuang
+ *
  */
 public class DataFormatter {
     /**
@@ -745,8 +745,6 @@ public class DataFormatter {
 
     /**
      * Format class for Excel's SSN format. This class mimics Excel's built-in SSN formatting.
-     *
-     * @author James May
      */
     @SuppressWarnings("serial")
     private static final class SSNFormat extends Format {
@@ -777,8 +775,6 @@ public class DataFormatter {
 
     /**
      * Format class for Excel Zip + 4 format. This class mimics Excel's built-in formatting for Zip + 4.
-     *
-     * @author James May
      */
     @SuppressWarnings("serial")
     private static final class ZipPlusFourFormat extends Format {
@@ -809,8 +805,6 @@ public class DataFormatter {
 
     /**
      * Format class for Excel phone number format. This class mimics Excel's built-in phone number formatting.
-     *
-     * @author James May
      */
     @SuppressWarnings("serial")
     private static final class PhoneFormat extends Format {

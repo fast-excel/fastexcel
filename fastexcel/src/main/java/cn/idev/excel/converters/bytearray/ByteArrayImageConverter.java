@@ -8,7 +8,7 @@ import cn.idev.excel.metadata.property.ExcelContentProperty;
 /**
  * Byte array and image converter
  *
- * @author Jiaju Zhuang
+ *
  */
 public class ByteArrayImageConverter implements Converter<byte[]> {
 

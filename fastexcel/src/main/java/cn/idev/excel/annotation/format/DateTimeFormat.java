@@ -15,7 +15,7 @@ import java.lang.annotation.Target;
  * <p>
  * read: It can be used on classes {@link String}
  *
- * @author Jiaju Zhuang
+ *
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)

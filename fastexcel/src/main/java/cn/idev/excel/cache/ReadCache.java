@@ -5,7 +5,7 @@ import cn.idev.excel.context.AnalysisContext;
 /**
  * Read cache
  *
- * @author Jiaju Zhuang
+ *
  */
 public interface ReadCache {
 

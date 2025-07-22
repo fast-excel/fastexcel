@@ -14,7 +14,7 @@ import java.math.BigDecimal;
  * This converter is responsible for converting between Java type BigDecimal and Excel's boolean type.
  * It treats Excel's true as BigDecimal.ONE, and false as BigDecimal.ZERO.
  *
- * @author Jiaju Zhuang
+ *
  */
 public class BigDecimalBooleanConverter implements Converter<BigDecimal> {
 

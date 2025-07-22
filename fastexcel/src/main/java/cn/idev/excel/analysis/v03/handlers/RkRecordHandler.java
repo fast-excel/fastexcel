@@ -8,8 +8,6 @@ import org.apache.poi.hssf.record.Record;
 
 /**
  * Record handler
- *
- * @author Dan Zheng
  */
 public class RkRecordHandler extends AbstractXlsRecordHandler implements IgnorableXlsRecordHandler {
 

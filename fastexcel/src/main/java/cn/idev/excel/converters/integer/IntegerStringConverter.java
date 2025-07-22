@@ -12,7 +12,7 @@ import java.text.ParseException;
 /**
  * Integer and string converter
  *
- * @author Jiaju Zhuang
+ *
  */
 public class IntegerStringConverter implements Converter<Integer> {
 

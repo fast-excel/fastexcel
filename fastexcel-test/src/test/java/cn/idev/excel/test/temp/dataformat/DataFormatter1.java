@@ -15,6 +15,7 @@
  * can be found in svn at location root/projects/3rd-party/src
  * ====================================================================
  */
+
 package cn.idev.excel.test.temp.dataformat;
 
 import cn.idev.excel.analysis.ExcelAnalyserImpl;
@@ -1138,8 +1139,6 @@ public class DataFormatter1 implements Observer {
 
     /**
      * Format class for Excel's SSN format. This class mimics Excel's built-in SSN formatting.
-     *
-     * @author James May
      */
     @SuppressWarnings("serial")
     private static final class SSNFormat extends Format {
@@ -1171,8 +1170,6 @@ public class DataFormatter1 implements Observer {
 
     /**
      * Format class for Excel Zip + 4 format. This class mimics Excel's built-in formatting for Zip + 4.
-     *
-     * @author James May
      */
     @SuppressWarnings("serial")
     private static final class ZipPlusFourFormat extends Format {
@@ -1204,8 +1201,6 @@ public class DataFormatter1 implements Observer {
 
     /**
      * Format class for Excel phone number format. This class mimics Excel's built-in phone number formatting.
-     *
-     * @author James May
      */
     @SuppressWarnings("serial")
     private static final class PhoneFormat extends Format {

@@ -13,7 +13,7 @@ import org.apache.poi.ss.usermodel.DataFormat;
 import org.apache.poi.ss.usermodel.IndexedColors;
 
 /**
- * @author Jiaju Zhuang
+ *
  */
 @Slf4j
 public class WriteCellHandler implements CellWriteHandler {

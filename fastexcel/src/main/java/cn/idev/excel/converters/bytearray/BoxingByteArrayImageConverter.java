@@ -8,7 +8,7 @@ import cn.idev.excel.metadata.property.ExcelContentProperty;
 /**
  * Boxing Byte array and image converter
  *
- * @author Jiaju Zhuang
+ *
  */
 public class BoxingByteArrayImageConverter implements Converter<Byte[]> {
     @Override

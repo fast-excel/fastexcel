@@ -15,7 +15,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.junit.jupiter.api.Assertions;
 
 /**
- * @author JiaJu Zhuang
+ *
  **/
 public class WriteHandler implements WorkbookWriteHandler, SheetWriteHandler, RowWriteHandler, CellWriteHandler {
 

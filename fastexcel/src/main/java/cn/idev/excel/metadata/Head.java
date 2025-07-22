@@ -15,7 +15,7 @@ import lombok.Setter;
 /**
  * excel head
  *
- * @author Jiaju Zhuang
+ *
  **/
 @Getter
 @Setter

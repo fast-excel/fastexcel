@@ -28,7 +28,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.openxmlformats.schemas.drawingml.x2006.spreadsheetDrawing.CTMarker;
 
 /**
- * @author Jiaju Zhuang
+ *
  */
 @TestMethodOrder(MethodOrderer.MethodName.class)
 public class FillAnnotationDataTest {

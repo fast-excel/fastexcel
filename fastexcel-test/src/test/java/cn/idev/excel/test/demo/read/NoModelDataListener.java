@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * Directly receive data using a map.
  *
- * @author Jiaju Zhuang
+ *
  */
 @Slf4j
 public class NoModelDataListener extends AnalysisEventListener<Map<Integer, String>> {

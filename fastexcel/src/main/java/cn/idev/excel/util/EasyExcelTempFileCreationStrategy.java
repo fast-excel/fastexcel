@@ -34,7 +34,7 @@ import org.apache.poi.util.TempFileCreationStrategy;
  * java.nio.file.NoSuchFileException. Therefore, it is necessary to verify the existence of the temporary file every
  * time it is created.
  *
- * @author Jiaju Zhuang
+ *
  */
 public class EasyExcelTempFileCreationStrategy implements TempFileCreationStrategy {
     /**

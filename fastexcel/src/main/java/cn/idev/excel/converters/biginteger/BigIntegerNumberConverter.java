@@ -12,7 +12,7 @@ import java.math.BigInteger;
 /**
  * BigInteger and number converter
  *
- * @author Jiaju Zhuang
+ *
  */
 public class BigIntegerNumberConverter implements Converter<BigInteger> {
 

@@ -11,7 +11,7 @@ import java.io.IOException;
 /**
  * File and image converter
  *
- * @author Jiaju Zhuang
+ *
  */
 public class FileImageConverter implements Converter<File> {
     @Override

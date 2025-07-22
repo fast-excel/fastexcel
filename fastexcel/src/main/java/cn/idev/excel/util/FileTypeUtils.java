@@ -7,7 +7,7 @@ import java.util.Map;
 /**
  * file type utils
  *
- * @author Jiaju Zhuang
+ *
  */
 public class FileTypeUtils {
 

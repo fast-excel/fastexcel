@@ -5,8 +5,6 @@ import org.apache.poi.hssf.record.Record;
 
 /**
  * Intercepts handle xls reads.
- *
- * @author Dan Zheng
  */
 public interface XlsRecordHandler {
     /**

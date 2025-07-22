@@ -7,7 +7,7 @@ import org.apache.poi.ss.usermodel.Row;
 /**
  * Abstract row write handler
  *
- * @author Jiaju Zhuang
+ *
  * @deprecated Please use it directly {@link RowWriteHandler}
  **/
 @Deprecated

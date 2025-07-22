@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 /**
  * 测试poi
  *
- * @author Jiaju Zhuang
+ *
  **/
 public class Poi3Test {
     private static final Logger LOGGER = LoggerFactory.getLogger(Poi3Test.class);

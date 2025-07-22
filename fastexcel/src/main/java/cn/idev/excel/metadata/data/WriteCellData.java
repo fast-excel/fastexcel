@@ -18,7 +18,7 @@ import org.apache.poi.ss.usermodel.CellStyle;
  * Class representing data for writing to a cell in an Excel sheet.
  *
  * @param <T> The type of data being written to the cell.
- * @author Jiaju Zhuang
+ *
  */
 @Getter
 @Setter

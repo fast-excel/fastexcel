@@ -11,7 +11,7 @@ import cn.idev.excel.util.NumberUtils;
 /**
  * Double and number converter
  *
- * @author Jiaju Zhuang
+ *
  */
 public class DoubleNumberConverter implements Converter<Double> {
 

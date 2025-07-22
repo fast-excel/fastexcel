@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Excel file Executor
  *
- * @author Jiaju Zhuang
+ *
  */
 public interface ExcelReadExecutor {
 

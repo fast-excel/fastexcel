@@ -9,7 +9,7 @@ import org.apache.poi.ss.util.CellRangeAddress;
 /**
  * It only merges once when create cell(firstRowIndex,lastRowIndex)
  *
- * @author Jiaju Zhuang
+ *
  */
 public class OnceAbsoluteMergeStrategy implements SheetWriteHandler {
     /**

@@ -11,7 +11,7 @@ import cn.idev.excel.util.NumberUtils;
 /**
  * Byte and number converter
  *
- * @author Jiaju Zhuang
+ *
  */
 public class ByteNumberConverter implements Converter<Byte> {
 

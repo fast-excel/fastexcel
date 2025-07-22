@@ -8,7 +8,7 @@ import cn.idev.excel.write.metadata.style.WriteCellStyle;
 /**
  * Use the same style for the column
  *
- * @author Jiaju Zhuang
+ *
  */
 public abstract class AbstractVerticalCellStyleStrategy extends AbstractCellStyleStrategy {
 

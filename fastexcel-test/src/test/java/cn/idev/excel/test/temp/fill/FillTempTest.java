@@ -19,7 +19,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Example of filling data into Excel templates.
  *
- * @author Jiaju Zhuang
+ *
  * @since 2.1.1
  */
 public class FillTempTest {

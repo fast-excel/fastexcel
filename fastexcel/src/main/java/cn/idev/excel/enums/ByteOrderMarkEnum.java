@@ -9,7 +9,7 @@ import org.apache.commons.io.ByteOrderMark;
 /**
  * byte order mark
  *
- * @author Jiaju Zhuang
+ *
  */
 @Getter
 public enum ByteOrderMarkEnum {

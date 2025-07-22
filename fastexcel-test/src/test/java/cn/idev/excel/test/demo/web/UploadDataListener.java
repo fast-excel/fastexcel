@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * 模板的读取类
  *
- * @author Jiaju Zhuang
+ *
  */
 // 有个很重要的点 DemoDataListener 不能被spring管理，要每次读取excel都要new,然后里面用到spring可以构造方法传进去
 @Slf4j

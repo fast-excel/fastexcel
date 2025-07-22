@@ -22,7 +22,7 @@ import javax.xml.parsers.SAXParserFactory;
 /**
  * Build ExcelReader
  *
- * @author Jiaju Zhuang
+ *
  */
 public class ExcelReaderBuilder extends AbstractExcelReaderParameterBuilder<ExcelReaderBuilder, ReadWorkbook> {
     /**

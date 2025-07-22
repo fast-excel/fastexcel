@@ -19,7 +19,7 @@ import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 /**
  * Workbook holder
  *
- * @author Jiaju Zhuang
+ *
  */
 @Getter
 @Setter

@@ -21,7 +21,6 @@ import lombok.extern.slf4j.Slf4j;
  *    2. Edit existing Excel, write the original Excel file, or write it to other places.}
  * </pre>
  *
- * @author jipengfei
  */
 @Slf4j
 public class ExcelWriter implements Closeable {

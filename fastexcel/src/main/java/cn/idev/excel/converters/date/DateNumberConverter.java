@@ -14,7 +14,7 @@ import org.apache.poi.ss.usermodel.DateUtil;
 /**
  * Date and number converter
  *
- * @author Jiaju Zhuang
+ *
  */
 public class DateNumberConverter implements Converter<Date> {
 

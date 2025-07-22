@@ -16,7 +16,7 @@ import java.util.Map;
  * Specific correspondence please see:
  * https://docs.microsoft.com/en-us/dotnet/api/documentformat.openxml.spreadsheet.numberingformat?view=openxml-2.8.1
  *
- * @author Jiaju Zhuang
+ *
  **/
 public class BuiltinFormats {
 

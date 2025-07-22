@@ -48,7 +48,7 @@ import org.apache.commons.collections4.CollectionUtils;
 /**
  * Write holder configuration
  *
- * @author Jiaju Zhuang
+ *
  */
 @Getter
 @Setter

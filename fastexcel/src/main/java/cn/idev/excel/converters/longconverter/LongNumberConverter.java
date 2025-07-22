@@ -12,7 +12,7 @@ import cn.idev.excel.util.NumberUtils;
 /**
  * Long and number converter
  *
- * @author Jiaju Zhuang
+ *
  */
 public class LongNumberConverter implements Converter<Long> {
 

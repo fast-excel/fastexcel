@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author Jiaju Zhuang
+ *
  */
 public class ConverterDataListener extends AnalysisEventListener<ConverterReadData> {
     private static final Logger LOGGER = LoggerFactory.getLogger(ConverterDataListener.class);

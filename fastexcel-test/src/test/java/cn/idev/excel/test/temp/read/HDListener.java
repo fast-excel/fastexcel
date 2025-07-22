@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 /**
  * 模板的读取类
  *
- * @author Jiaju Zhuang
+ *
  */
 public class HDListener extends AnalysisEventListener<HeadReadData> {
     private static final Logger LOGGER = LoggerFactory.getLogger(HDListener.class);

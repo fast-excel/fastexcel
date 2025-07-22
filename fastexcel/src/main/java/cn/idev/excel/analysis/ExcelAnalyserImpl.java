@@ -48,7 +48,6 @@ import org.slf4j.LoggerFactory;
  *     <li>Closing and cleaning up resources such as streams, caches, and temporary files.</li>
  * </ul>
  *
- * @author jipengfei
  */
 public class ExcelAnalyserImpl implements ExcelAnalyser {
     private static final Logger LOGGER = LoggerFactory.getLogger(ExcelAnalyserImpl.class);

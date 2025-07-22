@@ -11,7 +11,7 @@ import java.io.IOException;
 /**
  * String and image converter
  *
- * @author Jiaju Zhuang
+ *
  */
 public class StringImageConverter implements Converter<String> {
     @Override

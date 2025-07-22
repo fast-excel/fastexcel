@@ -20,7 +20,7 @@ import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
- * @author jipengfei
+ *
  */
 public class WorkBookUtil {
 

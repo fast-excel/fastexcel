@@ -10,7 +10,7 @@ import org.apache.poi.ss.usermodel.VerticalAlignment;
  * <!-- FIXME: Identical to {@link org.apache.poi.ss.usermodel.VerticalAlignment}. Should merge these to
  * {@link org.apache.poi.common.usermodel}.VerticalAlignment in the future. -->
  *
- * @author Jiaju Zhuang
+ *
  */
 @Getter
 public enum VerticalAlignmentEnum {

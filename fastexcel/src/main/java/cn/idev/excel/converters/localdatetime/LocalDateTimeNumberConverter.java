@@ -14,7 +14,7 @@ import org.apache.poi.ss.usermodel.DateUtil;
 /**
  * LocalDateTime and number converter
  *
- * @author Jiaju Zhuang
+ *
  */
 public class LocalDateTimeNumberConverter implements Converter<LocalDateTime> {
 

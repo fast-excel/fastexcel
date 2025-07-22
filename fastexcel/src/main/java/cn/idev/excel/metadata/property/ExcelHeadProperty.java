@@ -22,7 +22,6 @@ import org.slf4j.LoggerFactory;
 /**
  * Define the header attribute of excel
  *
- * @author jipengfei
  */
 @Getter
 @Setter

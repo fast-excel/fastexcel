@@ -15,7 +15,7 @@ import lombok.Setter;
 /**
  * 图片导出类
  *
- * @author Jiaju Zhuang
+ *
  */
 @Getter
 @Setter

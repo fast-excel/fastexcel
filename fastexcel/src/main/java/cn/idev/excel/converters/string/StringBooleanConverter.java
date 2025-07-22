@@ -10,7 +10,7 @@ import cn.idev.excel.metadata.property.ExcelContentProperty;
 /**
  * String and boolean converter
  *
- * @author Jiaju Zhuang
+ *
  */
 public class StringBooleanConverter implements Converter<String> {
 

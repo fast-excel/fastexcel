@@ -8,8 +8,6 @@ import org.apache.poi.hssf.record.SSTRecord;
 
 /**
  * Record handler
- *
- * @author Dan Zheng
  */
 public class SstRecordHandler extends AbstractXlsRecordHandler implements IgnorableXlsRecordHandler {
     @Override

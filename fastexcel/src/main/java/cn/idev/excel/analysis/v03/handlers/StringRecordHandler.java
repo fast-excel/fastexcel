@@ -11,8 +11,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Record handler
- *
- * @author Dan Zheng
  */
 public class StringRecordHandler extends AbstractXlsRecordHandler implements IgnorableXlsRecordHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(StringRecordHandler.class);

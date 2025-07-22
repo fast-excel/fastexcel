@@ -10,8 +10,6 @@ import org.apache.poi.ss.util.CellRangeAddress;
 
 /**
  * Record handler
- *
- * @author Dan Zheng
  */
 public class MergeCellsRecordHandler extends AbstractXlsRecordHandler implements IgnorableXlsRecordHandler {
 

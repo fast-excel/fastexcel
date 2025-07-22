@@ -9,7 +9,6 @@ import java.util.Map;
 /**
  * Receives the return of each piece of data parsed
  *
- * @author jipengfei
  */
 public abstract class AnalysisEventListener<T> implements ReadListener<T> {
 

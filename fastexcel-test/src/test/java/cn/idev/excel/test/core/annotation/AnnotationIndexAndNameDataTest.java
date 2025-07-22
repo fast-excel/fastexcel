@@ -13,7 +13,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 /**
  * Annotation data test
  *
- * @author Jiaju Zhuang
+ *
  */
 @TestMethodOrder(MethodOrderer.MethodName.class)
 public class AnnotationIndexAndNameDataTest {

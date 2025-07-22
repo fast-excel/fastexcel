@@ -13,7 +13,7 @@ import org.apache.commons.collections4.CollectionUtils;
 /**
  * Use the same style for the row
  *
- * @author Jiaju Zhuang
+ *
  */
 @Getter
 @Setter

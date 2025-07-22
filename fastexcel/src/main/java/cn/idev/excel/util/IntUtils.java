@@ -3,7 +3,7 @@ package cn.idev.excel.util;
 /**
  * Int utils
  *
- * @author Jiaju Zhuang
+ *
  **/
 public class IntUtils {
     private IntUtils() {}

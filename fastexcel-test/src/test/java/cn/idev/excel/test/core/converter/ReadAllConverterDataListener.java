@@ -16,7 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author Jiaju Zhuang
+ *
  */
 public class ReadAllConverterDataListener extends AnalysisEventListener<ReadAllConverterData> {
     private static final Logger LOGGER = LoggerFactory.getLogger(ReadAllConverterDataListener.class);

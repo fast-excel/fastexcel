@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author Jiaju Zhuang
+ *
  */
 public class ExceptionThrowDataListener implements ReadListener<ExceptionData> {
     private static final Logger LOGGER = LoggerFactory.getLogger(ExceptionData.class);

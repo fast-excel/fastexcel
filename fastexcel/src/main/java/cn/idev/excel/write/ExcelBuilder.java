@@ -8,7 +8,7 @@ import cn.idev.excel.write.metadata.fill.FillConfig;
 import java.util.Collection;
 
 /**
- * @author jipengfei
+ *
  */
 public interface ExcelBuilder {
 

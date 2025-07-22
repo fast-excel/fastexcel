@@ -11,7 +11,7 @@ import java.util.Date;
 /**
  * Date and date converter
  *
- * @author Jiaju Zhuang
+ *
  */
 public class DateDateConverter implements Converter<Date> {
     @Override

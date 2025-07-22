@@ -5,7 +5,6 @@ import cn.idev.excel.context.xlsx.XlsxReadContext;
 /**
  * Cell Value Handler
  *
- * @author jipengfei
  */
 public abstract class AbstractCellValueTagHandler extends AbstractXlsxTagHandler {
 

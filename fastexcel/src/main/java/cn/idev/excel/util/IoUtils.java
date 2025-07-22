@@ -8,7 +8,7 @@ import java.io.OutputStream;
 /**
  * IO Utils
  *
- * @author Jiaju Zhuang
+ *
  */
 public class IoUtils {
     public static final int EOF = -1;

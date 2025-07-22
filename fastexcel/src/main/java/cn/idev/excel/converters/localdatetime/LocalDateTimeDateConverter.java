@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 /**
  * LocalDateTime and date converter
  *
- * @author Jiaju Zhuang
+ *
  */
 public class LocalDateTimeDateConverter implements Converter<LocalDateTime> {
     @Override

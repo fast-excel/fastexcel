@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Sheet utils
  *
- * @author Jiaju Zhuang
+ *
  */
 public class SheetUtils {
     private static final Logger LOGGER = LoggerFactory.getLogger(SheetUtils.class);

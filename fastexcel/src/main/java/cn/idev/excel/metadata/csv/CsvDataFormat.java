@@ -11,7 +11,7 @@ import org.apache.poi.ss.usermodel.DataFormat;
 /**
  * format data
  *
- * @author Jiaju Zhuang
+ *
  */
 public class CsvDataFormat implements DataFormat {
     /**

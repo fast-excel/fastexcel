@@ -6,9 +6,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * TODO
- *
- * @author 罗成
  **/
 @Getter
 @Setter

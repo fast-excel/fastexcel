@@ -14,7 +14,6 @@ import org.apache.poi.ss.usermodel.Workbook;
 /**
  * Write context
  *
- * @author jipengfei
  */
 public interface WriteContext {
     /**

@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Putting temporary data directly into a map is a little more efficient but very memory intensive
  *
- * @author Jiaju Zhuang
+ *
  */
 public class MapCache implements ReadCache {
     private final List<String> cache = new ArrayList<>();

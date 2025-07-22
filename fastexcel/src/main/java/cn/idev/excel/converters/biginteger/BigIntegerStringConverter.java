@@ -13,7 +13,7 @@ import java.text.ParseException;
 /**
  * BigDecimal and string converter
  *
- * @author Jiaju Zhuang
+ *
  */
 public class BigIntegerStringConverter implements Converter<BigInteger> {
 

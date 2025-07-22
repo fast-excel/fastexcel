@@ -15,7 +15,6 @@ import org.xml.sax.Attributes;
 /**
  * Cell Handler
  *
- * @author jipengfei
  */
 public class CellTagHandler extends AbstractXlsxTagHandler {
 

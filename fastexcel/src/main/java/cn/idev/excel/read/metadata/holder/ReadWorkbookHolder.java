@@ -27,7 +27,7 @@ import lombok.Setter;
 /**
  * Workbook holder
  *
- * @author Jiaju Zhuang
+ *
  */
 @Getter
 @Setter

@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author Jiaju Zhuang
+ *
  */
 public class CellDataDataListener extends AnalysisEventListener<CellDataReadData> {
     private static final Logger LOGGER = LoggerFactory.getLogger(CellDataDataListener.class);

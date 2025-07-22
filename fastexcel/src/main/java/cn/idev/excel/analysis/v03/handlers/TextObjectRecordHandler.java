@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Record handler
  *
- * @author Jiaju Zhuang
+ *
  */
 public class TextObjectRecordHandler extends AbstractXlsRecordHandler implements IgnorableXlsRecordHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(TextObjectRecordHandler.class);

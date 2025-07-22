@@ -10,7 +10,7 @@ import java.text.ParseException;
 /**
  * Number utils
  *
- * @author Jiaju Zhuang
+ *
  */
 public class NumberUtils {
     private NumberUtils() {}

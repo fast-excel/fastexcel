@@ -14,7 +14,7 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 /**
  * Configuration from annotations
  *
- * @author Jiaju Zhuang
+ *
  */
 @Getter
 @Setter

@@ -6,7 +6,7 @@ import java.math.RoundingMode;
 /**
  * Used to store constant
  *
- * @author Jiaju Zhuang
+ *
  */
 public class EasyExcelConstants {
 

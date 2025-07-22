@@ -27,7 +27,7 @@ import org.xml.sax.helpers.DefaultHandler;
 /**
  * Sax read sharedStringsTable.xml
  *
- * @author Jiaju Zhuang
+ *
  */
 public class SharedStringsTableHandler extends DefaultHandler {
 

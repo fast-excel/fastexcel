@@ -7,7 +7,6 @@ import java.util.List;
 /**
  * Define the header attribute of excel
  *
- * @author jipengfei
  */
 public class ExcelReadHeadProperty extends ExcelHeadProperty {
 

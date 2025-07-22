@@ -5,7 +5,7 @@ import java.util.Collection;
 /**
  * Multiple lists are supported when packing
  *
- * @author Jiaju Zhuang
+ *
  **/
 public class FillWrapper {
     /**

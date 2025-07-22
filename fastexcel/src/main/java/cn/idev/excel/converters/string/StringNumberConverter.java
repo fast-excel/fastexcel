@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 /**
  * String and number converter
  *
- * @author Jiaju Zhuang
+ *
  */
 public class StringNumberConverter implements Converter<String> {
 

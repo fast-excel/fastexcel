@@ -3,7 +3,7 @@ package cn.idev.excel.util;
 import java.util.regex.Pattern;
 
 /**
- * @author jipengfei
+ *
  */
 public class PositionUtils {
 

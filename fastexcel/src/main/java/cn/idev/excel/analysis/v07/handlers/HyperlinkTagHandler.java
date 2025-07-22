@@ -13,7 +13,7 @@ import org.xml.sax.Attributes;
 /**
  * Cell Handler
  *
- * @author Jiaju Zhuang
+ *
  */
 public class HyperlinkTagHandler extends AbstractXlsxTagHandler {
 

@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * Template reading class
  *
- * @author Jiaju Zhuang
+ *
  */
 // An important point is that DemoDataListener should not be managed by Spring.
 // It needs to be newly created each time an Excel file is read.

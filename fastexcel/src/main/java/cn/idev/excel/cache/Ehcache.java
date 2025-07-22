@@ -19,7 +19,7 @@ import org.ehcache.config.units.MemoryUnit;
 /**
  * Default cache
  *
- * @author Jiaju Zhuang
+ *
  */
 @Slf4j
 public class Ehcache implements ReadCache {

@@ -7,7 +7,7 @@ import org.apache.poi.ss.usermodel.Row;
 /**
  * Set the row height strategy
  *
- * @author Jiaju Zhuang
+ *
  */
 public abstract class AbstractRowHeightStyleStrategy implements RowWriteHandler {
     @Override

@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Load default handler
  *
- * @author Jiaju Zhuang
+ *
  */
 public class DefaultWriteHandlerLoader {
 

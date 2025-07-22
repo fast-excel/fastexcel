@@ -9,7 +9,7 @@ import org.apache.poi.ss.usermodel.Cell;
 /**
  * Cell style strategy
  *
- * @author Jiaju Zhuang
+ *
  */
 public abstract class AbstractCellStyleStrategy implements CellWriteHandler {
 

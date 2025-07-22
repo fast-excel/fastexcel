@@ -20,7 +20,7 @@ import java.util.Map;
 /**
  * Converting objects
  *
- * @author Jiaju Zhuang
+ *
  **/
 public class ConverterUtils {
     public static Class<?> defaultClassGeneric = String.class;

@@ -11,7 +11,7 @@ import java.io.InputStream;
 /**
  * File and image converter
  *
- * @author Jiaju Zhuang
+ *
  */
 public class InputStreamImageConverter implements Converter<InputStream> {
     @Override

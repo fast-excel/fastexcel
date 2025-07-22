@@ -5,7 +5,7 @@ import java.util.Map;
 /**
  * A map row of data.
  *
- * @author Jiaju Zhuang
+ *
  */
 public class MapRowData implements RowData {
 

@@ -12,7 +12,7 @@ import java.text.ParseException;
 /**
  * Double and string converter
  *
- * @author Jiaju Zhuang
+ *
  */
 public class DoubleStringConverter implements Converter<Double> {
 

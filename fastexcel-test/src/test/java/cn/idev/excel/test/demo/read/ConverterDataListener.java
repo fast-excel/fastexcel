@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * Template data reading class
  *
- * @author Jiaju Zhuang
+ *
  */
 @Slf4j
 public class ConverterDataListener implements ReadListener<ConverterData> {

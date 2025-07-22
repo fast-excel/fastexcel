@@ -5,7 +5,6 @@ import cn.idev.excel.context.AnalysisContext;
 /**
  * Event processor
  *
- * @author jipengfei
  */
 public interface AnalysisEventProcessor {
     /**

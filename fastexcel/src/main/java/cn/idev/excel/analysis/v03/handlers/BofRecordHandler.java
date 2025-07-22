@@ -13,8 +13,6 @@ import org.apache.poi.hssf.record.Record;
 
 /**
  * Record handler
- *
- * @author Dan Zheng
  */
 public class BofRecordHandler extends AbstractXlsRecordHandler {
 

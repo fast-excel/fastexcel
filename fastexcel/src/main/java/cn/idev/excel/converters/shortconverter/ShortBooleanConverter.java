@@ -10,7 +10,7 @@ import cn.idev.excel.metadata.property.ExcelContentProperty;
 /**
  * Short and boolean converter
  *
- * @author Jiaju Zhuang
+ *
  */
 public class ShortBooleanConverter implements Converter<Short> {
     private static final Short ONE = 1;

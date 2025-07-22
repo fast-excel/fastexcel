@@ -11,7 +11,7 @@ import lombok.Setter;
 /**
  * Basic parameter
  *
- * @author Jiaju Zhuang
+ *
  **/
 @Getter
 @Setter

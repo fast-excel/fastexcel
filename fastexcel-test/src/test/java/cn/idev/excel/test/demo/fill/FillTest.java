@@ -19,7 +19,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Example of writing and filling data into Excel
  *
- * @author Jiaju Zhuang
+ *
  * @since 2.1.1
  */
 public class FillTest {

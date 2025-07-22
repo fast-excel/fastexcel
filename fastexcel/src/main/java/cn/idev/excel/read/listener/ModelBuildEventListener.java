@@ -24,7 +24,6 @@ import java.util.Map;
 /**
  * Convert to the object the user needs
  *
- * @author jipengfei
  */
 public class ModelBuildEventListener implements IgnoreExceptionReadListener<Map<Integer, ReadCellData<?>>> {
 

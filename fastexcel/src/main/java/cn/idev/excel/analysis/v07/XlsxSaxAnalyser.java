@@ -52,7 +52,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
 /**
- * @author jipengfei
+ *
  */
 @Slf4j
 public class XlsxSaxAnalyser implements ExcelReadExecutor {

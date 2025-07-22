@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author Jiaju Zhuang
+ *
  */
 public class LargeDataListener extends AnalysisEventListener<LargeData> {
     private static final Logger LOGGER = LoggerFactory.getLogger(LargeDataListener.class);

@@ -31,7 +31,7 @@ import org.apache.poi.ss.usermodel.Row;
 /**
  * Add the data into excel
  *
- * @author Jiaju Zhuang
+ *
  */
 public class ExcelWriteAddExecutor extends AbstractExcelWriteExecutor {
 

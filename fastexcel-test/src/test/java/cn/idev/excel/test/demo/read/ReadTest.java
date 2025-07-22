@@ -26,7 +26,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Common approaches for reading Excel files
  *
- * @author Jiaju Zhuang
+ *
  */
 @Slf4j
 public class ReadTest {
