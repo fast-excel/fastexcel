@@ -118,7 +118,7 @@ public class WriteHandlerUtils {
     }
 
     public static void beforeCellCreate(CellWriteHandlerContext context) {
-        CellHandlerExecutionChain cellHandlerExecutionChain = ((AbstractWriteHolder)context.getWriteContext()
+        CellHandlerExecutionChain cellHandlerExecutionChain = ((AbstractWriteHolder) context.getWriteContext()
             .currentWriteHolder()).getCellHandlerExecutionChain();
         if (cellHandlerExecutionChain != null) {
             cellHandlerExecutionChain.beforeCellCreate(context);
@@ -126,7 +126,7 @@ public class WriteHandlerUtils {
     }
 
     public static void afterCellCreate(CellWriteHandlerContext context) {
-        CellHandlerExecutionChain cellHandlerExecutionChain = ((AbstractWriteHolder)context.getWriteContext()
+        CellHandlerExecutionChain cellHandlerExecutionChain = ((AbstractWriteHolder) context.getWriteContext()
             .currentWriteHolder()).getCellHandlerExecutionChain();
         if (cellHandlerExecutionChain != null) {
             cellHandlerExecutionChain.afterCellCreate(context);
@@ -134,7 +134,7 @@ public class WriteHandlerUtils {
     }
 
     public static void afterCellDataConverted(CellWriteHandlerContext context) {
-        CellHandlerExecutionChain cellHandlerExecutionChain = ((AbstractWriteHolder)context.getWriteContext()
+        CellHandlerExecutionChain cellHandlerExecutionChain = ((AbstractWriteHolder) context.getWriteContext()
             .currentWriteHolder()).getCellHandlerExecutionChain();
         if (cellHandlerExecutionChain != null) {
             cellHandlerExecutionChain.afterCellDataConverted(context);
@@ -142,7 +142,7 @@ public class WriteHandlerUtils {
     }
 
     public static void afterCellDispose(CellWriteHandlerContext context) {
-        CellHandlerExecutionChain cellHandlerExecutionChain = ((AbstractWriteHolder)context.getWriteContext()
+        CellHandlerExecutionChain cellHandlerExecutionChain = ((AbstractWriteHolder) context.getWriteContext()
             .currentWriteHolder()).getCellHandlerExecutionChain();
         if (cellHandlerExecutionChain != null) {
             cellHandlerExecutionChain.afterCellDispose(context);
@@ -156,7 +156,7 @@ public class WriteHandlerUtils {
     }
 
     public static void beforeRowCreate(RowWriteHandlerContext context) {
-        RowHandlerExecutionChain rowHandlerExecutionChain = ((AbstractWriteHolder)context.getWriteContext()
+        RowHandlerExecutionChain rowHandlerExecutionChain = ((AbstractWriteHolder) context.getWriteContext()
             .currentWriteHolder()).getRowHandlerExecutionChain();
         if (rowHandlerExecutionChain != null) {
             rowHandlerExecutionChain.beforeRowCreate(context);
@@ -164,7 +164,7 @@ public class WriteHandlerUtils {
     }
 
     public static void afterRowCreate(RowWriteHandlerContext context) {
-        RowHandlerExecutionChain rowHandlerExecutionChain = ((AbstractWriteHolder)context.getWriteContext()
+        RowHandlerExecutionChain rowHandlerExecutionChain = ((AbstractWriteHolder) context.getWriteContext()
             .currentWriteHolder()).getRowHandlerExecutionChain();
         if (rowHandlerExecutionChain != null) {
             rowHandlerExecutionChain.afterRowCreate(context);
@@ -172,11 +172,20 @@ public class WriteHandlerUtils {
     }
 
     public static void afterRowDispose(RowWriteHandlerContext context) {
-        RowHandlerExecutionChain rowHandlerExecutionChain = ((AbstractWriteHolder)context.getWriteContext()
+        RowHandlerExecutionChain rowHandlerExecutionChain = ((AbstractWriteHolder) context.getWriteContext()
             .currentWriteHolder()).getRowHandlerExecutionChain();
         if (rowHandlerExecutionChain != null) {
             rowHandlerExecutionChain.afterRowDispose(context);
         }
     }
+
+    public static void afterSheetDispose(WriteContext writeContext) {
+        SheetWriteHandlerContext context = WriteHandlerUtils.createSheetWriteHandlerContext(writeContext);
+        SheetHandlerExecutionChain sheetHandlerExecutionChain = getSheetHandlerExecutionChain(context, false);
+        if (sheetHandlerExecutionChain != null) {
+            sheetHandlerExecutionChain.afterSheetDispose(context);
+        }
+    }
+
 
 }
