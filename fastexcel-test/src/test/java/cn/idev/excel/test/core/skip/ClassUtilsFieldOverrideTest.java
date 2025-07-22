@@ -79,6 +79,36 @@ public class ClassUtilsFieldOverrideTest {
         private String field;
     }
     
+    @Getter
+    @Setter
+    static class Parent5 {
+        
+        @ExcelProperty("parent5Field")
+        private String field;
+    }
+    
+    @Getter
+    @Setter
+    static class Child5 extends Parent5 {
+        
+        private String field;
+    }
+    
+    @Getter
+    @Setter
+    static class Parent6 {
+        
+        @ExcelIgnore
+        private String field;
+    }
+    
+    @Getter
+    @Setter
+    static class Child6 extends Parent6 {
+        
+        private String field;
+    }
+    
     
     @Test
     public void validateHeaderWithExcelIgnore(@TempDir Path tempDir) {
@@ -162,6 +192,38 @@ public class ClassUtilsFieldOverrideTest {
         FastExcel.write(file8.toString(), Child4.class).sheet().doWrite(data8);
         List<String> header8 = readHeader.apply(file8);
         Assertions.assertTrue(header8.contains("child4Field"), "Child4 should contain child4Field");
+        
+        // Parent5: should contain parent5Field
+        Path file9 = tempDir.resolve("parent5.xlsx");
+        List<Parent5> data9 = new ArrayList<>();
+        data9.add(new Parent5());
+        FastExcel.write(file9.toString(), Parent5.class).sheet().doWrite(data9);
+        List<String> header9 = readHeader.apply(file9);
+        Assertions.assertTrue(header9.contains("parent5Field"), "Parent5 should contain parent5Field");
+        
+        // Child5: should contain field
+        Path file10 = tempDir.resolve("child5.xlsx");
+        List<Child5> data10 = new ArrayList<>();
+        data10.add(new Child5());
+        FastExcel.write(file10.toString(), Child5.class).sheet().doWrite(data10);
+        List<String> header10 = readHeader.apply(file10);
+        Assertions.assertTrue(header10.contains("field"), "Child5 should contain field");
+        
+        // Parent6: should NOT contain field
+        Path file11 = tempDir.resolve("parent6.xlsx");
+        List<Parent6> data11 = new ArrayList<>();
+        data11.add(new Parent6());
+        FastExcel.write(file11.toString(), Parent6.class).sheet().doWrite(data11);
+        List<String> header11 = readHeader.apply(file11);
+        Assertions.assertFalse(header11.contains("field"), "Parent6 should NOT contain field");
+        
+        // Child6: should contain field
+        Path file12 = tempDir.resolve("child6.xlsx");
+        List<Child6> data12 = new ArrayList<>();
+        data12.add(new Child6());
+        FastExcel.write(file12.toString(), Child6.class).sheet().doWrite(data12);
+        List<String> header12 = readHeader.apply(file12);
+        Assertions.assertTrue(header12.contains("field"), "Child6 should contain field");
     }
     
     
