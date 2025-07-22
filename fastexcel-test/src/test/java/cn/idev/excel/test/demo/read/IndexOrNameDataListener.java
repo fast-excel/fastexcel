@@ -10,21 +10,24 @@ import com.alibaba.fastjson2.JSON;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * 模板的读取类
+ * Template reading class
  *
  * @author Jiaju Zhuang
  */
 @Slf4j
 public class IndexOrNameDataListener extends AnalysisEventListener<IndexOrNameData> {
+
     /**
-     * 每隔5条存储数据库，实际使用中可以100条，然后清理list ，方便内存回收
+     * Store data in the database every 5 records. In actual use, it can be 100 records,
+     * and then clear the list to facilitate memory recycling.
      */
     private static final int BATCH_COUNT = 5;
+
     private List<IndexOrNameData> cachedDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
 
     @Override
     public void invoke(IndexOrNameData data, AnalysisContext context) {
-        log.info("解析到一条数据:{}", JSON.toJSONString(data));
+        log.info("Parsed one row of data: {}", JSON.toJSONString(data));
         cachedDataList.add(data);
         if (cachedDataList.size() >= BATCH_COUNT) {
             saveData();
@@ -35,14 +38,14 @@ public class IndexOrNameDataListener extends AnalysisEventListener<IndexOrNameDa
     @Override
     public void doAfterAllAnalysed(AnalysisContext context) {
         saveData();
-        log.info("所有数据解析完成！");
+        log.info("All data has been parsed!");
     }
 
     /**
-     * 加上存储数据库
+     * Store data in the database
      */
     private void saveData() {
-        log.info("{}条数据，开始存储数据库！", cachedDataList.size());
-        log.info("存储数据库成功！");
+        log.info("{} records are being stored in the database!", cachedDataList.size());
+        log.info("Data has been successfully stored in the database!");
     }
 }

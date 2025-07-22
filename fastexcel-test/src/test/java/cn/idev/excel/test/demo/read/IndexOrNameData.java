@@ -9,7 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * 基础数据类
+ * Basic data class
  *
  * @author Jiaju Zhuang
  **/
@@ -18,15 +18,17 @@ import lombok.Setter;
 @EqualsAndHashCode
 public class IndexOrNameData {
     /**
-     * 强制读取第三个 这里不建议 index 和 name 同时用，要么一个对象只用index，要么一个对象只用name去匹配
+     * Force reading the third column. It is not recommended to use both index and name at the same time.
+     * Either use index only or use name only for matching within a single object.
      */
     @ExcelProperty(index = 2)
     private Double doubleData;
     /**
-     * 用名字去匹配，这里需要注意，如果名字重复，会导致只有一个字段读取到数据
+     * Match by name. Note that if the name is duplicated, only one field will be populated with data.
      */
-    @ExcelProperty("字符串标题")
+    @ExcelProperty("String")
     private String string;
-    @ExcelProperty("日期标题")
+
+    @ExcelProperty("Date")
     private Date date;
 }

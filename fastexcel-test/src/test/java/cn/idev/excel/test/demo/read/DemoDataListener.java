@@ -10,34 +10,39 @@ import com.alibaba.fastjson2.JSON;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * 模板的读取类
+ * Template reading class
  *
  * @author Jiaju Zhuang
  */
-// 有个很重要的点 DemoDataListener 不能被spring管理，要每次读取excel都要new,然后里面用到spring可以构造方法传进去
+// An important point is that DemoDataListener should not be managed by Spring.
+// It needs to be newly created each time an Excel file is read.
+// If Spring is used inside, it can be passed through the constructor.
 @Slf4j
 public class DemoDataListener implements ReadListener<DemoData> {
 
     /**
-     * 每隔5条存储数据库，实际使用中可以100条，然后清理list ，方便内存回收
+     * Store data in the database every 5 records. In actual use, it can be 100 records,
+     * and then clear the list to facilitate memory recycling.
      */
     private static final int BATCH_COUNT = 100;
     /**
-     * 缓存的数据
+     * Cached data
      */
     private List<DemoData> cachedDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
     /**
-     * 假设这个是一个DAO，当然有业务逻辑这个也可以是一个service。当然如果不用存储这个对象没用。
+     * Assume this is a DAO. Of course, if there is business logic, this can also be a service.
+     * If the data does not need to be stored, this object is useless.
      */
     private DemoDAO demoDAO;
 
     public DemoDataListener() {
-        // 这里是demo，所以随便new一个。实际使用如果到了spring,请使用下面的有参构造函数
+        // This is a demo, so a new instance is created here. In actual use with Spring,
+        // please use the constructor with parameters below.
         demoDAO = new DemoDAO();
     }
 
     /**
-     * 如果使用了spring,请使用这个构造方法。每次创建Listener的时候需要把spring管理的类传进来
+     * If Spring is used, please use this constructor. When creating a Listener, the class managed by Spring needs to be passed in.
      *
      * @param demoDAO
      */
@@ -46,41 +51,42 @@ public class DemoDataListener implements ReadListener<DemoData> {
     }
 
     /**
-     * 这个每一条数据解析都会来调用
+     * This method will be called for each data parsed.
      *
      * @param data    one row value. It is same as {@link AnalysisContext#readRowHolder()}
      * @param context
      */
     @Override
     public void invoke(DemoData data, AnalysisContext context) {
-        log.info("解析到一条数据:{}", JSON.toJSONString(data));
+        log.info("Parsed one row of data: {}", JSON.toJSONString(data));
         cachedDataList.add(data);
-        // 达到BATCH_COUNT了，需要去存储一次数据库，防止数据几万条数据在内存，容易OOM
+        // When the number of records reaches BATCH_COUNT, the data needs to be stored in the database to prevent tens of
+        // thousands of records from being held in memory, which can easily cause OutOfMemoryError (OOM).
         if (cachedDataList.size() >= BATCH_COUNT) {
             saveData();
-            // 存储完成清理 list
+            // Clear the list after storage
             cachedDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
         }
     }
 
     /**
-     * 所有数据解析完成了 都会来调用
+     * This method will be called after all data has been parsed.
      *
      * @param context
      */
     @Override
     public void doAfterAllAnalysed(AnalysisContext context) {
-        // 这里也要保存数据，确保最后遗留的数据也存储到数据库
+        // Data needs to be saved here to ensure that any remaining data is stored in the database.
         saveData();
-        log.info("所有数据解析完成！");
+        log.info("All data has been parsed!");
     }
 
     /**
-     * 加上存储数据库
+     * Store data in the database
      */
     private void saveData() {
-        log.info("{}条数据，开始存储数据库！", cachedDataList.size());
+        log.info("{} records are being stored in the database!", cachedDataList.size());
         demoDAO.save(cachedDataList);
-        log.info("存储数据库成功！");
+        log.info("Data has been successfully stored in the database!");
     }
 }

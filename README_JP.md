@@ -37,7 +37,7 @@ Mavenでプロジェクトを構築する場合、`pom.xml`ファイルに次の
 <dependency>
     <groupId>cn.idev.excel</groupId>
     <artifactId>fastexcel</artifactId>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
 </dependency>
 ```
 ### Gradle
@@ -45,7 +45,7 @@ Mavenでプロジェクトを構築する場合、`pom.xml`ファイルに次の
 Gradleでプロジェクトを構築する場合、build.gradleファイルに次の構成を含めてください：
 ```gradle
 dependencies {
-    implementation 'cn.idev.excel:fastexcel:1.1.0'
+    implementation 'cn.idev.excel:fastexcel:1.2.0'
 }
 ```
 ## 更新する
@@ -70,7 +70,7 @@ EasyExcelの依存関係をFastExcelの依存関係に置き換えます。以�
 <dependency>
     <groupId>cn.idev.excel</groupId>
     <artifactId>fastexcel</artifactId>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
 </dependency>
 ```
 ### 2. コードの修正

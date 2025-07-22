@@ -16,14 +16,18 @@ import cn.idev.excel.test.util.TestFileUtil;
 import cn.idev.excel.util.ListUtils;
 import com.alibaba.fastjson2.JSON;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.springframework.core.io.ClassPathResource;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 /**
- * 读的常见写法
+ * Common approaches for reading Excel files
  *
  * @author Jiaju Zhuang
  */
@@ -32,39 +36,39 @@ import java.util.Map;
 public class ReadTest {
 
     /**
-     * 最简单的读
+     * Simplest way to read
      * <p>
-     * 1. 创建excel对应的实体对象 参照{@link DemoData}
+     * 1. Create an entity class corresponding to the Excel data structure. Refer to {@link DemoData}.
      * <p>
-     * 2. 由于默认一行行的读取excel，所以需要创建excel一行一行的回调监听器，参照{@link DemoDataListener}
+     * 2. Since EasyExcel reads Excel files row by row, you need to create a callback listener for each row. Refer to {@link DemoDataListener}.
      * <p>
-     * 3. 直接读即可
+     * 3. Directly read the file.
      */
     @Test
     public void simpleRead() {
-        // 写法1：JDK8+ ,不用额外写一个DemoDataListener
+        // Approach 1: JDK8+, no need to create a separate DemoDataListener
         // since: 3.0.0-beta1
         String fileName = TestFileUtil.getPath() + "demo" + File.separator + "demo.xlsx";
-        // 这里 需要指定读用哪个class去读，然后读取第一个sheet 文件流会自动关闭
-        // 这里默认每次会读取100条数据 然后返回过来 直接调用使用数据就行
-        // 具体需要返回多少行可以在`PageReadListener`的构造函数设置
+        // Specify the class to read the data, then read the first sheet. The file stream will be automatically closed.
+        // By default, it reads 100 rows at a time. You can process the data directly.
+        // The number of rows to read can be set in the constructor of `PageReadListener`.
         EasyExcel.read(fileName, DemoData.class, new PageReadListener<DemoData>(dataList -> {
             for (DemoData demoData : dataList) {
-                log.info("读取到一条数据{}", JSON.toJSONString(demoData));
+                log.info("Reading a row of data: {}", JSON.toJSONString(demoData));
             }
         })).numRows(2).sheet().doRead();
 
-        // 写法2：
-        // 匿名内部类 不用额外写一个DemoDataListener
+        // Approach 2:
+        // Anonymous inner class, no need to create a separate DemoDataListener
         fileName = TestFileUtil.getPath() + "demo" + File.separator + "demo.xlsx";
-        // 这里 需要指定读用哪个class去读，然后读取第一个sheet 文件流会自动关闭
+        // Specify the class to read the data, then read the first sheet. The file stream will be automatically closed.
         EasyExcel.read(fileName, DemoData.class, new ReadListener<DemoData>() {
             /**
-             * 单次缓存的数据量
+             * Batch size for caching data
              */
             public static final int BATCH_COUNT = 100;
             /**
-             *临时存储
+             * Temporary storage
              */
             private List<DemoData> cachedDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
 
@@ -73,7 +77,7 @@ public class ReadTest {
                 cachedDataList.add(data);
                 if (cachedDataList.size() >= BATCH_COUNT) {
                     saveData();
-                    // 存储完成清理 list
+                    // Clear the list after saving
                     cachedDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
                 }
             }
@@ -84,28 +88,28 @@ public class ReadTest {
             }
 
             /**
-             * 加上存储数据库
+             * Simulate saving data to the database
              */
             private void saveData() {
-                log.info("{}条数据，开始存储数据库！", cachedDataList.size());
-                log.info("存储数据库成功！");
+                log.info("Saving {} rows of data to the database!", cachedDataList.size());
+                log.info("Data saved successfully!");
             }
         }).sheet().doRead();
 
-        // 有个很重要的点 DemoDataListener 不能被spring管理，要每次读取excel都要new,然后里面用到spring可以构造方法传进去
-        // 写法3：
+        // Important note: DemoDataListener should not be managed by Spring. It needs to be instantiated every time you read an Excel file.
+        // Approach 3:
         fileName = TestFileUtil.getPath() + "demo" + File.separator + "demo.xlsx";
-        // 这里 需要指定读用哪个class去读，然后读取第一个sheet 文件流会自动关闭
+        // Specify the class to read the data, then read the first sheet. The file stream will be automatically closed.
         EasyExcel.read(fileName, DemoData.class, new DemoDataListener()).sheet().doRead();
 
-        // 写法4
+        // Approach 4
         fileName = TestFileUtil.getPath() + "demo" + File.separator + "demo.xlsx";
-        // 一个文件一个reader
+        // One reader per file
         try (ExcelReader excelReader = EasyExcel.read(fileName, DemoData.class, new DemoDataListener()).build()) {
-            // 构建一个sheet 这里可以指定名字或者no
+            // Build a sheet. You can specify the name or index.
             ReadSheet readSheet = EasyExcel.readSheet(0).build();
             readSheet.setNumRows(2);
-            // 读取一个sheet
+            // Read a single sheet
             excelReader.read(readSheet);
         }
     }
@@ -113,112 +117,121 @@ public class ReadTest {
     @Test
     public void genericHeaderTypeRead() {
         String fileName = TestFileUtil.getPath() + "demo" + File.separator + "generic-demo.xlsx";
-        // 模拟通过任何可能的方式获取到的excel头对应的Class<?>对象
+        // Simulate obtaining the Excel header's Class<?> object through any possible means
         Class<?> excelHeaderClass = DemoDataAnother.class;
         EasyExcel.read(fileName, excelHeaderClass, GenericHeaderTypeDataListener.build(excelHeaderClass)).sheet().doRead();
     }
 
     /**
-     * 指定列的下标或者列名
-     *
+     * Specify column indexes or names
      * <p>
-     * 1. 创建excel对应的实体对象,并使用{@link ExcelProperty}注解. 参照{@link IndexOrNameData}
+     * 1. Create an entity class corresponding to the Excel data structure and use the {@link ExcelProperty} annotation. Refer to {@link IndexOrNameData}.
      * <p>
-     * 2. 由于默认一行行的读取excel，所以需要创建excel一行一行的回调监听器，参照{@link IndexOrNameDataListener}
+     * 2. Since EasyExcel reads Excel files row by row, you need to create a callback listener for each row. Refer to {@link IndexOrNameDataListener}.
      * <p>
-     * 3. 直接读即可
+     * 3. Directly read the file.
      */
     @Test
     public void indexOrNameRead() {
         String fileName = TestFileUtil.getPath() + "demo" + File.separator + "demo.xlsx";
-        // 这里默认读取第一个sheet
+        // By default, read the first sheet
         EasyExcel.read(fileName, IndexOrNameData.class, new IndexOrNameDataListener()).numRows(1).sheet().doRead();
     }
 
     /**
-     * 读多个或者全部sheet,这里注意一个sheet不能读取多次，多次读取需要重新读取文件
+     * Read multiple or all sheets. Note that a sheet cannot be read multiple times; multiple reads require re-reading the file.
      * <p>
-     * 1. 创建excel对应的实体对象 参照{@link DemoData}
+     * 1. Create an entity class corresponding to the Excel data structure. Refer to {@link DemoData}.
      * <p>
-     * 2. 由于默认一行行的读取excel，所以需要创建excel一行一行的回调监听器，参照{@link DemoDataListener}
+     * 2. Since EasyExcel reads Excel files row by row, you need to create a callback listener for each row. Refer to {@link DemoDataListener}.
      * <p>
-     * 3. 直接读即可
+     * 3. Directly read the file.
      */
     @Test
     public void repeatedRead() {
         String fileName = TestFileUtil.getPath() + "demo" + File.separator + "demo.xlsx";
-        // 读取全部sheet
-        // 这里需要注意 DemoDataListener的doAfterAllAnalysed 会在每个sheet读取完毕后调用一次。然后所有sheet都会往同一个DemoDataListener里面写
+        // Read all sheets
+        // Note: The `doAfterAllAnalysed` method of DemoDataListener will be called once after each sheet is read.
+        // All sheets will write to the same DemoDataListener.
         EasyExcel.read(fileName, DemoData.class, new DemoDataListener()).doReadAll();
 
-        // 读取部分sheet
+        // Read some sheets
         fileName = TestFileUtil.getPath() + "demo" + File.separator + "demo.xlsx";
 
-        // 写法1
+        // Method 1
         try (ExcelReader excelReader = EasyExcel.read(fileName).build()) {
-            // 这里为了简单 所以注册了 同样的head 和Listener 自己使用功能必须不同的Listener
-            ReadSheet readSheet1 =
-                EasyExcel.readSheet(0).head(DemoData.class).registerReadListener(new DemoDataListener()).build();
-            ReadSheet readSheet2 =
-                EasyExcel.readSheet(1).head(DemoData.class).registerReadListener(new DemoDataListener()).build();
-            // 这里注意 一定要把sheet1 sheet2 一起传进去，不然有个问题就是03版的excel 会读取多次，浪费性能
+            // For simplicity, the same head and Listener are registered here.
+            // In actual use, different Listeners must be used.
+            ReadSheet readSheet1 = EasyExcel.readSheet(0).head(DemoData.class)
+                    .registerReadListener(new DemoDataListener()).build();
+            ReadSheet readSheet2 = EasyExcel.readSheet(1).head(DemoData.class)
+                    .registerReadListener(new DemoDataListener()).build();
+            // Note: All sheets (sheet1 and sheet2) must be passed together.
+            // Otherwise, for Excel 2003 files, the same sheet may be read multiple times, wasting performance.
             excelReader.read(readSheet1, readSheet2);
         }
     }
 
     /**
-     * 日期、数字或者自定义格式转换
+     * Date, number, or custom format conversion
      * <p>
-     * 默认读的转换器{@link DefaultConverterLoader#loadDefaultReadConverter()}
+     * Default converter: {@link DefaultConverterLoader#loadDefaultReadConverter()}
      * <p>
-     * 1. 创建excel对应的实体对象 参照{@link ConverterData}.里面可以使用注解{@link DateTimeFormat}、{@link NumberFormat}或者自定义注解
+     * 1. Create an entity class corresponding to the Excel data structure. Refer to {@link ConverterData}.
+     * Annotations such as {@link DateTimeFormat}, {@link NumberFormat}, or custom annotations can be used.
      * <p>
-     * 2. 由于默认一行行的读取excel，所以需要创建excel一行一行的回调监听器，参照{@link ConverterDataListener}
+     * 2. Since EasyExcel reads Excel files row by row, you need to create a callback listener for each row. Refer to {@link ConverterDataListener}.
      * <p>
-     * 3. 直接读即可
+     * 3. Directly read the file.
      */
     @Test
     public void converterRead() {
         String fileName = TestFileUtil.getPath() + "demo" + File.separator + "demo.xlsx";
-        // 这里 需要指定读用哪个class去读，然后读取第一个sheet
+        // Specify the class to read, then read the first sheet
         EasyExcel.read(fileName, ConverterData.class, new ConverterDataListener())
-            // 这里注意 我们也可以registerConverter来指定自定义转换器， 但是这个转换变成全局了， 所有java为string,excel为string的都会用这个转换器。
-            // 如果就想单个字段使用请使用@ExcelProperty 指定converter
-            // .registerConverter(new CustomStringStringConverter())
-            // 读取sheet
-            .sheet().doRead();
+                // Note: We can also register a custom converter using `registerConverter`.
+                // However, this converter will be global, and all fields with Java type `String` and Excel type `String` will use this converter.
+                // If you want to use it for a single field, specify the converter using `@ExcelProperty`.
+                // .registerConverter(new CustomStringStringConverter())
+                // Read the sheet
+                .sheet().doRead();
     }
 
     /**
-     * 多行头
+     * Multi-row header
      *
      * <p>
-     * 1. 创建excel对应的实体对象 参照{@link DemoData}
+     * 1. Create an entity class corresponding to the Excel data structure. Refer to {@link DemoData}.
      * <p>
-     * 2. 由于默认一行行的读取excel，所以需要创建excel一行一行的回调监听器，参照{@link DemoDataListener}
+     * 2. Since EasyExcel reads Excel files row by row, you need to create a callback listener for each row. Refer to {@link DemoDataListener}.
      * <p>
-     * 3. 设置headRowNumber参数，然后读。 这里要注意headRowNumber如果不指定， 会根据你传入的class的{@link ExcelProperty#value()}里面的表头的数量来决定行数，
-     * 如果不传入class则默认为1.当然你指定了headRowNumber不管是否传入class都是以你传入的为准。
+     * 3. Set the `headRowNumber` parameter, then read. Note that if `headRowNumber` is not specified,
+     * the number of rows will be determined by the number of headers in the `@ExcelProperty#value()` of the class you provide.
+     * If no class is provided, the default is 1. Of course, if you specify `headRowNumber`, it will be used regardless of whether a class is provided.
      */
     @Test
     public void complexHeaderRead() {
         String fileName = TestFileUtil.getPath() + "demo" + File.separator + "demo.xlsx";
-        // 这里 需要指定读用哪个class去读，然后读取第一个sheet
+        // Specify the class to read, then read the first sheet
         EasyExcel.read(fileName, DemoData.class, new DemoDataListener()).sheet()
-            // 这里可以设置1，因为头就是一行。如果多行头，可以设置其他值。不传入也可以，因为默认会根据DemoData 来解析，他没有指定头，也就是默认1行
-            .headRowNumber(1).doRead();
+                // Set to 1 here because the header is one row. For multi-row headers, set to other values.
+                // You can also omit this, as the default behavior will parse based on DemoData, which does not specify a header, meaning the default is 1 row.
+                .headRowNumber(1).doRead();
     }
 
     /**
-     * Method to read Excel files with headers that support compatibility, such as case sensitivity or simultaneous support for Chinese and English headers.
+     * Method to read Excel files with headers that support compatibility, such as case sensitivity or simultaneous
+     * support for Chinese and English headers.
      *
      * <p>
-     * 1. Create an entity object corresponding to the Excel data structure. Refer to {@link DemoCompatibleHeaderData} for implementation details.
+     * 1. Create an entity object corresponding to the Excel data structure. Refer to {@link DemoCompatibleHeaderData}
+     * for implementation details.
      * </p>
      *
      * <p>
-     * 2. Since EasyExcel reads the Excel file row by row by default, you need to create a listener that handles each row's data accordingly. Refer to {@link DemoCompatibleHeaderDataListener} for implementation details.
-     * In this listener, you should override the `invokeHead` method to transform the uploaded headers as needed.
+     * 2. Since EasyExcel reads the Excel file row by row by default, you need to create a listener that handles each
+     * row's data accordingly. Refer to {@link DemoCompatibleHeaderDataListener} for implementation details. In this
+     * listener, you should override the `invokeHead` method to transform the uploaded headers as needed.
      * </p>
      *
      * <p>
@@ -229,140 +242,166 @@ public class ReadTest {
     public void compatibleHeaderRead() {
         String fileName = TestFileUtil.getPath() + "demo" + File.separator + "demo.xlsx";
         // Specify the class used for reading and choose to read the first sheet.
-        EasyExcel.read(fileName, DemoCompatibleHeaderData.class, new DemoCompatibleHeaderDataListener()).sheet().doRead();
+        EasyExcel.read(fileName, DemoCompatibleHeaderData.class, new DemoCompatibleHeaderDataListener()).sheet()
+                .doRead();
     }
 
     /**
-     * 读取表头数据
+     * Read header data
      *
      * <p>
-     * 1. 创建excel对应的实体对象 参照{@link DemoData}
+     * 1. Create an entity object corresponding to the Excel data structure. Refer to {@link DemoData}.
      * <p>
-     * 2. 由于默认一行行的读取excel，所以需要创建excel一行一行的回调监听器，参照{@link DemoHeadDataListener}
+     * 2. Since EasyExcel reads Excel files row by row, you need to create a callback listener for each row. Refer to {@link DemoHeadDataListener}.
      * <p>
-     * 3. 直接读即可
+     * 3. Directly read the file.
      */
     @Test
     public void headerRead() {
         String fileName = TestFileUtil.getPath() + "demo" + File.separator + "demo.xlsx";
-        // 这里 需要指定读用哪个class去读，然后读取第一个sheet
+        // Specify the class to read, then read the first sheet
         EasyExcel.read(fileName, DemoData.class, new DemoHeadDataListener()).sheet().doRead();
     }
 
     /**
-     * 额外信息（批注、超链接、合并单元格信息读取）
+     * Additional information (comments, hyperlinks, merged cell information)
      * <p>
-     * 由于是流式读取，没法在读取到单元格数据的时候直接读取到额外信息，所以只能最后通知哪些单元格有哪些额外信息
+     * Since it is stream-based reading, it is not possible to directly read additional information when reading cell data.
+     * Therefore, only notifications of which cells contain additional information can be provided at the end.
      *
      * <p>
-     * 1. 创建excel对应的实体对象 参照{@link DemoExtraData}
+     * 1. Create an entity object corresponding to the Excel data structure. Refer to {@link DemoExtraData}.
      * <p>
-     * 2. 由于默认异步读取excel，所以需要创建excel一行一行的回调监听器，参照{@link DemoExtraListener}
+     * 2. Since EasyExcel reads Excel files row by row by default, you need to create a callback listener for each row. Refer to {@link DemoExtraListener}.
      * <p>
-     * 3. 直接读即可
+     * 3. Directly read the file.
      *
      * @since 2.2.0-beat1
      */
     @Test
     public void extraRead() {
         String fileName = TestFileUtil.getPath() + "demo" + File.separator + "extra.xlsx";
-        // 这里 需要指定读用哪个class去读，然后读取第一个sheet
+        // Specify the class to read, then read the first sheet
         EasyExcel.read(fileName, DemoExtraData.class, new DemoExtraListener())
-            // 需要读取批注 默认不读取
-            .extraRead(CellExtraTypeEnum.COMMENT)
-            // 需要读取超链接 默认不读取
-            .extraRead(CellExtraTypeEnum.HYPERLINK)
-            // 需要读取合并单元格信息 默认不读取
-            .extraRead(CellExtraTypeEnum.MERGE).sheet().doRead();
+                // Read comments (default is not to read)
+                .extraRead(CellExtraTypeEnum.COMMENT)
+                // Read hyperlinks (default is not to read)
+                .extraRead(CellExtraTypeEnum.HYPERLINK)
+                // Read merged cell information (default is not to read)
+                .extraRead(CellExtraTypeEnum.MERGE).sheet().doRead();
     }
 
     /**
-     * 读取公式和单元格类型
+     * Read formulas and cell types
      *
      * <p>
-     * 1. 创建excel对应的实体对象 参照{@link CellDataReadDemoData}
+     * 1. Create an entity object corresponding to the Excel data structure. Refer to {@link CellDataReadDemoData}.
      * <p>
-     * 2. 由于默认一行行的读取excel，所以需要创建excel一行一行的回调监听器，参照{@link DemoHeadDataListener}
+     * 2. Since EasyExcel reads Excel files row by row by default, you need to create a callback listener for each row. Refer to {@link CellDataDemoHeadDataListener}.
      * <p>
-     * 3. 直接读即可
+     * 3. Directly read the file.
      *
      * @since 2.2.0-beat1
      */
     @Test
     public void cellDataRead() {
         String fileName = TestFileUtil.getPath() + "demo" + File.separator + "cellDataDemo.xlsx";
-        // 这里 需要指定读用哪个class去读，然后读取第一个sheet
+        // Specify the class to read, then read the first sheet
         EasyExcel.read(fileName, CellDataReadDemoData.class, new CellDataDemoHeadDataListener()).sheet().doRead();
     }
 
     /**
-     * 数据转换等异常处理
+     * Exception handling for data conversion, etc.
      *
      * <p>
-     * 1. 创建excel对应的实体对象 参照{@link ExceptionDemoData}
+     * 1. Create an entity object corresponding to the Excel data structure. Refer to {@link ExceptionDemoData}.
      * <p>
-     * 2. 由于默认一行行的读取excel，所以需要创建excel一行一行的回调监听器，参照{@link DemoExceptionListener}
+     * 2. Since EasyExcel reads Excel files row by row by default, you need to create a callback listener for each row. Refer to {@link DemoExceptionListener}.
      * <p>
-     * 3. 直接读即可
+     * 3. Directly read the file.
      */
     @Test
     public void exceptionRead() {
         String fileName = TestFileUtil.getPath() + "demo" + File.separator + "demo.xlsx";
-        // 这里 需要指定读用哪个class去读，然后读取第一个sheet
+        // Specify the class to read, then read the first sheet
         EasyExcel.read(fileName, ExceptionDemoData.class, new DemoExceptionListener()).sheet().doRead();
     }
 
     /**
-     * 同步的返回，不推荐使用，如果数据量大会把数据放到内存里面
+     * Synchronous return is not recommended, as it will store data in memory if the data volume is large.
      */
     @Test
     public void synchronousRead() {
         String fileName = TestFileUtil.getPath() + "demo" + File.separator + "demo.xlsx";
-        // 这里 需要指定读用哪个class去读，然后读取第一个sheet 同步读取会自动finish
+        // Specify the class to read, then read the first sheet. Synchronous reading will automatically finish.
         List<DemoData> list = EasyExcel.read(fileName).head(DemoData.class).sheet().doReadSync();
         for (DemoData data : list) {
-            log.info("读取到数据:{}", JSON.toJSONString(data));
+            log.info("Read data:{}", JSON.toJSONString(data));
         }
 
-        // 这里 也可以不指定class，返回一个list，然后读取第一个sheet 同步读取会自动finish
+        // Alternatively, you can read without specifying a class, returning a list, then read the first sheet.
+        // Synchronous reading will automatically finish.
         List<Map<Integer, String>> listMap = EasyExcel.read(fileName).sheet().doReadSync();
         for (Map<Integer, String> data : listMap) {
-            // 返回每条数据的键值对 表示所在的列 和所在列的值
-            log.info("读取到数据:{}", JSON.toJSONString(data));
+            // Return key-value pairs for each data item, representing the column index and its value.
+            log.info("Read data:{}", JSON.toJSONString(data));
         }
     }
 
     /**
-     * 不创建对象的读
+     * Reading without creating objects
      */
     @Test
     public void noModelRead() {
         String fileName = TestFileUtil.getPath() + "demo" + File.separator + "demo.xlsx";
-        // 这里 只要，然后读取第一个sheet 同步读取会自动finish
+        // Simply read the first sheet. Synchronous reading will automatically finish.
         EasyExcel.read(fileName, new NoModelDataListener()).sheet().doRead();
     }
 
     /**
-     * 自定义修改csv配置
+     * Custom modification of CSV configuration
      */
-    @Test
-    public void csvFormat() {
-        String fileName = TestFileUtil.getPath() + "demo" + File.separator + "demo.csv";
-        try (ExcelReader excelReader = EasyExcel.read(fileName, DemoData.class, new DemoDataListener()).build()) {
-            // 判断是 csv 文件
-            if (excelReader.analysisContext().readWorkbookHolder() instanceof CsvReadWorkbookHolder) {
-                CsvReadWorkbookHolder csvReadWorkbookHolder = (CsvReadWorkbookHolder)excelReader.analysisContext()
-                    .readWorkbookHolder();
-                // 设置成逗号分隔 当然默认也是逗号分隔
-                // 这里要注意 withDelimiter 会重新生成一个 所以要放回去
-                csvReadWorkbookHolder.setCsvFormat(csvReadWorkbookHolder.getCsvFormat().withDelimiter(','));
-            }
+    @Nested
+    class ReadCsvFormat {
 
-            // 拿到所有 sheet
-            List<ReadSheet> readSheetList = excelReader.excelExecutor().sheetList();
-            // 如果只想读取第一个 咋样传入参数即可
-            //ReadSheet readSheet = EasyExcel.readSheet(0).build();
-            excelReader.read(readSheetList);
+        @Test
+        void asNormalJavaBean() {
+            String fileName = TestFileUtil.getPath() + "demo" + File.separator + "demo.csv";
+            try (ExcelReader excelReader = EasyExcel.read(fileName, DemoData.class, new DemoDataListener()).build()) {
+                // Check if it is a CSV file
+                if (excelReader.analysisContext().readWorkbookHolder() instanceof CsvReadWorkbookHolder) {
+                    CsvReadWorkbookHolder csvReadWorkbookHolder = (CsvReadWorkbookHolder) excelReader.analysisContext()
+                        .readWorkbookHolder();
+                    // Set to comma-separated (default is also comma-separated)
+                    // Note: `withDelimiter` will regenerate the format, so it needs to be set back.
+                    csvReadWorkbookHolder.setCsvFormat(csvReadWorkbookHolder.getCsvFormat().withDelimiter(','));
+                }
+
+                // Get all sheets
+                List<ReadSheet> readSheetList = excelReader.excelExecutor().sheetList();
+                // If you only want to read the first sheet, you can pass the parameter accordingly.
+                //ReadSheet readSheet = EasyExcel.readSheet(0).build();
+                excelReader.read(readSheetList);
+            }
+        }
+
+        @Test
+        void asChainedAccessorsJavaBean() {
+            String fileName = TestFileUtil.getPath() + "demo" + File.separator + "demo.csv";
+            try (ExcelReader excelReader = EasyExcel.read(fileName, DemoChainAccessorsData.class, new ReadListener<DemoChainAccessorsData>() {
+                @Override
+                public void invoke(DemoChainAccessorsData data, AnalysisContext context) {
+                    Assertions.assertNotNull(data.getString());
+                    Assertions.assertNotNull(data.getDate());
+                    Assertions.assertNotNull(data.getDoubleData());
+                }
+
+                @Override
+                public void doAfterAllAnalysed(AnalysisContext context) {
+                }
+            }).build()) {
+                excelReader.readAll();
+            }
         }
     }
 }

@@ -23,7 +23,7 @@ public class PoiDateFormatTest {
     @Test
     public void read() throws IOException {
         String file
-            = "/Users/zhuangjiaju/IdeaProjects/easyexcel/easyexcel-test/src/test/resources/dataformat/dataformat.xlsx";
+            = "src/test/resources/dataformat/dataformat.xlsx";
         XSSFWorkbook xssfWorkbook = new XSSFWorkbook( file);
         XSSFSheet xssfSheet = xssfWorkbook.getSheetAt(0);
         LOGGER.info("一共行数:{}", xssfSheet.getLastRowNum());

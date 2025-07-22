@@ -139,6 +139,10 @@ git config --get user.email
 - **IntelliJ IDEA 插件**：[安装指南](https://github.com/alibaba/p3c/blob/master/idea-plugin/README.md)
 - **Eclipse 插件**：[安装指南](https://github.com/alibaba/p3c/blob/master/eclipse-plugin/README.md)
 
+贡献者也可以在IDE中导入代码规范配置，以确保符合项目的代码规范：
+- **IntelliJ IDEA 配置**：[配置文件下载](https://github.com/fast-excel/fastexcel/blob/main/style/codestyle/idea/fastexcel_codestyle.xml) 
+- **Eclipse 配置**：[配置文件下载](https://github.com/fast-excel/fastexcel/blob/main/style/codestyle/eclipse/fastexcel_codestyle.xml) 
+      
 ---
 
 **最后，感谢您对 FastExcel 的支持！每一份帮助，都是我们前进的动力。**

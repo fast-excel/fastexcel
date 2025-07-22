@@ -5,7 +5,8 @@ import cn.idev.excel.read.listener.ReadListener;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * 针对通过泛型指定头部类型的数据监听器样例
+ * A data listener example that specifies the header type through generics.
+ *
  * @param <T>
  */
 @Slf4j
@@ -21,12 +22,12 @@ public class GenericHeaderTypeDataListener<T> implements ReadListener<T> {
     @Override
     public void invoke(T data, AnalysisContext context) {
         log.info("data:{}", data);
-        // 执行业务逻辑
+        // Execute business logic
     }
 
     @Override
     public void doAfterAllAnalysed(AnalysisContext context) {
-        // 执行收尾工作
+        // Perform cleanup tasks
     }
 
     public static <T> GenericHeaderTypeDataListener<T> build(Class<T> excelHeaderClass) {

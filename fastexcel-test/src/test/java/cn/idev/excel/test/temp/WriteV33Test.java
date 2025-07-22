@@ -1,27 +1,26 @@
 package cn.idev.excel.test.temp;
 
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import cn.idev.excel.EasyExcel;
 import cn.idev.excel.test.demo.write.DemoData;
 import cn.idev.excel.test.util.TestFileUtil;
 import cn.idev.excel.util.BooleanUtils;
 import cn.idev.excel.write.handler.CellWriteHandler;
 import cn.idev.excel.write.handler.context.CellWriteHandlerContext;
-
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * 临时测试
@@ -140,8 +139,8 @@ public class WriteV33Test {
 
 
     @Test
-    public void test4() throws Exception{
-       Path path= Files.createTempFile(new File("/Users/zhuangjiaju/test/test0422/test/xx").toPath(),System.currentTimeMillis()+"",".jpg");
+    public void test4(@TempDir Path tempDir) throws Exception {
+        Path path = Files.createTempFile(tempDir, System.currentTimeMillis() + "", ".jpg");
         System.out.println(path);
     }
 

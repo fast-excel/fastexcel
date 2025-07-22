@@ -34,7 +34,7 @@ public class FillTempTest {
     @Test
     public void simpleFill() {
         // Template note: Use {} to represent variables. If the template contains "{", "}" as special characters, use "\{", "\}" instead.
-        String templateFileName = "/Users/zhuangjiaju/Downloads/simple.xlsx";
+        String templateFileName = "src/test/resources/fill/simple.xlsx";
 
         // Option 1: Fill using an object
         String fileName = TestFileUtil.getPath() + "simpleFill" + System.currentTimeMillis() + ".xlsx";

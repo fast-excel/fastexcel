@@ -37,7 +37,7 @@ public class FillTempTest {
 
         String fileName = TestFileUtil.getPath() + "complexFill" + System.currentTimeMillis() + ".xlsx";
         ExcelWriter excelWriter = EasyExcel.write(fileName).registerWriteHandler(onceAbsoluteMergeStrategy)
-            .withTemplate(TestFileUtil.readUserHomeFile("test/simple.xlsx")).build();
+                .withTemplate("src/test/resources/demo/fill/simple.xlsx").build();
         WriteSheet writeSheet0 = EasyExcel.writerSheet(0).build();
         WriteSheet writeSheet1 = EasyExcel.writerSheet(1).build();
 
@@ -64,8 +64,8 @@ public class FillTempTest {
         // 模板注意 用{} 来表示你要用的变量 如果本来就有"{","}" 特殊字符 用"\{","\}"代替
         // {} 代表普通变量 {.} 代表是list的变量
         // 这里模板 删除了list以后的数据，也就是统计的这一行
-        String templateFileName = "D:\\test\\complex.xlsx";
-
+        String templateFileName = "src/test/resources/demo/fill/complexFillWithTable.xlsx";
+        
         String fileName = TestFileUtil.getPath() + "complexFillWithTable" + System.currentTimeMillis() + ".xlsx";
         ExcelWriter excelWriter = EasyExcel.write(fileName).withTemplate(templateFileName).build();
         WriteSheet writeSheet = EasyExcel.writerSheet().build();
