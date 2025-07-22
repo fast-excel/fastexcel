@@ -1,10 +1,5 @@
 package cn.idev.excel.support;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-
 import cn.idev.excel.exception.ExcelAnalysisException;
 import cn.idev.excel.exception.ExcelCommonException;
 import cn.idev.excel.read.metadata.ReadWorkbook;
@@ -12,6 +7,11 @@ import cn.idev.excel.util.StringUtils;
 import lombok.Getter;
 import org.apache.poi.EmptyFileException;
 import org.apache.poi.util.IOUtils;
+
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 
 /**
  * @author jipengfei
@@ -22,17 +22,17 @@ public enum ExcelTypeEnum {
     /**
      * csv
      */
-    CSV(".csv", new byte[] {-27, -89, -109, -27}),
+    CSV(".csv", new byte[]{-27, -89, -109, -27}),
 
     /**
      * xls
      */
-    XLS(".xls", new byte[] {-48, -49, 17, -32, -95, -79, 26, -31}),
+    XLS(".xls", new byte[]{-48, -49, 17, -32, -95, -79, 26, -31}),
 
     /**
      * xlsx
      */
-    XLSX(".xlsx", new byte[] {80, 75, 3, 4});
+    XLSX(".xlsx", new byte[]{80, 75, 3, 4});
 
     final String value;
     final byte[] magic;
@@ -45,26 +45,35 @@ public enum ExcelTypeEnum {
     final static int MAX_PATTERN_LENGTH = 8;
 
     public static ExcelTypeEnum valueOf(ReadWorkbook readWorkbook) {
-        ExcelTypeEnum excelType = readWorkbook.getExcelType();
-        if (excelType != null) {
-            return excelType;
-        }
         File file = readWorkbook.getFile();
         InputStream inputStream = readWorkbook.getInputStream();
         if (file == null && inputStream == null) {
             throw new ExcelAnalysisException("File and inputStream must be a non-null.");
         }
+
+        ExcelTypeEnum excelType = readWorkbook.getExcelType();
+        boolean hasPassword = !StringUtils.isEmpty(readWorkbook.getPassword());
+        ExcelTypeEnum recognitionType;
         try {
             if (file != null) {
                 if (!file.exists()) {
                     throw new ExcelAnalysisException("File " + file.getAbsolutePath() + " not exists.");
                 }
+
                 // If there is a password, use the FileMagic first
-                if (!StringUtils.isEmpty(readWorkbook.getPassword())) {
+                if (hasPassword) {
                     try (BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(file))) {
-                        return recognitionExcelType(bufferedInputStream);
+                        recognitionType = recognitionExcelType(bufferedInputStream);
+                        if (excelType == null || !excelType.equals(recognitionType)) {
+                            return recognitionType;
+                        }
                     }
                 }
+
+                if (excelType != null) {
+                    return excelType;
+                }
+
                 // Use the name to determine the type
                 String fileName = file.getName();
                 if (fileName.endsWith(XLSX.getValue())) {
@@ -74,17 +83,20 @@ public enum ExcelTypeEnum {
                 } else if (fileName.endsWith(CSV.getValue())) {
                     return CSV;
                 }
-                if (StringUtils.isEmpty(readWorkbook.getPassword())) {
-                    try (BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(file))) {
-                        return recognitionExcelType(bufferedInputStream);
-                    }
+                try (BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(file))) {
+                    return recognitionExcelType(bufferedInputStream);
                 }
             }
             if (!inputStream.markSupported()) {
                 inputStream = new BufferedInputStream(inputStream);
                 readWorkbook.setInputStream(inputStream);
             }
-            return recognitionExcelType(inputStream);
+            recognitionType = recognitionExcelType(inputStream);
+            if (excelType == null
+                || (hasPassword && !excelType.equals(recognitionType))) {
+                return recognitionType;
+            }
+            return excelType;
         } catch (ExcelCommonException e) {
             throw e;
         } catch (EmptyFileException e) {
