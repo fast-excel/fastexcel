@@ -201,5 +201,5 @@ Thank you to all the people who already contributed to FastExcel!
 
 ## License
 
-The project is licensed under the [Apache License 2.0](https://github.com/fast-excel/fastexcel/blob/main/LICENSE).
+The project is licensed under the [Apache License 2.0](LICENSE).
 
