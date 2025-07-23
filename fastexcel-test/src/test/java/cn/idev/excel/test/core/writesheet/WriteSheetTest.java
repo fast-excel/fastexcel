@@ -4,9 +4,6 @@ import cn.idev.excel.ExcelWriter;
 import cn.idev.excel.FastExcel;
 import cn.idev.excel.support.ExcelTypeEnum;
 import cn.idev.excel.test.util.TestFileUtil;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,6 +11,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class WriteSheetTest {
 
@@ -50,18 +49,22 @@ public class WriteSheetTest {
 
         File testFile = TestFileUtil.createNewFile("writesheet/write-sheet-order" + excelTypeEnum.getValue());
         // write a file in the order of sheetNoList.
-        try (ExcelWriter excelWriter = FastExcel.write(testFile, WriteSheetData.class).excelType(excelTypeEnum).build()) {
+        try (ExcelWriter excelWriter = FastExcel.write(testFile, WriteSheetData.class)
+                .excelType(excelTypeEnum)
+                .build()) {
             for (Integer sheetNo : sheetNoList) {
-                excelWriter.write(dataList(dataMap.get(sheetNo)), FastExcel.writerSheet(sheetNo).build());
+                excelWriter.write(
+                        dataList(dataMap.get(sheetNo)),
+                        FastExcel.writerSheet(sheetNo).build());
             }
         }
 
         for (int i = 0; i < sheetNoList.size(); i++) {
             List<WriteSheetData> sheetDataList = FastExcel.read(testFile)
-                .excelType(excelTypeEnum)
-                .head(WriteSheetData.class)
-                .sheet(i)
-                .doReadSync();
+                    .excelType(excelTypeEnum)
+                    .head(WriteSheetData.class)
+                    .sheet(i)
+                    .doReadSync();
             Assertions.assertEquals(dataMap.get(sheetNoList.get(i)), sheetDataList.size());
         }
     }

@@ -9,9 +9,6 @@ import cn.idev.excel.write.style.DefaultStyle;
 import java.util.ArrayList;
 import java.util.List;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Load default handler
  *

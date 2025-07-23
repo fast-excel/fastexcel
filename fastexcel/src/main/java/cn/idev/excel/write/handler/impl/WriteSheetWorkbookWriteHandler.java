@@ -5,12 +5,11 @@ import cn.idev.excel.util.StringUtils;
 import cn.idev.excel.write.handler.WorkbookWriteHandler;
 import cn.idev.excel.write.metadata.holder.WriteSheetHolder;
 import cn.idev.excel.write.metadata.holder.WriteWorkbookHolder;
-import org.apache.commons.collections4.MapUtils;
-import org.apache.poi.ss.usermodel.Workbook;
-
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import org.apache.commons.collections4.MapUtils;
+import org.apache.poi.ss.usermodel.Workbook;
 
 /**
  * Set the order of each worksheet after completing workbook processing.
@@ -33,15 +32,16 @@ public class WriteSheetWorkbookWriteHandler implements WorkbookWriteHandler {
         }
         Workbook workbook = writeWorkbookHolder.getWorkbook();
         // sort by sheetNo.
-        List<Integer> sheetNoSortList = writeSheetHolderMap.keySet().stream().sorted().collect(Collectors.toList());
+        List<Integer> sheetNoSortList =
+                writeSheetHolderMap.keySet().stream().sorted().collect(Collectors.toList());
 
         int pos = 0;
         for (Integer key : sheetNoSortList) {
             WriteSheetHolder writeSheetHolder = writeSheetHolderMap.get(key);
             if (writeSheetHolder == null
-                || writeSheetHolder.getWriteSheet() == null
-                || writeSheetHolder.getSheetNo() == null
-                || StringUtils.isBlank(writeSheetHolder.getSheetName())) {
+                    || writeSheetHolder.getWriteSheet() == null
+                    || writeSheetHolder.getSheetNo() == null
+                    || StringUtils.isBlank(writeSheetHolder.getSheetName())) {
                 continue;
             }
             // set the order of sheet.
