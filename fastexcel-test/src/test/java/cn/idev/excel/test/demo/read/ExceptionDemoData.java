@@ -1,15 +1,14 @@
 package cn.idev.excel.test.demo.read;
 
+import java.util.Date;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
-
 /**
  * Basic data class. The order here is consistent with the order in the Excel file.
  *
- * @author Jiaju Zhuang
+ *
  **/
 @Getter
 @Setter

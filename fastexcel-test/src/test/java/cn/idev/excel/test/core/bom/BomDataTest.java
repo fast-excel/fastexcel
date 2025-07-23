@@ -1,19 +1,17 @@
 package cn.idev.excel.test.core.bom;
 
+import cn.idev.excel.EasyExcel;
+import cn.idev.excel.context.AnalysisContext;
+import cn.idev.excel.metadata.data.ReadCellData;
+import cn.idev.excel.read.listener.ReadListener;
+import cn.idev.excel.support.ExcelTypeEnum;
+import cn.idev.excel.test.util.TestFileUtil;
+import cn.idev.excel.util.ListUtils;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Map;
-
-import cn.idev.excel.read.listener.ReadListener;
-import cn.idev.excel.util.ListUtils;
-import cn.idev.excel.test.util.TestFileUtil;
-import cn.idev.excel.EasyExcel;
-import cn.idev.excel.context.AnalysisContext;
-import cn.idev.excel.metadata.data.ReadCellData;
-import cn.idev.excel.support.ExcelTypeEnum;
-
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.compress.utils.Lists;
 import org.junit.jupiter.api.Assertions;
@@ -24,7 +22,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 /**
  * bom test
  *
- * @author Jiaju Zhuang
+ *
  */
 @TestMethodOrder(MethodOrderer.MethodName.class)
 @Slf4j
@@ -44,8 +42,10 @@ public class BomDataTest {
         readAndWriteCsv(TestFileUtil.createNewFile("bom" + File.separator + "bom_gbk.csv"), "GBK", null);
         readAndWriteCsv(TestFileUtil.createNewFile("bom" + File.separator + "bom_gbk_lower_case.csv"), "gbk", null);
         readAndWriteCsv(TestFileUtil.createNewFile("bom" + File.separator + "bom_utf_16be.csv"), "UTF-16BE", null);
-        readAndWriteCsv(TestFileUtil.createNewFile("bom" + File.separator + "bom_utf_8_not_with_bom.csv"), "UTF-8",
-            Boolean.FALSE);
+        readAndWriteCsv(
+                TestFileUtil.createNewFile("bom" + File.separator + "bom_utf_8_not_with_bom.csv"),
+                "UTF-8",
+                Boolean.FALSE);
     }
 
     private void readAndWriteCsv(File file, String charsetName, Boolean withBom) throws Exception {
@@ -54,63 +54,66 @@ public class BomDataTest {
             charset = Charset.forName(charsetName);
         }
         EasyExcel.write(new FileOutputStream(file), BomData.class)
-            .charset(charset)
-            .withBom(withBom)
-            .excelType(ExcelTypeEnum.CSV)
-            .sheet()
-            .doWrite(data());
+                .charset(charset)
+                .withBom(withBom)
+                .excelType(ExcelTypeEnum.CSV)
+                .sheet()
+                .doWrite(data());
 
         EasyExcel.read(file, BomData.class, new ReadListener<BomData>() {
 
-                private final List<BomData> dataList = Lists.newArrayList();
+                    private final List<BomData> dataList = Lists.newArrayList();
 
-                @Override
-                public void invokeHead(Map<Integer, ReadCellData<?>> headMap, AnalysisContext context) {
-                    String head = headMap.get(0).getStringValue();
-                    Assertions.assertEquals("姓名", head);
-                }
+                    @Override
+                    public void invokeHead(Map<Integer, ReadCellData<?>> headMap, AnalysisContext context) {
+                        String head = headMap.get(0).getStringValue();
+                        Assertions.assertEquals("姓名", head);
+                    }
 
-                @Override
-                public void invoke(BomData data, AnalysisContext context) {
-                    dataList.add(data);
-                }
+                    @Override
+                    public void invoke(BomData data, AnalysisContext context) {
+                        dataList.add(data);
+                    }
 
-                @Override
-                public void doAfterAllAnalysed(AnalysisContext context) {
-                    Assertions.assertEquals(dataList.size(), 10);
-                    BomData bomData = dataList.get(0);
-                    Assertions.assertEquals("姓名0", bomData.getName());
-                    Assertions.assertEquals(20, (long)bomData.getAge());
-                }
-            })
-            .charset(charset)
-            .sheet().doRead();
+                    @Override
+                    public void doAfterAllAnalysed(AnalysisContext context) {
+                        Assertions.assertEquals(dataList.size(), 10);
+                        BomData bomData = dataList.get(0);
+                        Assertions.assertEquals("姓名0", bomData.getName());
+                        Assertions.assertEquals(20, (long) bomData.getAge());
+                    }
+                })
+                .charset(charset)
+                .sheet()
+                .doRead();
     }
 
     private void readCsv(File file) {
         EasyExcel.read(file, BomData.class, new ReadListener<BomData>() {
 
-            private final List<BomData> dataList = Lists.newArrayList();
+                    private final List<BomData> dataList = Lists.newArrayList();
 
-            @Override
-            public void invokeHead(Map<Integer, ReadCellData<?>> headMap, AnalysisContext context) {
-                String head = headMap.get(0).getStringValue();
-                Assertions.assertEquals("姓名", head);
-            }
+                    @Override
+                    public void invokeHead(Map<Integer, ReadCellData<?>> headMap, AnalysisContext context) {
+                        String head = headMap.get(0).getStringValue();
+                        Assertions.assertEquals("姓名", head);
+                    }
 
-            @Override
-            public void invoke(BomData data, AnalysisContext context) {
-                dataList.add(data);
-            }
+                    @Override
+                    public void invoke(BomData data, AnalysisContext context) {
+                        dataList.add(data);
+                    }
 
-            @Override
-            public void doAfterAllAnalysed(AnalysisContext context) {
-                Assertions.assertEquals(dataList.size(), 10);
-                BomData bomData = dataList.get(0);
-                Assertions.assertEquals("姓名0", bomData.getName());
-                Assertions.assertEquals(20L, (long)bomData.getAge());
-            }
-        }).sheet().doRead();
+                    @Override
+                    public void doAfterAllAnalysed(AnalysisContext context) {
+                        Assertions.assertEquals(dataList.size(), 10);
+                        BomData bomData = dataList.get(0);
+                        Assertions.assertEquals("姓名0", bomData.getName());
+                        Assertions.assertEquals(20L, (long) bomData.getAge());
+                    }
+                })
+                .sheet()
+                .doRead();
     }
 
     private List<BomData> data() {

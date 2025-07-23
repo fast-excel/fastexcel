@@ -1,13 +1,12 @@
 package cn.idev.excel.test.demo.web;
 
 import java.util.List;
-
 import org.springframework.stereotype.Repository;
 
 /**
  * 假设这个是你的DAO存储。当然还要这个类让spring管理，当然你不用需要存储，也不需要这个类。
  *
- * @author Jiaju Zhuang
+ *
  **/
 @Repository
 public class UploadDAO {

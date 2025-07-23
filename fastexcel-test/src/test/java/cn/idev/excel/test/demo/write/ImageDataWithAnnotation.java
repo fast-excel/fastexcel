@@ -1,14 +1,12 @@
 package cn.idev.excel.test.demo.write;
 
+import cn.idev.excel.annotation.ExcelProperty;
+import cn.idev.excel.annotation.write.style.ColumnWidth;
+import cn.idev.excel.annotation.write.style.ContentRowHeight;
+import cn.idev.excel.converters.string.StringImageConverter;
 import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
-
-import cn.idev.excel.annotation.write.style.ContentRowHeight;
-import cn.idev.excel.converters.string.StringImageConverter;
-import cn.idev.excel.annotation.ExcelProperty;
-import cn.idev.excel.annotation.write.style.ColumnWidth;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,6 +27,7 @@ public class ImageDataWithAnnotation {
      */
     @ExcelProperty(converter = StringImageConverter.class)
     private String string;
+
     private byte[] byteArray;
     /**
      * 根据url导出

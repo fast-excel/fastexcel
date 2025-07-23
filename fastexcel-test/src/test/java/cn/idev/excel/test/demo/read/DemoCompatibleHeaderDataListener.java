@@ -5,11 +5,10 @@ import cn.idev.excel.event.AnalysisEventListener;
 import cn.idev.excel.metadata.data.ReadCellData;
 import cn.idev.excel.util.ListUtils;
 import com.alibaba.fastjson2.JSON;
-import lombok.extern.slf4j.Slf4j;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Listener to read headers with compatibility for both Chinese and English.
@@ -93,5 +92,4 @@ public class DemoCompatibleHeaderDataListener extends AnalysisEventListener<Demo
         log.info("{} rows of data, starting to save to the database!", cachedDataList.size());
         log.info("Data saved successfully to the database!");
     }
-
 }

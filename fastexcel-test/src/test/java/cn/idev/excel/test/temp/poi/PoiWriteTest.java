@@ -1,6 +1,10 @@
 package cn.idev.excel.test.temp.poi;
 
 import com.alibaba.fastjson2.JSON;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.nio.file.Path;
 import org.apache.poi.xssf.streaming.SXSSFCell;
 import org.apache.poi.xssf.streaming.SXSSFRow;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
@@ -10,25 +14,20 @@ import org.junit.jupiter.api.io.TempDir;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.nio.file.Path;
-
 /**
  * 测试poi
  *
- * @author Jiaju Zhuang
+ *
  **/
-
 public class PoiWriteTest {
-    
+
     private static final Logger LOGGER = LoggerFactory.getLogger(PoiWriteTest.class);
-    
+
     @Test
     public void write0(@TempDir Path path) throws IOException {
-        try (FileOutputStream fileOutputStream = new FileOutputStream(
-                path.resolve("PoiWriteTest_" + System.currentTimeMillis() + ".xlsx").toFile());
+        try (FileOutputStream fileOutputStream =
+                        new FileOutputStream(path.resolve("PoiWriteTest_" + System.currentTimeMillis() + ".xlsx")
+                                .toFile());
                 SXSSFWorkbook workbook = new SXSSFWorkbook()) {
             SXSSFSheet sheet = workbook.createSheet("t1");
             SXSSFRow row = sheet.createRow(0);
@@ -41,7 +40,7 @@ public class PoiWriteTest {
             workbook.write(fileOutputStream);
         }
     }
-    
+
     @Test
     public void write01() throws IOException {
         float ff = 300.35f;
@@ -49,11 +48,12 @@ public class PoiWriteTest {
         System.out.println(bd.doubleValue());
         System.out.println(bd.floatValue());
     }
-    
+
     @Test
     public void write(@TempDir Path path) throws IOException {
-        try (FileOutputStream fileOutputStream = new FileOutputStream(
-                path.resolve("PoiWriteTest_" + System.currentTimeMillis() + ".xlsx").toFile());
+        try (FileOutputStream fileOutputStream =
+                        new FileOutputStream(path.resolve("PoiWriteTest_" + System.currentTimeMillis() + ".xlsx")
+                                .toFile());
                 SXSSFWorkbook workbook = new SXSSFWorkbook()) {
             SXSSFSheet sheet = workbook.createSheet("t1");
             SXSSFRow row = sheet.createRow(0);
@@ -64,13 +64,13 @@ public class PoiWriteTest {
             workbook.write(fileOutputStream);
         }
     }
-    
+
     @Test
     public void write1() {
         System.out.println(JSON.toJSONString(long2Bytes(-999999999999999L)));
         System.out.println(JSON.toJSONString(long2Bytes(-9999999999999999L)));
     }
-    
+
     public static byte[] long2Bytes(long num) {
         byte[] byteNum = new byte[8];
         for (int ix = 0; ix < 8; ++ix) {
@@ -79,5 +79,4 @@ public class PoiWriteTest {
         }
         return byteNum;
     }
-    
 }

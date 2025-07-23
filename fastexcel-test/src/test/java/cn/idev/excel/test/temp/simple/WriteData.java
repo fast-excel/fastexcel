@@ -1,7 +1,6 @@
 package cn.idev.excel.test.temp.simple;
 
 import java.util.Date;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,7 +8,7 @@ import lombok.Setter;
 /**
  * write data
  *
- * @author Jiaju Zhuang
+ *
  **/
 @Getter
 @Setter

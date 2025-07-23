@@ -9,7 +9,7 @@ import cn.idev.excel.metadata.data.WriteCellData;
 /**
  * String and string converter
  *
- * @author Jiaju Zhuang
+ *
  */
 public class CustomStringStringConverter implements Converter<String> {
 
@@ -45,5 +45,4 @@ public class CustomStringStringConverter implements Converter<String> {
     public WriteCellData<?> convertToExcelData(WriteConverterContext<String> context) {
         return new WriteCellData<>(context.getValue());
     }
-
 }

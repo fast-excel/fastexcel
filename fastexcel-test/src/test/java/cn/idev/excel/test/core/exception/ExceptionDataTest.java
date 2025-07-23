@@ -1,17 +1,15 @@
 package cn.idev.excel.test.core.exception;
 
+import cn.idev.excel.EasyExcel;
+import cn.idev.excel.ExcelWriter;
+import cn.idev.excel.test.util.TestFileUtil;
+import cn.idev.excel.write.metadata.WriteSheet;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import cn.idev.excel.test.util.TestFileUtil;
-import cn.idev.excel.EasyExcel;
-import cn.idev.excel.ExcelWriter;
-import cn.idev.excel.write.metadata.WriteSheet;
-
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -20,7 +18,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
 /**
- * @author Jiaju Zhuang
+ *
  */
 @TestMethodOrder(MethodOrderer.MethodName.class)
 public class ExceptionDataTest {
@@ -80,9 +78,9 @@ public class ExceptionDataTest {
         readAndWriteExcelAnalysisStopSheetException(fileExcelAnalysisStopSheetException03);
     }
 
-
     private void readAndWriteExcelAnalysisStopSheetException(File file) throws Exception {
-        try (ExcelWriter excelWriter = EasyExcel.write(file, ExceptionData.class).build()) {
+        try (ExcelWriter excelWriter =
+                EasyExcel.write(file, ExceptionData.class).build()) {
             for (int i = 0; i < 5; i++) {
                 String sheetName = "sheet" + i;
                 WriteSheet writeSheet = EasyExcel.writerSheet(i, sheetName).build();
@@ -91,9 +89,10 @@ public class ExceptionDataTest {
             }
         }
 
-        ExcelAnalysisStopSheetExceptionDataListener excelAnalysisStopSheetExceptionDataListener
-            = new ExcelAnalysisStopSheetExceptionDataListener();
-        EasyExcel.read(file, ExceptionData.class, excelAnalysisStopSheetExceptionDataListener).doReadAll();
+        ExcelAnalysisStopSheetExceptionDataListener excelAnalysisStopSheetExceptionDataListener =
+                new ExcelAnalysisStopSheetExceptionDataListener();
+        EasyExcel.read(file, ExceptionData.class, excelAnalysisStopSheetExceptionDataListener)
+                .doReadAll();
         Map<Integer, List<String>> dataMap = excelAnalysisStopSheetExceptionDataListener.getDataMap();
         Assertions.assertEquals(5, dataMap.size());
         for (int i = 0; i < 5; i++) {
@@ -111,14 +110,17 @@ public class ExceptionDataTest {
     private void readAndWriteException(File file) throws Exception {
         EasyExcel.write(new FileOutputStream(file), ExceptionData.class).sheet().doWrite(data());
         ArithmeticException exception = Assertions.assertThrows(ArithmeticException.class, () -> EasyExcel.read(
-            new FileInputStream(file), ExceptionData.class,
-            new ExceptionThrowDataListener()).sheet().doRead());
+                        new FileInputStream(file), ExceptionData.class, new ExceptionThrowDataListener())
+                .sheet()
+                .doRead());
         Assertions.assertEquals("/ by zero", exception.getMessage());
     }
 
     private void readAndWrite(File file) throws Exception {
         EasyExcel.write(new FileOutputStream(file), ExceptionData.class).sheet().doWrite(data());
-        EasyExcel.read(new FileInputStream(file), ExceptionData.class, new ExceptionDataListener()).sheet().doRead();
+        EasyExcel.read(new FileInputStream(file), ExceptionData.class, new ExceptionDataListener())
+                .sheet()
+                .doRead();
     }
 
     private List<ExceptionData> data() {

@@ -1,6 +1,10 @@
 package cn.idev.excel.test.temp.poi;
 
 import cn.idev.excel.test.util.TestFileUtil;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.nio.file.Path;
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.hssf.record.crypto.Biff8EncryptionKey;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -16,17 +20,11 @@ import org.junit.jupiter.api.io.TempDir;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
-import java.nio.file.Path;
-
 /**
  * 测试poi
  *
- * @author Jiaju Zhuang
+ *
  **/
-
 public class Poi3Test {
     private static final Logger LOGGER = LoggerFactory.getLogger(Poi3Test.class);
 
@@ -35,7 +33,7 @@ public class Poi3Test {
         // Write out the encrypted version
         try (POIFSFileSystem fs = new POIFSFileSystem();
                 FileOutputStream fos = new FileOutputStream(
-                        tempDir.resolve(System.currentTimeMillis() + ".xlsx").toFile());) {
+                        tempDir.resolve(System.currentTimeMillis() + ".xlsx").toFile()); ) {
             String file = TestFileUtil.getPath() + "large" + File.separator + "large07.xlsx";
             EncryptionInfo info = new EncryptionInfo(EncryptionMode.agile);
             Encryptor enc = info.getEncryptor();
@@ -59,6 +57,5 @@ public class Poi3Test {
         Assertions.assertEquals("Sheet1", hwb.getSheetAt(0).getSheetName());
         Biff8EncryptionKey.setCurrentUserPassword(null);
         System.out.println(hwb.getSheetAt(0).getSheetName());
-
     }
 }

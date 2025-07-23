@@ -6,7 +6,30 @@ on:
   push:
     branches: [ main ]
 
+permissions:
+  checks: write
+  pull-requests: write
+
 jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Cache Local Maven Repository
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-m2
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: 21
+          distribution: 'adopt'
+      - name: Check code style
+        run: ./mvnw spotless:check
+
   test:
     runs-on: ubuntu-24.04
     strategy:
@@ -37,6 +60,11 @@ jobs:
       - name: Test with Maven
         if: ${{ matrix.java != '8' }}
         run: ./mvnw test -B -Dmaven.test.skip=false -DargLine="--add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/sun.reflect.annotation=ALL-UNNAMED"
+      - name: Publish Unit Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: (!cancelled())
+        with:
+          files: "**/target/surefire-reports/*.xml"
       - name: Maven Build
         run: ./mvnw install -B -V
       - name: Java Doc

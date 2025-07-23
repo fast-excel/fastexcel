@@ -1,21 +1,19 @@
 package cn.idev.excel.test.core.head;
 
+import cn.idev.excel.EasyExcel;
+import cn.idev.excel.test.util.TestFileUtil;
+import cn.idev.excel.util.DateUtils;
 import java.io.File;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
-
-import cn.idev.excel.util.DateUtils;
-import cn.idev.excel.test.util.TestFileUtil;
-import cn.idev.excel.EasyExcel;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
 /**
- * @author Jiaju Zhuang
+ *
  */
 @TestMethodOrder(MethodOrderer.MethodName.class)
 public class ListHeadDataTest {
@@ -48,7 +46,10 @@ public class ListHeadDataTest {
 
     private void readAndWrite(File file) throws Exception {
         EasyExcel.write(file).head(head()).sheet().doWrite(data());
-        EasyExcel.read(file).registerReadListener(new ListHeadDataListener()).sheet().doRead();
+        EasyExcel.read(file)
+                .registerReadListener(new ListHeadDataListener())
+                .sheet()
+                .doRead();
     }
 
     private List<List<String>> head() {

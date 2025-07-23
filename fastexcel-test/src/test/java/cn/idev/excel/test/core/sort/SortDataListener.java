@@ -1,17 +1,15 @@
 package cn.idev.excel.test.core.sort;
 
+import cn.idev.excel.context.AnalysisContext;
+import cn.idev.excel.event.AnalysisEventListener;
 import java.util.ArrayList;
 import java.util.List;
-
-import cn.idev.excel.event.AnalysisEventListener;
-import cn.idev.excel.context.AnalysisContext;
-
 import org.junit.jupiter.api.Assertions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author Jiaju Zhuang
+ *
  */
 public class SortDataListener extends AnalysisEventListener<SortData> {
 

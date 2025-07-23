@@ -21,7 +21,7 @@
     <dependencies>
         <dependency>
             <groupId>cn.idev.excel</groupId>
-            <artifactId>fastexcel-core</artifactId>
+            <artifactId>fastexcel</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
