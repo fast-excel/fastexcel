@@ -17,19 +17,17 @@
 
 package cn.idev.excel.analysis.v07.handlers.sax;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import cn.idev.excel.cache.ReadCache;
 import cn.idev.excel.constant.ExcelXmlConstants;
-
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * Sax read sharedStringsTable.xml
  *
- * @author Jiaju Zhuang
+ *
  */
 public class SharedStringsTableHandler extends DefaultHandler {
 
@@ -164,7 +162,7 @@ public class SharedStringsTableHandler extends DefaultHandler {
 
             String code = m.group(1);
             int icode = Integer.decode("0x" + code);
-            buf.append((char)icode);
+            buf.append((char) icode);
 
             idx = m.end();
         }

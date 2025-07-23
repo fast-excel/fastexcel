@@ -1,15 +1,13 @@
 package cn.idev.excel.test.core.large;
 
+import cn.idev.excel.EasyExcel;
+import cn.idev.excel.ExcelWriter;
+import cn.idev.excel.test.util.TestFileUtil;
+import cn.idev.excel.write.metadata.WriteSheet;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
-
-import cn.idev.excel.test.util.TestFileUtil;
-import cn.idev.excel.EasyExcel;
-import cn.idev.excel.ExcelWriter;
-import cn.idev.excel.write.metadata.WriteSheet;
-
 import org.apache.poi.xssf.streaming.SXSSFCell;
 import org.apache.poi.xssf.streaming.SXSSFRow;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
@@ -23,7 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author Jiaju Zhuang
+ *
  */
 @TestMethodOrder(MethodOrderer.MethodName.class)
 public class LargeDataTest {
@@ -50,14 +48,20 @@ public class LargeDataTest {
     @Test
     public void t01Read() throws Exception {
         long start = System.currentTimeMillis();
-        EasyExcel.read(TestFileUtil.getPath() + "large" + File.separator + "large07.xlsx", LargeData.class,
-            new LargeDataListener()).headRowNumber(2).sheet().doRead();
+        EasyExcel.read(
+                        TestFileUtil.getPath() + "large" + File.separator + "large07.xlsx",
+                        LargeData.class,
+                        new LargeDataListener())
+                .headRowNumber(2)
+                .sheet()
+                .doRead();
         LOGGER.info("Large data total time spent:{}", System.currentTimeMillis() - start);
     }
 
     @Test
     public void t02Fill() {
-        try (ExcelWriter excelWriter = EasyExcel.write(fileFill07).withTemplate(template07).build()) {
+        try (ExcelWriter excelWriter =
+                EasyExcel.write(fileFill07).withTemplate(template07).build()) {
             WriteSheet writeSheet = EasyExcel.writerSheet().build();
             for (int j = 0; j < 5000; j++) {
                 excelWriter.fill(data(), writeSheet);
@@ -81,13 +85,16 @@ public class LargeDataTest {
 
         //  read
         start = System.currentTimeMillis();
-        EasyExcel.read(fileCsv, LargeData.class, new LargeDataListener()).sheet().doRead();
+        EasyExcel.read(fileCsv, LargeData.class, new LargeDataListener())
+                .sheet()
+                .doRead();
         LOGGER.info("CSV large data total time spent:{}", System.currentTimeMillis() - start);
     }
 
     @Test
     public void t04Write() throws Exception {
-        ExcelWriter excelWriter = EasyExcel.write(fileWriteTemp07, LargeData.class).build();
+        ExcelWriter excelWriter =
+                EasyExcel.write(fileWriteTemp07, LargeData.class).build();
         WriteSheet writeSheet = EasyExcel.writerSheet().build();
         for (int j = 0; j < 2; j++) {
             excelWriter.write(data(), writeSheet);

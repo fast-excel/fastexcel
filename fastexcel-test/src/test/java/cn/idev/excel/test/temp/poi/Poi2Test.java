@@ -1,7 +1,6 @@
 package cn.idev.excel.test.temp.poi;
 
 import java.io.IOException;
-
 import org.apache.poi.xssf.streaming.SXSSFRow;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
@@ -15,9 +14,8 @@ import org.slf4j.LoggerFactory;
 /**
  * 测试poi
  *
- * @author Jiaju Zhuang
+ *
  **/
-
 public class Poi2Test {
     private static final Logger LOGGER = LoggerFactory.getLogger(Poi2Test.class);
 

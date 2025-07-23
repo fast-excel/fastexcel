@@ -1,11 +1,5 @@
 package cn.idev.excel.metadata.property;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-
 import cn.idev.excel.enums.HeadKindEnum;
 import cn.idev.excel.metadata.ConfigurationHolder;
 import cn.idev.excel.metadata.FieldCache;
@@ -14,7 +8,11 @@ import cn.idev.excel.metadata.Head;
 import cn.idev.excel.util.ClassUtils;
 import cn.idev.excel.util.StringUtils;
 import cn.idev.excel.write.metadata.holder.AbstractWriteHolder;
-
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,7 +22,6 @@ import org.slf4j.LoggerFactory;
 /**
  * Define the header attribute of excel
  *
- * @author jipengfei
  */
 @Getter
 @Setter
@@ -58,7 +55,7 @@ public class ExcelHeadProperty {
             int headIndex = 0;
             for (int i = 0; i < head.size(); i++) {
                 if (configurationHolder instanceof AbstractWriteHolder) {
-                    if (((AbstractWriteHolder)configurationHolder).ignore(null, i)) {
+                    if (((AbstractWriteHolder) configurationHolder).ignore(null, i)) {
                         continue;
                     }
                 }
@@ -102,9 +99,12 @@ public class ExcelHeadProperty {
         }
         FieldCache fieldCache = ClassUtils.declaredFields(headClazz, configurationHolder);
 
-        for (Map.Entry<Integer, FieldWrapper> entry : fieldCache.getSortedFieldMap().entrySet()) {
-            initOneColumnProperty(entry.getKey(), entry.getValue(),
-                fieldCache.getIndexFieldMap().containsKey(entry.getKey()));
+        for (Map.Entry<Integer, FieldWrapper> entry :
+                fieldCache.getSortedFieldMap().entrySet()) {
+            initOneColumnProperty(
+                    entry.getKey(),
+                    entry.getValue(),
+                    fieldCache.getIndexFieldMap().containsKey(entry.getKey()));
         }
         headKind = HeadKindEnum.CLASS;
     }
@@ -119,8 +119,9 @@ public class ExcelHeadProperty {
      */
     private void initOneColumnProperty(int index, FieldWrapper field, Boolean forceIndex) {
         List<String> tmpHeadList = new ArrayList<>();
-        boolean notForceName = field.getHeads() == null || field.getHeads().length == 0
-            || (field.getHeads().length == 1 && StringUtils.isEmpty(field.getHeads()[0]));
+        boolean notForceName = field.getHeads() == null
+                || field.getHeads().length == 0
+                || (field.getHeads().length == 1 && StringUtils.isEmpty(field.getHeads()[0]));
         if (headMap.containsKey(index)) {
             tmpHeadList.addAll(headMap.get(index).getHeadNameList());
         } else {
@@ -137,5 +138,4 @@ public class ExcelHeadProperty {
     public boolean hasHead() {
         return headKind != HeadKindEnum.NONE;
     }
-
 }

@@ -10,6 +10,6 @@ import lombok.Setter;
 @EqualsAndHashCode
 @NoArgsConstructor
 public class Sample {
-    
+
     private String header;
 }

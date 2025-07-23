@@ -3,7 +3,7 @@ package cn.idev.excel.enums;
 /**
  * Direction of writing
  *
- * @author Jiaju Zhuang
+ *
  **/
 public enum WriteDirectionEnum {
     /**
@@ -13,5 +13,6 @@ public enum WriteDirectionEnum {
     /**
      * Horizontal write.
      */
-    HORIZONTAL,;
+    HORIZONTAL,
+    ;
 }

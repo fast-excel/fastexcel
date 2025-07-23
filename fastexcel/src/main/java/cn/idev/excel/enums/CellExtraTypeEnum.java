@@ -3,7 +3,7 @@ package cn.idev.excel.enums;
 /**
  * Extra data type
  *
- * @author Jiaju Zhuang
+ *
  **/
 public enum CellExtraTypeEnum {
     /**

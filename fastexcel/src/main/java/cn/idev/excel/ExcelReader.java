@@ -1,22 +1,19 @@
 package cn.idev.excel;
 
-import java.io.Closeable;
-import java.util.Arrays;
-import java.util.List;
-
-import cn.idev.excel.read.metadata.ReadSheet;
-import cn.idev.excel.read.metadata.ReadWorkbook;
 import cn.idev.excel.analysis.ExcelAnalyser;
 import cn.idev.excel.analysis.ExcelAnalyserImpl;
 import cn.idev.excel.analysis.ExcelReadExecutor;
 import cn.idev.excel.context.AnalysisContext;
-
+import cn.idev.excel.read.metadata.ReadSheet;
+import cn.idev.excel.read.metadata.ReadWorkbook;
+import java.io.Closeable;
+import java.util.Arrays;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 
 /**
  * Excel readers are all read in event mode.
  *
- * @author jipengfei
  */
 @Slf4j
 public class ExcelReader implements Closeable {

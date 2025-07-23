@@ -1,13 +1,12 @@
 package cn.idev.excel.util;
 
-
 import cn.idev.excel.support.cglib.beans.BeanMap;
 import cn.idev.excel.support.cglib.core.DefaultNamingPolicy;
 
 /**
  * bean utils
  *
- * @author Jiaju Zhuang
+ *
  */
 public class BeanMapUtils {
 

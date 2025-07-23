@@ -1,16 +1,15 @@
 package cn.idev.excel.write.style;
 
-import cn.idev.excel.write.handler.CellWriteHandler;
-import cn.idev.excel.write.handler.context.CellWriteHandlerContext;
 import cn.idev.excel.constant.OrderConstant;
 import cn.idev.excel.metadata.Head;
-
+import cn.idev.excel.write.handler.CellWriteHandler;
+import cn.idev.excel.write.handler.context.CellWriteHandlerContext;
 import org.apache.poi.ss.usermodel.Cell;
 
 /**
  * Cell style strategy
  *
- * @author Jiaju Zhuang
+ *
  */
 public abstract class AbstractCellStyleStrategy implements CellWriteHandler {
 
@@ -70,5 +69,4 @@ public abstract class AbstractCellStyleStrategy implements CellWriteHandler {
     protected void setContentCellStyle(Cell cell, Head head, Integer relativeRowIndex) {
         throw new UnsupportedOperationException("Custom styles must override the setContentCellStyle method.");
     }
-
 }

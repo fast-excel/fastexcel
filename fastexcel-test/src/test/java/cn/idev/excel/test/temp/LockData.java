@@ -1,7 +1,6 @@
 package cn.idev.excel.test.temp;
 
 import cn.idev.excel.annotation.format.NumberFormat;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,7 +8,7 @@ import lombok.Setter;
 /**
  * 基础数据类.这里的排序和excel里面的排序一致
  *
- * @author Jiaju Zhuang
+ *
  **/
 @Getter
 @Setter
@@ -17,6 +16,7 @@ import lombok.Setter;
 public class LockData {
     @NumberFormat("#.##%")
     private Double string0;
+
     private String string1;
     private String string2;
     private String string3;
@@ -25,5 +25,4 @@ public class LockData {
     private String string6;
     private String string7;
     private String string8;
-
 }

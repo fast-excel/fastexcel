@@ -1,12 +1,10 @@
 package cn.idev.excel.write.metadata;
 
+import cn.idev.excel.metadata.BasicParameter;
+import cn.idev.excel.write.handler.WriteHandler;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
-import cn.idev.excel.metadata.BasicParameter;
-import cn.idev.excel.write.handler.WriteHandler;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +12,7 @@ import lombok.Setter;
 /**
  * Write basic parameter
  *
- * @author Jiaju Zhuang
+ *
  **/
 @Getter
 @Setter

@@ -1,13 +1,11 @@
 package cn.idev.excel.write.handler.impl;
 
-import java.lang.reflect.Field;
-import java.util.Map;
-
-import cn.idev.excel.write.handler.WorkbookWriteHandler;
 import cn.idev.excel.util.FieldUtils;
+import cn.idev.excel.write.handler.WorkbookWriteHandler;
 import cn.idev.excel.write.metadata.holder.WriteSheetHolder;
 import cn.idev.excel.write.metadata.holder.WriteWorkbookHolder;
-
+import java.lang.reflect.Field;
+import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.poi.ss.util.CellReference;
@@ -21,14 +19,14 @@ import org.openxmlformats.schemas.spreadsheetml.x2006.main.CTWorksheet;
  *
  * https://github.com/fast-excel/fastexcel/issues/1282
  *
- * @author Jiaju Zhuang
+ *
  */
 @Slf4j
 public class DimensionWorkbookWriteHandler implements WorkbookWriteHandler {
 
     private static final String XSSF_SHEET_MEMBER_VARIABLE_NAME = "_sh";
-    private static final Field XSSF_SHEET_FIELD = FieldUtils.getField(SXSSFSheet.class, XSSF_SHEET_MEMBER_VARIABLE_NAME,
-        true);
+    private static final Field XSSF_SHEET_FIELD =
+            FieldUtils.getField(SXSSFSheet.class, XSSF_SHEET_MEMBER_VARIABLE_NAME, true);
 
     @Override
     public void afterWorkbookDispose(WriteWorkbookHolder writeWorkbookHolder) {
@@ -47,10 +45,10 @@ public class DimensionWorkbookWriteHandler implements WorkbookWriteHandler {
             if (writeSheetHolder.getSheet() == null || !(writeSheetHolder.getSheet() instanceof SXSSFSheet)) {
                 continue;
             }
-            SXSSFSheet sxssfSheet = ((SXSSFSheet)writeSheetHolder.getSheet());
+            SXSSFSheet sxssfSheet = ((SXSSFSheet) writeSheetHolder.getSheet());
             XSSFSheet xssfSheet;
             try {
-                xssfSheet = (XSSFSheet)XSSF_SHEET_FIELD.get(sxssfSheet);
+                xssfSheet = (XSSFSheet) XSSF_SHEET_FIELD.get(sxssfSheet);
             } catch (IllegalAccessException e) {
                 log.debug("Can not found _sh.", e);
                 continue;
@@ -64,7 +62,10 @@ public class DimensionWorkbookWriteHandler implements WorkbookWriteHandler {
             }
             int headSize = 0;
             if (MapUtils.isNotEmpty(writeSheetHolder.getExcelWriteHeadProperty().getHeadMap())) {
-                headSize = writeSheetHolder.getExcelWriteHeadProperty().getHeadMap().size();
+                headSize = writeSheetHolder
+                        .getExcelWriteHeadProperty()
+                        .getHeadMap()
+                        .size();
                 if (headSize > 0) {
                     headSize--;
                 }
@@ -74,8 +75,9 @@ public class DimensionWorkbookWriteHandler implements WorkbookWriteHandler {
                 lastRowIndex = 0;
             }
 
-            ctWorksheet.getDimension().setRef(
-                "A1:" + CellReference.convertNumToColString(headSize) + (lastRowIndex + 1));
+            ctWorksheet
+                    .getDimension()
+                    .setRef("A1:" + CellReference.convertNumToColString(headSize) + (lastRowIndex + 1));
         }
     }
 }

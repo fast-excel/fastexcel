@@ -1,16 +1,15 @@
 package cn.idev.excel.test.core.large;
 
-import cn.idev.excel.event.AnalysisEventListener;
 import cn.idev.excel.context.AnalysisContext;
+import cn.idev.excel.event.AnalysisEventListener;
 import cn.idev.excel.support.ExcelTypeEnum;
 import com.alibaba.fastjson2.JSON;
-
 import org.junit.jupiter.api.Assertions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author Jiaju Zhuang
+ *
  */
 public class LargeDataListener extends AnalysisEventListener<LargeData> {
     private static final Logger LOGGER = LoggerFactory.getLogger(LargeDataListener.class);

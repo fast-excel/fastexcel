@@ -5,11 +5,10 @@ import cn.idev.excel.exception.ExcelGenerateException;
 import cn.idev.excel.support.ExcelTypeEnum;
 import cn.idev.excel.write.metadata.WriteSheet;
 import cn.idev.excel.write.metadata.WriteWorkbook;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.QuoteMode;
-
 import java.util.Collection;
 import java.util.function.Supplier;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.QuoteMode;
 
 /**
  * Builder for CSV file writing
@@ -19,8 +18,7 @@ public class CsvWriterBuilder extends AbstractExcelWriterParameterBuilder<CsvWri
     private CSVFormat.Builder csvFormatBuilder;
     private WriteSheet writeSheet;
 
-    private CsvWriterBuilder() {
-    }
+    private CsvWriterBuilder() {}
 
     public CsvWriterBuilder(WriteWorkbook writeWorkbook) {
         writeWorkbook.setExcelType(ExcelTypeEnum.CSV);
@@ -136,5 +134,4 @@ public class CsvWriterBuilder extends AbstractExcelWriterParameterBuilder<CsvWri
     protected WriteSheet parameter() {
         return writeSheet;
     }
-
 }

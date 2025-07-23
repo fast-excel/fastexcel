@@ -1,15 +1,13 @@
 package cn.idev.excel.metadata;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
-
 import cn.idev.excel.exception.ExcelGenerateException;
 import cn.idev.excel.metadata.property.ColumnWidthProperty;
 import cn.idev.excel.metadata.property.FontProperty;
 import cn.idev.excel.metadata.property.LoopMergeProperty;
 import cn.idev.excel.metadata.property.StyleProperty;
-
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,7 +15,7 @@ import lombok.Setter;
 /**
  * excel head
  *
- * @author Jiaju Zhuang
+ *
  **/
 @Getter
 @Setter
@@ -66,8 +64,13 @@ public class Head {
      */
     private FontProperty headFontProperty;
 
-    public Head(Integer columnIndex, Field field, String fieldName, List<String> headNameList, Boolean forceIndex,
-        Boolean forceName) {
+    public Head(
+            Integer columnIndex,
+            Field field,
+            String fieldName,
+            List<String> headNameList,
+            Boolean forceIndex,
+            Boolean forceName) {
         this.columnIndex = columnIndex;
         this.field = field;
         this.fieldName = fieldName;

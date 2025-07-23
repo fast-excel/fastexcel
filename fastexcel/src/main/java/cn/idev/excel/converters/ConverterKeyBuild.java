@@ -1,10 +1,8 @@
 package cn.idev.excel.converters;
 
-import java.util.Map;
-
 import cn.idev.excel.enums.CellDataTypeEnum;
 import cn.idev.excel.util.MapUtils;
-
+import java.util.Map;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -13,7 +11,7 @@ import lombok.Setter;
 /**
  * Converter unique key.Consider that you can just use class as the key.
  *
- * @author Jiaju Zhuang
+ *
  */
 public class ConverterKeyBuild {
 

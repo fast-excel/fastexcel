@@ -1,14 +1,13 @@
 package cn.idev.excel.event;
 
+import cn.idev.excel.context.AnalysisContext;
 import java.util.ArrayList;
 import java.util.List;
-
-import cn.idev.excel.context.AnalysisContext;
 
 /**
  * Synchronous data reading
  *
- * @author Jiaju Zhuang
+ *
  */
 public class SyncReadListener extends AnalysisEventListener<Object> {
     private List<Object> list = new ArrayList<Object>();

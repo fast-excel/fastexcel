@@ -1,10 +1,9 @@
 package cn.idev.excel.constant;
 
-import java.util.Locale;
-import java.util.Map;
-
 import cn.idev.excel.util.MapUtils;
 import cn.idev.excel.util.StringUtils;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Excel's built-in format conversion.Currently only supports Chinese.
@@ -17,7 +16,7 @@ import cn.idev.excel.util.StringUtils;
  * Specific correspondence please see:
  * https://docs.microsoft.com/en-us/dotnet/api/documentformat.openxml.spreadsheet.numberingformat?view=openxml-2.8.1
  *
- * @author Jiaju Zhuang
+ *
  **/
 public class BuiltinFormats {
 
@@ -522,9 +521,8 @@ public class BuiltinFormats {
     private static Map<String, Short> buildMap(String[] builtinFormats) {
         Map<String, Short> map = MapUtils.newHashMapWithExpectedSize(builtinFormats.length);
         for (int i = 0; i < builtinFormats.length; i++) {
-            map.put(builtinFormats[i], (short)i);
+            map.put(builtinFormats[i], (short) i);
         }
         return map;
     }
-
 }

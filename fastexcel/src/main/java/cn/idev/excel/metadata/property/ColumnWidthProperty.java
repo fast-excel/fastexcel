@@ -5,7 +5,7 @@ import cn.idev.excel.annotation.write.style.ColumnWidth;
 /**
  * Configuration from annotations
  *
- * @author Jiaju Zhuang
+ *
  */
 public class ColumnWidthProperty {
     private Integer width;

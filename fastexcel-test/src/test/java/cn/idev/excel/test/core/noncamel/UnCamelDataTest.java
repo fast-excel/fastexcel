@@ -1,19 +1,17 @@
 package cn.idev.excel.test.core.noncamel;
 
+import cn.idev.excel.EasyExcel;
+import cn.idev.excel.test.util.TestFileUtil;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import cn.idev.excel.test.util.TestFileUtil;
-import cn.idev.excel.EasyExcel;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
 /**
- * @author Jiaju Zhuang
+ *
  */
 @TestMethodOrder(MethodOrderer.MethodName.class)
 public class UnCamelDataTest {
@@ -46,7 +44,9 @@ public class UnCamelDataTest {
 
     private void readAndWrite(File file) {
         EasyExcel.write(file, UnCamelData.class).sheet().doWrite(data());
-        EasyExcel.read(file, UnCamelData.class, new UnCamelDataListener()).sheet().doRead();
+        EasyExcel.read(file, UnCamelData.class, new UnCamelDataListener())
+                .sheet()
+                .doRead();
     }
 
     private List<UnCamelData> data() {

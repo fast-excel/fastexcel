@@ -1,12 +1,10 @@
 package cn.idev.excel.test.temp.issue1662;
 
+import cn.idev.excel.EasyExcel;
+import cn.idev.excel.test.util.TestFileUtil;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import cn.idev.excel.EasyExcel;
-import cn.idev.excel.test.util.TestFileUtil;
-
 import org.junit.jupiter.api.Test;
 
 public class Issue1662Test {

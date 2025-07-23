@@ -5,7 +5,7 @@ import java.util.Collection;
 /**
  * A collection row of data.
  *
- * @author Jiaju Zhuang
+ *
  */
 public class CollectionRowData implements RowData {
 

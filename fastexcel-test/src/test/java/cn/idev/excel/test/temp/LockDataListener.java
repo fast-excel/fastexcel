@@ -1,20 +1,18 @@
 package cn.idev.excel.test.temp;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import cn.idev.excel.context.AnalysisContext;
 import cn.idev.excel.event.AnalysisEventListener;
 import cn.idev.excel.test.demo.read.DemoDataListener;
 import com.alibaba.fastjson2.JSON;
-
+import java.util.ArrayList;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * 模板的读取类
  *
- * @author Jiaju Zhuang
+ *
  */
 public class LockDataListener extends AnalysisEventListener<LockData> {
     private static final Logger LOGGER = LoggerFactory.getLogger(DemoDataListener.class);
@@ -22,6 +20,7 @@ public class LockDataListener extends AnalysisEventListener<LockData> {
      * 每隔5条存储数据库，实际使用中可以100条，然后清理list ，方便内存回收
      */
     private static final int BATCH_COUNT = 5;
+
     List<LockData> list = new ArrayList<LockData>();
 
     @Override

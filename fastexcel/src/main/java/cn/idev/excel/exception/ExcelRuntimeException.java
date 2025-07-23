@@ -2,7 +2,7 @@ package cn.idev.excel.exception;
 
 /**
  * Excel  Exception
- * @author Jiaju Zhuang
+ *
  */
 public class ExcelRuntimeException extends RuntimeException {
     public ExcelRuntimeException() {}

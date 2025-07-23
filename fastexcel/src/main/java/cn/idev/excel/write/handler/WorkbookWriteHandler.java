@@ -6,7 +6,7 @@ import cn.idev.excel.write.metadata.holder.WriteWorkbookHolder;
 /**
  * intercepts handle Workbook creation
  *
- * @author Jiaju Zhuang
+ *
  */
 public interface WorkbookWriteHandler extends WriteHandler {
 

@@ -1,12 +1,5 @@
 package cn.idev.excel.test.temp;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import cn.idev.excel.EasyExcel;
 import cn.idev.excel.ExcelWriter;
 import cn.idev.excel.read.listener.PageReadListener;
@@ -16,7 +9,12 @@ import cn.idev.excel.write.metadata.WriteSheet;
 import cn.idev.excel.write.metadata.style.WriteCellStyle;
 import cn.idev.excel.write.metadata.style.WriteFont;
 import cn.idev.excel.write.style.HorizontalCellStyleStrategy;
-
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.hssf.eventusermodel.HSSFEventFactory;
 import org.apache.poi.hssf.eventusermodel.HSSFListener;
@@ -37,11 +35,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 临时测试
  *
- * @author Jiaju Zhuang
- **/
-
+ */
 @Slf4j
 public class WriteLargeTest {
 
@@ -56,7 +51,7 @@ public class WriteLargeTest {
         // 背景设置为红色
         headWriteCellStyle.setFillForegroundColor(IndexedColors.RED.getIndex());
         WriteFont headWriteFont = new WriteFont();
-        headWriteFont.setFontHeightInPoints((short)20);
+        headWriteFont.setFontHeightInPoints((short) 20);
         headWriteCellStyle.setWriteFont(headWriteFont);
         // 内容的策略
         WriteCellStyle contentWriteCellStyle = new WriteCellStyle();
@@ -66,21 +61,21 @@ public class WriteLargeTest {
         contentWriteCellStyle.setFillForegroundColor(IndexedColors.GREEN.getIndex());
         WriteFont contentWriteFont = new WriteFont();
         // 字体大小
-        contentWriteFont.setFontHeightInPoints((short)20);
+        contentWriteFont.setFontHeightInPoints((short) 20);
         contentWriteCellStyle.setWriteFont(contentWriteFont);
         // 这个策略是 头是头的样式 内容是内容的样式 其他的策略可以自己实现
         HorizontalCellStyleStrategy horizontalCellStyleStrategy =
-            new HorizontalCellStyleStrategy(headWriteCellStyle, contentWriteCellStyle);
+                new HorizontalCellStyleStrategy(headWriteCellStyle, contentWriteCellStyle);
 
-        ExcelWriter excelWriter = EasyExcel.write(fileName, LargeData.class).registerWriteHandler(
-            horizontalCellStyleStrategy).build();
+        ExcelWriter excelWriter = EasyExcel.write(fileName, LargeData.class)
+                .registerWriteHandler(horizontalCellStyleStrategy)
+                .build();
         WriteSheet writeSheet = EasyExcel.writerSheet().build();
         for (int j = 0; j < 100; j++) {
             excelWriter.write(data(), writeSheet);
             LOGGER.info("{} fill success.", j);
         }
         excelWriter.finish();
-
     }
 
     @Test
@@ -91,21 +86,22 @@ public class WriteLargeTest {
         // 这里默认每次会读取100条数据 然后返回过来 直接调用使用数据就行
         // 具体需要返回多少行可以在`PageReadListener`的构造函数设置
         EasyExcel.read(fileName, new PageReadListener<List<Map<String, String>>>(dataList -> {
-            log.info("SIZEL：{}", dataList.size());
-        })).sheet().doRead();
+                    log.info("SIZEL：{}", dataList.size());
+                }))
+                .sheet()
+                .doRead();
 
         log.info("test");
-
     }
 
     @Test
     public void read2() throws Exception {
         // 使用输入的文件创建一个新的文件输入流
-        //FileInputStream fin = new FileInputStream("/Users/zhuangjiaju/Downloads/1e9e0578a9634abbbbd9b67f338f142a
+        // FileInputStream fin = new FileInputStream("/Users/zhuangjiaju/Downloads/1e9e0578a9634abbbbd9b67f338f142a
         // .xls");
         // 创建一个新的org.apache.poi.poifs.filesystem.Filesystem
-        POIFSFileSystem poifs = new POIFSFileSystem(
-            new File("src/test/resources/poi/last_row_number_xssf_date_test.xls"));
+        POIFSFileSystem poifs =
+                new POIFSFileSystem(new File("src/test/resources/poi/last_row_number_xssf_date_test.xls"));
         // 在InputStream中获取Workbook流
         InputStream din = poifs.createDocumentInputStream("Workbook");
         // 构造出HSSFRequest对象
@@ -117,7 +113,7 @@ public class WriteLargeTest {
         // 根据文档输入流处理我们监听的事件
         factory.processEvents(req, din);
         // 关闭文件输入流
-        //fin.close();
+        // fin.close();
         // 关闭文档输入流
         din.close();
         System.out.println("读取结束");
@@ -125,16 +121,15 @@ public class WriteLargeTest {
 
     @Test
     public void read3() throws Exception {
-        HSSFWorkbook hwb = new HSSFWorkbook(
-            new FileInputStream("src/test/resources/poi/last_row_number_xssf_date_test.xls"));
+        HSSFWorkbook hwb =
+                new HSSFWorkbook(new FileInputStream("src/test/resources/poi/last_row_number_xssf_date_test.xls"));
         HSSFSheet sheet = hwb.getSheetAt(0);
         HSSFRow row = null;
         HSSFCell cell = null;
         for (int i = sheet.getFirstRowNum(); i <= sheet.getPhysicalNumberOfRows(); i++) {
             row = sheet.getRow(i);
-            if(row!=null){
-                log.info("r:{}",row.getRowNum());
-
+            if (row != null) {
+                log.info("r:{}", row.getRowNum());
             }
         }
 
@@ -151,17 +146,17 @@ public class WriteLargeTest {
          */
         public void processRecord(Record record) {
             switch (record.getSid()) {
-                //BOFRecord可以表示工作表或工作簿的开头
+                // BOFRecord可以表示工作表或工作簿的开头
                 case BOFRecord.sid:
-                    BOFRecord bof = (BOFRecord)record;
-                    if (bof.getType() == bof.TYPE_WORKBOOK) {
+                    BOFRecord bof = (BOFRecord) record;
+                    if (bof.getType() == BOFRecord.TYPE_WORKBOOK) {
                         System.out.println("监听到工作表");
-                    } else if (bof.getType() == bof.TYPE_WORKSHEET) {
+                    } else if (bof.getType() == BOFRecord.TYPE_WORKSHEET) {
                         System.out.println("监听到工作簿");
                     }
                     break;
                 case BoundSheetRecord.sid:
-                    BoundSheetRecord bsr = (BoundSheetRecord)record;
+                    BoundSheetRecord bsr = (BoundSheetRecord) record;
                     System.out.println("工作簿名称: " + bsr.getSheetname());
                     break;
             }
@@ -180,7 +175,6 @@ public class WriteLargeTest {
             LOGGER.info("{} fill success.", j);
         }
         excelWriter.finish();
-
     }
 
     private List<List<String>> data() {

@@ -1,17 +1,16 @@
 package cn.idev.excel.read.builder;
 
-import java.util.List;
-
 import cn.idev.excel.ExcelReader;
 import cn.idev.excel.event.SyncReadListener;
 import cn.idev.excel.exception.ExcelAnalysisException;
 import cn.idev.excel.exception.ExcelGenerateException;
 import cn.idev.excel.read.metadata.ReadSheet;
+import java.util.List;
 
 /**
  * Build sheet
  *
- * @author Jiaju Zhuang
+ *
  */
 public class ExcelReaderSheetBuilder extends AbstractExcelReaderParameterBuilder<ExcelReaderSheetBuilder, ReadSheet> {
     private ExcelReader excelReader;
@@ -90,7 +89,7 @@ public class ExcelReaderSheetBuilder extends AbstractExcelReaderParameterBuilder
         registerReadListener(syncReadListener);
         excelReader.read(build());
         excelReader.finish();
-        return (List<T>)syncReadListener.getList();
+        return (List<T>) syncReadListener.getList();
     }
 
     @Override

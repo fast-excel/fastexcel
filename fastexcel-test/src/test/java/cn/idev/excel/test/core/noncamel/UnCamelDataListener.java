@@ -1,18 +1,16 @@
 package cn.idev.excel.test.core.noncamel;
 
+import cn.idev.excel.context.AnalysisContext;
+import cn.idev.excel.event.AnalysisEventListener;
+import com.alibaba.fastjson2.JSON;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import cn.idev.excel.event.AnalysisEventListener;
-import cn.idev.excel.context.AnalysisContext;
-import com.alibaba.fastjson2.JSON;
-
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 
 /**
- * @author Jiaju Zhuang
+ *
  */
 @Slf4j
 public class UnCamelDataListener extends AnalysisEventListener<UnCamelData> {
@@ -27,7 +25,6 @@ public class UnCamelDataListener extends AnalysisEventListener<UnCamelData> {
         Assertions.assertEquals(headMap.get(3), "STring4");
         Assertions.assertEquals(headMap.get(4), "STRING5");
         Assertions.assertEquals(headMap.get(5), "STRing6");
-
     }
 
     @Override

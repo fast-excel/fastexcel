@@ -1,20 +1,18 @@
 package cn.idev.excel.test.core.head;
 
+import cn.idev.excel.context.AnalysisContext;
+import cn.idev.excel.metadata.data.ReadCellData;
+import cn.idev.excel.read.listener.ReadListener;
+import com.alibaba.fastjson2.JSON;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import cn.idev.excel.read.listener.ReadListener;
-import cn.idev.excel.context.AnalysisContext;
-import cn.idev.excel.metadata.data.ReadCellData;
-import com.alibaba.fastjson2.JSON;
-
 import org.junit.jupiter.api.Assertions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author Jiaju Zhuang
+ *
  */
 public class ListHeadDataListener implements ReadListener<Map<Integer, String>> {
 

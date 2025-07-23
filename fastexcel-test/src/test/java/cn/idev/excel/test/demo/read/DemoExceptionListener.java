@@ -6,15 +6,14 @@ import cn.idev.excel.metadata.data.ReadCellData;
 import cn.idev.excel.read.listener.ReadListener;
 import cn.idev.excel.util.ListUtils;
 import com.alibaba.fastjson2.JSON;
-import lombok.extern.slf4j.Slf4j;
-
 import java.util.List;
 import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Read and convert exceptions.
  *
- * @author Jiaju Zhuang
+ *
  */
 @Slf4j
 public class DemoExceptionListener implements ReadListener<ExceptionDemoData> {
@@ -40,8 +39,11 @@ public class DemoExceptionListener implements ReadListener<ExceptionDemoData> {
         // If the header information is needed, use it in conjunction with invokeHeadMap.
         if (exception instanceof ExcelDataConvertException) {
             ExcelDataConvertException excelDataConvertException = (ExcelDataConvertException) exception;
-            log.error("Parsing exception in row {}, column {}, data: {}", excelDataConvertException.getRowIndex(),
-                    excelDataConvertException.getColumnIndex(), excelDataConvertException.getCellData());
+            log.error(
+                    "Parsing exception in row {}, column {}, data: {}",
+                    excelDataConvertException.getRowIndex(),
+                    excelDataConvertException.getColumnIndex(),
+                    excelDataConvertException.getCellData());
         }
     }
 

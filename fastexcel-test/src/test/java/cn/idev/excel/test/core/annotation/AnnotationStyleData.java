@@ -1,18 +1,17 @@
 package cn.idev.excel.test.core.annotation;
 
-import cn.idev.excel.enums.poi.FillPatternTypeEnum;
 import cn.idev.excel.annotation.ExcelProperty;
 import cn.idev.excel.annotation.write.style.ContentFontStyle;
 import cn.idev.excel.annotation.write.style.ContentStyle;
 import cn.idev.excel.annotation.write.style.HeadFontStyle;
 import cn.idev.excel.annotation.write.style.HeadStyle;
-
+import cn.idev.excel.enums.poi.FillPatternTypeEnum;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 /**
- * @author Jiaju Zhuang
+ *
  */
 @Getter
 @Setter
@@ -28,6 +27,7 @@ public class AnnotationStyleData {
     @ContentStyle(fillPatternType = FillPatternTypeEnum.SOLID_FOREGROUND, fillForegroundColor = 40)
     @ContentFontStyle(fontHeightInPoints = 50, color = 12)
     private String string;
+
     @ExcelProperty("字符串1")
     private String string1;
 }

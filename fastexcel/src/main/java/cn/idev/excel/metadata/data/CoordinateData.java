@@ -7,7 +7,7 @@ import lombok.Setter;
 /**
  * coordinate.
  *
- * @author Jiaju Zhuang
+ *
  */
 @Getter
 @Setter

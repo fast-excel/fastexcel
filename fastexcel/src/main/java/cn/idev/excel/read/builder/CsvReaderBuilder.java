@@ -6,10 +6,9 @@ import cn.idev.excel.exception.ExcelGenerateException;
 import cn.idev.excel.read.metadata.ReadSheet;
 import cn.idev.excel.read.metadata.ReadWorkbook;
 import cn.idev.excel.support.ExcelTypeEnum;
+import java.util.List;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.QuoteMode;
-
-import java.util.List;
 
 /**
  * Builder for CSV file reading
@@ -19,8 +18,7 @@ public class CsvReaderBuilder extends AbstractExcelReaderParameterBuilder<CsvRea
     private ReadSheet readSheet;
     private CSVFormat.Builder csvFormatBuilder;
 
-    private CsvReaderBuilder() {
-    }
+    private CsvReaderBuilder() {}
 
     public CsvReaderBuilder(ReadWorkbook readWorkbook) {
         readWorkbook.setExcelType(ExcelTypeEnum.CSV);

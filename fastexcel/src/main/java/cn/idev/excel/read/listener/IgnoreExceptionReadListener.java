@@ -5,7 +5,7 @@ import cn.idev.excel.context.AnalysisContext;
 /**
  * Interface to listen for read results
  *
- * @author Jiaju Zhuang
+ *
  */
 public interface IgnoreExceptionReadListener<T> extends ReadListener<T> {
 
@@ -19,5 +19,4 @@ public interface IgnoreExceptionReadListener<T> extends ReadListener<T> {
      */
     @Override
     default void onException(Exception exception, AnalysisContext context) throws Exception {}
-
 }

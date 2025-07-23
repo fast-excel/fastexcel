@@ -4,14 +4,13 @@ import cn.idev.excel.context.AnalysisContext;
 import cn.idev.excel.read.listener.ReadListener;
 import cn.idev.excel.util.ListUtils;
 import com.alibaba.fastjson2.JSON;
-import lombok.extern.slf4j.Slf4j;
-
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Template data reading class
  *
- * @author Jiaju Zhuang
+ *
  */
 @Slf4j
 public class ConverterDataListener implements ReadListener<ConverterData> {

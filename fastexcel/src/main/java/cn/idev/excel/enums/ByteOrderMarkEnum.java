@@ -1,16 +1,15 @@
 package cn.idev.excel.enums;
 
+import cn.idev.excel.util.MapUtils;
 import java.nio.charset.Charset;
 import java.util.Map;
-
-import cn.idev.excel.util.MapUtils;
 import lombok.Getter;
 import org.apache.commons.io.ByteOrderMark;
 
 /**
  * byte order mark
  *
- * @author Jiaju Zhuang
+ *
  */
 @Getter
 public enum ByteOrderMarkEnum {
@@ -59,5 +58,4 @@ public enum ByteOrderMarkEnum {
     public static ByteOrderMarkEnum valueOfByCharsetName(String charsetName) {
         return CHARSET_BYTE_ORDER_MARK_MAP.get(charsetName);
     }
-
 }

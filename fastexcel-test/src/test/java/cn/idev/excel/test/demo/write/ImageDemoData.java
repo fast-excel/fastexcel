@@ -1,15 +1,13 @@
 package cn.idev.excel.test.demo.write;
 
-import java.io.File;
-import java.io.InputStream;
-import java.net.URL;
-
-import cn.idev.excel.converters.string.StringImageConverter;
 import cn.idev.excel.annotation.ExcelProperty;
 import cn.idev.excel.annotation.write.style.ColumnWidth;
 import cn.idev.excel.annotation.write.style.ContentRowHeight;
+import cn.idev.excel.converters.string.StringImageConverter;
 import cn.idev.excel.metadata.data.WriteCellData;
-
+import java.io.File;
+import java.io.InputStream;
+import java.net.URL;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,7 +15,7 @@ import lombok.Setter;
 /**
  * 图片导出类
  *
- * @author Jiaju Zhuang
+ *
  */
 @Getter
 @Setter
@@ -32,6 +30,7 @@ public class ImageDemoData {
      */
     @ExcelProperty(converter = StringImageConverter.class)
     private String string;
+
     private byte[] byteArray;
     /**
      * 根据url导出

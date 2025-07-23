@@ -3,7 +3,6 @@ package cn.idev.excel.test.demo.read;
 import cn.idev.excel.annotation.ExcelProperty;
 import cn.idev.excel.annotation.format.DateTimeFormat;
 import cn.idev.excel.annotation.format.NumberFormat;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,7 +10,7 @@ import lombok.Setter;
 /**
  * Basic data class. The order here is consistent with the order in the Excel file.
  *
- * @author Jiaju Zhuang
+ *
  **/
 @Getter
 @Setter
