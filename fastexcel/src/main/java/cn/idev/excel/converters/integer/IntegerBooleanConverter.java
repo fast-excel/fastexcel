@@ -10,7 +10,7 @@ import cn.idev.excel.metadata.property.ExcelContentProperty;
 /**
  * Integer and boolean converter
  *
- * @author Jiaju Zhuang
+ *
  */
 public class IntegerBooleanConverter implements Converter<Integer> {
     private static final Integer ONE = 1;
@@ -27,8 +27,8 @@ public class IntegerBooleanConverter implements Converter<Integer> {
     }
 
     @Override
-    public Integer convertToJavaData(ReadCellData<?> cellData, ExcelContentProperty contentProperty,
-                                     GlobalConfiguration globalConfiguration) {
+    public Integer convertToJavaData(
+            ReadCellData<?> cellData, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) {
         if (cellData.getBooleanValue()) {
             return ONE;
         }
@@ -36,12 +36,11 @@ public class IntegerBooleanConverter implements Converter<Integer> {
     }
 
     @Override
-    public WriteCellData<?> convertToExcelData(Integer value, ExcelContentProperty contentProperty,
-                                               GlobalConfiguration globalConfiguration) {
+    public WriteCellData<?> convertToExcelData(
+            Integer value, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) {
         if (ONE.equals(value)) {
             return new WriteCellData<>(Boolean.TRUE);
         }
         return new WriteCellData<>(Boolean.FALSE);
     }
-
 }

@@ -1,15 +1,13 @@
 package cn.idev.excel.test.temp.poi;
 
-import java.io.FileOutputStream;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.List;
-
 import cn.idev.excel.EasyExcel;
 import cn.idev.excel.test.core.encrypt.EncryptData;
 import cn.idev.excel.test.core.simple.SimpleData;
 import cn.idev.excel.test.util.TestFileUtil;
-
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.poi.poifs.crypt.EncryptionInfo;
 import org.apache.poi.poifs.crypt.EncryptionMode;
 import org.apache.poi.poifs.crypt.Encryptor;
@@ -22,9 +20,8 @@ import org.junit.jupiter.api.Test;
 /**
  * TODO
  *
- * @author Jiaju Zhuang
+ *
  */
-
 public class PoiEncryptTest {
     @Test
     public void encrypt() throws Exception {
@@ -48,8 +45,8 @@ public class PoiEncryptTest {
         sxssfWorkbook.close();
         encos.close(); // this is necessary before writing out the FileSystem
 
-        OutputStream os = new FileOutputStream(
-            TestFileUtil.createNewFile("encrypt" + System.currentTimeMillis() + ".xlsx"));
+        OutputStream os =
+                new FileOutputStream(TestFileUtil.createNewFile("encrypt" + System.currentTimeMillis() + ".xlsx"));
         fs.writeFilesystem(os);
         os.close();
         fs.close();
@@ -57,9 +54,12 @@ public class PoiEncryptTest {
 
     @Test
     public void encryptExcel() throws Exception {
-        EasyExcel.write(TestFileUtil.createNewFile("encryptv2" + System.currentTimeMillis() + ".xlsx"),
-                EncryptData.class).password("123456")
-            .sheet().doWrite(data());
+        EasyExcel.write(
+                        TestFileUtil.createNewFile("encryptv2" + System.currentTimeMillis() + ".xlsx"),
+                        EncryptData.class)
+                .password("123456")
+                .sheet()
+                .doWrite(data());
     }
 
     private List<SimpleData> data() {
@@ -71,5 +71,4 @@ public class PoiEncryptTest {
         }
         return list;
     }
-
 }

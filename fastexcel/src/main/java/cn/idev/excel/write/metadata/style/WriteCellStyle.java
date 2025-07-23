@@ -5,7 +5,6 @@ import cn.idev.excel.metadata.data.DataFormatData;
 import cn.idev.excel.metadata.property.FontProperty;
 import cn.idev.excel.metadata.property.StyleProperty;
 import cn.idev.excel.util.StringUtils;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,7 +18,7 @@ import org.apache.poi.ss.usermodel.VerticalAlignment;
 /**
  * Cell style when writing
  *
- * @author Jiaju Zhuang
+ *
  */
 @Getter
 @Setter
@@ -354,7 +353,5 @@ public class WriteCellStyle {
         if (styleProperty.getShrinkToFit() != null) {
             writeCellStyle.setShrinkToFit(styleProperty.getShrinkToFit());
         }
-
     }
-
 }

@@ -2,7 +2,7 @@ package cn.idev.excel.exception;
 
 /**
  *
- * @author Jiaju Zhuang
+ *
  */
 public class ExcelCommonException extends ExcelRuntimeException {
 

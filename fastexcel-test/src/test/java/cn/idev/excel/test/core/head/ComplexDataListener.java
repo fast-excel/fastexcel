@@ -1,18 +1,16 @@
 package cn.idev.excel.test.core.head;
 
+import cn.idev.excel.context.AnalysisContext;
+import cn.idev.excel.event.AnalysisEventListener;
+import com.alibaba.fastjson2.JSON;
 import java.util.ArrayList;
 import java.util.List;
-
-import cn.idev.excel.event.AnalysisEventListener;
-import cn.idev.excel.context.AnalysisContext;
-import com.alibaba.fastjson2.JSON;
-
 import org.junit.jupiter.api.Assertions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author Jiaju Zhuang
+ *
  */
 public class ComplexDataListener extends AnalysisEventListener<ComplexHeadData> {
     private static final Logger LOGGER = LoggerFactory.getLogger(ComplexHeadData.class);

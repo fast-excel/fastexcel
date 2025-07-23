@@ -7,7 +7,7 @@ import lombok.Setter;
 /**
  * image
  *
- * @author Jiaju Zhuang
+ *
  */
 @Getter
 @Setter
@@ -50,7 +50,6 @@ public class ImageData extends ClientAnchorData {
          * Device independent bitmap
          */
         PICTURE_TYPE_DIB(7),
-
         ;
 
         int value;
@@ -59,5 +58,4 @@ public class ImageData extends ClientAnchorData {
             this.value = value;
         }
     }
-
 }

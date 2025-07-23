@@ -1,13 +1,12 @@
 package cn.idev.excel.analysis;
 
-import java.util.List;
-
 import cn.idev.excel.read.metadata.ReadSheet;
+import java.util.List;
 
 /**
  * Excel file Executor
  *
- * @author Jiaju Zhuang
+ *
  */
 public interface ExcelReadExecutor {
 

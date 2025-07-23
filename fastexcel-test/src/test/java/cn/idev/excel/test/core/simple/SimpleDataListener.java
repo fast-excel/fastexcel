@@ -1,14 +1,12 @@
 package cn.idev.excel.test.core.simple;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import cn.idev.excel.context.AnalysisContext;
 import cn.idev.excel.event.AnalysisEventListener;
 import cn.idev.excel.event.SyncReadListener;
-
 import com.alibaba.fastjson2.JSON;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.Assertions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +14,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Define an AnalysisEventListener to handler the Analysis event
  *
- * @author Jiaju Zhuang
+ *
  */
 public class SimpleDataListener extends AnalysisEventListener<SimpleData> {
     private static final Logger LOGGER = LoggerFactory.getLogger(SimpleDataListener.class);
@@ -56,12 +54,18 @@ public class SimpleDataListener extends AnalysisEventListener<SimpleData> {
      */
     @Override
     public void doAfterAllAnalysed(AnalysisContext context) {
-        //check the results
+        // check the results
         Assertions.assertEquals(list.size(), 10);
         Assertions.assertEquals(list.get(0).getName(), "姓名0");
-        Assertions.assertEquals((int)(context.readSheetHolder().getSheetNo()), 0);
+        Assertions.assertEquals((int) (context.readSheetHolder().getSheetNo()), 0);
         Assertions.assertEquals(
-            context.readSheetHolder().getExcelReadHeadProperty().getHeadMap().get(0).getHeadNameList().get(0), "姓名");
+                context.readSheetHolder()
+                        .getExcelReadHeadProperty()
+                        .getHeadMap()
+                        .get(0)
+                        .getHeadNameList()
+                        .get(0),
+                "姓名");
         LOGGER.debug("First row:{}", JSON.toJSONString(list.get(0)));
     }
 }

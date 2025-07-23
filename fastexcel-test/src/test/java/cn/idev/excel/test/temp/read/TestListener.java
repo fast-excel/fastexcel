@@ -1,15 +1,14 @@
 package cn.idev.excel.test.temp.read;
 
-import cn.idev.excel.event.AnalysisEventListener;
 import cn.idev.excel.context.AnalysisContext;
+import cn.idev.excel.event.AnalysisEventListener;
 import com.alibaba.fastjson2.JSON;
-
 import lombok.extern.slf4j.Slf4j;
 
 /**
  * TODO
  *
- * @author JiaJu Zhuang
+ *
  * @date 2020/4/9 16:33
  **/
 @Slf4j
@@ -21,7 +20,5 @@ public class TestListener extends AnalysisEventListener {
     }
 
     @Override
-    public void doAfterAllAnalysed(AnalysisContext analysisContext) {
-
-    }
+    public void doAfterAllAnalysed(AnalysisContext analysisContext) {}
 }

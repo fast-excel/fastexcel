@@ -18,7 +18,6 @@ public class GenericHeaderTypeDataListener<T> implements ReadListener<T> {
         this.headerClass = headerClass;
     }
 
-
     @Override
     public void invoke(T data, AnalysisContext context) {
         log.info("data:{}", data);

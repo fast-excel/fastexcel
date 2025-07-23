@@ -4,7 +4,6 @@ import cn.idev.excel.write.metadata.style.WriteFont;
 
 /**
  *
- * @author jipengfei
  * @deprecated please use {@link WriteFont}
  */
 @Deprecated

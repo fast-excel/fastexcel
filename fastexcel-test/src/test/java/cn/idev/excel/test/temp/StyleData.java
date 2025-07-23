@@ -1,13 +1,12 @@
 package cn.idev.excel.test.temp;
 
 import java.util.List;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 /**
- * @author Jiaju Zhuang
+ *
  **/
 @Getter
 @Setter

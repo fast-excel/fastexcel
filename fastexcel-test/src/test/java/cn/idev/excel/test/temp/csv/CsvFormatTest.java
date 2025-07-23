@@ -14,15 +14,6 @@ import cn.idev.excel.util.DateUtils;
 import cn.idev.excel.util.StringUtils;
 import cn.idev.excel.write.metadata.WriteSheet;
 import cn.idev.excel.write.metadata.holder.WriteWorkbookHolder;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVPrinter;
-import org.apache.commons.csv.QuoteMode;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -31,6 +22,14 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
+import org.apache.commons.csv.QuoteMode;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 @Slf4j
 public class CsvFormatTest {
@@ -56,10 +55,10 @@ public class CsvFormatTest {
 
         // sheet
         csvFile = TestFileUtil.createNewFile(CSV_BASE + "csv-sheet-simple.csv");
-        FastExcel.write(csvFile, CsvData.class)
-            .sheet().doWrite(csvDataList);
+        FastExcel.write(csvFile, CsvData.class).sheet().doWrite(csvDataList);
         List<CsvData> dataList = FastExcel.read(csvFile, CsvData.class, new CsvDataListener())
-            .sheet().doReadSync();
+                .sheet()
+                .doReadSync();
         Assertions.assertEquals(10, dataList.size());
         Assertions.assertNotNull(dataList.get(0).getString());
     }
@@ -108,14 +107,11 @@ public class CsvFormatTest {
     @Test
     public void testNoHead() {
         csvFile = TestFileUtil.createNewFile(CSV_BASE + "csv-no-head.csv");
-        FastExcel.write(csvFile, CsvData.class)
-            .needHead(false)
-            .csv()
-            .doWrite(csvDataList);
+        FastExcel.write(csvFile, CsvData.class).needHead(false).csv().doWrite(csvDataList);
         List<Object> dataList = FastExcel.read(csvFile, new CsvDataListener())
-            .headRowNumber(0)
-            .csv()
-            .doReadSync();
+                .headRowNumber(0)
+                .csv()
+                .doReadSync();
         Assertions.assertEquals(10, dataList.size());
         Assertions.assertNotNull(dataList.get(0));
     }
@@ -124,23 +120,26 @@ public class CsvFormatTest {
     public void testAutoTrim() {
         csvFile = TestFileUtil.createNewFile(CSV_BASE + "csv-auto-trim.csv");
         FastExcel.write(csvFile, CsvData.class)
-            .autoTrim(Boolean.FALSE)
-            .csv()
-            .doWrite(dataList(10, " " + STRING_PREFIX));
+                .autoTrim(Boolean.FALSE)
+                .csv()
+                .doWrite(dataList(10, " " + STRING_PREFIX));
         List<Object> dataList = FastExcel.read(csvFile, CsvData.class, new CsvDataListener())
-            .autoTrim(Boolean.FALSE)
-            .csv()
-            .doReadSync();
+                .autoTrim(Boolean.FALSE)
+                .csv()
+                .doReadSync();
         Assertions.assertEquals(10, dataList.size());
         Assertions.assertNotNull(dataList.get(0));
     }
 
     @Test
     public void testHolder() {
-        CSVFormat csvFormat = CSVFormat.DEFAULT.builder().setDelimiter(CsvConstant.AT).build();
-        
+        CSVFormat csvFormat =
+                CSVFormat.DEFAULT.builder().setDelimiter(CsvConstant.AT).build();
+
         csvFile = TestFileUtil.createNewFile(CSV_BASE + "csv-delimiter.csv");
-        try (ExcelWriter excelWriter = FastExcel.write(csvFile, CsvData.class).excelType(ExcelTypeEnum.CSV).build()) {
+        try (ExcelWriter excelWriter = FastExcel.write(csvFile, CsvData.class)
+                .excelType(ExcelTypeEnum.CSV)
+                .build()) {
             WriteWorkbookHolder writeWorkbookHolder = excelWriter.writeContext().writeWorkbookHolder();
             Workbook workbook = writeWorkbookHolder.getWorkbook();
             if (workbook instanceof CsvWorkbook) {
@@ -154,8 +153,10 @@ public class CsvFormatTest {
 
         // https://github.com/alibaba/easyexcel/issues/3868
         csvFile = TestFileUtil.readFile(CSV_BASE + "csv-delimiter.csv");
-        try (ExcelReader excelReader = FastExcel.read(csvFile, CsvData.class, new CsvDataListener()).build()) {
-            ReadWorkbookHolder readWorkbookHolder = excelReader.analysisContext().readWorkbookHolder();
+        try (ExcelReader excelReader =
+                FastExcel.read(csvFile, CsvData.class, new CsvDataListener()).build()) {
+            ReadWorkbookHolder readWorkbookHolder =
+                    excelReader.analysisContext().readWorkbookHolder();
             if (readWorkbookHolder instanceof CsvReadWorkbookHolder) {
                 CsvReadWorkbookHolder csvReadWorkbookHolder = (CsvReadWorkbookHolder) readWorkbookHolder;
                 csvReadWorkbookHolder.setCsvFormat(csvFormat);
@@ -163,21 +164,27 @@ public class CsvFormatTest {
             ReadSheet readSheet = FastExcel.readSheet(0).build();
             excelReader.read(readSheet);
         }
-
     }
 
     @Test
     public void writeWithCommonCsv() {
         csvFile = TestFileUtil.readFile(CSV_BASE + "write-common-csv.csv");
-        CSVFormat csvFormat = CSVFormat.DEFAULT.builder()
-            .setQuote(CsvConstant.DOUBLE_QUOTE)
-            .setQuoteMode(QuoteMode.ALL)
-            .build();
+        CSVFormat csvFormat = CSVFormat.DEFAULT
+                .builder()
+                .setQuote(CsvConstant.DOUBLE_QUOTE)
+                .setQuoteMode(QuoteMode.ALL)
+                .build();
         writeWithCommonCsv(csvFile, csvFormat, dataList(10, STRING_PREFIX));
     }
 
-    private void doTest(boolean isCreate, File csvFile, String delimiter, Character quote, String recordSeparator,
-                        String nullString, Character escapse) {
+    private void doTest(
+            boolean isCreate,
+            File csvFile,
+            String delimiter,
+            Character quote,
+            String recordSeparator,
+            String nullString,
+            Character escapse) {
         if (isCreate) {
             String appendStr = "";
             if (quote != null) {
@@ -190,23 +197,23 @@ public class CsvFormatTest {
                 csvDataList = dataList(10, STRING_PREFIX + appendStr);
             }
             FastExcel.write(csvFile, CsvData.class)
+                    .csv()
+                    .delimiter(delimiter)
+                    .quote(quote, QuoteMode.MINIMAL)
+                    .nullString(nullString)
+                    .recordSeparator(recordSeparator)
+                    .escape(escapse)
+                    .doWrite(csvDataList);
+        }
+
+        List<CsvData> dataList = FastExcel.read(csvFile, CsvData.class, new CsvDataListener())
                 .csv()
                 .delimiter(delimiter)
                 .quote(quote, QuoteMode.MINIMAL)
                 .nullString(nullString)
                 .recordSeparator(recordSeparator)
                 .escape(escapse)
-                .doWrite(csvDataList);
-        }
-
-        List<CsvData> dataList = FastExcel.read(csvFile, CsvData.class, new CsvDataListener())
-            .csv()
-            .delimiter(delimiter)
-            .quote(quote, QuoteMode.MINIMAL)
-            .nullString(nullString)
-            .recordSeparator(recordSeparator)
-            .escape(escapse)
-            .doReadSync();
+                .doReadSync();
         Assertions.assertEquals(10, dataList.size());
         Assertions.assertNotNull(dataList.get(0).getString());
     }
@@ -225,13 +232,14 @@ public class CsvFormatTest {
 
     private void writeWithCommonCsv(File csvFile, CSVFormat csvFormat, List<CsvData> dataList) {
         try {
-            Appendable out = new PrintWriter(
-                new OutputStreamWriter(Files.newOutputStream(csvFile.toPath())));
+            Appendable out = new PrintWriter(new OutputStreamWriter(Files.newOutputStream(csvFile.toPath())));
             CSVPrinter printer = csvFormat.print(out);
             for (CsvData data : dataList) {
                 // format date
-                printer.printRecord(data.getString(), DateUtils.format(data.getDate(), DateUtils.DATE_FORMAT_19),
-                    data.getDoubleData());
+                printer.printRecord(
+                        data.getString(),
+                        DateUtils.format(data.getDate(), DateUtils.DATE_FORMAT_19),
+                        data.getDoubleData());
             }
             printer.flush();
             printer.close();

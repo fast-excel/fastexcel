@@ -1,14 +1,13 @@
 package cn.idev.excel.cache;
 
-import org.apache.poi.hssf.record.SSTRecord;
-
 import cn.idev.excel.context.AnalysisContext;
+import org.apache.poi.hssf.record.SSTRecord;
 
 /**
  *
  * Use SSTRecord.
  *
- * @author Jiaju Zhuang
+ *
  */
 public class XlsCache implements ReadCache {
     private final SSTRecord sstRecord;
@@ -33,5 +32,4 @@ public class XlsCache implements ReadCache {
 
     @Override
     public void destroy() {}
-
 }

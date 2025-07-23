@@ -4,11 +4,10 @@ import cn.idev.excel.annotation.ExcelProperty;
 import cn.idev.excel.annotation.write.style.ContentStyle;
 import cn.idev.excel.annotation.write.style.HeadStyle;
 import cn.idev.excel.enums.BooleanEnum;
-
 import lombok.Data;
 
 @Data
-//@Accessors(chain = true)
+// @Accessors(chain = true)
 public class TempWriteData {
     private String name1;
 

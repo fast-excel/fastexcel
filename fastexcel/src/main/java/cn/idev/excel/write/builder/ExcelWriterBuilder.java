@@ -3,7 +3,6 @@ package cn.idev.excel.write.builder;
 import cn.idev.excel.ExcelWriter;
 import cn.idev.excel.support.ExcelTypeEnum;
 import cn.idev.excel.write.metadata.WriteWorkbook;
-
 import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -12,7 +11,7 @@ import java.nio.charset.Charset;
 /**
  * Build ExcelWriter
  *
- * @author Jiaju Zhuang
+ *
  */
 public class ExcelWriterBuilder extends AbstractExcelWriterParameterBuilder<ExcelWriterBuilder, WriteWorkbook> {
     /**

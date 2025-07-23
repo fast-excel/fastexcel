@@ -9,7 +9,7 @@ import cn.idev.excel.support.ExcelTypeEnum;
 /**
  * A context is the main anchorage point of a ls xls reader.
  *
- * @author Jiaju Zhuang
+ *
  */
 public class DefaultCsvReadContext extends AnalysisContextImpl implements CsvReadContext {
 
@@ -19,11 +19,11 @@ public class DefaultCsvReadContext extends AnalysisContextImpl implements CsvRea
 
     @Override
     public CsvReadWorkbookHolder csvReadWorkbookHolder() {
-        return (CsvReadWorkbookHolder)readWorkbookHolder();
+        return (CsvReadWorkbookHolder) readWorkbookHolder();
     }
 
     @Override
     public CsvReadSheetHolder csvReadSheetHolder() {
-        return (CsvReadSheetHolder)readSheetHolder();
+        return (CsvReadSheetHolder) readSheetHolder();
     }
 }

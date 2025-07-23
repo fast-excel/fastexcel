@@ -1,13 +1,11 @@
 package cn.idev.excel.test.core.multiplesheets;
 
-import java.io.File;
-import java.util.List;
-
-import cn.idev.excel.read.metadata.ReadSheet;
-import cn.idev.excel.test.util.TestFileUtil;
 import cn.idev.excel.EasyExcel;
 import cn.idev.excel.ExcelReader;
-
+import cn.idev.excel.read.metadata.ReadSheet;
+import cn.idev.excel.test.util.TestFileUtil;
+import java.io.File;
+import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
@@ -15,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
 /**
- * @author Jiaju Zhuang
+ *
  */
 @TestMethodOrder(MethodOrderer.MethodName.class)
 public class MultipleSheetsDataTest {
@@ -51,7 +49,8 @@ public class MultipleSheetsDataTest {
 
     private void read(File file) {
         MultipleSheetsListener multipleSheetsListener = new MultipleSheetsListener();
-        try (ExcelReader excelReader = EasyExcel.read(file, MultipleSheetsData.class, multipleSheetsListener).build()) {
+        try (ExcelReader excelReader = EasyExcel.read(file, MultipleSheetsData.class, multipleSheetsListener)
+                .build()) {
             List<ReadSheet> sheets = excelReader.excelExecutor().sheetList();
             int count = 1;
             for (ReadSheet readSheet : sheets) {
@@ -63,7 +62,7 @@ public class MultipleSheetsDataTest {
     }
 
     private void readAll(File file) {
-        EasyExcel.read(file, MultipleSheetsData.class, new MultipleSheetsListener()).doReadAll();
+        EasyExcel.read(file, MultipleSheetsData.class, new MultipleSheetsListener())
+                .doReadAll();
     }
-
 }

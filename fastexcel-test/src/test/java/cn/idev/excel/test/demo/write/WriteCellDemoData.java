@@ -1,7 +1,6 @@
 package cn.idev.excel.test.demo.write;
 
 import cn.idev.excel.metadata.data.WriteCellData;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,7 +8,7 @@ import lombok.Setter;
 /**
  * 根据WriteCellData写
  *
- * @author Jiaju Zhuang
+ *
  */
 @Getter
 @Setter

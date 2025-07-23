@@ -1,23 +1,21 @@
 package cn.idev.excel.test.core.handler;
 
-import java.util.List;
-
+import cn.idev.excel.metadata.Head;
+import cn.idev.excel.metadata.data.WriteCellData;
 import cn.idev.excel.write.handler.CellWriteHandler;
 import cn.idev.excel.write.handler.RowWriteHandler;
 import cn.idev.excel.write.handler.SheetWriteHandler;
 import cn.idev.excel.write.handler.WorkbookWriteHandler;
-import cn.idev.excel.metadata.Head;
-import cn.idev.excel.metadata.data.WriteCellData;
 import cn.idev.excel.write.metadata.holder.WriteSheetHolder;
 import cn.idev.excel.write.metadata.holder.WriteTableHolder;
 import cn.idev.excel.write.metadata.holder.WriteWorkbookHolder;
-
+import java.util.List;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.junit.jupiter.api.Assertions;
 
 /**
- * @author JiaJu Zhuang
+ *
  **/
 public class WriteHandler implements WorkbookWriteHandler, SheetWriteHandler, RowWriteHandler, CellWriteHandler {
 
@@ -35,8 +33,14 @@ public class WriteHandler implements WorkbookWriteHandler, SheetWriteHandler, Ro
     private long afterWorkbookDispose = 0L;
 
     @Override
-    public void beforeCellCreate(WriteSheetHolder writeSheetHolder, WriteTableHolder writeTableHolder, Row row,
-                                 Head head, Integer columnIndex, Integer relativeRowIndex, Boolean isHead) {
+    public void beforeCellCreate(
+            WriteSheetHolder writeSheetHolder,
+            WriteTableHolder writeTableHolder,
+            Row row,
+            Head head,
+            Integer columnIndex,
+            Integer relativeRowIndex,
+            Boolean isHead) {
         if (isHead) {
             Assertions.assertEquals(0L, beforeCellCreate);
             Assertions.assertEquals(0L, afterCellCreate);
@@ -52,12 +56,16 @@ public class WriteHandler implements WorkbookWriteHandler, SheetWriteHandler, Ro
             Assertions.assertEquals(0L, afterWorkbookDispose);
             beforeCellCreate++;
         }
-
     }
 
     @Override
-    public void afterCellCreate(WriteSheetHolder writeSheetHolder, WriteTableHolder writeTableHolder, Cell cell,
-        Head head, Integer relativeRowIndex, Boolean isHead) {
+    public void afterCellCreate(
+            WriteSheetHolder writeSheetHolder,
+            WriteTableHolder writeTableHolder,
+            Cell cell,
+            Head head,
+            Integer relativeRowIndex,
+            Boolean isHead) {
         if (isHead) {
             Assertions.assertEquals(1L, beforeCellCreate);
             Assertions.assertEquals(0L, afterCellCreate);
@@ -76,8 +84,14 @@ public class WriteHandler implements WorkbookWriteHandler, SheetWriteHandler, Ro
     }
 
     @Override
-    public void afterCellDataConverted(WriteSheetHolder writeSheetHolder, WriteTableHolder writeTableHolder,
-                                       WriteCellData<?> cellData, Cell cell, Head head, Integer relativeRowIndex, Boolean isHead) {
+    public void afterCellDataConverted(
+            WriteSheetHolder writeSheetHolder,
+            WriteTableHolder writeTableHolder,
+            WriteCellData<?> cellData,
+            Cell cell,
+            Head head,
+            Integer relativeRowIndex,
+            Boolean isHead) {
         Assertions.assertEquals(1L, beforeCellCreate);
         Assertions.assertEquals(1L, afterCellCreate);
         Assertions.assertEquals(0L, afterCellDataConverted);
@@ -94,8 +108,14 @@ public class WriteHandler implements WorkbookWriteHandler, SheetWriteHandler, Ro
     }
 
     @Override
-    public void afterCellDispose(WriteSheetHolder writeSheetHolder, WriteTableHolder writeTableHolder,
-        List<WriteCellData<?>> cellDataList, Cell cell, Head head, Integer relativeRowIndex, Boolean isHead) {
+    public void afterCellDispose(
+            WriteSheetHolder writeSheetHolder,
+            WriteTableHolder writeTableHolder,
+            List<WriteCellData<?>> cellDataList,
+            Cell cell,
+            Head head,
+            Integer relativeRowIndex,
+            Boolean isHead) {
         if (isHead) {
             Assertions.assertEquals(1L, beforeCellCreate);
             Assertions.assertEquals(1L, afterCellCreate);
@@ -114,8 +134,12 @@ public class WriteHandler implements WorkbookWriteHandler, SheetWriteHandler, Ro
     }
 
     @Override
-    public void beforeRowCreate(WriteSheetHolder writeSheetHolder, WriteTableHolder writeTableHolder, Integer rowIndex,
-        Integer relativeRowIndex, Boolean isHead) {
+    public void beforeRowCreate(
+            WriteSheetHolder writeSheetHolder,
+            WriteTableHolder writeTableHolder,
+            Integer rowIndex,
+            Integer relativeRowIndex,
+            Boolean isHead) {
         if (isHead) {
             Assertions.assertEquals(0L, beforeCellCreate);
             Assertions.assertEquals(0L, afterCellCreate);
@@ -131,12 +155,15 @@ public class WriteHandler implements WorkbookWriteHandler, SheetWriteHandler, Ro
             Assertions.assertEquals(0L, afterWorkbookDispose);
             beforeRowCreate++;
         }
-
     }
 
     @Override
-    public void afterRowCreate(WriteSheetHolder writeSheetHolder, WriteTableHolder writeTableHolder, Row row,
-        Integer relativeRowIndex, Boolean isHead) {
+    public void afterRowCreate(
+            WriteSheetHolder writeSheetHolder,
+            WriteTableHolder writeTableHolder,
+            Row row,
+            Integer relativeRowIndex,
+            Boolean isHead) {
         if (isHead) {
             Assertions.assertEquals(0L, beforeCellCreate);
             Assertions.assertEquals(0L, afterCellCreate);
@@ -155,8 +182,12 @@ public class WriteHandler implements WorkbookWriteHandler, SheetWriteHandler, Ro
     }
 
     @Override
-    public void afterRowDispose(WriteSheetHolder writeSheetHolder, WriteTableHolder writeTableHolder, Row row,
-        Integer relativeRowIndex, Boolean isHead) {
+    public void afterRowDispose(
+            WriteSheetHolder writeSheetHolder,
+            WriteTableHolder writeTableHolder,
+            Row row,
+            Integer relativeRowIndex,
+            Boolean isHead) {
         if (isHead) {
             Assertions.assertEquals(1L, beforeCellCreate);
             Assertions.assertEquals(1L, afterCellCreate);
@@ -257,7 +288,6 @@ public class WriteHandler implements WorkbookWriteHandler, SheetWriteHandler, Ro
         Assertions.assertEquals(1L, afterWorkbookCreate);
         Assertions.assertEquals(0L, afterWorkbookDispose);
         afterWorkbookDispose++;
-
     }
 
     public void afterAll() {

@@ -3,13 +3,12 @@ package cn.idev.excel.write.handler;
 import cn.idev.excel.write.handler.context.RowWriteHandlerContext;
 import cn.idev.excel.write.metadata.holder.WriteSheetHolder;
 import cn.idev.excel.write.metadata.holder.WriteTableHolder;
-
 import org.apache.poi.ss.usermodel.Row;
 
 /**
  * intercepts handle row creation
  *
- * @author Jiaju Zhuang
+ *
  */
 public interface RowWriteHandler extends WriteHandler {
 
@@ -19,8 +18,12 @@ public interface RowWriteHandler extends WriteHandler {
      * @param context
      */
     default void beforeRowCreate(RowWriteHandlerContext context) {
-        beforeRowCreate(context.getWriteSheetHolder(), context.getWriteTableHolder(), context.getRowIndex(),
-            context.getRelativeRowIndex(), context.getHead());
+        beforeRowCreate(
+                context.getWriteSheetHolder(),
+                context.getWriteTableHolder(),
+                context.getRowIndex(),
+                context.getRelativeRowIndex(),
+                context.getHead());
     }
 
     /**
@@ -32,8 +35,12 @@ public interface RowWriteHandler extends WriteHandler {
      * @param relativeRowIndex Nullable.It is null in the case of fill data.
      * @param isHead           Nullable.It is null in the case of fill data.
      */
-    default void beforeRowCreate(WriteSheetHolder writeSheetHolder, WriteTableHolder writeTableHolder, Integer rowIndex,
-        Integer relativeRowIndex, Boolean isHead) {}
+    default void beforeRowCreate(
+            WriteSheetHolder writeSheetHolder,
+            WriteTableHolder writeTableHolder,
+            Integer rowIndex,
+            Integer relativeRowIndex,
+            Boolean isHead) {}
 
     /**
      * Called after the row is created
@@ -41,8 +48,12 @@ public interface RowWriteHandler extends WriteHandler {
      * @param context
      */
     default void afterRowCreate(RowWriteHandlerContext context) {
-        afterRowCreate(context.getWriteSheetHolder(), context.getWriteTableHolder(), context.getRow(),
-            context.getRelativeRowIndex(), context.getHead());
+        afterRowCreate(
+                context.getWriteSheetHolder(),
+                context.getWriteTableHolder(),
+                context.getRow(),
+                context.getRelativeRowIndex(),
+                context.getHead());
     }
 
     /**
@@ -54,8 +65,12 @@ public interface RowWriteHandler extends WriteHandler {
      * @param relativeRowIndex Nullable.It is null in the case of fill data.
      * @param isHead           Nullable.It is null in the case of fill data.
      */
-    default void afterRowCreate(WriteSheetHolder writeSheetHolder, WriteTableHolder writeTableHolder, Row row,
-        Integer relativeRowIndex, Boolean isHead) {}
+    default void afterRowCreate(
+            WriteSheetHolder writeSheetHolder,
+            WriteTableHolder writeTableHolder,
+            Row row,
+            Integer relativeRowIndex,
+            Boolean isHead) {}
 
     /**
      * Called after all operations on the row have been completed.
@@ -64,8 +79,12 @@ public interface RowWriteHandler extends WriteHandler {
      * @param context
      */
     default void afterRowDispose(RowWriteHandlerContext context) {
-        afterRowDispose(context.getWriteSheetHolder(), context.getWriteTableHolder(), context.getRow(),
-            context.getRelativeRowIndex(), context.getHead());
+        afterRowDispose(
+                context.getWriteSheetHolder(),
+                context.getWriteTableHolder(),
+                context.getRow(),
+                context.getRelativeRowIndex(),
+                context.getHead());
     }
 
     /**
@@ -78,6 +97,10 @@ public interface RowWriteHandler extends WriteHandler {
      * @param relativeRowIndex Nullable.It is null in the case of fill data.
      * @param isHead           Nullable.It is null in the case of fill data.
      */
-    default void afterRowDispose(WriteSheetHolder writeSheetHolder, WriteTableHolder writeTableHolder, Row row,
-        Integer relativeRowIndex, Boolean isHead) {}
+    default void afterRowDispose(
+            WriteSheetHolder writeSheetHolder,
+            WriteTableHolder writeTableHolder,
+            Row row,
+            Integer relativeRowIndex,
+            Boolean isHead) {}
 }

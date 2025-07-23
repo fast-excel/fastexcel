@@ -8,7 +8,7 @@ import org.apache.poi.hssf.record.Record;
 /**
  * Record handler
  *
- * @author Jiaju Zhuang
+ *
  */
 public class IndexRecordHandler extends AbstractXlsRecordHandler implements IgnorableXlsRecordHandler {
     @Override
@@ -16,6 +16,6 @@ public class IndexRecordHandler extends AbstractXlsRecordHandler implements Igno
         if (xlsReadContext.readSheetHolder() == null) {
             return;
         }
-        xlsReadContext.readSheetHolder().setApproximateTotalRowNumber(((IndexRecord)record).getLastRowAdd1());
+        xlsReadContext.readSheetHolder().setApproximateTotalRowNumber(((IndexRecord) record).getLastRowAdd1());
     }
 }

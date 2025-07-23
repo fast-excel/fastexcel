@@ -1,7 +1,5 @@
 package cn.idev.excel.write.executor;
 
-import java.util.List;
-
 import cn.idev.excel.context.WriteContext;
 import cn.idev.excel.converters.Converter;
 import cn.idev.excel.converters.ConverterKeyBuild;
@@ -23,7 +21,7 @@ import cn.idev.excel.util.StyleUtil;
 import cn.idev.excel.util.WorkBookUtil;
 import cn.idev.excel.util.WriteHandlerUtils;
 import cn.idev.excel.write.handler.context.CellWriteHandlerContext;
-
+import java.util.List;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.poi.hssf.usermodel.HSSFClientAnchor;
 import org.apache.poi.ss.usermodel.Cell;
@@ -39,7 +37,7 @@ import org.apache.poi.xssf.usermodel.XSSFClientAnchor;
 /**
  * Excel write Executor
  *
- * @author Jiaju Zhuang
+ *
  */
 public abstract class AbstractExcelWriteExecutor implements ExcelWriteExecutor {
     protected WriteContext writeContext;
@@ -95,18 +93,18 @@ public abstract class AbstractExcelWriteExecutor implements ExcelWriteExecutor {
                 cell.setCellValue(cellData.getDateValue());
                 return;
             case RICH_TEXT_STRING:
-                cell.setCellValue(StyleUtil
-                    .buildRichTextString(writeContext.writeWorkbookHolder(), cellData.getRichTextStringDataValue()));
+                cell.setCellValue(StyleUtil.buildRichTextString(
+                        writeContext.writeWorkbookHolder(), cellData.getRichTextStringDataValue()));
                 return;
             case EMPTY:
                 return;
             default:
-                throw new ExcelWriteDataConvertException(cellWriteHandlerContext,
-                    "Not supported data:" + cellWriteHandlerContext.getOriginalValue() + " return type:"
-                        + cellData.getType()
-                        + "at row:" + cellWriteHandlerContext.getRowIndex());
+                throw new ExcelWriteDataConvertException(
+                        cellWriteHandlerContext,
+                        "Not supported data:" + cellWriteHandlerContext.getOriginalValue() + " return type:"
+                                + cellData.getType()
+                                + "at row:" + cellWriteHandlerContext.getRowIndex());
         }
-
     }
 
     private void fillFormula(CellWriteHandlerContext cellWriteHandlerContext, FormulaData formulaData) {
@@ -131,14 +129,14 @@ public abstract class AbstractExcelWriteExecutor implements ExcelWriteExecutor {
         CreationHelper helper = workbook.getCreationHelper();
         Hyperlink hyperlink = helper.createHyperlink(StyleUtil.getHyperlinkType(hyperlinkData.getHyperlinkType()));
         hyperlink.setAddress(hyperlinkData.getAddress());
-        hyperlink.setFirstRow(StyleUtil.getCellCoordinate(rowIndex, hyperlinkData.getFirstRowIndex(),
-            hyperlinkData.getRelativeFirstRowIndex()));
-        hyperlink.setFirstColumn(StyleUtil.getCellCoordinate(columnIndex, hyperlinkData.getFirstColumnIndex(),
-            hyperlinkData.getRelativeFirstColumnIndex()));
-        hyperlink.setLastRow(StyleUtil.getCellCoordinate(rowIndex, hyperlinkData.getLastRowIndex(),
-            hyperlinkData.getRelativeLastRowIndex()));
-        hyperlink.setLastColumn(StyleUtil.getCellCoordinate(columnIndex, hyperlinkData.getLastColumnIndex(),
-            hyperlinkData.getRelativeLastColumnIndex()));
+        hyperlink.setFirstRow(StyleUtil.getCellCoordinate(
+                rowIndex, hyperlinkData.getFirstRowIndex(), hyperlinkData.getRelativeFirstRowIndex()));
+        hyperlink.setFirstColumn(StyleUtil.getCellCoordinate(
+                columnIndex, hyperlinkData.getFirstColumnIndex(), hyperlinkData.getRelativeFirstColumnIndex()));
+        hyperlink.setLastRow(StyleUtil.getCellCoordinate(
+                rowIndex, hyperlinkData.getLastRowIndex(), hyperlinkData.getRelativeLastRowIndex()));
+        hyperlink.setLastColumn(StyleUtil.getCellCoordinate(
+                columnIndex, hyperlinkData.getLastColumnIndex(), hyperlinkData.getRelativeLastColumnIndex()));
         cell.setHyperlink(hyperlink);
     }
 
@@ -153,37 +151,47 @@ public abstract class AbstractExcelWriteExecutor implements ExcelWriteExecutor {
         Cell cell = cellWriteHandlerContext.getCell();
 
         if (writeContext.writeWorkbookHolder().getExcelType() == ExcelTypeEnum.XLSX) {
-            anchor = new XSSFClientAnchor(StyleUtil.getCoordinate(commentData.getLeft()),
-                StyleUtil.getCoordinate(commentData.getTop()),
-                StyleUtil.getCoordinate(commentData.getRight()),
-                StyleUtil.getCoordinate(commentData.getBottom()),
-                StyleUtil.getCellCoordinate(columnIndex, commentData.getFirstColumnIndex(),
-                    commentData.getRelativeFirstColumnIndex()),
-                StyleUtil.getCellCoordinate(rowIndex, commentData.getFirstRowIndex(),
-                    commentData.getRelativeFirstRowIndex()),
-                StyleUtil.getCellCoordinate(columnIndex, commentData.getLastColumnIndex(),
-                    commentData.getRelativeLastColumnIndex()) + 1,
-                StyleUtil.getCellCoordinate(rowIndex, commentData.getLastRowIndex(),
-                    commentData.getRelativeLastRowIndex()) + 1);
+            anchor = new XSSFClientAnchor(
+                    StyleUtil.getCoordinate(commentData.getLeft()),
+                    StyleUtil.getCoordinate(commentData.getTop()),
+                    StyleUtil.getCoordinate(commentData.getRight()),
+                    StyleUtil.getCoordinate(commentData.getBottom()),
+                    StyleUtil.getCellCoordinate(
+                            columnIndex, commentData.getFirstColumnIndex(), commentData.getRelativeFirstColumnIndex()),
+                    StyleUtil.getCellCoordinate(
+                            rowIndex, commentData.getFirstRowIndex(), commentData.getRelativeFirstRowIndex()),
+                    StyleUtil.getCellCoordinate(
+                                    columnIndex,
+                                    commentData.getLastColumnIndex(),
+                                    commentData.getRelativeLastColumnIndex())
+                            + 1,
+                    StyleUtil.getCellCoordinate(
+                                    rowIndex, commentData.getLastRowIndex(), commentData.getRelativeLastRowIndex())
+                            + 1);
         } else {
-            anchor = new HSSFClientAnchor(StyleUtil.getCoordinate(commentData.getLeft()),
-                StyleUtil.getCoordinate(commentData.getTop()),
-                StyleUtil.getCoordinate(commentData.getRight()),
-                StyleUtil.getCoordinate(commentData.getBottom()),
-                (short)StyleUtil.getCellCoordinate(columnIndex, commentData.getFirstColumnIndex(),
-                    commentData.getRelativeFirstColumnIndex()),
-                StyleUtil.getCellCoordinate(rowIndex, commentData.getFirstRowIndex(),
-                    commentData.getRelativeFirstRowIndex()),
-                (short)(StyleUtil.getCellCoordinate(columnIndex, commentData.getLastColumnIndex(),
-                    commentData.getRelativeLastColumnIndex()) + 1),
-                StyleUtil.getCellCoordinate(rowIndex, commentData.getLastRowIndex(),
-                    commentData.getRelativeLastRowIndex()) + 1);
+            anchor = new HSSFClientAnchor(
+                    StyleUtil.getCoordinate(commentData.getLeft()),
+                    StyleUtil.getCoordinate(commentData.getTop()),
+                    StyleUtil.getCoordinate(commentData.getRight()),
+                    StyleUtil.getCoordinate(commentData.getBottom()),
+                    (short) StyleUtil.getCellCoordinate(
+                            columnIndex, commentData.getFirstColumnIndex(), commentData.getRelativeFirstColumnIndex()),
+                    StyleUtil.getCellCoordinate(
+                            rowIndex, commentData.getFirstRowIndex(), commentData.getRelativeFirstRowIndex()),
+                    (short) (StyleUtil.getCellCoordinate(
+                                    columnIndex,
+                                    commentData.getLastColumnIndex(),
+                                    commentData.getRelativeLastColumnIndex())
+                            + 1),
+                    StyleUtil.getCellCoordinate(
+                                    rowIndex, commentData.getLastRowIndex(), commentData.getRelativeLastRowIndex())
+                            + 1);
         }
 
         Comment comment = sheet.createDrawingPatriarch().createCellComment(anchor);
         if (commentData.getRichTextStringData() != null) {
-            comment.setString(
-                StyleUtil.buildRichTextString(writeContext.writeWorkbookHolder(), commentData.getRichTextStringData()));
+            comment.setString(StyleUtil.buildRichTextString(
+                    writeContext.writeWorkbookHolder(), commentData.getRichTextStringData()));
         }
         if (commentData.getAuthor() != null) {
             comment.setAuthor(commentData.getAuthor());
@@ -206,8 +214,8 @@ public abstract class AbstractExcelWriteExecutor implements ExcelWriteExecutor {
         }
         CreationHelper helper = sheet.getWorkbook().getCreationHelper();
         for (ImageData imageData : imageDataList) {
-            int index = workbook.addPicture(imageData.getImage(),
-                FileTypeUtils.getImageTypeFormat(imageData.getImage()));
+            int index =
+                    workbook.addPicture(imageData.getImage(), FileTypeUtils.getImageTypeFormat(imageData.getImage()));
             ClientAnchor anchor = helper.createClientAnchor();
             if (imageData.getTop() != null) {
                 anchor.setDy1(StyleUtil.getCoordinate(imageData.getTop()));
@@ -221,14 +229,16 @@ public abstract class AbstractExcelWriteExecutor implements ExcelWriteExecutor {
             if (imageData.getLeft() != null) {
                 anchor.setDx1(StyleUtil.getCoordinate(imageData.getLeft()));
             }
-            anchor.setRow1(StyleUtil.getCellCoordinate(rowIndex, imageData.getFirstRowIndex(),
-                imageData.getRelativeFirstRowIndex()));
-            anchor.setCol1(StyleUtil.getCellCoordinate(columnIndex, imageData.getFirstColumnIndex(),
-                imageData.getRelativeFirstColumnIndex()));
-            anchor.setRow2(StyleUtil.getCellCoordinate(rowIndex, imageData.getLastRowIndex(),
-                imageData.getRelativeLastRowIndex()) + 1);
-            anchor.setCol2(StyleUtil.getCellCoordinate(columnIndex, imageData.getLastColumnIndex(),
-                imageData.getRelativeLastColumnIndex()) + 1);
+            anchor.setRow1(StyleUtil.getCellCoordinate(
+                    rowIndex, imageData.getFirstRowIndex(), imageData.getRelativeFirstRowIndex()));
+            anchor.setCol1(StyleUtil.getCellCoordinate(
+                    columnIndex, imageData.getFirstColumnIndex(), imageData.getRelativeFirstColumnIndex()));
+            anchor.setRow2(StyleUtil.getCellCoordinate(
+                            rowIndex, imageData.getLastRowIndex(), imageData.getRelativeLastRowIndex())
+                    + 1);
+            anchor.setCol2(StyleUtil.getCellCoordinate(
+                            columnIndex, imageData.getLastColumnIndex(), imageData.getRelativeLastColumnIndex())
+                    + 1);
             if (imageData.getAnchorType() != null) {
                 anchor.setAnchorType(imageData.getAnchorType().getValue());
             }
@@ -242,7 +252,7 @@ public abstract class AbstractExcelWriteExecutor implements ExcelWriteExecutor {
             if (cellWriteHandlerContext.getOriginalValue() == null) {
                 return new WriteCellData<>(CellDataTypeEnum.EMPTY);
             }
-            WriteCellData<?> cellDataValue = (WriteCellData<?>)cellWriteHandlerContext.getOriginalValue();
+            WriteCellData<?> cellDataValue = (WriteCellData<?>) cellWriteHandlerContext.getOriginalValue();
             if (cellDataValue.getType() != null) {
                 // Configuration information may not be read here
                 fillProperty(cellDataValue, cellWriteHandlerContext.getExcelContentProperty());
@@ -282,14 +292,16 @@ public abstract class AbstractExcelWriteExecutor implements ExcelWriteExecutor {
             case DATE:
                 String dateFormat = null;
                 if (excelContentProperty != null && excelContentProperty.getDateTimeFormatProperty() != null) {
-                    dateFormat = excelContentProperty.getDateTimeFormatProperty().getFormat();
+                    dateFormat =
+                            excelContentProperty.getDateTimeFormatProperty().getFormat();
                 }
                 WorkBookUtil.fillDataFormat(cellDataValue, dateFormat, DateUtils.defaultDateFormat);
                 return;
             case NUMBER:
                 String numberFormat = null;
                 if (excelContentProperty != null && excelContentProperty.getNumberFormatProperty() != null) {
-                    numberFormat = excelContentProperty.getNumberFormatProperty().getFormat();
+                    numberFormat =
+                            excelContentProperty.getNumberFormatProperty().getFormat();
                 }
                 WorkBookUtil.fillDataFormat(cellDataValue, numberFormat, null);
                 return;
@@ -310,33 +322,40 @@ public abstract class AbstractExcelWriteExecutor implements ExcelWriteExecutor {
             if (writeContext.writeWorkbookHolder().getExcelType() == ExcelTypeEnum.CSV) {
                 cellWriteHandlerContext.setTargetCellDataType(CellDataTypeEnum.STRING);
             }
-            converter = writeContext.currentWriteHolder().converterMap().get(
-                ConverterKeyBuild.buildKey(cellWriteHandlerContext.getOriginalFieldClass(),
-                    cellWriteHandlerContext.getTargetCellDataType()));
+            converter = writeContext
+                    .currentWriteHolder()
+                    .converterMap()
+                    .get(ConverterKeyBuild.buildKey(
+                            cellWriteHandlerContext.getOriginalFieldClass(),
+                            cellWriteHandlerContext.getTargetCellDataType()));
         }
         if (cellWriteHandlerContext.getOriginalValue() == null && !(converter instanceof NullableObjectConverter)) {
             return new WriteCellData<>(CellDataTypeEnum.EMPTY);
         }
         if (converter == null) {
-            throw new ExcelWriteDataConvertException(cellWriteHandlerContext,
-                "Can not find 'Converter' support class " + cellWriteHandlerContext.getOriginalFieldClass()
-                    .getSimpleName() + ".");
+            throw new ExcelWriteDataConvertException(
+                    cellWriteHandlerContext,
+                    "Can not find 'Converter' support class "
+                            + cellWriteHandlerContext.getOriginalFieldClass().getSimpleName() + ".");
         }
         WriteCellData<?> cellData;
         try {
-            cellData = ((Converter<Object>)converter).convertToExcelData(
-                new WriteConverterContext<>(cellWriteHandlerContext.getOriginalValue(), excelContentProperty,
-                    writeContext));
+            cellData = ((Converter<Object>) converter)
+                    .convertToExcelData(new WriteConverterContext<>(
+                            cellWriteHandlerContext.getOriginalValue(), excelContentProperty, writeContext));
         } catch (Exception e) {
-            throw new ExcelWriteDataConvertException(cellWriteHandlerContext,
-                "Convert data:" + cellWriteHandlerContext.getOriginalValue() + " error, at row:"
-                    + cellWriteHandlerContext.getRowIndex(), e);
+            throw new ExcelWriteDataConvertException(
+                    cellWriteHandlerContext,
+                    "Convert data:" + cellWriteHandlerContext.getOriginalValue() + " error, at row:"
+                            + cellWriteHandlerContext.getRowIndex(),
+                    e);
         }
         if (cellData == null || cellData.getType() == null) {
-            throw new ExcelWriteDataConvertException(cellWriteHandlerContext,
-                "Convert data:" + cellWriteHandlerContext.getOriginalValue()
-                    + " return is null or return type is null, at row:"
-                    + cellWriteHandlerContext.getRowIndex());
+            throw new ExcelWriteDataConvertException(
+                    cellWriteHandlerContext,
+                    "Convert data:" + cellWriteHandlerContext.getOriginalValue()
+                            + " return is null or return type is null, at row:"
+                            + cellWriteHandlerContext.getRowIndex());
         }
         return cellData;
     }

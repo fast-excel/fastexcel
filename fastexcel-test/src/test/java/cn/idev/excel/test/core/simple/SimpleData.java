@@ -1,7 +1,6 @@
 package cn.idev.excel.test.core.simple;
 
 import cn.idev.excel.annotation.ExcelProperty;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,7 +11,7 @@ import lombok.Setter;
  * Use ExcelProperty {@link ExcelProperty} to mark headers
  * </p>
  *
- * @author Jiaju Zhuang
+ *
  */
 @Getter
 @Setter

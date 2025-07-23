@@ -1,27 +1,24 @@
 package cn.idev.excel.test.temp;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import cn.idev.excel.EasyExcel;
 import cn.idev.excel.ExcelWriter;
 import cn.idev.excel.test.demo.fill.FillData;
 import cn.idev.excel.test.temp.fill.FillData2;
-import cn.idev.excel.write.merge.OnceAbsoluteMergeStrategy;
 import cn.idev.excel.test.util.TestFileUtil;
+import cn.idev.excel.write.merge.OnceAbsoluteMergeStrategy;
 import cn.idev.excel.write.metadata.WriteSheet;
-
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 /**
  * 写的填充写法
  *
- * @author Jiaju Zhuang
+ *
  * @since 2.1.1
  */
-
 public class FillTempTest {
 
     /**
@@ -36,8 +33,10 @@ public class FillTempTest {
         OnceAbsoluteMergeStrategy onceAbsoluteMergeStrategy = new OnceAbsoluteMergeStrategy(2, 2, 0, 1);
 
         String fileName = TestFileUtil.getPath() + "complexFill" + System.currentTimeMillis() + ".xlsx";
-        ExcelWriter excelWriter = EasyExcel.write(fileName).registerWriteHandler(onceAbsoluteMergeStrategy)
-                .withTemplate("src/test/resources/demo/fill/simple.xlsx").build();
+        ExcelWriter excelWriter = EasyExcel.write(fileName)
+                .registerWriteHandler(onceAbsoluteMergeStrategy)
+                .withTemplate("src/test/resources/demo/fill/simple.xlsx")
+                .build();
         WriteSheet writeSheet0 = EasyExcel.writerSheet(0).build();
         WriteSheet writeSheet1 = EasyExcel.writerSheet(1).build();
 
@@ -65,9 +64,10 @@ public class FillTempTest {
         // {} 代表普通变量 {.} 代表是list的变量
         // 这里模板 删除了list以后的数据，也就是统计的这一行
         String templateFileName = "src/test/resources/demo/fill/complexFillWithTable.xlsx";
-        
+
         String fileName = TestFileUtil.getPath() + "complexFillWithTable" + System.currentTimeMillis() + ".xlsx";
-        ExcelWriter excelWriter = EasyExcel.write(fileName).withTemplate(templateFileName).build();
+        ExcelWriter excelWriter =
+                EasyExcel.write(fileName).withTemplate(templateFileName).build();
         WriteSheet writeSheet = EasyExcel.writerSheet().build();
         // 直接写入数据
         excelWriter.fill(data(), writeSheet);

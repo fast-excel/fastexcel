@@ -1,14 +1,12 @@
 package cn.idev.excel.test.core.fill.annotation;
 
+import cn.idev.excel.EasyExcel;
+import cn.idev.excel.test.util.TestFileUtil;
+import cn.idev.excel.util.DateUtils;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import cn.idev.excel.util.DateUtils;
-import cn.idev.excel.test.util.TestFileUtil;
-import cn.idev.excel.EasyExcel;
-
 import org.apache.poi.hssf.usermodel.HSSFClientAnchor;
 import org.apache.poi.hssf.usermodel.HSSFPicture;
 import org.apache.poi.hssf.usermodel.HSSFShape;
@@ -30,7 +28,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.openxmlformats.schemas.drawingml.x2006.spreadsheetDrawing.CTMarker;
 
 /**
- * @author Jiaju Zhuang
+ *
  */
 @TestMethodOrder(MethodOrderer.MethodName.class)
 public class FillAnnotationDataTest {
@@ -59,7 +57,12 @@ public class FillAnnotationDataTest {
     }
 
     private void readAndWrite(File file, File fileTemplate) throws Exception {
-        EasyExcel.write().file(file).head(FillAnnotationData.class).withTemplate(fileTemplate).sheet().doFill(data());
+        EasyExcel.write()
+                .file(file)
+                .head(FillAnnotationData.class)
+                .withTemplate(fileTemplate)
+                .sheet()
+                .doFill(data());
 
         try (Workbook workbook = WorkbookFactory.create(file)) {
             Sheet sheet = workbook.getSheetAt(0);
@@ -75,29 +78,31 @@ public class FillAnnotationDataTest {
             Assertions.assertEquals(99.99, cell11.getNumericCellValue(), 2);
             boolean hasMerge = false;
             for (CellRangeAddress mergedRegion : sheet.getMergedRegions()) {
-                if (mergedRegion.getFirstRow() == 1 && mergedRegion.getLastRow() == 1
-                    && mergedRegion.getFirstColumn() == 2 && mergedRegion.getLastColumn() == 3) {
+                if (mergedRegion.getFirstRow() == 1
+                        && mergedRegion.getLastRow() == 1
+                        && mergedRegion.getFirstColumn() == 2
+                        && mergedRegion.getLastColumn() == 3) {
                     hasMerge = true;
                     break;
                 }
             }
             Assertions.assertTrue(hasMerge);
             if (sheet instanceof XSSFSheet) {
-                XSSFSheet xssfSheet = (XSSFSheet)sheet;
+                XSSFSheet xssfSheet = (XSSFSheet) sheet;
                 List<XSSFShape> shapeList = xssfSheet.getDrawingPatriarch().getShapes();
                 XSSFShape shape0 = shapeList.get(0);
                 Assertions.assertTrue(shape0 instanceof XSSFPicture);
-                XSSFPicture picture0 = (XSSFPicture)shape0;
+                XSSFPicture picture0 = (XSSFPicture) shape0;
                 CTMarker ctMarker0 = picture0.getPreferredSize().getFrom();
                 Assertions.assertEquals(1, ctMarker0.getRow());
                 Assertions.assertEquals(4, ctMarker0.getCol());
             } else {
-                HSSFSheet hssfSheet = (HSSFSheet)sheet;
+                HSSFSheet hssfSheet = (HSSFSheet) sheet;
                 List<HSSFShape> shapeList = hssfSheet.getDrawingPatriarch().getChildren();
                 HSSFShape shape0 = shapeList.get(0);
                 Assertions.assertTrue(shape0 instanceof HSSFPicture);
-                HSSFPicture picture0 = (HSSFPicture)shape0;
-                HSSFClientAnchor anchor = (HSSFClientAnchor)picture0.getAnchor();
+                HSSFPicture picture0 = (HSSFPicture) shape0;
+                HSSFClientAnchor anchor = (HSSFClientAnchor) picture0.getAnchor();
                 Assertions.assertEquals(1, anchor.getRow1());
                 Assertions.assertEquals(4, anchor.getCol1());
             }

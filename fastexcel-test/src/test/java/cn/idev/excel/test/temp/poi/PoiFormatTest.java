@@ -2,7 +2,6 @@ package cn.idev.excel.test.temp.poi;
 
 import java.io.IOException;
 import java.util.Locale;
-
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.xssf.streaming.SXSSFRow;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
@@ -18,9 +17,8 @@ import org.slf4j.LoggerFactory;
 /**
  * 测试poi
  *
- * @author Jiaju Zhuang
+ *
  **/
-
 public class PoiFormatTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(PoiFormatTest.class);
 
@@ -47,6 +45,5 @@ public class PoiFormatTest {
         XSSFCell xssfCell = row.getCell(0);
         DataFormatter d = new DataFormatter(Locale.CHINA);
         LOGGER.info("fo:{}", d.formatCellValue(xssfCell));
-
     }
 }

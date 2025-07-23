@@ -6,7 +6,7 @@ import org.apache.poi.openxml4j.opc.PackagePart;
 /**
  * Select the cache
  *
- * @author Jiaju Zhuang
+ *
  **/
 public interface ReadCacheSelector {
 

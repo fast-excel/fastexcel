@@ -3,7 +3,7 @@ package cn.idev.excel.constant;
 /**
  * Order constant.
  *
- * @author Jiaju Zhuang
+ *
  */
 public class OrderConstant {
 

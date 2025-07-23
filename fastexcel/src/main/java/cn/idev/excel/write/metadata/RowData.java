@@ -3,7 +3,7 @@ package cn.idev.excel.write.metadata;
 /**
  * A row of data.
  *
- * @author Jiaju Zhuang
+ *
  */
 public interface RowData {
 
@@ -31,5 +31,4 @@ public interface RowData {
      * @return <code>true</code> if this collection contains no elements
      */
     boolean isEmpty();
-
 }

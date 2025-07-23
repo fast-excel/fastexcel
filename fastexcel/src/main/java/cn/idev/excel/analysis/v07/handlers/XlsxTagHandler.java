@@ -5,8 +5,6 @@ import org.xml.sax.Attributes;
 
 /**
  * Tag handler
- *
- * @author Dan Zheng
  */
 public interface XlsxTagHandler {
 
@@ -49,5 +47,4 @@ public interface XlsxTagHandler {
      * @param length
      */
     void characters(XlsxReadContext xlsxReadContext, char[] ch, int start, int length);
-
 }

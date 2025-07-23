@@ -1,7 +1,6 @@
 package cn.idev.excel.test.temp.data;
 
 import cn.idev.excel.annotation.ExcelProperty;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;

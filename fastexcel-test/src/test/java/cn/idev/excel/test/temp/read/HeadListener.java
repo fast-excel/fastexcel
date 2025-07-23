@@ -1,18 +1,16 @@
 package cn.idev.excel.test.temp.read;
 
-import java.util.Map;
-
-import cn.idev.excel.event.AnalysisEventListener;
 import cn.idev.excel.context.AnalysisContext;
+import cn.idev.excel.event.AnalysisEventListener;
 import com.alibaba.fastjson2.JSON;
-
+import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * 模板的读取类
  *
- * @author Jiaju Zhuang
+ *
  */
 public class HeadListener extends AnalysisEventListener<HeadReadData> {
     private static final Logger LOGGER = LoggerFactory.getLogger(HeadListener.class);
@@ -25,7 +23,6 @@ public class HeadListener extends AnalysisEventListener<HeadReadData> {
     public void invokeHeadMap(Map<Integer, String> headMap, AnalysisContext context) {
         LOGGER.info("HEAD:{}", JSON.toJSONString(headMap));
         LOGGER.info("total:{}", context.readSheetHolder().getTotal());
-
     }
 
     @Override
@@ -38,5 +35,4 @@ public class HeadListener extends AnalysisEventListener<HeadReadData> {
     public void doAfterAllAnalysed(AnalysisContext context) {
         LOGGER.info("所有数据解析完成！");
     }
-
 }

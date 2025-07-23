@@ -7,7 +7,7 @@ import lombok.Setter;
 /**
  * hyperlink
  *
- * @author Jiaju Zhuang
+ *
  */
 @Getter
 @Setter

@@ -1,10 +1,9 @@
 package cn.idev.excel.read.metadata;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import cn.idev.excel.metadata.BasicParameter;
 import cn.idev.excel.read.listener.ReadListener;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,7 +11,7 @@ import lombok.Setter;
 /**
  * Read basic parameter
  *
- * @author Jiaju Zhuang
+ *
  **/
 @Getter
 @Setter

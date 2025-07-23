@@ -1,14 +1,12 @@
 package cn.idev.excel.test.core.annotation;
 
+import cn.idev.excel.EasyExcel;
+import cn.idev.excel.test.core.StyleTestUtils;
+import cn.idev.excel.test.util.TestFileUtil;
+import cn.idev.excel.util.DateUtils;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import cn.idev.excel.util.DateUtils;
-import cn.idev.excel.test.core.StyleTestUtils;
-import cn.idev.excel.test.util.TestFileUtil;
-import cn.idev.excel.EasyExcel;
-
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -21,7 +19,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
 /**
- * @author Jiaju Zhuang
+ *
  */
 @TestMethodOrder(MethodOrderer.MethodName.class)
 public class AnnotationDataTest {

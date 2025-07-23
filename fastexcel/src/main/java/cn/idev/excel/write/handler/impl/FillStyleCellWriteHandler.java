@@ -1,20 +1,19 @@
 package cn.idev.excel.write.handler.impl;
 
-import cn.idev.excel.write.handler.CellWriteHandler;
 import cn.idev.excel.constant.OrderConstant;
 import cn.idev.excel.metadata.data.WriteCellData;
 import cn.idev.excel.util.BooleanUtils;
+import cn.idev.excel.write.handler.CellWriteHandler;
 import cn.idev.excel.write.handler.context.CellWriteHandlerContext;
 import cn.idev.excel.write.metadata.holder.WriteWorkbookHolder;
 import cn.idev.excel.write.metadata.style.WriteCellStyle;
-
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.CellStyle;
 
 /**
  * fill cell style.
  *
- * @author Jiaju Zhuang
+ *
  */
 @Slf4j
 public class FillStyleCellWriteHandler implements CellWriteHandler {
@@ -40,7 +39,7 @@ public class FillStyleCellWriteHandler implements CellWriteHandler {
             return;
         }
         WriteWorkbookHolder writeWorkbookHolder = context.getWriteWorkbookHolder();
-        context.getCell().setCellStyle(writeWorkbookHolder.createCellStyle(writeCellStyle, originCellStyle, cellData.getType()));
+        context.getCell()
+                .setCellStyle(writeWorkbookHolder.createCellStyle(writeCellStyle, originCellStyle, cellData.getType()));
     }
-
 }

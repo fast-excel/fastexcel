@@ -2,7 +2,6 @@ package cn.idev.excel.write.handler.chain;
 
 import cn.idev.excel.write.handler.WorkbookWriteHandler;
 import cn.idev.excel.write.handler.context.WorkbookWriteHandlerContext;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,7 +9,7 @@ import lombok.Setter;
 /**
  * Execute the workbook handler chain
  *
- * @author Jiaju Zhuang
+ *
  */
 @Getter
 @Setter

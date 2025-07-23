@@ -1,19 +1,17 @@
 package cn.idev.excel.test.core.nomodel;
 
+import cn.idev.excel.EasyExcel;
+import cn.idev.excel.enums.ReadDefaultReturnEnum;
+import cn.idev.excel.metadata.data.ReadCellData;
+import cn.idev.excel.test.util.TestFileUtil;
+import cn.idev.excel.util.DateUtils;
+import com.alibaba.fastjson2.JSON;
 import java.io.File;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import cn.idev.excel.enums.ReadDefaultReturnEnum;
-import cn.idev.excel.util.DateUtils;
-import cn.idev.excel.test.util.TestFileUtil;
-import cn.idev.excel.EasyExcel;
-import cn.idev.excel.metadata.data.ReadCellData;
-import com.alibaba.fastjson2.JSON;
-
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -22,7 +20,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
 /**
- * @author Jiaju Zhuang
+ *
  */
 @TestMethodOrder(MethodOrderer.MethodName.class)
 @Slf4j
@@ -62,7 +60,8 @@ public class NoModelDataTest {
 
     private void readAndWrite(File file, File fileRepeat, boolean isCsv) throws Exception {
         EasyExcel.write(file).sheet().doWrite(data());
-        List<Map<Integer, String>> result = EasyExcel.read(file).headRowNumber(0).sheet().doReadSync();
+        List<Map<Integer, String>> result =
+                EasyExcel.read(file).headRowNumber(0).sheet().doReadSync();
         Assertions.assertEquals(10, result.size());
         Map<Integer, String> data10 = result.get(9);
         Assertions.assertEquals("string19", data10.get(0));
@@ -70,10 +69,10 @@ public class NoModelDataTest {
         Assertions.assertEquals("2020-01-01 01:01:01", data10.get(2));
 
         List<Map<Integer, Object>> actualDataList = EasyExcel.read(file)
-            .headRowNumber(0)
-            .readDefaultReturn(ReadDefaultReturnEnum.ACTUAL_DATA)
-            .sheet()
-            .doReadSync();
+                .headRowNumber(0)
+                .readDefaultReturn(ReadDefaultReturnEnum.ACTUAL_DATA)
+                .sheet()
+                .doReadSync();
         log.info("actualDataList:{}", JSON.toJSONString(actualDataList));
         Assertions.assertEquals(10, actualDataList.size());
         Map<Integer, Object> actualData10 = actualDataList.get(9);
@@ -83,15 +82,15 @@ public class NoModelDataTest {
             Assertions.assertEquals("109", actualData10.get(1));
             Assertions.assertEquals("2020-01-01 01:01:01", actualData10.get(2));
         } else {
-            Assertions.assertEquals(0, new BigDecimal("109").compareTo((BigDecimal)actualData10.get(1)));
+            Assertions.assertEquals(0, new BigDecimal("109").compareTo((BigDecimal) actualData10.get(1)));
             Assertions.assertEquals(LocalDateTime.of(2020, 1, 1, 1, 1, 1), actualData10.get(2));
         }
 
         List<Map<Integer, ReadCellData<?>>> readCellDataList = EasyExcel.read(file)
-            .headRowNumber(0)
-            .readDefaultReturn(ReadDefaultReturnEnum.READ_CELL_DATA)
-            .sheet()
-            .doReadSync();
+                .headRowNumber(0)
+                .readDefaultReturn(ReadDefaultReturnEnum.READ_CELL_DATA)
+                .sheet()
+                .doReadSync();
         log.info("readCellDataList:{}", JSON.toJSONString(readCellDataList));
         Assertions.assertEquals(10, readCellDataList.size());
         Map<Integer, ReadCellData<?>> readCellData10 = readCellDataList.get(9);
@@ -101,8 +100,10 @@ public class NoModelDataTest {
             Assertions.assertEquals("109", readCellData10.get(1).getData());
             Assertions.assertEquals("2020-01-01 01:01:01", readCellData10.get(2).getData());
         } else {
-            Assertions.assertEquals(0, new BigDecimal("109").compareTo((BigDecimal)readCellData10.get(1).getData()));
-            Assertions.assertEquals(LocalDateTime.of(2020, 1, 1, 1, 1, 1), readCellData10.get(2).getData());
+            Assertions.assertEquals(0, new BigDecimal("109").compareTo((BigDecimal)
+                            readCellData10.get(1).getData()));
+            Assertions.assertEquals(
+                    LocalDateTime.of(2020, 1, 1, 1, 1, 1), readCellData10.get(2).getData());
         }
 
         EasyExcel.write(fileRepeat).sheet().doWrite(result);

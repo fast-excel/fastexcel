@@ -1,15 +1,14 @@
 package cn.idev.excel.util;
 
-import java.math.BigDecimal;
-import java.util.Locale;
-
 import cn.idev.excel.metadata.GlobalConfiguration;
 import cn.idev.excel.metadata.format.DataFormatter;
+import java.math.BigDecimal;
+import java.util.Locale;
 
 /**
  * Convert number data, including date.
  *
- * @author Jiaju Zhuang
+ *
  **/
 public class NumberDataFormatterUtils {
 
@@ -27,13 +26,18 @@ public class NumberDataFormatterUtils {
      * @param globalConfiguration
      * @return
      */
-    public static String format(BigDecimal data, Short dataFormat, String dataFormatString,
-        GlobalConfiguration globalConfiguration) {
+    public static String format(
+            BigDecimal data, Short dataFormat, String dataFormatString, GlobalConfiguration globalConfiguration) {
         if (globalConfiguration == null) {
             return format(data, dataFormat, dataFormatString, null, null, null);
         }
-        return format(data, dataFormat, dataFormatString, globalConfiguration.getUse1904windowing(),
-            globalConfiguration.getLocale(), globalConfiguration.getUseScientificFormat());
+        return format(
+                data,
+                dataFormat,
+                dataFormatString,
+                globalConfiguration.getUse1904windowing(),
+                globalConfiguration.getLocale(),
+                globalConfiguration.getUseScientificFormat());
     }
 
     /**
@@ -47,8 +51,13 @@ public class NumberDataFormatterUtils {
      * @param useScientificFormat
      * @return
      */
-    public static String format(BigDecimal data, Short dataFormat, String dataFormatString, Boolean use1904windowing,
-        Locale locale, Boolean useScientificFormat) {
+    public static String format(
+            BigDecimal data,
+            Short dataFormat,
+            String dataFormatString,
+            Boolean use1904windowing,
+            Locale locale,
+            Boolean useScientificFormat) {
         DataFormatter dataFormatter = DATA_FORMATTER_THREAD_LOCAL.get();
         if (dataFormatter == null) {
             dataFormatter = new DataFormatter(use1904windowing, locale, useScientificFormat);

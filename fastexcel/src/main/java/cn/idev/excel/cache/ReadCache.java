@@ -5,7 +5,7 @@ import cn.idev.excel.context.AnalysisContext;
 /**
  * Read cache
  *
- * @author Jiaju Zhuang
+ *
  */
 public interface ReadCache {
 
@@ -43,5 +43,4 @@ public interface ReadCache {
      * Called when the excel read is complete
      */
     void destroy();
-
 }

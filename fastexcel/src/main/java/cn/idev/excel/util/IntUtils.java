@@ -3,11 +3,10 @@ package cn.idev.excel.util;
 /**
  * Int utils
  *
- * @author Jiaju Zhuang
+ *
  **/
 public class IntUtils {
     private IntUtils() {}
-
 
     /**
      * The largest power of two that can be represented as an {@code int}.
