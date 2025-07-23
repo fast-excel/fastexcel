@@ -5,24 +5,24 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
 >
     <modelVersion>4.0.0</modelVersion>
-    
+
     <groupId>cn.idev.excel</groupId>
     <artifactId>fastexcel-parent</artifactId>
     <version>1.2.0</version>
-    
+
     <packaging>pom</packaging>
-    
+
     <name>fastexcel-parent</name>
     <description>Fastexcel is an Excel handle tools written in Java</description>
     <url>https://github.com/fast-excel/fastexcel</url>
     <inceptionYear>2024</inceptionYear>
-    
+
     <modules>
         <module>fastexcel</module>
         <module>fastexcel-support</module>
         <module>fastexcel-test</module>
     </modules>
-    
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
@@ -50,17 +50,17 @@
         <mockserver.version>5.15.0</mockserver.version>
         <jacoco.version>0.8.13</jacoco.version>
     </properties>
-    
+
     <scm>
         <url>https://github.com/fast-excel/fastexcel</url>
         <connection>scm:git:https://git@github.com/fast-excel/fastexcel.git</connection>
     </scm>
-    
+
     <organization>
         <name>fast-excel</name>
         <url>https://github.com/fast-excel</url>
     </organization>
-    
+
     <developers>
         <developer>
             <id>jipengfei</id>
@@ -73,7 +73,7 @@
             <email>zhuangjiaju@qq.com</email>
         </developer>
     </developers>
-    
+
     <licenses>
         <license>
             <name>Apache License, Version 2.0</name>
@@ -81,14 +81,14 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
-    
+
     <distributionManagement>
         <snapshotRepository>
             <id>ossrh</id>
             <url>https://central.sonatype.com/repository/maven-snapshots</url>
         </snapshotRepository>
     </distributionManagement>
-    
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -193,8 +193,8 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-    
-    
+
+
     <build>
         <pluginManagement>
             <plugins>
@@ -291,9 +291,8 @@
                 </plugin>
             </plugins>
         </pluginManagement>
-        
+
         <plugins>
-            <!-- code style -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -360,7 +359,7 @@
                     </execution>
                 </executions>
             </plugin>
-            
+
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>flatten-maven-plugin</artifactId>
@@ -392,7 +391,7 @@
                     </execution>
                 </executions>
             </plugin>
-            
+
             <plugin>
                 <groupId>com.diffplug.spotless</groupId>
                 <artifactId>spotless-maven-plugin</artifactId>
@@ -413,9 +412,17 @@
                             <spacesPerTab>4</spacesPerTab>
                         </indent>
                     </java>
+                    <pom>
+                        <trimTrailingWhitespace />
+                        <endWithNewline />
+                        <indent>
+                            <spaces>true</spaces>
+                            <spacesPerTab>4</spacesPerTab>
+                        </indent>
+                    </pom>
                 </configuration>
             </plugin>
-            
+
             <!-- Publish package to the Maven Central Repository -->
             <!--            <plugin>-->
             <!--                <groupId>org.sonatype.plugins</groupId>-->
