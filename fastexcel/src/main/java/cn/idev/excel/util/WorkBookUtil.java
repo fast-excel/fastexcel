@@ -5,6 +5,9 @@ import cn.idev.excel.metadata.data.DataFormatData;
 import cn.idev.excel.metadata.data.WriteCellData;
 import cn.idev.excel.write.metadata.holder.WriteWorkbookHolder;
 import cn.idev.excel.write.metadata.style.WriteCellStyle;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import org.apache.poi.hssf.record.crypto.Biff8EncryptionKey;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
@@ -17,17 +20,12 @@ import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openxmlformats.schemas.spreadsheetml.x2006.main.CTWorkbook;
 
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-
 /**
  *
  */
 public class WorkBookUtil {
 
-    private WorkBookUtil() {
-    }
+    private WorkBookUtil() {}
 
     public static void createWorkBook(WriteWorkbookHolder writeWorkbookHolder) throws IOException {
         switch (writeWorkbookHolder.getExcelType()) {
@@ -43,13 +41,15 @@ public class WorkBookUtil {
                     return;
                 }
                 Workbook workbook = writeWorkbookHolder.getInMemory() ? new XSSFWorkbook() : new SXSSFWorkbook();
-                Boolean use1904windowing = writeWorkbookHolder.getGlobalConfiguration().getUse1904windowing();
+                Boolean use1904windowing =
+                        writeWorkbookHolder.getGlobalConfiguration().getUse1904windowing();
                 if (use1904windowing != null) {
                     CTWorkbook ctWorkbook;
                     if (workbook instanceof XSSFWorkbook) {
                         ctWorkbook = ((XSSFWorkbook) workbook).getCTWorkbook();
                     } else {
-                        ctWorkbook = ((SXSSFWorkbook) workbook).getXSSFWorkbook().getCTWorkbook();
+                        ctWorkbook =
+                                ((SXSSFWorkbook) workbook).getXSSFWorkbook().getCTWorkbook();
                     }
                     ctWorkbook.getWorkbookPr().setDate1904(use1904windowing);
                 }
