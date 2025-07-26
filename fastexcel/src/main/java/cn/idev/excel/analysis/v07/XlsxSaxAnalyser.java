@@ -15,19 +15,6 @@ import cn.idev.excel.util.FileUtils;
 import cn.idev.excel.util.MapUtils;
 import cn.idev.excel.util.SheetUtils;
 import cn.idev.excel.util.StringUtils;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.openxml4j.opc.OPCPackage;
@@ -50,6 +37,20 @@ import org.xml.sax.ContentHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
 
 /**
  *
@@ -174,7 +175,7 @@ public class XlsxSaxAnalyser implements ExcelReadExecutor {
 
     private void analysisUse1904WindowDate(XSSFReader xssfReader, XlsxReadWorkbookHolder xlsxReadWorkbookHolder)
             throws Exception {
-        if (xlsxReadWorkbookHolder.globalConfiguration().getUse1904windowing() != null) {
+        if (xlsxReadWorkbookHolder.getReadWorkbook().getUse1904windowing() != null) {
             return;
         }
         InputStream workbookXml = xssfReader.getWorkbookData();
