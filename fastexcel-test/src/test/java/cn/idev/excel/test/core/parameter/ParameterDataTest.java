@@ -4,24 +4,32 @@ import cn.idev.excel.EasyExcel;
 import cn.idev.excel.ExcelReader;
 import cn.idev.excel.ExcelWriter;
 import cn.idev.excel.cache.MapCache;
+import cn.idev.excel.context.AnalysisContext;
 import cn.idev.excel.converters.string.StringStringConverter;
+import cn.idev.excel.event.AnalysisEventListener;
 import cn.idev.excel.read.metadata.ReadSheet;
 import cn.idev.excel.support.ExcelTypeEnum;
 import cn.idev.excel.test.util.TestFileUtil;
 import cn.idev.excel.write.metadata.WriteSheet;
 import cn.idev.excel.write.metadata.WriteTable;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.util.ArrayList;
-import java.util.List;
+import com.alibaba.fastjson2.JSON;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 /**
  *
  */
+@Slf4j
 @TestMethodOrder(MethodOrderer.MethodName.class)
 public class ParameterDataTest {
 
@@ -199,11 +207,50 @@ public class ParameterDataTest {
                 .doRead();
     }
 
+    @Test
+    void readAndWriteDate1904Test() {
+        readAndWriteDate1904(file07, ExcelTypeEnum.XLSX, null);
+        readAndWriteDate1904(file07, ExcelTypeEnum.XLSX, Boolean.TRUE);
+        readAndWriteDate1904(file07, ExcelTypeEnum.XLSX, Boolean.FALSE);
+    }
+
+    private void readAndWriteDate1904(File file, ExcelTypeEnum type, Boolean use1904windowing) {
+        EasyExcel.write(file)
+                .excelType(type)
+                .use1904windowing(use1904windowing)
+                .head(ParameterData.class)
+                .sheet()
+                .doWrite(data());
+
+        final boolean useFlag = use1904windowing == null || (ExcelTypeEnum.CSV == type) ? false : use1904windowing;
+
+        EasyExcel.read(file, new AnalysisEventListener<ParameterData>() {
+                    @Override
+                    public void invoke(ParameterData data, AnalysisContext context) {
+                        log.info("row data:{}", JSON.toJSONString(data));
+                    }
+
+                    @Override
+                    public void doAfterAllAnalysed(AnalysisContext context) {
+                        boolean isUse1904windowing = context.readWorkbookHolder().globalConfiguration().getUse1904windowing();
+                        log.info("isUse1904windowing: {}", isUse1904windowing);
+
+                        Assertions.assertEquals(isUse1904windowing, useFlag);
+                    }
+                })
+                .excelType(type)
+                .head(ParameterData.class)
+                .sheet(0)
+                .doReadSync();
+
+    }
+
     private List<ParameterData> data() {
         List<ParameterData> list = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             ParameterData simpleData = new ParameterData();
             simpleData.setName("姓名" + i);
+            simpleData.setDate(new Date());
             list.add(simpleData);
         }
         return list;

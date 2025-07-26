@@ -5,6 +5,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
+
 /**
  *
  */
@@ -14,4 +16,6 @@ import lombok.Setter;
 public class ParameterData {
     @ExcelProperty("姓名")
     private String name;
+    @ExcelProperty("日期")
+    private Date date;
 }
