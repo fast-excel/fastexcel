@@ -13,18 +13,17 @@ import cn.idev.excel.test.util.TestFileUtil;
 import cn.idev.excel.write.metadata.WriteSheet;
 import cn.idev.excel.write.metadata.WriteTable;
 import com.alibaba.fastjson2.JSON;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 /**
  *
@@ -232,7 +231,9 @@ public class ParameterDataTest {
 
                     @Override
                     public void doAfterAllAnalysed(AnalysisContext context) {
-                        boolean isUse1904windowing = context.readWorkbookHolder().globalConfiguration().getUse1904windowing();
+                        boolean isUse1904windowing = context.readWorkbookHolder()
+                                .globalConfiguration()
+                                .getUse1904windowing();
                         log.info("isUse1904windowing: {}", isUse1904windowing);
 
                         Assertions.assertEquals(isUse1904windowing, useFlag);
@@ -242,7 +243,6 @@ public class ParameterDataTest {
                 .head(ParameterData.class)
                 .sheet(0)
                 .doReadSync();
-
     }
 
     private List<ParameterData> data() {
