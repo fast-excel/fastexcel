@@ -4,22 +4,18 @@ import cn.idev.excel.EasyExcel;
 import cn.idev.excel.ExcelReader;
 import cn.idev.excel.ExcelWriter;
 import cn.idev.excel.cache.MapCache;
-import cn.idev.excel.context.AnalysisContext;
 import cn.idev.excel.converters.string.StringStringConverter;
-import cn.idev.excel.event.AnalysisEventListener;
 import cn.idev.excel.read.metadata.ReadSheet;
 import cn.idev.excel.support.ExcelTypeEnum;
 import cn.idev.excel.test.util.TestFileUtil;
 import cn.idev.excel.write.metadata.WriteSheet;
 import cn.idev.excel.write.metadata.WriteTable;
-import com.alibaba.fastjson2.JSON;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
@@ -32,11 +28,13 @@ import org.junit.jupiter.api.TestMethodOrder;
 @TestMethodOrder(MethodOrderer.MethodName.class)
 public class ParameterDataTest {
 
+    private static File file03;
     private static File file07;
     private static File fileCsv;
 
     @BeforeAll
     public static void init() {
+        file03 = TestFileUtil.createNewFile("parameter03.xls");
         file07 = TestFileUtil.createNewFile("parameter07.xlsx");
         fileCsv = TestFileUtil.createNewFile("parameterCsv.csv");
     }
@@ -208,9 +206,15 @@ public class ParameterDataTest {
 
     @Test
     void readAndWriteDate1904Test() {
+        readAndWriteDate1904(file03, ExcelTypeEnum.XLS, null);
+        readAndWriteDate1904(file03, ExcelTypeEnum.XLS, Boolean.TRUE);
+        readAndWriteDate1904(file03, ExcelTypeEnum.XLS, Boolean.FALSE);
         readAndWriteDate1904(file07, ExcelTypeEnum.XLSX, null);
         readAndWriteDate1904(file07, ExcelTypeEnum.XLSX, Boolean.TRUE);
         readAndWriteDate1904(file07, ExcelTypeEnum.XLSX, Boolean.FALSE);
+        readAndWriteDate1904(fileCsv, ExcelTypeEnum.CSV, null);
+        readAndWriteDate1904(fileCsv, ExcelTypeEnum.CSV, Boolean.TRUE);
+        readAndWriteDate1904(fileCsv, ExcelTypeEnum.CSV, Boolean.FALSE);
     }
 
     private void readAndWriteDate1904(File file, ExcelTypeEnum type, Boolean use1904windowing) {
@@ -221,28 +225,22 @@ public class ParameterDataTest {
                 .sheet()
                 .doWrite(data());
 
-        final boolean useFlag = use1904windowing == null || (ExcelTypeEnum.CSV == type) ? false : use1904windowing;
-
-        EasyExcel.read(file, new AnalysisEventListener<ParameterData>() {
-                    @Override
-                    public void invoke(ParameterData data, AnalysisContext context) {
-                        log.info("row data:{}", JSON.toJSONString(data));
-                    }
-
-                    @Override
-                    public void doAfterAllAnalysed(AnalysisContext context) {
-                        boolean isUse1904windowing = context.readWorkbookHolder()
-                                .globalConfiguration()
-                                .getUse1904windowing();
-                        log.info("isUse1904windowing: {}", isUse1904windowing);
-
-                        Assertions.assertEquals(isUse1904windowing, useFlag);
-                    }
-                })
-                .excelType(type)
-                .head(ParameterData.class)
-                .sheet(0)
-                .doReadSync();
+        ExcelReader excelReader;
+        if (ExcelTypeEnum.XLSX == type) {
+            // for the xlsx files, automatically obtained from the file
+            excelReader = EasyExcel.read(file, new ParameterUse1904Listener(use1904windowing))
+                    .excelType(type)
+                    .head(ParameterData.class)
+                    .build();
+        } else {
+            excelReader = EasyExcel.read(file, new ParameterUse1904Listener(use1904windowing))
+                    .use1904windowing(use1904windowing) // user-defined settings
+                    .excelType(type)
+                    .head(ParameterData.class)
+                    .build();
+        }
+        excelReader.readAll();
+        excelReader.finish();
     }
 
     private List<ParameterData> data() {
