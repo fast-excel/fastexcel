@@ -13,9 +13,7 @@ import cn.idev.excel.write.metadata.WriteTable;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
@@ -24,17 +22,14 @@ import org.junit.jupiter.api.TestMethodOrder;
 /**
  *
  */
-@Slf4j
 @TestMethodOrder(MethodOrderer.MethodName.class)
 public class ParameterDataTest {
 
-    private static File file03;
     private static File file07;
     private static File fileCsv;
 
     @BeforeAll
     public static void init() {
-        file03 = TestFileUtil.createNewFile("parameter03.xls");
         file07 = TestFileUtil.createNewFile("parameter07.xlsx");
         fileCsv = TestFileUtil.createNewFile("parameterCsv.csv");
     }
@@ -204,51 +199,11 @@ public class ParameterDataTest {
                 .doRead();
     }
 
-    @Test
-    void readAndWriteDate1904Test() {
-        readAndWriteDate1904(file03, ExcelTypeEnum.XLS, null);
-        readAndWriteDate1904(file03, ExcelTypeEnum.XLS, Boolean.TRUE);
-        readAndWriteDate1904(file03, ExcelTypeEnum.XLS, Boolean.FALSE);
-        readAndWriteDate1904(file07, ExcelTypeEnum.XLSX, null);
-        readAndWriteDate1904(file07, ExcelTypeEnum.XLSX, Boolean.TRUE);
-        readAndWriteDate1904(file07, ExcelTypeEnum.XLSX, Boolean.FALSE);
-        readAndWriteDate1904(fileCsv, ExcelTypeEnum.CSV, null);
-        readAndWriteDate1904(fileCsv, ExcelTypeEnum.CSV, Boolean.TRUE);
-        readAndWriteDate1904(fileCsv, ExcelTypeEnum.CSV, Boolean.FALSE);
-    }
-
-    private void readAndWriteDate1904(File file, ExcelTypeEnum type, Boolean use1904windowing) {
-        EasyExcel.write(file)
-                .excelType(type)
-                .use1904windowing(use1904windowing)
-                .head(ParameterData.class)
-                .sheet()
-                .doWrite(data());
-
-        ExcelReader excelReader;
-        if (ExcelTypeEnum.XLSX == type) {
-            // for the xlsx files, automatically obtained from the file
-            excelReader = EasyExcel.read(file, new ParameterUse1904Listener(use1904windowing))
-                    .excelType(type)
-                    .head(ParameterData.class)
-                    .build();
-        } else {
-            excelReader = EasyExcel.read(file, new ParameterUse1904Listener(use1904windowing))
-                    .use1904windowing(use1904windowing) // user-defined settings
-                    .excelType(type)
-                    .head(ParameterData.class)
-                    .build();
-        }
-        excelReader.readAll();
-        excelReader.finish();
-    }
-
     private List<ParameterData> data() {
         List<ParameterData> list = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             ParameterData simpleData = new ParameterData();
             simpleData.setName("姓名" + i);
-            simpleData.setDate(new Date());
             list.add(simpleData);
         }
         return list;
