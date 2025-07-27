@@ -5,6 +5,7 @@ import cn.idev.excel.analysis.v03.handlers.BlankRecordHandler;
 import cn.idev.excel.analysis.v03.handlers.BofRecordHandler;
 import cn.idev.excel.analysis.v03.handlers.BoolErrRecordHandler;
 import cn.idev.excel.analysis.v03.handlers.BoundSheetRecordHandler;
+import cn.idev.excel.analysis.v03.handlers.DateWindow1904RecordHandler;
 import cn.idev.excel.analysis.v03.handlers.DummyRecordHandler;
 import cn.idev.excel.analysis.v03.handlers.EofRecordHandler;
 import cn.idev.excel.analysis.v03.handlers.FormulaRecordHandler;
@@ -42,6 +43,7 @@ import org.apache.poi.hssf.record.BOFRecord;
 import org.apache.poi.hssf.record.BlankRecord;
 import org.apache.poi.hssf.record.BoolErrRecord;
 import org.apache.poi.hssf.record.BoundSheetRecord;
+import org.apache.poi.hssf.record.DateWindow1904Record;
 import org.apache.poi.hssf.record.EOFRecord;
 import org.apache.poi.hssf.record.FormulaRecord;
 import org.apache.poi.hssf.record.HyperlinkRecord;
@@ -102,6 +104,7 @@ public class XlsSaxAnalyser implements HSSFListener, ExcelReadExecutor {
         XLS_RECORD_HANDLER_MAP.put(SSTRecord.sid, new SstRecordHandler());
         XLS_RECORD_HANDLER_MAP.put(StringRecord.sid, new StringRecordHandler());
         XLS_RECORD_HANDLER_MAP.put(TextObjectRecord.sid, new TextObjectRecordHandler());
+        XLS_RECORD_HANDLER_MAP.put(DateWindow1904Record.sid, new DateWindow1904RecordHandler());
     }
 
     /**
