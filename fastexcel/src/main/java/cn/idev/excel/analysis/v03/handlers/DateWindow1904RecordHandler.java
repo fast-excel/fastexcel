@@ -13,6 +13,9 @@ public class DateWindow1904RecordHandler extends AbstractXlsRecordHandler implem
     @Override
     public void processRecord(XlsReadContext xlsReadContext, Record record) {
         DateWindow1904Record dwr = (DateWindow1904Record) record;
+        if (xlsReadContext.xlsReadWorkbookHolder().getReadWorkbook().getUse1904windowing() != null) {
+            return;
+        }
         xlsReadContext.xlsReadWorkbookHolder().getGlobalConfiguration().setUse1904windowing(dwr.getWindowing() == 1);
     }
 }
