@@ -11,8 +11,7 @@ public class DateWindowingListener extends AnalysisEventListener<ParameterData> 
 
     private Boolean expectFlag = Boolean.FALSE;
 
-    private DateWindowingListener() {
-    }
+    private DateWindowingListener() {}
 
     public DateWindowingListener(Boolean expectFlag) {
         this.expectFlag = expectFlag == null ? Boolean.FALSE : expectFlag;
