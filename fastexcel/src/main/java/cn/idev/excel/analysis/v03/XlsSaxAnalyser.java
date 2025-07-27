@@ -5,6 +5,7 @@ import cn.idev.excel.analysis.v03.handlers.BlankRecordHandler;
 import cn.idev.excel.analysis.v03.handlers.BofRecordHandler;
 import cn.idev.excel.analysis.v03.handlers.BoolErrRecordHandler;
 import cn.idev.excel.analysis.v03.handlers.BoundSheetRecordHandler;
+import cn.idev.excel.analysis.v03.handlers.DateWindow1904RecordHandler;
 import cn.idev.excel.analysis.v03.handlers.DummyRecordHandler;
 import cn.idev.excel.analysis.v03.handlers.EofRecordHandler;
 import cn.idev.excel.analysis.v03.handlers.FormulaRecordHandler;
@@ -26,11 +27,6 @@ import cn.idev.excel.exception.ExcelAnalysisStopException;
 import cn.idev.excel.exception.ExcelAnalysisStopSheetException;
 import cn.idev.excel.read.metadata.ReadSheet;
 import cn.idev.excel.read.metadata.holder.xls.XlsReadWorkbookHolder;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.hssf.eventusermodel.EventWorkbookBuilder;
 import org.apache.poi.hssf.eventusermodel.FormatTrackingHSSFListener;
@@ -42,6 +38,7 @@ import org.apache.poi.hssf.record.BOFRecord;
 import org.apache.poi.hssf.record.BlankRecord;
 import org.apache.poi.hssf.record.BoolErrRecord;
 import org.apache.poi.hssf.record.BoundSheetRecord;
+import org.apache.poi.hssf.record.DateWindow1904Record;
 import org.apache.poi.hssf.record.EOFRecord;
 import org.apache.poi.hssf.record.FormulaRecord;
 import org.apache.poi.hssf.record.HyperlinkRecord;
@@ -59,6 +56,12 @@ import org.apache.poi.hssf.record.StringRecord;
 import org.apache.poi.hssf.record.TextObjectRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * A text extractor for Excel files.
@@ -102,6 +105,7 @@ public class XlsSaxAnalyser implements HSSFListener, ExcelReadExecutor {
         XLS_RECORD_HANDLER_MAP.put(SSTRecord.sid, new SstRecordHandler());
         XLS_RECORD_HANDLER_MAP.put(StringRecord.sid, new StringRecordHandler());
         XLS_RECORD_HANDLER_MAP.put(TextObjectRecord.sid, new TextObjectRecordHandler());
+        XLS_RECORD_HANDLER_MAP.put(DateWindow1904Record.sid, new DateWindow1904RecordHandler());
     }
 
     /**
