@@ -7,13 +7,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 
 @Slf4j
-public class ParameterUse1904Listener extends AnalysisEventListener<ParameterData> {
+public class DateWindowingListener extends AnalysisEventListener<ParameterData> {
 
     private Boolean expectFlag = Boolean.FALSE;
 
-    private ParameterUse1904Listener() {}
+    private DateWindowingListener() {
+    }
 
-    public ParameterUse1904Listener(Boolean expectFlag) {
+    public DateWindowingListener(Boolean expectFlag) {
         this.expectFlag = expectFlag == null ? Boolean.FALSE : expectFlag;
     }
 
