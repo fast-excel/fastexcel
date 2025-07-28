@@ -15,7 +15,6 @@ jobs:
         distribution: [ 'adopt' ]
       fail-fast: false
       max-parallel: 4
-
     name: Test JDK ${{ matrix.java }}
     steps:
       - uses: actions/checkout@v4
@@ -32,10 +31,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-m2
       - name: Test with Maven
-        run: ./mvnw test -B -Dmaven.test.skip=false -Dtest=/cn/idev/excel/test/**/*.java
+        run: ./mvnw test -B -Dmaven.test.skip=false -Dsurefire.test.includes=cn/idev/excel/test/**/*.java
       - name: Publish Unit Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: (!cancelled())
         with:
           files: "**/target/surefire-reports/*.xml"
-
