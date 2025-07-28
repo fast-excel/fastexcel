@@ -58,6 +58,10 @@ FastExcel 欢迎社区的每一位用户和开发者成为贡献者。无论是�
 
 ### 工作区准备
 
+开发 FastExcel 需要 Java 工具链。目前，开发工具链要求 JDK 21 及以上的版本，但在编码过程中必须使用 JRE 1.8 兼容的语言特性，保证产出的 JAR 包能在 JRE 1.8 及以上版本环境中运行。
+
+您可以使用 [SDKMAN](https://sdkman.io/) 等工具配置多版本的 Java 工具链。如果使用 IntelliJ IDEA 开发，可以设置项目 [Language Level](https://www.jetbrains.com/help/idea/project-settings-and-structure.html#language-level) 为 8 以确保后向兼容。
+
 确保您已注册 GitHub 账号，并按照以下步骤完成本地开发环境配置：
 
 1. **Fork 仓库**：在 FastExcel 的 [GitHub 页面](https://github.com/fast-excel/fastexcel) 点击 `Fork` 按钮，将项目复制到您的 GitHub 账户下，例如：`https://github.com/<your-username>/fastexcel`。
