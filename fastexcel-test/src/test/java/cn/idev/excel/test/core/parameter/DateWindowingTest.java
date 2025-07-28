@@ -1,16 +1,19 @@
 package cn.idev.excel.test.core.parameter;
 
 import cn.idev.excel.FastExcel;
+import cn.idev.excel.exception.ExcelAnalysisException;
 import cn.idev.excel.support.ExcelTypeEnum;
 import cn.idev.excel.test.util.TestFileUtil;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @TestMethodOrder(MethodOrderer.MethodName.class)
 public class DateWindowingTest {
@@ -53,6 +56,12 @@ public class DateWindowingTest {
                 .doWrite(data());
 
         // reading a file
+        Assertions.assertThrows(ExcelAnalysisException.class, () -> {
+            FastExcel.read(file03DateWindowing1904, new DateWindowingListener(Boolean.TRUE))
+                    .excelType(ExcelTypeEnum.XLS)
+                    .head(ParameterData.class)
+                    .doReadAllSync();
+        });
         FastExcel.read(file03DateWindowing1900, new DateWindowingListener(Boolean.FALSE))
                 .excelType(ExcelTypeEnum.XLS)
                 .use1904windowing(Boolean.FALSE)
@@ -118,6 +127,12 @@ public class DateWindowingTest {
                 .use1904windowing(Boolean.FALSE)
                 .head(ParameterData.class)
                 .doReadAllSync();
+        Assertions.assertThrows(ExcelAnalysisException.class, () -> {
+            FastExcel.read(fileCsvDateWindowing1904, new DateWindowingListener(Boolean.TRUE))
+                    .excelType(ExcelTypeEnum.CSV)
+                    .head(ParameterData.class)
+                    .doReadAllSync();
+        });
         FastExcel.read(fileCsvDateWindowing1904, new DateWindowingListener(Boolean.TRUE))
                 .excelType(ExcelTypeEnum.CSV)
                 .use1904windowing(Boolean.TRUE)
