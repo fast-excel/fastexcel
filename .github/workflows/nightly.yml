@@ -1,0 +1,39 @@
+name: Nightly Build
+on:
+  schedule:
+    - cron: '0 1 * * *'
+  workflow_dispatch:
+permissions:
+  checks: write
+  pull-requests: write
+jobs:
+  nightly-test:
+    runs-on: ubuntu-24.04
+    strategy:
+      matrix:
+        java: [ 8, 11, 17, 21]
+        distribution: [ 'adopt' ]
+      fail-fast: false
+      max-parallel: 4
+    name: Test JDK ${{ matrix.java }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ matrix.java }}
+          distribution: ${{ matrix.distribution }}
+      - name: Cache local Maven repository
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-m2
+      - name: Test with Maven
+        run: ./mvnw test -B -Dmaven.test.skip=false -Dsurefire.test.includes=cn/idev/excel/test/**/*.java
+      - name: Publish Unit Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: (!cancelled())
+        with:
+          files: "**/target/surefire-reports/*.xml"
