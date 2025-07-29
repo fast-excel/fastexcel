@@ -354,6 +354,9 @@
                 <artifactId>spotless-maven-plugin</artifactId>
                 <configuration>
                     <java>
+                        <licenseHeader>
+                            <file>${maven.multiModuleProjectDirectory}/dev-support/license-header</file>
+                        </licenseHeader>
                         <palantirJavaFormat>
                             <version>2.72.0</version>
                         </palantirJavaFormat>
@@ -378,6 +381,15 @@
                         </indent>
                     </pom>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>spotless-check</id>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <phase>compile</phase>
+                    </execution>
+                </executions>
             </plugin>
 
             <!-- Publish package to the Maven Central Repository -->
@@ -399,45 +411,6 @@
                     <publishingServerId>ossrh</publishingServerId>
                     <tokenAuth>true</tokenAuth>
                 </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>com.diffplug.spotless</groupId>
-                <artifactId>spotless-maven-plugin</artifactId>
-                <version>${spotless-maven-plugin.version}</version>
-                <configuration>
-                    <java>
-                        <eclipse>
-                            <file>${maven.multiModuleProjectDirectory}/dev-support/spotless_nebula_formatter.xml</file>
-                        </eclipse>
-                        <licenseHeader>
-                            <file>${maven.multiModuleProjectDirectory}/dev-support/license-header</file>
-                        </licenseHeader>
-                    </java>
-                    <pom>
-                        <sortPom>
-                            <encoding>UTF-8</encoding>
-                            <nrOfIndentSpace>4</nrOfIndentSpace>
-                            <keepBlankLines>true</keepBlankLines>
-                            <indentBlankLines>false</indentBlankLines>
-                            <indentSchemaLocation>true</indentSchemaLocation>
-                            <spaceBeforeCloseEmptyElement>true</spaceBeforeCloseEmptyElement>
-                            <sortModules>false</sortModules>
-                            <sortExecutions>false</sortExecutions>
-                            <predefinedSortOrder>custom_1</predefinedSortOrder>
-                            <expandEmptyElements>false</expandEmptyElements>
-                            <sortProperties>false</sortProperties>
-                        </sortPom>
-                    </pom>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>apply</goal>
-                        </goals>
-                        <phase>compile</phase>
-                    </execution>
-                </executions>
             </plugin>
 
         </plugins>
