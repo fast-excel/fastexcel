@@ -191,7 +191,7 @@ public class XlsxSaxAnalyser implements ExcelReadExecutor {
 
     private void analysisUse1904WindowDate(XSSFReader xssfReader, XlsxReadWorkbookHolder xlsxReadWorkbookHolder)
             throws Exception {
-        if (xlsxReadWorkbookHolder.globalConfiguration().getUse1904windowing() != null) {
+        if (xlsxReadWorkbookHolder.getReadWorkbook().getUse1904windowing() != null) {
             return;
         }
         InputStream workbookXml = xssfReader.getWorkbookData();
