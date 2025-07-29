@@ -1,3 +1,20 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package cn.idev.excel.test.temp;
 
 import cn.idev.excel.EasyExcel;
@@ -174,39 +191,39 @@ public class Lock2Test {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 
         // LOGGER.info("date:{}",
-        //    NumberDataFormatterUtils.format(BigDecimal.valueOf(44727.99998842592), (short)200, "yyyy-MM-dd HH:mm:ss",
-        //        null,
-        //        null, null));
+        // NumberDataFormatterUtils.format(BigDecimal.valueOf(44727.99998842592), (short)200, "yyyy-MM-dd HH:mm:ss",
+        // null,
+        // null, null));
         //
         // LOGGER.info("date:{}",
-        //    NumberDataFormatterUtils.format(BigDecimal.valueOf(44728.99998842592), (short)200, "yyyy-MM-dd HH:mm:ss",
-        //        null,
-        //        null, null));
+        // NumberDataFormatterUtils.format(BigDecimal.valueOf(44728.99998842592), (short)200, "yyyy-MM-dd HH:mm:ss",
+        // null,
+        // null, null));
         //
         // LOGGER.info("date:{}",
-        //    NumberDataFormatterUtils.format(BigDecimal.valueOf(44729.99998836806), (short)200, "yyyy-MM-dd HH:mm:ss",
-        //        null,
-        //        null, null));
+        // NumberDataFormatterUtils.format(BigDecimal.valueOf(44729.99998836806), (short)200, "yyyy-MM-dd HH:mm:ss",
+        // null,
+        // null, null));
         //
         // LOGGER.info("date:{}",
-        //    NumberDataFormatterUtils.format(BigDecimal.valueOf(44727.99998842592).setScale(10, RoundingMode
-        //    .HALF_UP), (short)200, "yyyy-MM-dd HH:mm:ss",
-        //        null,
-        //        null, null));
+        // NumberDataFormatterUtils.format(BigDecimal.valueOf(44727.99998842592).setScale(10, RoundingMode
+        // .HALF_UP), (short)200, "yyyy-MM-dd HH:mm:ss",
+        // null,
+        // null, null));
         //
         // LOGGER.info("date:{}",
-        //    NumberDataFormatterUtils.format(BigDecimal.valueOf(44728.99998842592).setScale(10, RoundingMode
-        //    .HALF_UP), (short)200, "yyyy-MM-dd HH:mm:ss",
-        //        null,
-        //        null, null));
+        // NumberDataFormatterUtils.format(BigDecimal.valueOf(44728.99998842592).setScale(10, RoundingMode
+        // .HALF_UP), (short)200, "yyyy-MM-dd HH:mm:ss",
+        // null,
+        // null, null));
 
         // 44729.9999883681
         // 44729.999988368058
         // LOGGER.info("date:{}",
-        //    NumberDataFormatterUtils.format(BigDecimal.valueOf(44729.999988368058).setScale(10, RoundingMode
-        //    .HALF_UP), (short)200, "yyyy-MM-dd HH:mm:ss",
-        //        null,
-        //        null, null));
+        // NumberDataFormatterUtils.format(BigDecimal.valueOf(44729.999988368058).setScale(10, RoundingMode
+        // .HALF_UP), (short)200, "yyyy-MM-dd HH:mm:ss",
+        // null,
+        // null, null));
         // LOGGER.info("date:{}",BigDecimal.valueOf(44729.999988368058).setScale(10, RoundingMode.HALF_UP).doubleValue
         // ());
 
@@ -309,11 +326,11 @@ public class Lock2Test {
             Date date = new Date(dateTime);
             double excelDate = DateUtil.getExcelDate(date);
             // odd assertion comment at 2025-03
-            //            Assertions.assertEquals("测试基本转换错误" + dateTime, format.format(date),
-            //                format.format(DateUtil.getJavaDate(excelDate, false)));
-            //            Assertions.assertEquals("测试精度5转换错误" + dateTime, format.format(date),
-            //                format.format(DateUtil.getJavaDate(BigDecimal.valueOf(excelDate)
-            //                    .setScale(10, RoundingMode.HALF_UP).doubleValue(), false)));
+            // Assertions.assertEquals("测试基本转换错误" + dateTime, format.format(date),
+            // format.format(DateUtil.getJavaDate(excelDate, false)));
+            // Assertions.assertEquals("测试精度5转换错误" + dateTime, format.format(date),
+            // format.format(DateUtil.getJavaDate(BigDecimal.valueOf(excelDate)
+            // .setScale(10, RoundingMode.HALF_UP).doubleValue(), false)));
             LOGGER.info(
                     "date:{}",
                     format2.format(DateUtil.getJavaDate(BigDecimal.valueOf(excelDate)

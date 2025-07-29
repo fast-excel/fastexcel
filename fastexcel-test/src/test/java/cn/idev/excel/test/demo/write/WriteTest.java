@@ -1,3 +1,20 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package cn.idev.excel.test.demo.write;
 
 import cn.idev.excel.EasyExcel;
@@ -310,7 +327,7 @@ public class WriteTest {
             imageData.setRelativeFirstRowIndex(0);
             imageData.setRelativeFirstColumnIndex(0);
             imageData.setRelativeLastRowIndex(0);
-            // 前面3个可以不写  下面这个需要写 也就是 结尾 需要相对当前单元格 往右移动一格
+            // 前面3个可以不写 下面这个需要写 也就是 结尾 需要相对当前单元格 往右移动一格
             // 也就是说 这个图片会覆盖当前单元格和 后面的那一格
             imageData.setRelativeLastColumnIndex(1);
 
@@ -503,6 +520,7 @@ public class WriteTest {
         fileName = TestFileUtil.getPath() + "handlerStyleWrite" + System.currentTimeMillis() + ".xlsx";
         EasyExcel.write(fileName, DemoData.class)
                 .registerWriteHandler(new CellWriteHandler() {
+
                     @Override
                     public void afterCellDispose(CellWriteHandlerContext context) {
                         // 当前事件会在 数据设置到poi的cell里面才会回调
@@ -534,6 +552,7 @@ public class WriteTest {
         fileName = TestFileUtil.getPath() + "handlerStyleWrite" + System.currentTimeMillis() + ".xlsx";
         EasyExcel.write(fileName, DemoData.class)
                 .registerWriteHandler(new CellWriteHandler() {
+
                     @Override
                     public void afterCellDispose(CellWriteHandlerContext context) {
                         // 当前事件会在 数据设置到poi的cell里面才会回调

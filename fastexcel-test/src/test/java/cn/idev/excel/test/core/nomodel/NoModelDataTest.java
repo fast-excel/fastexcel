@@ -1,3 +1,20 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package cn.idev.excel.test.core.nomodel;
 
 import cn.idev.excel.EasyExcel;
@@ -78,7 +95,7 @@ public class NoModelDataTest {
         Map<Integer, Object> actualData10 = actualDataList.get(9);
         Assertions.assertEquals("string19", actualData10.get(0));
         if (isCsv) {
-            //  CSV only string type
+            // CSV only string type
             Assertions.assertEquals("109", actualData10.get(1));
             Assertions.assertEquals("2020-01-01 01:01:01", actualData10.get(2));
         } else {
@@ -96,7 +113,7 @@ public class NoModelDataTest {
         Map<Integer, ReadCellData<?>> readCellData10 = readCellDataList.get(9);
         Assertions.assertEquals("string19", readCellData10.get(0).getData());
         if (isCsv) {
-            //  CSV only string type
+            // CSV only string type
             Assertions.assertEquals("109", readCellData10.get(1).getData());
             Assertions.assertEquals("2020-01-01 01:01:01", readCellData10.get(2).getData());
         } else {

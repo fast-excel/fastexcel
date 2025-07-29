@@ -1,20 +1,20 @@
 /*
- * ==================================================================== Licensed to the Apache Software Foundation (ASF)
- * under one or more contributor license agreements. See the NOTICE file distributed with this work for additional
- * information regarding copyright ownership. The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the
- * License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
- * specific language governing permissions and limitations under the License.
- *
- * 2012 - Alfresco Software, Ltd. Alfresco Software has modified source of this file The details of changes as svn diff
- * can be found in svn at location root/projects/3rd-party/src
- * ====================================================================
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
+
 package cn.idev.excel.metadata.format;
 
 import cn.idev.excel.util.DateUtils;
@@ -50,6 +50,7 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class DataFormatter {
+
     /**
      * For logging any problems we find
      */
@@ -200,9 +201,9 @@ public class DataFormatter {
         String formatStr = dataFormatString;
 
         // Excel supports 2+ part conditional data formats, eg positive/negative/zero,
-        //  or (>1000),(>0),(0),(negative). As Java doesn't handle these kinds
-        //  of different formats for different ranges, just +ve/-ve, we need to
-        //  handle these ourselves in a special way.
+        // or (>1000),(>0),(0),(negative). As Java doesn't handle these kinds
+        // of different formats for different ranges, just +ve/-ve, we need to
+        // handle these ourselves in a special way.
         // For now, if we detect 2+ parts, we call out to CellFormat to handle it
         // TODO Going forward, we should really merge the logic between the two classes
         if (formatStr.contains(";")
@@ -374,10 +375,8 @@ public class DataFormatter {
         // Excel uses lower and upper case 'm' for both minutes and months.
         // From Excel help:
         /*
-          The "m" or "mm" code must appear immediately after the "h" or"hh"
-          code or immediately before the "ss" code; otherwise, Microsoft
-          Excel displays the month instead of minutes."
-        */
+         * The "m" or "mm" code must appear immediately after the "h" or"hh" code or immediately before the "ss" code; otherwise, Microsoft Excel displays the month instead of minutes."
+         */
         StringBuilder sb = new StringBuilder();
         char[] chars = formatStr.toCharArray();
         boolean mIsMonth = true;
@@ -748,6 +747,7 @@ public class DataFormatter {
      */
     @SuppressWarnings("serial")
     private static final class SSNFormat extends Format {
+
         private static final DecimalFormat df = createIntegerOnlyFormat("000000000");
 
         private SSNFormat() {
@@ -778,6 +778,7 @@ public class DataFormatter {
      */
     @SuppressWarnings("serial")
     private static final class ZipPlusFourFormat extends Format {
+
         private static final DecimalFormat df = createIntegerOnlyFormat("000000000");
 
         private ZipPlusFourFormat() {
@@ -808,6 +809,7 @@ public class DataFormatter {
      */
     @SuppressWarnings("serial")
     private static final class PhoneFormat extends Format {
+
         private static final DecimalFormat df = createIntegerOnlyFormat("##########");
 
         private PhoneFormat() {
@@ -857,6 +859,7 @@ public class DataFormatter {
      * {@link CellFormatResult}
      */
     private final class CellFormatResultWrapper extends Format {
+
         private final CellFormatResult result;
 
         private CellFormatResultWrapper(CellFormatResult result) {

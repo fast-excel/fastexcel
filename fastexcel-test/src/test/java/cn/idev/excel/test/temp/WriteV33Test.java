@@ -1,3 +1,20 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package cn.idev.excel.test.temp;
 
 import cn.idev.excel.EasyExcel;
@@ -55,40 +72,40 @@ public class WriteV33Test {
         // contentWriteCellStyle.setWriteFont(contentWriteFont);
         //// 这个策略是 头是头的样式 内容是内容的样式 其他的策略可以自己实现
         // HorizontalCellStyleStrategy horizontalCellStyleStrategy =
-        //    new HorizontalCellStyleStrategy(headWriteCellStyle, contentWriteCellStyle);
+        // new HorizontalCellStyleStrategy(headWriteCellStyle, contentWriteCellStyle);
         //
         //// 这里 需要指定写用哪个class去写，然后写到第一个sheet，名字为模板 然后文件流会自动关闭
         // EasyExcel.write(fileName, DemoData.class)
-        //    .registerWriteHandler(horizontalCellStyleStrategy)
-        //    .sheet("模板")
-        //    .doWrite(data());
+        // .registerWriteHandler(horizontalCellStyleStrategy)
+        // .sheet("模板")
+        // .doWrite(data());
         //
         // 方法2: 使用easyexcel的方式完全自己写 不太推荐 尽量使用已有策略
         // fileName = TestFileUtil.getPath() + "handlerStyleWrite" + System.currentTimeMillis() + ".xlsx";
         // EasyExcel.write(fileName, DemoData.class)
-        //    .registerWriteHandler(new CellWriteHandler() {
-        //        @Override
-        //        public void afterCellDispose(CellWriteHandlerContext context) {
-        //            // 当前事件会在 数据设置到poi的cell里面才会回调
-        //            // 判断不是头的情况 如果是fill 的情况 这里会==null 所以用not true
-        //            if (BooleanUtils.isNotTrue(context.getHead())) {
-        //                // 第一个单元格
-        //                // 只要不是头 一定会有数据 当然fill的情况 可能要context.getCellDataList() ,这个需要看模板，因为一个单元格会有多个 WriteCellData
-        //                WriteCellData<?> cellData = context.getFirstCellData();
-        //                // 这里需要去cellData 获取样式
-        //                // 很重要的一个原因是 WriteCellStyle 和 dataFormatData绑定的 简单的说 比如你加了 DateTimeFormat
-        //                // ，已经将writeCellStyle里面的dataFormatData 改了 如果你自己new了一个WriteCellStyle，可能注解的样式就失效了
-        //                // 然后 getOrCreateStyle 用于返回一个样式，如果为空，则创建一个后返回
-        //                WriteCellStyle writeCellStyle = cellData.getOrCreateStyle();
-        //                writeCellStyle.setFillForegroundColor(IndexedColors.RED.getIndex());
-        //                // 这里需要指定 FillPatternType 为FillPatternType.SOLID_FOREGROUND
-        //                writeCellStyle.setFillPatternType(FillPatternType.SOLID_FOREGROUND);
+        // .registerWriteHandler(new CellWriteHandler() {
+        // @Override
+        // public void afterCellDispose(CellWriteHandlerContext context) {
+        // // 当前事件会在 数据设置到poi的cell里面才会回调
+        // // 判断不是头的情况 如果是fill 的情况 这里会==null 所以用not true
+        // if (BooleanUtils.isNotTrue(context.getHead())) {
+        // // 第一个单元格
+        // // 只要不是头 一定会有数据 当然fill的情况 可能要context.getCellDataList() ,这个需要看模板，因为一个单元格会有多个 WriteCellData
+        // WriteCellData<?> cellData = context.getFirstCellData();
+        // // 这里需要去cellData 获取样式
+        // // 很重要的一个原因是 WriteCellStyle 和 dataFormatData绑定的 简单的说 比如你加了 DateTimeFormat
+        // // ，已经将writeCellStyle里面的dataFormatData 改了 如果你自己new了一个WriteCellStyle，可能注解的样式就失效了
+        // // 然后 getOrCreateStyle 用于返回一个样式，如果为空，则创建一个后返回
+        // WriteCellStyle writeCellStyle = cellData.getOrCreateStyle();
+        // writeCellStyle.setFillForegroundColor(IndexedColors.RED.getIndex());
+        // // 这里需要指定 FillPatternType 为FillPatternType.SOLID_FOREGROUND
+        // writeCellStyle.setFillPatternType(FillPatternType.SOLID_FOREGROUND);
         //
-        //                // 这样样式就设置好了 后面有个FillStyleCellWriteHandler 默认会将 WriteCellStyle 设置到 cell里面去 所以可以不用管了
-        //            }
-        //        }
-        //    }).sheet("模板")
-        //    .doWrite(data());
+        // // 这样样式就设置好了 后面有个FillStyleCellWriteHandler 默认会将 WriteCellStyle 设置到 cell里面去 所以可以不用管了
+        // }
+        // }
+        // }).sheet("模板")
+        // .doWrite(data());
 
         // 方法3: 使用poi的样式完全自己写 不推荐
         // 坑1：style里面有dataformat 用来格式化数据的 所以自己设置可能导致格式化注解不生效
@@ -96,6 +113,7 @@ public class WriteV33Test {
         fileName = TestFileUtil.getPath() + "handlerStyleWrite" + System.currentTimeMillis() + ".xlsx";
         EasyExcel.write(fileName, DemoData.class)
                 .registerWriteHandler(new CellWriteHandler() {
+
                     @Override
                     public void afterCellDispose(CellWriteHandlerContext context) {
                         // 当前事件会在 数据设置到poi的cell里面才会回调
