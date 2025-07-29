@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project
-    xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>cn.idev.excel</groupId>
@@ -14,8 +11,6 @@
 
     <name>fastexcel-parent</name>
     <description>Fastexcel is an Excel handle tools written in Java</description>
-    <url>https://github.com/fast-excel/fastexcel</url>
-    <inceptionYear>2024</inceptionYear>
 
     <modules>
         <module>fastexcel</module>
@@ -50,44 +45,6 @@
         <mockserver.version>5.15.0</mockserver.version>
         <jacoco.version>0.8.13</jacoco.version>
     </properties>
-
-    <scm>
-        <url>https://github.com/fast-excel/fastexcel</url>
-        <connection>scm:git:https://git@github.com/fast-excel/fastexcel.git</connection>
-    </scm>
-
-    <organization>
-        <name>fast-excel</name>
-        <url>https://github.com/fast-excel</url>
-    </organization>
-
-    <developers>
-        <developer>
-            <id>jipengfei</id>
-            <name>jipengfei</name>
-            <email>1558143046@qq.com</email>
-        </developer>
-        <developer>
-            <id>zhuangjiaju</id>
-            <name>Jiaju Zhuang</name>
-            <email>zhuangjiaju@qq.com</email>
-        </developer>
-    </developers>
-
-    <licenses>
-        <license>
-            <name>Apache License, Version 2.0</name>
-            <url>https://www.apache.org/licenses/LICENSE-2.0</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
-
-    <distributionManagement>
-        <snapshotRepository>
-            <id>ossrh</id>
-            <url>https://central.sonatype.com/repository/maven-snapshots</url>
-        </snapshotRepository>
-    </distributionManagement>
 
     <dependencyManagement>
         <dependencies>
@@ -194,7 +151,6 @@
         </dependencies>
     </dependencyManagement>
 
-
     <build>
         <pluginManagement>
             <plugins>
@@ -228,9 +184,7 @@
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>${maven-surefire-plugin.version}</version>
                     <configuration>
-                        <argLine>
-                            ${argLine} ${surefireArgLine}
-                        </argLine>
+                        <argLine>${argLine} ${surefireArgLine}</argLine>
                     </configuration>
                     <!--                    please add below configuration if you are using JDK 9 or higher-->
                     <!--                    <configuration>-->
@@ -276,18 +230,18 @@
                         <!-- generate module report -->
                         <execution>
                             <id>generate-report</id>
-                            <phase>test</phase>
                             <goals>
                                 <goal>report</goal>
                             </goals>
+                            <phase>test</phase>
                         </execution>
                         <!-- generate aggregate report -->
                         <execution>
                             <id>generate-aggregate-report</id>
-                            <phase>test</phase>
                             <goals>
                                 <goal>report-aggregate</goal>
                             </goals>
+                            <phase>test</phase>
                         </execution>
                     </executions>
                 </plugin>
@@ -311,24 +265,16 @@
                 </configuration>
                 <executions>
                     <execution>
-                        <phase>compile</phase>
                         <goals>
                             <goal>jar</goal>
                         </goals>
+                        <phase>compile</phase>
                     </execution>
                 </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>sign</goal>
-                        </goals>
-                    </execution>
-                </executions>
                 <!-- Configuration GPG plug-ins don't tip password -->
                 <configuration>
                     <gpgArguments>
@@ -336,6 +282,14 @@
                         <argument>loopback</argument>
                     </gpgArguments>
                 </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                        <phase>verify</phase>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -354,10 +308,10 @@
                 <artifactId>lombok-maven-plugin</artifactId>
                 <executions>
                     <execution>
-                        <phase>generate-sources</phase>
                         <goals>
                             <goal>delombok</goal>
                         </goals>
+                        <phase>generate-sources</phase>
                     </execution>
                 </executions>
             </plugin>
@@ -372,24 +326,24 @@
                 <executions>
                     <execution>
                         <id>flatten.process-resources</id>
-                        <phase>process-resources</phase>
                         <goals>
                             <goal>flatten</goal>
                         </goals>
+                        <phase>process-resources</phase>
                     </execution>
                     <execution>
                         <id>flatten</id>
-                        <phase>package</phase>
                         <goals>
                             <goal>flatten</goal>
                         </goals>
+                        <phase>package</phase>
                     </execution>
                     <execution>
                         <id>flatten.clean</id>
-                        <phase>clean</phase>
                         <goals>
                             <goal>clean</goal>
                         </goals>
+                        <phase>clean</phase>
                     </execution>
                 </executions>
             </plugin>
@@ -399,6 +353,9 @@
                 <artifactId>spotless-maven-plugin</artifactId>
                 <configuration>
                     <java>
+                        <licenseHeader>
+                            <file>${maven.multiModuleProjectDirectory}/dev-support/license-header</file>
+                        </licenseHeader>
                         <palantirJavaFormat>
                             <version>2.72.0</version>
                         </palantirJavaFormat>
@@ -406,23 +363,32 @@
                         <importOrder>
                             <order>\#|</order>
                         </importOrder>
-                        <removeUnusedImports/>
-                        <trimTrailingWhitespace/>
-                        <endWithNewline/>
+                        <removeUnusedImports />
+                        <trimTrailingWhitespace />
+                        <endWithNewline />
                         <indent>
                             <spaces>true</spaces>
                             <spacesPerTab>4</spacesPerTab>
                         </indent>
                     </java>
                     <pom>
-                        <trimTrailingWhitespace/>
-                        <endWithNewline/>
+                        <trimTrailingWhitespace />
+                        <endWithNewline />
                         <indent>
                             <spaces>true</spaces>
                             <spacesPerTab>4</spacesPerTab>
                         </indent>
                     </pom>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>spotless-check</id>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <phase>compile</phase>
+                    </execution>
+                </executions>
             </plugin>
 
             <!-- Publish package to the Maven Central Repository -->
@@ -445,8 +411,49 @@
                     <tokenAuth>true</tokenAuth>
                 </configuration>
             </plugin>
+
         </plugins>
     </build>
+    <url>https://github.com/fast-excel/fastexcel</url>
+    <inceptionYear>2024</inceptionYear>
+
+    <organization>
+        <name>fast-excel</name>
+        <url>https://github.com/fast-excel</url>
+    </organization>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>jipengfei</id>
+            <name>jipengfei</name>
+            <email>1558143046@qq.com</email>
+        </developer>
+        <developer>
+            <id>zhuangjiaju</id>
+            <name>Jiaju Zhuang</name>
+            <email>zhuangjiaju@qq.com</email>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:https://git@github.com/fast-excel/fastexcel.git</connection>
+        <url>https://github.com/fast-excel/fastexcel</url>
+    </scm>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://central.sonatype.com/repository/maven-snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
     <profiles>
         <profile>
             <id>jdk9plus</id>
@@ -454,7 +461,7 @@
                 <jdk>[9,)</jdk>
             </activation>
             <properties>
-                    <surefireArgLine>--add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/sun.reflect.annotation=ALL-UNNAMED -Dfile.encoding=UTF-8</surefireArgLine>
+                <surefireArgLine>--add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/sun.reflect.annotation=ALL-UNNAMED -Dfile.encoding=UTF-8</surefireArgLine>
             </properties>
         </profile>
         <profile>
@@ -463,7 +470,7 @@
                 <jdk>1.8</jdk>
             </activation>
             <properties>
-                <surefireArgLine> -Dfile.encoding=UTF-8</surefireArgLine>
+                <surefireArgLine>-Dfile.encoding=UTF-8</surefireArgLine>
             </properties>
         </profile>
     </profiles>
