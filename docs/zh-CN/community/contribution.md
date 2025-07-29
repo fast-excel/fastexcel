@@ -107,6 +107,41 @@ git config --get user.email
 
 ---
 
+## 贡献文档
+
+文档是 FastExcel 官方网站的重要构建内容，是项目与社区之间的重要桥梁。
+
+### 目录结构说明
+
+```shell
+.
+├── quickstart     # 1. 快速开始
+├── read           # 2. 读取文件
+├── write          # 3. 写入
+├── fill           # 4. 填充
+├── community      # 5. 社区
+└── help           # 6. FAQ
+```
+
+### 文档编写指南
+
+- 使用带有 `.md` 扩展名的文件路径
+``` markdown
+[Example](quickstart/example.md)
+```
+
+- 使用相对于 docs/ 目录的路径
+``` markdown
+[Example](quickstart/example.md)
+```
+
+- 图片文件需要存储在 `docs/images` 目录，并使用相对目录的形式引用.
+``` markdown
+[img](../../images/fill/listFill_file.png)
+```
+
+---
+
 ## 其他参与方式
 
 除了直接贡献代码，以下方式同样是对 FastExcel 的宝贵支持：
