@@ -4,16 +4,15 @@ import cn.idev.excel.analysis.v03.IgnorableXlsRecordHandler;
 import cn.idev.excel.context.xls.XlsReadContext;
 import cn.idev.excel.metadata.data.CellData;
 import cn.idev.excel.read.metadata.holder.xls.XlsReadSheetHolder;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.hssf.record.Record;
 import org.apache.poi.hssf.record.StringRecord;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Record handler
  */
+@Slf4j
 public class StringRecordHandler extends AbstractXlsRecordHandler implements IgnorableXlsRecordHandler {
-    private static final Logger LOGGER = LoggerFactory.getLogger(StringRecordHandler.class);
 
     @Override
     public void processRecord(XlsReadContext xlsReadContext, Record record) {
@@ -22,7 +21,7 @@ public class StringRecordHandler extends AbstractXlsRecordHandler implements Ign
         XlsReadSheetHolder xlsReadSheetHolder = xlsReadContext.xlsReadSheetHolder();
         CellData<?> tempCellData = xlsReadSheetHolder.getTempCellData();
         if (tempCellData == null) {
-            LOGGER.warn("String type formula but no value found.");
+            log.warn("String type formula but no value found.");
             return;
         }
         tempCellData.setStringValue(srec.getString());

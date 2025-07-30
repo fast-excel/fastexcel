@@ -10,14 +10,13 @@ import com.alibaba.fastjson2.JSON;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+@Slf4j
 public class CommentTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CommentTest.class);
 
     private final List<String> commentList = Arrays.asList("测试", "comment");
 
@@ -36,7 +35,7 @@ public class CommentTest {
 
                     @Override
                     public void extra(CellExtra extra, AnalysisContext context) {
-                        LOGGER.info("读取到了一条额外信息:{}", JSON.toJSONString(extra));
+                        log.info("读取到了一条额外信息:{}", JSON.toJSONString(extra));
                         if (extra.getType().equals(CellExtraTypeEnum.COMMENT)) {
                             Assertions.assertTrue(commentList.contains(extra.getText()));
                         }

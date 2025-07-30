@@ -11,8 +11,6 @@ import java.util.List;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * 临时测试
@@ -21,7 +19,7 @@ import org.slf4j.LoggerFactory;
  **/
 public class WriteV34Test {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(WriteV34Test.class);
+
 
     @Test
     public void test() throws Exception {

@@ -18,8 +18,6 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * 临时测试
@@ -28,7 +26,6 @@ import org.slf4j.LoggerFactory;
  **/
 public class WriteV33Test {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(WriteV33Test.class);
 
     @Test
     public void handlerStyleWrite() {

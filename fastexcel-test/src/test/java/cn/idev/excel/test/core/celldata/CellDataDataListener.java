@@ -6,15 +6,15 @@ import cn.idev.excel.support.ExcelTypeEnum;
 import com.alibaba.fastjson2.JSON;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
  */
+@Slf4j
 public class CellDataDataListener extends AnalysisEventListener<CellDataReadData> {
-    private static final Logger LOGGER = LoggerFactory.getLogger(CellDataDataListener.class);
+
     List<CellDataReadData> list = new ArrayList<>();
 
     @Override
@@ -36,6 +36,6 @@ public class CellDataDataListener extends AnalysisEventListener<CellDataReadData
         } else {
             Assertions.assertNull(cellDataData.getFormulaValue().getData());
         }
-        LOGGER.debug("First row:{}", JSON.toJSONString(list.get(0)));
+        log.debug("First row:{}", JSON.toJSONString(list.get(0)));
     }
 }

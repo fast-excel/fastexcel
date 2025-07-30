@@ -3,17 +3,17 @@ package cn.idev.excel.test.temp.read;
 import cn.idev.excel.EasyExcel;
 import cn.idev.excel.cache.Ehcache;
 import java.io.File;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * 临时测试
  *
  *
  **/
+@Slf4j
 public class HeadReadTest {
-    private static final Logger LOGGER = LoggerFactory.getLogger(HeadReadTest.class);
+
 
     @Test
     public void test() throws Exception {
@@ -32,12 +32,12 @@ public class HeadReadTest {
                 .sheet(0)
                 .doRead();
 
-        LOGGER.info("------------------");
+        log.info("------------------");
         EasyExcel.read(file, HeadReadData.class, new HDListener())
                 .readCache(new Ehcache(20))
                 .sheet(0)
                 .doRead();
-        LOGGER.info("------------------");
+        log.info("------------------");
         EasyExcel.read(file, HeadReadData.class, new HDListener())
                 .readCache(new Ehcache(20))
                 .sheet(0)

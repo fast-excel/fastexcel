@@ -7,18 +7,18 @@ import cn.idev.excel.util.BeanMapUtils;
 import com.alibaba.fastjson2.JSON;
 import java.nio.file.Path;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * 临时测试
  *
  *
  **/
+@Slf4j
 public class Xls03Test {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Xls03Test.class);
+
 
     @TempDir
     Path tempDir;
@@ -29,7 +29,7 @@ public class Xls03Test {
                 .sheet()
                 .doReadSync();
         for (Object data : list) {
-            LOGGER.info("返回数据：{}", JSON.toJSONString(data));
+            log.info("返回数据：{}", JSON.toJSONString(data));
         }
     }
 
@@ -45,9 +45,9 @@ public class Xls03Test {
 
         BeanMap beanMap = BeanMapUtils.create(camlData);
 
-        LOGGER.info("test:{}", beanMap.get("test"));
-        LOGGER.info("test:{}", beanMap.get("Test"));
-        LOGGER.info("test:{}", beanMap.get("TEst"));
-        LOGGER.info("test:{}", beanMap.get("TEST"));
+        log.info("test:{}", beanMap.get("test"));
+        log.info("test:{}", beanMap.get("Test"));
+        log.info("test:{}", beanMap.get("TEst"));
+        log.info("test:{}", beanMap.get("TEST"));
     }
 }

@@ -59,8 +59,6 @@ import org.apache.poi.hssf.record.Record;
 import org.apache.poi.hssf.record.SSTRecord;
 import org.apache.poi.hssf.record.StringRecord;
 import org.apache.poi.hssf.record.TextObjectRecord;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * A text extractor for Excel files.
@@ -78,7 +76,7 @@ import org.slf4j.LoggerFactory;
 @Slf4j
 public class XlsSaxAnalyser implements HSSFListener, ExcelReadExecutor {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(XlsSaxAnalyser.class);
+
     private static final short DUMMY_RECORD_SID = -1;
     private final XlsReadContext xlsReadContext;
     private static final Map<Short, XlsRecordHandler> XLS_RECORD_HANDLER_MAP = new HashMap<Short, XlsRecordHandler>(32);
@@ -130,8 +128,8 @@ public class XlsSaxAnalyser implements HSSFListener, ExcelReadExecutor {
                 new XlsListSheetListener(xlsReadContext).execute();
             }
         } catch (ExcelAnalysisStopException e) {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Custom stop!");
+            if (log.isDebugEnabled()) {
+                log.debug("Custom stop!");
             }
         }
         List<ReadSheet> actualSheetDataList =

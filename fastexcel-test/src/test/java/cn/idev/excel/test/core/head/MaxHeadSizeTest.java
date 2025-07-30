@@ -8,17 +8,16 @@ import com.alibaba.fastjson2.JSONWriter;
 import java.io.File;
 import java.util.List;
 import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @TestMethodOrder(MethodOrderer.MethodName.class)
+@Slf4j
 public class MaxHeadSizeTest {
-    private static final Logger log = LoggerFactory.getLogger(MaxHeadSizeTest.class);
 
     private static String headFile01;
     private static String headFile02;

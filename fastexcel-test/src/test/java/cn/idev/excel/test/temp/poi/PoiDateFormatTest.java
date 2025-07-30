@@ -1,34 +1,34 @@
 package cn.idev.excel.test.temp.poi;
 
 import java.io.IOException;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * 测试poi
  *
  *
  **/
+@Slf4j
 public class PoiDateFormatTest {
-    private static final Logger LOGGER = LoggerFactory.getLogger(PoiDateFormatTest.class);
+
 
     @Test
     public void read() throws IOException {
         String file = "src/test/resources/dataformat/dataformat.xlsx";
         XSSFWorkbook xssfWorkbook = new XSSFWorkbook(file);
         XSSFSheet xssfSheet = xssfWorkbook.getSheetAt(0);
-        LOGGER.info("一共行数:{}", xssfSheet.getLastRowNum());
+        log.info("一共行数:{}", xssfSheet.getLastRowNum());
         XSSFRow row = xssfSheet.getRow(7);
         XSSFCell cell = row.getCell(0);
-        LOGGER.info("dd{}", cell.getDateCellValue());
-        LOGGER.info("dd{}", cell.getNumericCellValue());
+        log.info("dd{}", cell.getDateCellValue());
+        log.info("dd{}", cell.getNumericCellValue());
 
-        LOGGER.info("dd{}", DateUtil.isCellDateFormatted(cell));
+        log.info("dd{}", DateUtil.isCellDateFormatted(cell));
     }
 }

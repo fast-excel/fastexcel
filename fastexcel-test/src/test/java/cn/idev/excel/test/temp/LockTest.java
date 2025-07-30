@@ -5,17 +5,17 @@ import com.alibaba.fastjson2.JSON;
 import java.io.FileInputStream;
 import java.util.List;
 import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * 临时测试
  *
  *
  **/
+@Slf4j
 public class LockTest {
-    private static final Logger LOGGER = LoggerFactory.getLogger(LockTest.class);
+
 
     @Test
     public void test() throws Exception {
@@ -23,7 +23,7 @@ public class LockTest {
                 .useDefaultListener(false)
                 .doReadAllSync();
         for (Object data : list) {
-            LOGGER.info("返回数据：{}", JSON.toJSONString(data));
+            log.info("返回数据：{}", JSON.toJSONString(data));
         }
     }
 
@@ -34,8 +34,8 @@ public class LockTest {
                 .headRowNumber(0)
                 .doReadSync();
         for (Object data : list) {
-            LOGGER.info("返回数据：{}", ((Map) data).size());
-            LOGGER.info("返回数据：{}", JSON.toJSONString(data));
+            log.info("返回数据：{}", ((Map) data).size());
+            log.info("返回数据：{}", JSON.toJSONString(data));
         }
     }
 }

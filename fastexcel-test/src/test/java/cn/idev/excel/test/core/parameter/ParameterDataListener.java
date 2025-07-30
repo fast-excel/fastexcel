@@ -5,15 +5,15 @@ import cn.idev.excel.event.AnalysisEventListener;
 import com.alibaba.fastjson2.JSON;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
  */
+@Slf4j
 public class ParameterDataListener extends AnalysisEventListener<ParameterData> {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ParameterDataListener.class);
+
     List<ParameterData> list = new ArrayList<ParameterData>();
 
     @Override
@@ -34,6 +34,6 @@ public class ParameterDataListener extends AnalysisEventListener<ParameterData> 
                         .getHeadNameList()
                         .get(0),
                 "姓名");
-        LOGGER.debug("First row:{}", JSON.toJSONString(list.get(0)));
+        log.debug("First row:{}", JSON.toJSONString(list.get(0)));
     }
 }

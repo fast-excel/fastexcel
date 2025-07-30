@@ -1,11 +1,11 @@
 package cn.idev.excel.test.temp.cache;
 
-import cn.idev.excel.test.temp.poi.Poi2Test;
 import cn.idev.excel.util.FileUtils;
 import com.alibaba.fastjson2.JSON;
 import java.io.File;
 import java.util.HashMap;
 import java.util.UUID;
+import lombok.extern.slf4j.Slf4j;
 import org.ehcache.Cache;
 import org.ehcache.PersistentCacheManager;
 import org.ehcache.config.builders.CacheConfigurationBuilder;
@@ -13,14 +13,12 @@ import org.ehcache.config.builders.CacheManagerBuilder;
 import org.ehcache.config.builders.ResourcePoolsBuilder;
 import org.ehcache.config.units.MemoryUnit;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
  **/
+@Slf4j
 public class CacheTest {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Poi2Test.class);
 
     @Test
     public void cache() throws Exception {
@@ -43,10 +41,10 @@ public class CacheTest {
         map.put(1, "test");
 
         cache.put(1, map);
-        LOGGER.info("dd1:{}", JSON.toJSONString(cache.get(1)));
+        log.info("dd1:{}", JSON.toJSONString(cache.get(1)));
 
         cache.clear();
 
-        LOGGER.info("dd2:{}", JSON.toJSONString(cache.get(1)));
+        log.info("dd2:{}", JSON.toJSONString(cache.get(1)));
     }
 }

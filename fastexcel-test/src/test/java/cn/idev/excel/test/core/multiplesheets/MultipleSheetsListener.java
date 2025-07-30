@@ -5,15 +5,15 @@ import cn.idev.excel.event.AnalysisEventListener;
 import com.alibaba.fastjson2.JSON;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
  */
+@Slf4j
 public class MultipleSheetsListener extends AnalysisEventListener<MultipleSheetsData> {
-    private static final Logger LOGGER = LoggerFactory.getLogger(MultipleSheetsListener.class);
+
     List<MultipleSheetsData> list = new ArrayList<MultipleSheetsData>();
 
     @Override
@@ -23,9 +23,9 @@ public class MultipleSheetsListener extends AnalysisEventListener<MultipleSheets
 
     @Override
     public void doAfterAllAnalysed(AnalysisContext context) {
-        LOGGER.debug("A form is read finished.");
+        log.debug("A form is read finished.");
         Assertions.assertEquals(list.get(0).getTitle(), "表1数据");
-        LOGGER.debug("All row:{}", JSON.toJSONString(list));
+        log.debug("All row:{}", JSON.toJSONString(list));
     }
 
     public List<MultipleSheetsData> getList() {

@@ -26,14 +26,13 @@ import cn.idev.excel.util.NumberDataFormatterUtils;
 import cn.idev.excel.util.StringUtils;
 import java.io.InputStream;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.poi.hssf.record.crypto.Biff8EncryptionKey;
 import org.apache.poi.poifs.crypt.Decryptor;
 import org.apache.poi.poifs.filesystem.DocumentFactoryHelper;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.util.IOUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * A class that implements the ExcelAnalyser interface for analyzing Excel files.
@@ -49,8 +48,9 @@ import org.slf4j.LoggerFactory;
  * </ul>
  *
  */
+@Slf4j
 public class ExcelAnalyserImpl implements ExcelAnalyser {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ExcelAnalyserImpl.class);
+
 
     /**
      * The context object holding metadata and configuration for the Excel analysis process.
@@ -163,8 +163,8 @@ public class ExcelAnalyserImpl implements ExcelAnalyser {
             try {
                 excelReadExecutor.execute();
             } catch (ExcelAnalysisStopException e) {
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("Custom stop!");
+                if (log.isDebugEnabled()) {
+                    log.debug("Custom stop!");
                 }
             }
         } catch (RuntimeException e) {

@@ -7,9 +7,8 @@ import java.io.IOException;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.openxml4j.opc.PackagePart;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Simple cache selector
@@ -19,8 +18,9 @@ import org.slf4j.LoggerFactory;
 @Getter
 @Setter
 @EqualsAndHashCode
+@Slf4j
 public class SimpleReadCacheSelector implements ReadCacheSelector {
-    private static final Logger LOGGER = LoggerFactory.getLogger(SimpleReadCacheSelector.class);
+
     /**
      * Convert bytes to megabytes
      */
@@ -76,7 +76,7 @@ public class SimpleReadCacheSelector implements ReadCacheSelector {
             try {
                 size = sharedStringsTablePackagePart.getInputStream().available();
             } catch (IOException e) {
-                LOGGER.warn("Unable to get file size, default used MapCache");
+                log.warn("Unable to get file size, default used MapCache");
                 return new MapCache();
             }
         }
@@ -84,13 +84,13 @@ public class SimpleReadCacheSelector implements ReadCacheSelector {
             maxUseMapCacheSize = DEFAULT_MAX_USE_MAP_CACHE_SIZE;
         }
         if (size < maxUseMapCacheSize * B2M) {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Use map cache.size:{}", size);
+            if (log.isDebugEnabled()) {
+                log.debug("Use map cache.size:{}", size);
             }
             return new MapCache();
         }
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Use ehcache.size:{}", size);
+        if (log.isDebugEnabled()) {
+            log.debug("Use ehcache.size:{}", size);
         }
 
         // In order to be compatible with the code
