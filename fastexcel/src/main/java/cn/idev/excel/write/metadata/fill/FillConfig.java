@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 /**
  * Fill config
  *
@@ -38,6 +40,9 @@ public class FillConfig {
 
     private boolean hasInit;
 
+    private List<String> dynamicColumnKeys;
+    private Integer dynamicColumnGroupSize;
+
     public void init() {
         if (hasInit) {
             return;
@@ -50,6 +55,9 @@ public class FillConfig {
         }
         if (autoStyle == null) {
             autoStyle = Boolean.TRUE;
+        }
+        if (dynamicColumnGroupSize == null) {
+            dynamicColumnGroupSize = 1;
         }
         hasInit = true;
     }

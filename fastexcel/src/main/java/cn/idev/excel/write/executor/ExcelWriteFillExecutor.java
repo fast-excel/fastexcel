@@ -1,5 +1,6 @@
 package cn.idev.excel.write.executor;
 
+import cn.idev.excel.annotation.fill.DynamicColumn;
 import cn.idev.excel.context.WriteContext;
 import cn.idev.excel.enums.CellDataTypeEnum;
 import cn.idev.excel.enums.WriteDirectionEnum;
@@ -21,6 +22,8 @@ import cn.idev.excel.write.metadata.fill.AnalysisCell;
 import cn.idev.excel.write.metadata.fill.FillConfig;
 import cn.idev.excel.write.metadata.fill.FillWrapper;
 import cn.idev.excel.write.metadata.holder.WriteSheetHolder;
+
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -78,6 +81,7 @@ public class ExcelWriteFillExecutor extends AbstractExcelWriteExecutor {
     private final Map<UniqueDataFlagKey, Map<AnalysisCell, Integer>> collectionLastIndexCache = MapUtils.newHashMap();
 
     private final Map<UniqueDataFlagKey, Integer> relativeRowIndexMap = MapUtils.newHashMap();
+
     /**
      * The unique data encoding for this fill
      */
@@ -198,8 +202,7 @@ public class ExcelWriteFillExecutor extends AbstractExcelWriteExecutor {
         }
         Set<String> dataKeySet = new HashSet<>(dataMap.keySet());
 
-        RowWriteHandlerContext rowWriteHandlerContext =
-                WriteHandlerUtils.createRowWriteHandlerContext(writeContext, null, relativeRowIndex, Boolean.FALSE);
+        RowWriteHandlerContext rowWriteHandlerContext = WriteHandlerUtils.createRowWriteHandlerContext(writeContext, null, relativeRowIndex, Boolean.FALSE);
 
         for (AnalysisCell analysisCell : analysisCellList) {
             CellWriteHandlerContext cellWriteHandlerContext = WriteHandlerUtils.createCellWriteHandlerContext(
@@ -213,9 +216,13 @@ public class ExcelWriteFillExecutor extends AbstractExcelWriteExecutor {
                     ExcelContentProperty.EMPTY);
 
             if (analysisCell.getOnlyOneVariable()) {
-                String variable = analysisCell.getVariableList().get(0);
+                String originalVariable = analysisCell.getVariableList().get(0);
+                String variable = originalVariable;
                 Object value = null;
                 if (dataKeySet.contains(variable)) {
+                    value = dataMap.get(variable);
+                }else if(variable.contains(".")){
+                    variable = variable.split("\\.")[0];
                     value = dataMap.get(variable);
                 }
                 ExcelContentProperty excelContentProperty = ClassUtils.declaredExcelContentProperty(
@@ -226,11 +233,12 @@ public class ExcelWriteFillExecutor extends AbstractExcelWriteExecutor {
                                 .getHeadClazz(),
                         variable,
                         writeContext.currentWriteHolder());
+                cellWriteHandlerContext.setOriginalVariable(originalVariable);
+                cellWriteHandlerContext.setFillConfig(fillConfig);
                 cellWriteHandlerContext.setExcelContentProperty(excelContentProperty);
-
-                createCell(analysisCell, fillConfig, cellWriteHandlerContext, rowWriteHandlerContext);
                 cellWriteHandlerContext.setOriginalValue(value);
                 cellWriteHandlerContext.setOriginalFieldClass(FieldUtils.getFieldClass(dataMap, variable, value));
+                createCell(analysisCell, fillConfig, cellWriteHandlerContext, rowWriteHandlerContext);
 
                 converterAndSet(cellWriteHandlerContext);
                 WriteCellData<?> cellData = cellWriteHandlerContext.getFirstCellData();
@@ -239,7 +247,13 @@ public class ExcelWriteFillExecutor extends AbstractExcelWriteExecutor {
                 if (fillConfig.getAutoStyle()) {
                     Optional.ofNullable(collectionFieldStyleCache.get(currentUniqueDataFlag))
                             .map(collectionFieldStyleMap -> collectionFieldStyleMap.get(analysisCell))
-                            .ifPresent(cellData::setOriginCellStyle);
+                            .ifPresent(style -> {
+                                if (cellWriteHandlerContext.getCellMap() != null && cellWriteHandlerContext.getCellMap().size() > 1) {
+                                    cellWriteHandlerContext.getCellMap().values().forEach(cell -> cell.getFirstCellData().setOriginCellStyle(style));
+                                }else{
+                                    cellData.setOriginCellStyle(style);
+                                }
+                            });
                 }
             } else {
                 StringBuilder cellValueBuild = new StringBuilder();
@@ -305,7 +319,12 @@ public class ExcelWriteFillExecutor extends AbstractExcelWriteExecutor {
                             .ifPresent(cell::setCellStyle);
                 }
             }
-            WriteHandlerUtils.afterCellDispose(cellWriteHandlerContext);
+            if (cellWriteHandlerContext.getCellMap() != null && cellWriteHandlerContext.getCellMap().size() > 1) {
+                //动态列则触发每个fill的column的afterCellDispose
+                cellWriteHandlerContext.getCellMap().values().forEach(WriteHandlerUtils::afterCellDispose);
+            }else{
+                WriteHandlerUtils.afterCellDispose(cellWriteHandlerContext);
+            }
         }
 
         // In the case of the fill line may be called many times
@@ -375,6 +394,9 @@ public class ExcelWriteFillExecutor extends AbstractExcelWriteExecutor {
                 throw new ExcelGenerateException("The wrong direction.");
         }
 
+        ExcelContentProperty excelContentProperty = cellWriteHandlerContext.getExcelContentProperty();
+        Field field = excelContentProperty.getField();
+
         Row row = createRowIfNecessary(
                 sheet, cachedSheet, lastRowIndex, fillConfig, analysisCell, isOriginalCell, rowWriteHandlerContext);
         cellWriteHandlerContext.setRow(row);
@@ -384,10 +406,47 @@ public class ExcelWriteFillExecutor extends AbstractExcelWriteExecutor {
         Cell cell = createCellIfNecessary(row, lastColumnIndex, cellWriteHandlerContext);
         cellWriteHandlerContext.setCell(cell);
 
+        if(null != field && field.isAnnotationPresent(DynamicColumn.class)){
+            if (cellWriteHandlerContext.getCellMap() == null) {
+                cellWriteHandlerContext.setCellMap(new HashMap<>());
+            }
+            cellWriteHandlerContext.getCellMap().put(lastRowIndex + "_" + lastColumnIndex, cellWriteHandlerContext);
+            List<String> dynamicColumnKeys = fillConfig.getDynamicColumnKeys();
+            if(CollectionUtils.isEmpty(dynamicColumnKeys)){
+                throw new ExcelGenerateException(String.format("Plase set dynamic column keys for %s in fillConfig",field.getName()));
+            }
+            for (int i = 1; i < dynamicColumnKeys.size(); i++) {
+                switch (fillConfig.getDirection()) {
+                    case VERTICAL:
+                        lastColumnIndex = lastColumnIndex + fillConfig.getDynamicColumnGroupSize();
+                        break;
+                    case HORIZONTAL:
+                        lastRowIndex = lastRowIndex + fillConfig.getDynamicColumnGroupSize();
+                        break;
+                    default:
+                        throw new ExcelGenerateException("The wrong direction.");
+                }
+                Row newRow = createRowIfNecessary( sheet, cachedSheet, lastRowIndex, fillConfig, analysisCell, false, rowWriteHandlerContext);
+                CellWriteHandlerContext cloneContext = cellWriteHandlerContext.clone();
+                cloneContext.setColumnIndex(lastColumnIndex);
+                cloneContext.setRowIndex(row.getRowNum());
+                Cell cloneCell = createCellIfNecessary(newRow, lastColumnIndex, cloneContext);
+                cloneContext.setCell(cloneCell);
+                cellWriteHandlerContext.getCellMap().put(row.getRowNum() + "_" + lastColumnIndex, cloneContext);
+            }
+        }
+
         if (isOriginalCell) {
             Map<AnalysisCell, CellStyle> collectionFieldStyleMap =
                     collectionFieldStyleCache.computeIfAbsent(currentUniqueDataFlag, key -> MapUtils.newHashMap());
             collectionFieldStyleMap.put(analysisCell, cell.getCellStyle());
+            if (cellWriteHandlerContext.getCellMap() != null && cellWriteHandlerContext.getCellMap().size() > 1) {
+                cellWriteHandlerContext.getCellMap().forEach((k, cellContext) -> {
+                    Integer currentColumnIndex = cellContext.getColumnIndex();
+                    int columnWidth = sheet.getColumnWidth(cellWriteHandlerContext.getColumnIndex());
+                    sheet.setColumnWidth(currentColumnIndex,columnWidth);
+                });
+            }
         }
     }
 
