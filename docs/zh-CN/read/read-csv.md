@@ -24,7 +24,7 @@ FastExcel 在`1.3.0`版本引入了定制化的 CSV 读取。
 public void csvRead() {
     String csvFile = "path/to/demo.csv";
 
-    FastExcel.read(csvFile, CsvData.class, new CsvDataListener())
+    List<CsvData> dataList = FastExcel.read(csvFile, CsvData.class, new CsvDataListener())
             .csv()
             .delimiter(CsvConstant.AT)
             .quote(CsvConstant.DOUBLE_QUOTE,QuoteMode.ALL)
