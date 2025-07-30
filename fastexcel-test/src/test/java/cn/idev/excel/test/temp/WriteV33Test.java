@@ -26,7 +26,6 @@ import org.junit.jupiter.api.io.TempDir;
  **/
 public class WriteV33Test {
 
-
     @Test
     public void handlerStyleWrite() {
         // 方法1 使用已有的策略 推荐

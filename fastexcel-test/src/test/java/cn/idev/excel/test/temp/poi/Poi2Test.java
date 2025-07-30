@@ -18,7 +18,6 @@ import org.junit.jupiter.api.Test;
 @Slf4j
 public class Poi2Test {
 
-
     @Test
     public void test() throws IOException {
         String file = "src/test/resources/poi/last_row_number_test.xlsx";

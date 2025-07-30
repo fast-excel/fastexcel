@@ -25,7 +25,6 @@ import org.junit.jupiter.api.Test;
 @Slf4j
 public class StyleTest {
 
-
     @Test
     public void poi07Test() throws Exception {
         InputStream is = Files.newInputStream(Paths.get("src/test/resources/style/styleTest.xlsx"));

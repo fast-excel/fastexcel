@@ -28,7 +28,6 @@ import org.apache.commons.collections4.MapUtils;
 @Slf4j
 public class DefaultAnalysisEventProcessor implements AnalysisEventProcessor {
 
-
     @Override
     public void extra(AnalysisContext analysisContext) {
         dealExtra(analysisContext);

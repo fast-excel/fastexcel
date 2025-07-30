@@ -16,7 +16,6 @@ import org.junit.jupiter.api.Test;
 @Slf4j
 public class LockTest {
 
-
     @Test
     public void test() throws Exception {
         List<Object> list = EasyExcel.read(new FileInputStream("src/test/resources/simple/simple07.xlsx"))

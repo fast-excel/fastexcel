@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Test;
 @Slf4j
 public class PoiFormatTest {
 
-
     @Test
     public void lastRowNum() throws IOException {
         String file = "src/test/resources/poi/last_row_number_test.xlsx";

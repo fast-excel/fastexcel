@@ -27,7 +27,6 @@ import org.junit.jupiter.api.io.TempDir;
 @Slf4j
 public class Poi3Test {
 
-
     @Test
     public void Encryption(@TempDir Path tempDir) throws Exception {
         // Write out the encrypted version

@@ -17,7 +17,6 @@ import org.junit.jupiter.api.Test;
 @Slf4j
 public class CommentTest {
 
-
     private final List<String> commentList = Arrays.asList("测试", "comment");
 
     private void runCommentTest(String filePath, ExcelTypeEnum excelType) throws Exception {

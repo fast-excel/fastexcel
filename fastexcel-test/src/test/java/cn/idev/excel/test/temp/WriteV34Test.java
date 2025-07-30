@@ -19,8 +19,6 @@ import org.junit.jupiter.api.Test;
  **/
 public class WriteV34Test {
 
-
-
     @Test
     public void test() throws Exception {
         String fileName = TestFileUtil.getPath() + "handlerStyleWrite" + System.currentTimeMillis() + ".xlsx";

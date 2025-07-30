@@ -19,8 +19,6 @@ import org.junit.jupiter.api.io.TempDir;
  **/
 public class PoiWriteTest {
 
-
-
     @Test
     public void write0(@TempDir Path path) throws IOException {
         try (FileOutputStream fileOutputStream =

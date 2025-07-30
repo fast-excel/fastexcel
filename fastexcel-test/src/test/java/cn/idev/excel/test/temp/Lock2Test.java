@@ -41,8 +41,6 @@ import org.junit.jupiter.api.io.TempDir;
 @Slf4j
 public class Lock2Test {
 
-
-
     @Test
     public void test() throws Exception {
         List<Object> list = EasyExcel.read("src/test/resources/converter/converter07.xlsx")

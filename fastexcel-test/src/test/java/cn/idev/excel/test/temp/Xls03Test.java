@@ -19,7 +19,6 @@ import org.junit.jupiter.api.io.TempDir;
 @Slf4j
 public class Xls03Test {
 
-
     @TempDir
     Path tempDir;
 

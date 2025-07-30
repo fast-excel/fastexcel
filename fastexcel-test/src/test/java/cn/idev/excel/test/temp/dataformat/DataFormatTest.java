@@ -29,7 +29,6 @@ import org.junit.jupiter.api.Test;
 @Slf4j
 public class DataFormatTest {
 
-
     @Test
     public void test() throws Exception {
 

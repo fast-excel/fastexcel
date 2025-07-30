@@ -53,9 +53,8 @@ public class DataFormatter {
     /**
      * For logging any problems we find
      */
-
-
     private static final String defaultFractionWholePartFormat = "#";
+
     private static final String defaultFractionFractionPartFormat = "#/##";
     /**
      * Pattern to find a number format: "0" or "#"

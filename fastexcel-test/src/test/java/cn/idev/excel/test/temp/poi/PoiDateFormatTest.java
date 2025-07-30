@@ -17,7 +17,6 @@ import org.junit.jupiter.api.Test;
 @Slf4j
 public class PoiDateFormatTest {
 
-
     @Test
     public void read() throws IOException {
         String file = "src/test/resources/dataformat/dataformat.xlsx";

@@ -76,7 +76,6 @@ import org.apache.poi.hssf.record.TextObjectRecord;
 @Slf4j
 public class XlsSaxAnalyser implements HSSFListener, ExcelReadExecutor {
 
-
     private static final short DUMMY_RECORD_SID = -1;
     private final XlsReadContext xlsReadContext;
     private static final Map<Short, XlsRecordHandler> XLS_RECORD_HANDLER_MAP = new HashMap<Short, XlsRecordHandler>(32);

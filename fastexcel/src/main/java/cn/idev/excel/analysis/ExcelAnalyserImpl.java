@@ -51,7 +51,6 @@ import org.apache.poi.util.IOUtils;
 @Slf4j
 public class ExcelAnalyserImpl implements ExcelAnalyser {
 
-
     /**
      * The context object holding metadata and configuration for the Excel analysis process.
      */
