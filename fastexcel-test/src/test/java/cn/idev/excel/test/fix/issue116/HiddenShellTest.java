@@ -5,10 +5,9 @@ import cn.idev.excel.annotation.ExcelProperty;
 import cn.idev.excel.annotation.write.style.HeadStyle;
 import cn.idev.excel.enums.BooleanEnum;
 import cn.idev.excel.test.util.TestFileUtil;
-import lombok.*;
-
 import java.util.ArrayList;
 import java.util.List;
+import lombok.*;
 
 /**
  * @author zz_zhi
@@ -45,5 +44,4 @@ public class HiddenShellTest {
         @ExcelProperty("test")
         private String test;
     }
-
 }

@@ -285,7 +285,7 @@ public abstract class AbstractWriteHolder extends AbstractHolder implements Writ
             dealColumnWidth(handlerList);
         }
 
-        //fix #116
+        // fix #116
         handlerList.add(new HiddenShellWriteHandler());
 
         dealStyle(handlerList);
