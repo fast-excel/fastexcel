@@ -5,6 +5,7 @@ import cn.idev.excel.exception.ExcelGenerateException;
 import cn.idev.excel.write.metadata.WriteSheet;
 import cn.idev.excel.write.metadata.WriteTable;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.function.Supplier;
 
 /**
@@ -40,6 +41,13 @@ public class ExcelWriterTableBuilder extends AbstractExcelWriterParameterBuilder
      */
     public ExcelWriterTableBuilder tableNo(Integer tableNo) {
         writeTable.setTableNo(tableNo);
+        return this;
+    }
+
+    public ExcelWriterTableBuilder tableNoIfNotNull(Integer tableNo) {
+        if (Objects.nonNull(tableNo)) {
+            writeTable.setTableNo(tableNo);
+        }
         return this;
     }
 

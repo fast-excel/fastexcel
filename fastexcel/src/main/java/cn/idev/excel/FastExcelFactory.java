@@ -12,7 +12,6 @@ import java.io.OutputStream;
 
 /**
  * Reader and writer factory class
- *
  */
 public class FastExcelFactory {
 
@@ -43,12 +42,7 @@ public class FastExcelFactory {
      * @return Excel writer builder
      */
     public static ExcelWriterBuilder write(File file, Class head) {
-        ExcelWriterBuilder excelWriterBuilder = new ExcelWriterBuilder();
-        excelWriterBuilder.file(file);
-        if (head != null) {
-            excelWriterBuilder.head(head);
-        }
-        return excelWriterBuilder;
+        return new ExcelWriterBuilder().file(file).headIfNotNull(head);
     }
 
     /**
@@ -69,12 +63,7 @@ public class FastExcelFactory {
      * @return Excel writer builder
      */
     public static ExcelWriterBuilder write(String pathName, Class head) {
-        ExcelWriterBuilder excelWriterBuilder = new ExcelWriterBuilder();
-        excelWriterBuilder.file(pathName);
-        if (head != null) {
-            excelWriterBuilder.head(head);
-        }
-        return excelWriterBuilder;
+        return new ExcelWriterBuilder().file(pathName).headIfNotNull(head);
     }
 
     /**
@@ -95,12 +84,7 @@ public class FastExcelFactory {
      * @return Excel writer builder
      */
     public static ExcelWriterBuilder write(OutputStream outputStream, Class head) {
-        ExcelWriterBuilder excelWriterBuilder = new ExcelWriterBuilder();
-        excelWriterBuilder.file(outputStream);
-        if (head != null) {
-            excelWriterBuilder.head(head);
-        }
-        return excelWriterBuilder;
+        return new ExcelWriterBuilder().file(outputStream).headIfNotNull(head);
     }
 
     /**
@@ -140,14 +124,7 @@ public class FastExcelFactory {
      * @return Excel sheet writer builder.
      */
     public static ExcelWriterSheetBuilder writerSheet(Integer sheetNo, String sheetName) {
-        ExcelWriterSheetBuilder excelWriterSheetBuilder = new ExcelWriterSheetBuilder();
-        if (sheetNo != null) {
-            excelWriterSheetBuilder.sheetNo(sheetNo);
-        }
-        if (sheetName != null) {
-            excelWriterSheetBuilder.sheetName(sheetName);
-        }
-        return excelWriterSheetBuilder;
+        return new ExcelWriterSheetBuilder().sheetNoIfNotNull(sheetNo).sheetNameIfNotNull(sheetName);
     }
 
     /**
@@ -166,11 +143,7 @@ public class FastExcelFactory {
      * @return Excel table writer builder.
      */
     public static ExcelWriterTableBuilder writerTable(Integer tableNo) {
-        ExcelWriterTableBuilder excelWriterTableBuilder = new ExcelWriterTableBuilder();
-        if (tableNo != null) {
-            excelWriterTableBuilder.tableNo(tableNo);
-        }
-        return excelWriterTableBuilder;
+        return new ExcelWriterTableBuilder().tableNoIfNotNull(tableNo);
     }
 
     /**
@@ -212,15 +185,7 @@ public class FastExcelFactory {
      * @return Excel reader builder.
      */
     public static ExcelReaderBuilder read(File file, Class head, ReadListener readListener) {
-        ExcelReaderBuilder excelReaderBuilder = new ExcelReaderBuilder();
-        excelReaderBuilder.file(file);
-        if (head != null) {
-            excelReaderBuilder.head(head);
-        }
-        if (readListener != null) {
-            excelReaderBuilder.registerReadListener(readListener);
-        }
-        return excelReaderBuilder;
+        return new ExcelReaderBuilder().file(file).headIfNotNull(head).registerReadListenerIfNotNull(readListener);
     }
 
     /**
@@ -253,15 +218,7 @@ public class FastExcelFactory {
      * @return Excel reader builder.
      */
     public static ExcelReaderBuilder read(String pathName, Class head, ReadListener readListener) {
-        ExcelReaderBuilder excelReaderBuilder = new ExcelReaderBuilder();
-        excelReaderBuilder.file(pathName);
-        if (head != null) {
-            excelReaderBuilder.head(head);
-        }
-        if (readListener != null) {
-            excelReaderBuilder.registerReadListener(readListener);
-        }
-        return excelReaderBuilder;
+        return new ExcelReaderBuilder().file(pathName).headIfNotNull(head).registerReadListenerIfNotNull(readListener);
     }
 
     /**
@@ -294,15 +251,10 @@ public class FastExcelFactory {
      * @return Excel reader builder.
      */
     public static ExcelReaderBuilder read(InputStream inputStream, Class head, ReadListener readListener) {
-        ExcelReaderBuilder excelReaderBuilder = new ExcelReaderBuilder();
-        excelReaderBuilder.file(inputStream);
-        if (head != null) {
-            excelReaderBuilder.head(head);
-        }
-        if (readListener != null) {
-            excelReaderBuilder.registerReadListener(readListener);
-        }
-        return excelReaderBuilder;
+        return new ExcelReaderBuilder()
+                .file(inputStream)
+                .headIfNotNull(head)
+                .registerReadListenerIfNotNull(readListener);
     }
 
     /**
@@ -342,34 +294,21 @@ public class FastExcelFactory {
      * @return Excel sheet reader builder.
      */
     public static ExcelReaderSheetBuilder readSheet(Integer sheetNo, String sheetName) {
-        ExcelReaderSheetBuilder excelReaderSheetBuilder = new ExcelReaderSheetBuilder();
-        if (sheetNo != null) {
-            excelReaderSheetBuilder.sheetNo(sheetNo);
-        }
-        if (sheetName != null) {
-            excelReaderSheetBuilder.sheetName(sheetName);
-        }
-        return excelReaderSheetBuilder;
+        return readSheet(sheetNo, sheetName, null);
     }
 
     /**
      * Build excel the 'readSheet'
-     * @param sheetNo Index of sheet,0 base.
+     *
+     * @param sheetNo   Index of sheet,0 base.
      * @param sheetName The name of sheet.
-     * @param numRows The number of rows to read, the default is all, start with 0.
+     * @param numRows   The number of rows to read, the default is all, start with 0.
      * @return
      */
     public static ExcelReaderSheetBuilder readSheet(Integer sheetNo, String sheetName, Integer numRows) {
-        ExcelReaderSheetBuilder excelReaderSheetBuilder = new ExcelReaderSheetBuilder();
-        if (sheetNo != null) {
-            excelReaderSheetBuilder.sheetNo(sheetNo);
-        }
-        if (sheetName != null) {
-            excelReaderSheetBuilder.sheetName(sheetName);
-        }
-        if (numRows != null) {
-            excelReaderSheetBuilder.numRows(numRows);
-        }
-        return excelReaderSheetBuilder;
+        return new ExcelReaderSheetBuilder()
+                .sheetNoIfNotNull(sheetNo)
+                .sheetNameIfNotNull(sheetName)
+                .numRowsIfNotNull(numRows);
     }
 }

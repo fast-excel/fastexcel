@@ -5,6 +5,7 @@ import cn.idev.excel.enums.CacheLocationEnum;
 import cn.idev.excel.util.ListUtils;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * ExcelBuilder
@@ -31,6 +32,13 @@ public abstract class AbstractParameterBuilder<T extends AbstractParameterBuilde
      */
     public T head(Class<?> clazz) {
         parameter().setClazz(clazz);
+        return self();
+    }
+
+    public T headIfNotNull(Class<?> clazz) {
+        if (Objects.nonNull(clazz)) {
+            parameter().setClazz(clazz);
+        }
         return self();
     }
 
