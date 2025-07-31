@@ -15,7 +15,7 @@
 
 ## 1.2.0
 
-此次升级主要内容： 
+此次升级主要内容：
 1. 修复[EasyExcel](https://github.com/alibaba/easyexcel) 历史 BUG；
 2. 将项目的开源协议修改为Apache-2.0 license；
 3. 修复测试模块中一些无法本地运行的测试用例；
@@ -30,7 +30,7 @@
 - 【修复】修复错别字 [#268](https://github.com/fast-excel/fastexcel/pull/268) [@happyfeetw](https://github.com/happyfeetw)
 - 【修复】修复填充时日期格式丢失问题 [#273](https://github.com/fast-excel/fastexcel/pull/273) [@waterisblue](https://github.com/waterisblue)
 - 【优化】升级 Apache POI 相关依赖 [#211](https://github.com/fast-excel/fastexcel/pull/211) [@psxjoy](https://github.com/psxjoy)
-- 【优化】优化项目Maven依赖 [#236](https://github.com/fast-excel/fastexcel/pull/236) [@wangmiscoding](https://github.com/wangmiscoding) 
+- 【优化】优化项目Maven依赖 [#236](https://github.com/fast-excel/fastexcel/pull/236) [@wangmiscoding](https://github.com/wangmiscoding)
 - 【优化】优化CI 和构建流程 [#246](https://github.com/fast-excel/fastexcel/pull/246) [#247](https://github.com/fast-excel/fastexcel/pull/247) [@tisonkun](https://github.com/tisonkun)
 - 【优化】优化测试模块的部分测试用例 [#249](https://github.com/fast-excel/fastexcel/pull/249) [#269](https://github.com/fast-excel/fastexcel/pull/269) [#291](https://github.com/fast-excel/fastexcel/pull/291)  [@tmlx1990](https://github.com/tmlx1990)
 - 【优化】增加注释，新增单元测试用例 [#260](https://github.com/fast-excel/fastexcel/pull/260) [@nx-xn2002](https://github.com/nx-xn2002)
@@ -38,3 +38,11 @@
 - 【优化】优化测试模块的部分测试用例  [#283](https://github.com/fast-excel/fastexcel/pull/283) [#285](https://github.com/fast-excel/fastexcel/pull/285) [#286](https://github.com/fast-excel/fastexcel/pull/286)  [#297](https://github.com/fast-excel/fastexcel/pull/297) [#298](https://github.com/fast-excel/fastexcel/pull/298) [@alaahong](https://github.com/alaahong)
 - 【优化】优化项目的maven配置 [#284](https://github.com/fast-excel/fastexcel/pull/284) [@alaahong](https://github.com/alaahong)
 - 【优化】优化 CONTRIBUTING.md 内容 [#300](https://github.com/fast-excel/fastexcel/pull/300) [@alaahong](https://github.com/alaahong)
+
+
+## 1.2.1
+
+此次升级主要新增Excel数据验证功能，提供强大的数据验证能力。
+
+具体更新内容如下：
+- 【新增】Excel数据验证功能 - 支持下拉选择、数值范围、日期范围、必填字段、自动序号、默认值等验证规则 [@TianYufeng](https://github.com/tianyufeng925/fastexcel)

@@ -784,4 +784,187 @@ private List<List<Object>> dataList() {
 }
 ```
 
+## **Excel数据验证功能**
+
+### 概述
+FastExcel 提供了强大的数据验证功能，通过验证注解和处理器，可以在Excel模板中生成各种数据验证规则，确保数据输入的准确性和一致性。
+
+### 支持的验证类型
+- **下拉选择验证** - 限制用户只能从预定义选项中选择
+- **数值范围验证** - 控制数值输入范围和精度
+- **日期范围验证** - 限制日期输入格式和范围
+- **必填字段验证** - 标记和验证必填项
+- **自动序号生成** - 写入时自动生成递增ID
+- **默认值设置** - 预设默认值并可锁定单元格
+
+### 示例对象
+```java
+@Data
+public class ProjectValidationData {
+    @ExcelProperty("序号")
+    @AutoIncrementId(start = 1)
+    private Integer id;
+
+    @ExcelProperty("项目名称")
+    @ExcelRequired(message = "项目名称不能为空")
+    private String projectName;
+
+    @ExcelProperty("项目类型")
+    @ExcelSelect({"基础设施", "房屋建筑", "市政工程", "水利工程", "其他"})
+    @ExcelRequired(message = "请选择项目类型")
+    private String projectType;
+
+    @ExcelProperty("项目金额(万元)")
+    @ExcelNumberValidation(
+        min = 0.0,
+        max = 999999.99,
+        decimalPlaces = 2,
+        errorTitle = "金额输入错误",
+        errorContent = "请输入0到999999.99之间的金额，最多2位小数",
+        unit = "万元"
+    )
+    @ExcelRequired(message = "项目金额不能为空")
+    private BigDecimal projectAmount;
+
+    @ExcelProperty("项目进度(%)")
+    @ExcelNumberValidation(
+        min = 0.0,
+        max = 100.0,
+        decimalPlaces = 1,
+        unit = "%"
+    )
+    private BigDecimal progress;
+
+    @ExcelProperty("开始日期")
+    @ExcelDateValidation(
+        format = "yyyy-MM-dd",
+        minDate = "2020-01-01",
+        maxDate = "2030-12-31",
+        errorTitle = "日期输入错误",
+        errorContent = "请输入2020-01-01到2030-12-31之间的日期"
+    )
+    @ExcelRequired(message = "开始日期不能为空")
+    private Date startDate;
+
+    @ExcelProperty("结束日期")
+    @ExcelDateValidation(
+        format = "yyyy-MM-dd",
+        minDate = "2020-01-01",
+        maxDate = "2030-12-31"
+    )
+    private Date endDate;
+
+    @ExcelProperty("负责部门")
+    @ExcelDefaultValue(value = "工程部")
+    private String department;
+
+    @ExcelProperty("备注")
+    private String remark;
+}
+```
+
+### 写入带验证的Excel模板
+```java
+@Test
+public void writeValidationTemplate() {
+    String fileName = "validation_template.xlsx";
+
+    // 创建测试数据
+    List<ProjectValidationData> dataList = createTestData();
+
+    // 写入Excel，注册所有验证处理器
+    EasyExcel.write(fileName, ProjectValidationData.class)
+        .registerWriteHandler(new ExcelSelectHandler(ProjectValidationData.class))
+        .registerWriteHandler(new ExcelNumberValidationHandler(ProjectValidationData.class))
+        .registerWriteHandler(new ExcelDateValidationHandler(ProjectValidationData.class))
+        .registerWriteHandler(new ExcelDefaultValueHandler(ProjectValidationData.class))
+        .registerWriteHandler(new AutoIncrementIdHandler())
+        .sheet("项目信息模板")
+        .doWrite(dataList);
+}
+
+private List<ProjectValidationData> createTestData() {
+    List<ProjectValidationData> dataList = new ArrayList<>();
+
+    for (int i = 1; i <= 3; i++) {
+        ProjectValidationData data = new ProjectValidationData();
+        data.setProjectName("示例项目" + i);
+        data.setProjectType("基础设施");
+        data.setProjectAmount(new BigDecimal("100.50"));
+        data.setProgress(new BigDecimal("50.5"));
+        data.setStartDate(new Date());
+        data.setRemark("这是示例项目" + i + "的备注");
+
+        dataList.add(data);
+    }
+
+    return dataList;
+}
+```
+
+### 读取并验证数据
+```java
+@Test
+public void readAndValidateData() {
+    String fileName = "validation_data.xlsx";
+
+    // 读取Excel数据
+    List<ProjectValidationData> dataList = EasyExcel.read(fileName)
+        .head(ProjectValidationData.class)
+        .sheet()
+        .doReadSync();
+
+    // 验证必填字段
+    List<ExcelValidationUtils.ValidationResult> results =
+        ExcelValidationUtils.validateRequiredBatch(dataList);
+
+    // 处理验证结果
+    if (results.isEmpty()) {
+        System.out.println("所有数据验证通过");
+    } else {
+        System.out.println("发现验证失败的数据:");
+        for (ExcelValidationUtils.ValidationResult result : results) {
+            System.out.println("第" + (result.getRowIndex() + 1) + "行: " +
+                             String.join(", ", result.getErrors()));
+        }
+    }
+}
+```
+
+### 验证功能特性
+
+#### 1. 下拉选择验证
+- 在Excel中生成下拉选择框
+- 限制用户只能从预定义选项中选择
+- 支持自定义错误提示信息
+
+#### 2. 数值验证
+- 控制数值输入的最小值和最大值
+- 限制小数位数
+- 支持占位符错误消息（{min}、{max}、{decimal}、{unit}）
+- 支持输入提示框
+
+#### 3. 日期验证
+- 限制日期输入格式
+- 控制日期输入范围
+- 支持占位符错误消息（{format}、{minDate}、{maxDate}）
+
+#### 4. 必填字段验证
+- 标记必填字段
+- 读取时自动验证
+- 生成详细的验证错误报告
+
+#### 5. 自动序号
+- 写入时自动生成递增序号
+- 支持自定义起始值
+
+#### 6. 默认值设置
+- 为字段设置默认值
+- 支持设置生效的行范围
+
+### 注意事项
+1. 验证处理器需要在写入时注册才能生效
+2. 必填字段验证在读取数据后使用 `ExcelValidationUtils` 进行
+3. 验证规则仅在Excel应用程序中生效，不影响程序读取
+
 

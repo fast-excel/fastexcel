@@ -49,6 +49,144 @@ FastExcel 提供了一套简单易用的 API 来处理 Excel 文件，支持读�
 | value           | 空    | 参照`java.text.DecimalFormat`书写即可 |
 | roundingMode           | RoundingMode.HALF_UP | 格式化的时候设置舍入模式                    |
 
+# 数据验证注解
+
+FastExcel 提供了一套强大的数据验证注解，用于在Excel模板中生成数据验证规则，确保数据输入的准确性和一致性。
+
+## **`@ExcelSelect`**
+
+下拉选择框验证注解，用于在Excel模板中生成下拉选择框，限制用户只能从预定义选项中选择。
+
+| 名称                  | 默认值  | 描述                          |
+|---------------------|------|-----------------------------|
+| value           | {}    | 下拉框选项值数组                    |
+| firstRow           | 2     | 下拉框生效的起始行号（从0开始计数）           |
+| lastRow           | 1000  | 下拉框生效的结束行号                  |
+| showErrorBox           | true  | 是否显示错误提示框                   |
+| errorTitle           | "输入错误" | 错误提示标题                      |
+| errorContent           | "请从下拉列表中选择有效选项" | 错误提示内容                      |
+
+### 使用示例
+```java
+@ExcelProperty("项目类型")
+@ExcelSelect({"基础设施", "房屋建筑", "市政工程", "水利工程", "其他"})
+@ExcelRequired(message = "请选择项目类型")
+private String projectType;
+```
+
+## **`@ExcelNumberValidation`**
+
+数值验证注解，用于在Excel模板中生成数值验证规则，控制数值输入范围和精度。
+
+| 名称                  | 默认值  | 描述                          |
+|---------------------|------|-----------------------------|
+| min           | 0.0   | 最小值                         |
+| max           | 999999999999.99 | 最大值                         |
+| decimalPlaces           | 2     | 允许的小数位数                     |
+| firstRow           | 2     | 数值验证生效的起始行号                 |
+| lastRow           | 1000  | 数值验证生效的结束行号                 |
+| showErrorBox           | true  | 是否显示错误提示框                   |
+| errorTitle           | "数值输入错误" | 错误提示标题                      |
+| errorContent           | "请输入{min}到{max}之间的数值，最多{decimal}位小数" | 错误提示内容（支持占位符）               |
+| showPromptBox           | true  | 是否显示输入提示框                   |
+| promptTitle           | "数值输入" | 输入提示标题                      |
+| promptContent           | "请输入{min}到{max}之间的数值，最多{decimal}位小数" | 输入提示内容（支持占位符）               |
+| unit           | "元"   | 单位说明                        |
+| allowEmpty           | true  | 是否允许空值                      |
+
+### 使用示例
+```java
+@ExcelProperty("项目金额(万元)")
+@ExcelNumberValidation(
+    min = 0.0,
+    max = 999999.99,
+    decimalPlaces = 2,
+    unit = "万元",
+    errorContent = "请输入0到999999.99之间的金额，最多2位小数"
+)
+private BigDecimal projectAmount;
+```
+
+## **`@ExcelDateValidation`**
+
+日期验证注解，用于在Excel模板中生成日期验证规则，控制日期输入格式和范围。
+
+| 名称                  | 默认值  | 描述                          |
+|---------------------|------|-----------------------------|
+| format           | "yyyy-MM-dd" | 日期格式                        |
+| minDate           | "1900-01-01" | 最小日期（格式：yyyy-MM-dd）          |
+| maxDate           | "2099-12-31" | 最大日期（格式：yyyy-MM-dd）          |
+| firstRow           | 2     | 日期验证生效的起始行号                 |
+| lastRow           | 1000  | 日期验证生效的结束行号                 |
+| showErrorBox           | true  | 是否显示错误提示框                   |
+| errorTitle           | "日期输入错误" | 错误提示标题                      |
+| errorContent           | "请输入{format}格式的日期，范围：{minDate}到{maxDate}" | 错误提示内容（支持占位符）               |
+| showPromptBox           | true  | 是否显示输入提示框                   |
+| promptTitle           | "日期输入" | 输入提示标题                      |
+| promptContent           | "请输入{format}格式的日期，范围：{minDate}到{maxDate}" | 输入提示内容（支持占位符）               |
+
+### 使用示例
+```java
+@ExcelProperty("开始日期")
+@ExcelDateValidation(
+    format = "yyyy-MM-dd",
+    minDate = "2020-01-01",
+    maxDate = "2030-12-31",
+    errorContent = "请输入2020-01-01到2030-12-31之间的日期"
+)
+private Date startDate;
+```
+
+## **`@ExcelRequired`**
+
+必填字段验证注解，用于标记Excel模板中的必填字段，在数据读取时进行验证。
+
+| 名称                  | 默认值  | 描述                          |
+|---------------------|------|-----------------------------|
+| message           | "此字段为必填项，不能为空" | 错误提示信息                      |
+| showErrorBox           | true  | 是否显示错误提示框                   |
+| errorTitle           | "必填字段验证" | 错误提示标题                      |
+
+### 使用示例
+```java
+@ExcelProperty("项目名称")
+@ExcelRequired(message = "项目名称不能为空")
+private String projectName;
+```
+
+## **`@AutoIncrementId`**
+
+自动递增ID注解，用于在Excel写入时自动生成递增序号。
+
+| 名称                  | 默认值  | 描述                          |
+|---------------------|------|-----------------------------|
+| start           | 1     | 序号起始值                       |
+
+### 使用示例
+```java
+@ExcelProperty("序号")
+@AutoIncrementId(start = 1)
+private Integer id;
+```
+
+## **`@ExcelDefaultValue`**
+
+默认值注解，用于为Excel模板字段设置默认值。
+
+| 名称                  | 默认值  | 描述                          |
+|---------------------|------|-----------------------------|
+| value           | ""    | 默认值                         |
+| startRow           | 3     | 默认值生效的起始行号                  |
+| endRow           | 10    | 默认值生效的结束行号                  |
+| message           | "此字段已设置默认值" | 提示信息                        |
+
+### 使用示例
+```java
+@ExcelProperty("负责部门")
+@ExcelDefaultValue(value = "工程部")
+private String department;
+```
+
 
 
 # 读操作
