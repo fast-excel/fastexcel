@@ -29,20 +29,23 @@ FastExcel可以通过对各个参数进行操作设定，也可以通过`CSVForm
 `delimiter` 用于指定 CSV 文件中的字段分隔符。默认值为逗号 `,`。
 
 #### 推荐使用
-- `CsvConstant.AT`
-- `CsvConstant.COMMA`
-- `CsvConstant.EMPTY`
-- `CsvConstant.TAB`
+- `, (逗號)`：可使用`CsvConstant.COMMA`
+- `; (分號)`
+- `\t (tab)`：可使用`CsvConstant.TAB`
+- `| (管道)`：可使用`CsvConstant.PIPE`
+- ` (空格)`：可使用`CsvConstant.SPACE`
 
 #### 代码示例
 如果您的 CSV 文件使用 `@` 作为分隔符，可以如下设置：
 ```java
-// 示例：使用 @ 作为分隔符
-String csvFile = "path/to/your.csv";
-List<DemoData> dataList = FastExcel.read(csvFile, DemoData.class, new DemoDataListener())
-        .csv()
-        .delimiter(CsvConstant.AT) // 推荐使用 CsvConstant.AT
-        .doReadSync();
+@Test
+public void readCsvByDelimiter() {
+        String csvFile = "path/to/your.csv";
+        List<DemoData> dataList = FastExcel.read(csvFile, DemoData.class, new DemoDataListener())
+                .csv()
+                .delimiter(CsvConstant.AT) // 推荐使用 CsvConstant.AT
+                .doReadSync();
+}
 ```
 
 ### quote
@@ -56,7 +59,6 @@ List<DemoData> dataList = FastExcel.read(csvFile, DemoData.class, new DemoDataLi
 
 #### 代码示例
 ```java
-// 示例：使用双引号 '"' 作为引用符号
 String csvFile = "path/to/your.csv";
 List<DemoData> dataList = FastExcel.read(csvFile, DemoData.class, new DemoDataListener())
         .csv()
@@ -76,7 +78,6 @@ List<DemoData> dataList = FastExcel.read(csvFile, DemoData.class, new DemoDataLi
 
 #### 代码示例
 ```java
-// 示例：指定换行符为 LF (\n)
 String csvFile = "path/to/your.csv";
 List<DemoData> dataList = FastExcel.read(csvFile, DemoData.class, new DemoDataListener())
         .csv()
@@ -90,7 +91,6 @@ List<DemoData> dataList = FastExcel.read(csvFile, DemoData.class, new DemoDataLi
 
 #### 代码示例
 ```java
-// 示例：将 "N/A" 字符串解析为 null
 String csvFile = "path/to/your.csv";
 List<DemoData> dataList = FastExcel.read(csvFile, DemoData.class, new DemoDataListener())
         .csv()
@@ -104,7 +104,6 @@ List<DemoData> dataList = FastExcel.read(csvFile, DemoData.class, new DemoDataLi
 
 #### 代码示例
 ```java
-// 示例：使用反斜杠 \ 作为转义字符
 String csvFile = "path/to/your.csv";
 List<DemoData> dataList = FastExcel.read(csvFile, DemoData.class, new DemoDataListener())
         .csv()
@@ -114,15 +113,12 @@ List<DemoData> dataList = FastExcel.read(csvFile, DemoData.class, new DemoDataLi
 
 ## CSVFormat设置详解与示例
 
-`CSVFormat` 为Apache Commons CSV对应支持的设置类别，实际执行上用`ExcelReader`去读取第一个页签(index=0)。
-
 上述章节所提及的参数，与`CSVFormat`设置皆有对应配置。
 > 目前FastExcel仍然支持使用，但并非最推荐的使用方法。
 
 ### 代码示例
 
 ```java
-// 示例：使用 @ 作为分隔符
 // 上面列出的其他参数可以在这里进行设置
 CSVFormat csvFormat = CSVFormat.DEFAULT.builder().setDelimiter(CsvConstant.AT).build();
 String csvFile = "path/to/your.csv";
