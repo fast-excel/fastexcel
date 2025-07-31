@@ -1,0 +1,49 @@
+package cn.idev.excel.test.fix.issue116;
+
+import cn.idev.excel.EasyExcel;
+import cn.idev.excel.annotation.ExcelProperty;
+import cn.idev.excel.annotation.write.style.HeadStyle;
+import cn.idev.excel.enums.BooleanEnum;
+import cn.idev.excel.test.util.TestFileUtil;
+import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * @author zz_zhi
+ */
+public class HiddenShellTest {
+
+    public static void main(String[] args) {
+        String fileName = TestFileUtil.getPath() + "hiddenShellTest" + System.currentTimeMillis() + ".xlsx";
+        EasyExcel.write(fileName, DemoModel.class).sheet("模板").doWrite(listDemoModel());
+    }
+
+    public static List<DemoModel> listDemoModel() {
+        List<DemoModel> dataList = new ArrayList<>();
+        for (int i = 1; i <= 5; i++) {
+            String category = "我是姓名" + i;
+            DemoModel exportModel = new DemoModel(category, i, "test" + i);
+            dataList.add(exportModel);
+        }
+        return dataList;
+    }
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class DemoModel {
+
+        @ExcelProperty("名字")
+        private String name;
+
+        @ExcelProperty("年龄")
+        @HeadStyle(hidden = BooleanEnum.TRUE)
+        private Integer age;
+
+        @ExcelProperty("test")
+        private String test;
+    }
+
+}
