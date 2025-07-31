@@ -4,11 +4,9 @@
 
 ## 概述
 
-FastExcel 在`1.3.0`版本引入了定制化的 CSV 读取。
-可以通过不同的参数设计进行 CSV 的解析。
-FastExcel可以通过对各个参数进行操作设定，也可以通过`CSVFormat`进行设定来达成读取的目标。
+FastExcel 通过不同的参数设计进行 CSV 的读取。其底层使用了[Apache Commons CSV](https://commons.apache.org/proper/commons-csv)，也支持通过直接设置[CSVFormat](https://commons.apache.org/proper/commons-csv/apidocs/org/apache/commons/csv/CSVFormat.html)进行设定来达成读取的目标。
 
-常用参数可以参考下表：
+主要的参数如下：
 
 | 名称 | 默认值 | 描述 |
 | :--- | :--- | :--- |
@@ -26,63 +24,53 @@ FastExcel可以通过对各个参数进行操作设定，也可以通过`CSVForm
 
 ### delimiter
 
-`delimiter` 用于指定 CSV 文件中的字段分隔符。默认值为逗号 `,`。
-
-#### 推荐使用
-- `, (逗號)`：可使用`CsvConstant.COMMA`
-- `; (分號)`
-- `\t (tab)`：可使用`CsvConstant.TAB`
-- `| (管道)`：可使用`CsvConstant.PIPE`
-- ` (空格)`：可使用`CsvConstant.SPACE`
+`delimiter` 用于指定 CSV 文件中的字段分隔符。默认值为英文逗号 `,`。同时，FastExcel 提供了一些常量`CsvConstant`，用于简化使用
 
 #### 代码示例
-如果您的 CSV 文件使用 `@` 作为分隔符，可以如下设置：
+如果 CSV 文件使用 `\u0000` 作为分隔符，可以如下设置：
 ```java
 @Test
-public void readCsvByDelimiter() {
+public void delimiterDemo() {
         String csvFile = "path/to/your.csv";
         List<DemoData> dataList = FastExcel.read(csvFile, DemoData.class, new DemoDataListener())
                 .csv()
-                .delimiter(CsvConstant.AT) // 推荐使用 CsvConstant.AT
+                .delimiter(CsvConstant.UNICODE_EMPTY)
                 .doReadSync();
 }
 ```
 
 ### quote
 
-`quote` 用于指定包裹字段的引用符号。默认值为双引号 `"`。当字段内容本身包含分隔符或换行符时，此设置非常有用。
-> 注意不可和`recordSeparator`有重复的状况。
-除此之外，此选项还可进行`QuoteMode`调整，对应设定可以参考Apache Commons CSV。
+`quote` 用于指定包裹字段的引用符号。默认值为双引号 `"`。当字段内容本身包含分隔符或换行符时，建议设置。
 
-#### 推荐使用
-- `CsvConstant.DOUBLE_QUOTE`
+> 注意不可和 `recordSeparator` 的设置重复，建议结合`QuoteMode`使用
 
 #### 代码示例
 ```java
-String csvFile = "path/to/your.csv";
-List<DemoData> dataList = FastExcel.read(csvFile, DemoData.class, new DemoDataListener())
-        .csv()
-        .quote(CsvConstant.DOUBLE_QUOTE, QuoteMode.MINIMAL)
-        .doReadSync();
+@Test
+public void quoteDemo() {
+    String csvFile = "path/to/your.csv";
+    List<DemoData> dataList = FastExcel.read(csvFile, DemoData.class, new DemoDataListener())
+            .csv()
+            .quote(CsvConstant.DOUBLE_QUOTE, QuoteMode.MINIMAL)
+            .doReadSync();
+}
 ```
 
 ### recordSeparator
 
 `recordSeparator` 用于指定文件中的换行符。不同操作系统的换行符可能不同（例如，Windows 使用 `CRLF`，而 Unix/Linux 使用 `LF`）。
 
-#### 推荐使用
-- `CsvConstant.CR`
-- `CsvConstant.CRLF` (Windows)
-- `CsvConstant.FF`
-- `CsvConstant.LF` (Unix/Linux)
-
 #### 代码示例
 ```java
-String csvFile = "path/to/your.csv";
-List<DemoData> dataList = FastExcel.read(csvFile, DemoData.class, new DemoDataListener())
-        .csv()
-        .recordSeparator(CsvConstant.LF)
-        .doReadSync();
+@Test
+public void recordSeparatorDemo() {
+    String csvFile = "path/to/your.csv";
+    List<DemoData> dataList = FastExcel.read(csvFile, DemoData.class, new DemoDataListener())
+            .csv()
+            .recordSeparator(CsvConstant.LF)
+            .doReadSync();
+}
 ```
 
 ### nullString
@@ -91,11 +79,14 @@ List<DemoData> dataList = FastExcel.read(csvFile, DemoData.class, new DemoDataLi
 
 #### 代码示例
 ```java
-String csvFile = "path/to/your.csv";
-List<DemoData> dataList = FastExcel.read(csvFile, DemoData.class, new DemoDataListener())
-        .csv()
-        .nullString("N/A")
-        .doReadSync();
+@Test
+public void nullStringDemo() {
+    String csvFile = "path/to/your.csv";
+    List<DemoData> dataList = FastExcel.read(csvFile, DemoData.class, new DemoDataListener())
+            .csv()
+            .nullString("N/A")
+            .doReadSync();
+}
 ```
 
 ### escape
@@ -104,34 +95,40 @@ List<DemoData> dataList = FastExcel.read(csvFile, DemoData.class, new DemoDataLi
 
 #### 代码示例
 ```java
-String csvFile = "path/to/your.csv";
-List<DemoData> dataList = FastExcel.read(csvFile, DemoData.class, new DemoDataListener())
-        .csv()
-        .escape(CsvConstant.BACKSLASH)
-        .doReadSync();
+@Test
+public void escapeDemo() {
+    String csvFile = "path/to/your.csv";
+    List<DemoData> dataList = FastExcel.read(csvFile, DemoData.class, new DemoDataListener())
+            .csv()
+            .escape(CsvConstant.BACKSLASH)
+            .doReadSync();
+}
 ```
 
 ## CSVFormat设置详解与示例
 
-上述章节所提及的参数，与`CSVFormat`设置皆有对应配置。
-> 目前FastExcel仍然支持使用，但并非最推荐的使用方法。
+支持直接构建一个`CSVFormat`对象。
+> 目前 FastExcel 仍然支持，但并非最推荐的使用方法。
 
 ### 代码示例
 
 ```java
-// 上面列出的其他参数可以在这里进行设置
-CSVFormat csvFormat = CSVFormat.DEFAULT.builder().setDelimiter(CsvConstant.AT).build();
-String csvFile = "path/to/your.csv";
-// 如果有需要储存资料可以在监听器做设定
-try (ExcelReader excelReader = FastExcel.read(csvFile, DemoData.class, new DemoDataListener()).build()) {
-    ReadWorkbookHolder readWorkbookHolder = excelReader.analysisContext().readWorkbookHolder();
-    // 判断是否为CsvReadWorkbookHolder实例
-    if (readWorkbookHolder instanceof CsvReadWorkbookHolder) {
-        CsvReadWorkbookHolder csvReadWorkbookHolder = (CsvReadWorkbookHolder) readWorkbookHolder;
-        csvReadWorkbookHolder.setCsvFormat(csvFormat);
+@Test
+public void escapeDemo() {
+
+    CSVFormat csvFormat = CSVFormat.DEFAULT.builder().setDelimiter(CsvConstant.AT).build();
+    String csvFile = "path/to/your.csv";
+
+    try (ExcelReader excelReader = FastExcel.read(csvFile, DemoData.class, new DemoDataListener()).build()) {
+        ReadWorkbookHolder readWorkbookHolder = excelReader.analysisContext().readWorkbookHolder();
+        // 判断是否为CsvReadWorkbookHolder实例
+        if (readWorkbookHolder instanceof CsvReadWorkbookHolder) {
+            CsvReadWorkbookHolder csvReadWorkbookHolder = (CsvReadWorkbookHolder) readWorkbookHolder;
+            csvReadWorkbookHolder.setCsvFormat(csvFormat);
+        }
+
+        ReadSheet readSheet = FastExcel.readSheet(0).build();
+        excelReader.read(readSheet);
     }
-    // 只会有一个 (index=0) Sheet
-    ReadSheet readSheet = FastExcel.readSheet(0).build();
-    excelReader.read(readSheet);
 }
 ```
