@@ -74,7 +74,6 @@ List<DemoData> dataList = FastExcel.read(csvFile, DemoData.class, new DemoDataLi
 - `CsvConstant.FF`
 - `CsvConstant.LF` (Unix/Linux)
 
-
 #### 代码示例
 ```java
 // 示例：指定换行符为 LF (\n)
@@ -87,7 +86,7 @@ List<DemoData> dataList = FastExcel.read(csvFile, DemoData.class, new DemoDataLi
 
 ### nullString
 
-`nullString` 用于定义文件中代表 `null` 值的特定字符串。例如，您可以将字符串 `"N/A"` 解析为 `null` 对象。
+`nullString` 用于定义文件中代表 `null` 值的特定字符串。例如，可以将字符串 `"N/A"` 解析为 `null` 对象。
 
 #### 代码示例
 ```java
@@ -126,7 +125,8 @@ List<DemoData> dataList = FastExcel.read(csvFile, DemoData.class, new DemoDataLi
 // 示例：使用 @ 作为分隔符
 // 上面列出的其他参数可以在这里进行设置
 CSVFormat csvFormat = CSVFormat.DEFAULT.builder().setDelimiter(CsvConstant.AT).build();
-csvFile = TestFileUtil.readFile("path/to/your.csv");
+String csvFile = "path/to/your.csv";
+// 如果有需要储存资料可以在监听器做设定
 try (ExcelReader excelReader = FastExcel.read(csvFile, DemoData.class, new DemoDataListener()).build()) {
     ReadWorkbookHolder readWorkbookHolder = excelReader.analysisContext().readWorkbookHolder();
     // 判断是否为CsvReadWorkbookHolder实例
