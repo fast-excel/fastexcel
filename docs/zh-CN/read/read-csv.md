@@ -56,7 +56,7 @@ List<DemoData> dataList = FastExcel.read(csvFile, DemoData.class, new DemoDataLi
 
 #### 代码示例
 ```java
-// 示例：使用单引号 '\'' 作为引用符号
+// 示例：使用双引号 '"' 作为引用符号
 String csvFile = "path/to/your.csv";
 List<DemoData> dataList = FastExcel.read(csvFile, DemoData.class, new DemoDataListener())
         .csv()
