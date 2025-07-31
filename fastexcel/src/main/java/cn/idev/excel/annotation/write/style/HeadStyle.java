@@ -10,6 +10,9 @@ import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+
+import cn.idev.excel.write.handler.context.CellWriteHandlerContext;
+import cn.idev.excel.write.handler.impl.HiddenShellWriteHandler;
 import org.apache.poi.ss.usermodel.BuiltinFormats;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.IgnoredErrorType;
@@ -31,6 +34,7 @@ public @interface HeadStyle {
 
     /**
      * Set the cell's using this style to be hidden
+     * @see HiddenShellWriteHandler#afterCellDispose(CellWriteHandlerContext)
      */
     BooleanEnum hidden() default BooleanEnum.DEFAULT;
 
