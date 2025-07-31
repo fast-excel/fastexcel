@@ -115,9 +115,10 @@ List<DemoData> dataList = FastExcel.read(csvFile, DemoData.class, new DemoDataLi
 
 ## CSVFormat设置详解与示例
 
-`CSVFormat` 为Apache Commons CSV对应支持的设置类别，实际执行上用`ExcelReader`去读取第一个页签(index=0)
+`CSVFormat` 为Apache Commons CSV对应支持的设置类别，实际执行上用`ExcelReader`去读取第一个页签(index=0)。
+
 上述章节所提及的参数，与`CSVFormat`设置皆有对应配置。
-目前FastExcel仍然支持使用，但并非最推荐的使用方法。
+> 目前FastExcel仍然支持使用，但并非最推荐的使用方法。
 
 ### 代码示例
 
