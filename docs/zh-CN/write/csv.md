@@ -33,7 +33,7 @@ public void delimiterDemo() {
     FastExcel.write(csvFile, DemoData.class)
             .csv()
             .delimiter(CsvConstant.UNICODE_EMPTY)
-            .doWrite(List<DemoData>);
+            .doWrite(data());
 }
 ```
 
@@ -50,7 +50,7 @@ public void quoteDemo() {
     FastExcel.write(csvFile, DemoData.class)
             .csv()
             .quote(CsvConstant.DOUBLE_QUOTE, QuoteMode.MINIMAL)
-            .doWrite(List<DemoData>);
+            .doWrite(data());
 }
 ```
 
@@ -66,7 +66,7 @@ public void recordSeparatorDemo() {
     FastExcel.write(csvFile, DemoData.class)
             .csv()
             .recordSeparator(CsvConstant.LF)
-            .doWrite(List<DemoData>);
+            .doWrite(data());
 }
 ```
 
@@ -82,7 +82,7 @@ public void nullStringDemo() {
     FastExcel.write(csvFile, DemoData.class)
             .csv()
             .nullString("N/A")
-            .doWrite(List<DemoData>);
+            .doWrite(data());
 }
 ```
 
@@ -93,12 +93,12 @@ public void nullStringDemo() {
 #### 代码示例
 ```java
 @Test
-public void writeCsvWithEscape() {
+public void escapeDemo() {
     String csvFile = "path/to/your.csv";
     FastExcel.write(csvFile, DemoData.class)
             .csv()
             .escape(CsvConstant.BACKSLASH)
-            .doWrite(List<DemoData>);
+            .doWrite(data());
 }
 ```
 
@@ -111,7 +111,7 @@ public void writeCsvWithEscape() {
 
 ```java
 @Test
-public void writeCsvWithCSVFormat() {
+public void csvFormatDemo() {
     CSVFormat csvFormat = CSVFormat.DEFAULT.builder().setDelimiter(CsvConstant.AT).build();
     String csvFile = "path/to/your.csv";
 
@@ -125,7 +125,7 @@ public void writeCsvWithCSVFormat() {
             writeWorkbookHolder.setWorkbook(csvWorkbook);
         }
         WriteSheet writeSheet = FastExcel.writerSheet(0).build();
-        excelWriter.write(List<DemoData>, writeSheet);
+        excelWriter.write(data(), writeSheet);
     }
 }
 ```
