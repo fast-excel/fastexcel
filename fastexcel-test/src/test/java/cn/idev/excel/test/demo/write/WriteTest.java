@@ -32,11 +32,6 @@ import cn.idev.excel.write.metadata.style.WriteCellStyle;
 import cn.idev.excel.write.metadata.style.WriteFont;
 import cn.idev.excel.write.style.HorizontalCellStyleStrategy;
 import cn.idev.excel.write.style.column.LongestMatchColumnWidthStyleStrategy;
-import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.xssf.streaming.SXSSFSheet;
-import org.junit.jupiter.api.Test;
-
 import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
@@ -45,11 +40,13 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.junit.jupiter.api.Test;
 
@@ -748,20 +745,20 @@ public class WriteTest {
         EasyExcel.write(fileName).head(head()).sheet("模板").doWrite(dataList());
     }
 
-
     @Test
-    public void sheetDisposeTest(){
+    public void sheetDisposeTest() {
         String fileName = TestFileUtil.getPath() + "simpleWrite" + System.currentTimeMillis() + ".xlsx";
-        EasyExcel.write(fileName, DemoData.class).sheet("模板")
-            .registerWriteHandler(new SheetWriteHandler() {
-                @Override
-                public void afterSheetDispose(SheetWriteHandlerContext context) {
-                    Sheet sheet = context.getWriteSheetHolder().getSheet();
-                    // 合并区域单元格
-                    sheet.addMergedRegionUnsafe(new CellRangeAddress(1,10,2,2));
-                }
-            })
-            .doWrite(this::data);
+        EasyExcel.write(fileName, DemoData.class)
+                .sheet("模板")
+                .registerWriteHandler(new SheetWriteHandler() {
+                    @Override
+                    public void afterSheetDispose(SheetWriteHandlerContext context) {
+                        Sheet sheet = context.getWriteSheetHolder().getSheet();
+                        // 合并区域单元格
+                        sheet.addMergedRegionUnsafe(new CellRangeAddress(1, 10, 2, 2));
+                    }
+                })
+                .doWrite(this::data);
         System.out.println(fileName);
     }
 

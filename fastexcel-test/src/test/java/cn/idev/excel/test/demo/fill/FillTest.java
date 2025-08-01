@@ -6,21 +6,18 @@ import cn.idev.excel.enums.WriteDirectionEnum;
 import cn.idev.excel.test.util.TestFileUtil;
 import cn.idev.excel.util.ListUtils;
 import cn.idev.excel.util.MapUtils;
-import cn.idev.excel.test.util.TestFileUtil;
-import cn.idev.excel.EasyExcel;
 import cn.idev.excel.write.handler.SheetWriteHandler;
 import cn.idev.excel.write.handler.context.SheetWriteHandlerContext;
 import cn.idev.excel.write.metadata.WriteSheet;
 import cn.idev.excel.write.metadata.fill.FillConfig;
 import cn.idev.excel.write.metadata.fill.FillWrapper;
-
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.util.CellRangeAddress;
 import java.io.File;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -269,20 +266,23 @@ public class FillTest {
 
     @Test
     public void testFillSheetDispose() {
-        String templateFileName = TestFileUtil.getPath() + "demo" + File.separator + "fill" + File.separator + "simple.xlsx";
+        String templateFileName =
+                TestFileUtil.getPath() + "demo" + File.separator + "fill" + File.separator + "simple.xlsx";
         String fileName = TestFileUtil.getPath() + "simpleFill" + System.currentTimeMillis() + ".xlsx";
         FillData fillData = new FillData();
         fillData.setName("Zhang San");
         fillData.setNumber(5.2);
-        EasyExcel.write(fileName).withTemplate(templateFileName).sheet()
-            .registerWriteHandler(new SheetWriteHandler() {
-                @Override
-                public void afterSheetDispose(SheetWriteHandlerContext context) {
-                    Sheet sheet = context.getWriteSheetHolder().getSheet();
-                    sheet.addMergedRegionUnsafe(new CellRangeAddress(1,2,0,1));
-                }
-            })
-            .doFill(fillData);
+        EasyExcel.write(fileName)
+                .withTemplate(templateFileName)
+                .sheet()
+                .registerWriteHandler(new SheetWriteHandler() {
+                    @Override
+                    public void afterSheetDispose(SheetWriteHandlerContext context) {
+                        Sheet sheet = context.getWriteSheetHolder().getSheet();
+                        sheet.addMergedRegionUnsafe(new CellRangeAddress(1, 2, 0, 1));
+                    }
+                })
+                .doFill(fillData);
     }
 
     private List<FillData> data() {

@@ -45,7 +45,6 @@ public interface SheetWriteHandler extends WriteHandler {
      */
     default void afterSheetCreate(WriteWorkbookHolder writeWorkbookHolder, WriteSheetHolder writeSheetHolder) {}
 
-
     /**
      * Called after all operations on the sheet have been completed
      * @param context

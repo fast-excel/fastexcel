@@ -6,8 +6,6 @@ import cn.idev.excel.write.handler.CellWriteHandler;
 import cn.idev.excel.write.handler.RowWriteHandler;
 import cn.idev.excel.write.handler.SheetWriteHandler;
 import cn.idev.excel.write.handler.WorkbookWriteHandler;
-import cn.idev.excel.metadata.Head;
-import cn.idev.excel.metadata.data.WriteCellData;
 import cn.idev.excel.write.handler.context.SheetWriteHandlerContext;
 import cn.idev.excel.write.metadata.holder.WriteSheetHolder;
 import cn.idev.excel.write.metadata.holder.WriteTableHolder;
