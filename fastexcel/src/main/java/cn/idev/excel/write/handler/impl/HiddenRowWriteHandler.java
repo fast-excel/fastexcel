@@ -61,11 +61,14 @@ public class HiddenRowWriteHandler implements RowWriteHandler {
             Row row,
             Integer relativeRowIndex,
             Boolean isHead) {
+        if (CollectionUtils.isEmpty(this.hiddenColumns)) {
+            return;
+        }
         boolean isSheetName =
-                (null == sheetName || StringUtils.equals(this.sheetName, writeSheetHolder.getSheetName()));
-        boolean isSheetNo = (null == sheetNo || Objects.equals(this.sheetNo, writeSheetHolder.getSheetNo()));
+                (null == this.sheetName || StringUtils.equals(this.sheetName, writeSheetHolder.getSheetName()));
+        boolean isSheetNo = (null == this.sheetNo || Objects.equals(this.sheetNo, writeSheetHolder.getSheetNo()));
         if (isSheetName && isSheetNo) {
-            if (hiddenColumns.contains(relativeRowIndex)) {
+            if (this.hiddenColumns.contains(relativeRowIndex)) {
                 row.setZeroHeight(true);
             }
         }
