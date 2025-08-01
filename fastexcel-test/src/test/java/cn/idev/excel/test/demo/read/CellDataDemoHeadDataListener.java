@@ -1,18 +1,16 @@
 package cn.idev.excel.test.demo.read;
 
-import java.util.List;
-
+import cn.idev.excel.context.AnalysisContext;
 import cn.idev.excel.read.listener.ReadListener;
 import cn.idev.excel.util.ListUtils;
-import cn.idev.excel.context.AnalysisContext;
 import com.alibaba.fastjson2.JSON;
-
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 
 /**
  * 读取头
  *
- * @author Jiaju Zhuang
+ *
  */
 @Slf4j
 public class CellDataDemoHeadDataListener implements ReadListener<CellDataReadDemoData> {

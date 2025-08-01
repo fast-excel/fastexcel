@@ -1,14 +1,5 @@
 package cn.idev.excel.write.metadata.holder;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-
 import cn.idev.excel.constant.OrderConstant;
 import cn.idev.excel.converters.Converter;
 import cn.idev.excel.converters.ConverterKeyBuild;
@@ -21,6 +12,12 @@ import cn.idev.excel.metadata.property.ExcelContentProperty;
 import cn.idev.excel.metadata.property.LoopMergeProperty;
 import cn.idev.excel.metadata.property.OnceAbsoluteMergeProperty;
 import cn.idev.excel.metadata.property.RowHeightProperty;
+import cn.idev.excel.write.handler.CellWriteHandler;
+import cn.idev.excel.write.handler.DefaultWriteHandlerLoader;
+import cn.idev.excel.write.handler.RowWriteHandler;
+import cn.idev.excel.write.handler.SheetWriteHandler;
+import cn.idev.excel.write.handler.WorkbookWriteHandler;
+import cn.idev.excel.write.handler.WriteHandler;
 import cn.idev.excel.write.handler.chain.CellHandlerExecutionChain;
 import cn.idev.excel.write.handler.chain.RowHandlerExecutionChain;
 import cn.idev.excel.write.handler.chain.SheetHandlerExecutionChain;
@@ -34,13 +31,14 @@ import cn.idev.excel.write.property.ExcelWriteHeadProperty;
 import cn.idev.excel.write.style.AbstractVerticalCellStyleStrategy;
 import cn.idev.excel.write.style.column.AbstractHeadColumnWidthStyleStrategy;
 import cn.idev.excel.write.style.row.SimpleRowHeightStyleStrategy;
-import cn.idev.excel.write.handler.CellWriteHandler;
-import cn.idev.excel.write.handler.DefaultWriteHandlerLoader;
-import cn.idev.excel.write.handler.RowWriteHandler;
-import cn.idev.excel.write.handler.SheetWriteHandler;
-import cn.idev.excel.write.handler.WorkbookWriteHandler;
-import cn.idev.excel.write.handler.WriteHandler;
-
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -50,7 +48,7 @@ import org.apache.commons.collections4.CollectionUtils;
 /**
  * Write holder configuration
  *
- * @author Jiaju Zhuang
+ *
  */
 @Getter
 @Setter
@@ -228,11 +226,13 @@ public abstract class AbstractWriteHolder extends AbstractHolder implements Writ
             setConverterMap(new HashMap<>(parentAbstractWriteHolder.getConverterMap()));
         }
         if (writeBasicParameter.getCustomConverterList() != null
-            && !writeBasicParameter.getCustomConverterList().isEmpty()) {
+                && !writeBasicParameter.getCustomConverterList().isEmpty()) {
             for (Converter<?> converter : writeBasicParameter.getCustomConverterList()) {
-                getConverterMap().put(
-                    ConverterKeyBuild.buildKey(converter.supportJavaTypeKey(), converter.supportExcelTypeKey()),
-                    converter);
+                getConverterMap()
+                        .put(
+                                ConverterKeyBuild.buildKey(
+                                        converter.supportJavaTypeKey(), converter.supportExcelTypeKey()),
+                                converter);
             }
         }
     }
@@ -245,7 +245,7 @@ public abstract class AbstractWriteHolder extends AbstractHolder implements Writ
         initAnnotationConfig(handlerList, writeBasicParameter);
 
         if (writeBasicParameter.getCustomWriteHandlerList() != null
-            && !writeBasicParameter.getCustomWriteHandlerList().isEmpty()) {
+                && !writeBasicParameter.getCustomWriteHandlerList().isEmpty()) {
             handlerList.addAll(writeBasicParameter.getCustomWriteHandlerList());
         }
         sortAndClearUpHandler(handlerList, true);
@@ -256,8 +256,8 @@ public abstract class AbstractWriteHolder extends AbstractHolder implements Writ
             }
         } else {
             if (this instanceof WriteWorkbookHolder) {
-                handlerList.addAll(DefaultWriteHandlerLoader.loadDefaultHandler(useDefaultStyle,
-                    ((WriteWorkbookHolder)this).getExcelType()));
+                handlerList.addAll(DefaultWriteHandlerLoader.loadDefaultHandler(
+                        useDefaultStyle, ((WriteWorkbookHolder) this).getExcelType()));
             }
         }
         sortAndClearUpHandler(handlerList, false);
@@ -308,8 +308,8 @@ public abstract class AbstractWriteHolder extends AbstractHolder implements Writ
             @Override
             protected WriteCellStyle contentCellStyle(CellWriteHandlerContext context) {
                 ExcelContentProperty excelContentProperty = context.getExcelContentProperty();
-                return WriteCellStyle.build(excelContentProperty.getContentStyleProperty(),
-                    excelContentProperty.getContentFontProperty());
+                return WriteCellStyle.build(
+                        excelContentProperty.getContentStyleProperty(), excelContentProperty.getContentFontProperty());
             }
         };
         handlerList.add(styleStrategy);
@@ -325,7 +325,7 @@ public abstract class AbstractWriteHolder extends AbstractHolder implements Writ
 
     private void dealOnceAbsoluteMerge(List<WriteHandler> handlerList) {
         OnceAbsoluteMergeProperty onceAbsoluteMergeProperty =
-            getExcelWriteHeadProperty().getOnceAbsoluteMergeProperty();
+                getExcelWriteHeadProperty().getOnceAbsoluteMergeProperty();
         if (onceAbsoluteMergeProperty == null) {
             return;
         }
@@ -384,7 +384,7 @@ public abstract class AbstractWriteHolder extends AbstractHolder implements Writ
         for (Map.Entry<Integer, List<WriteHandler>> entry : orderExcelWriteHandlerMap.entrySet()) {
             for (WriteHandler handler : entry.getValue()) {
                 if (handler instanceof NotRepeatExecutor) {
-                    String uniqueValue = ((NotRepeatExecutor)handler).uniqueValue();
+                    String uniqueValue = ((NotRepeatExecutor) handler).uniqueValue();
                     if (alreadyExistedHandlerSet.contains(uniqueValue)) {
                         continue;
                     }
@@ -407,50 +407,50 @@ public abstract class AbstractWriteHolder extends AbstractHolder implements Writ
         if (writeHandler instanceof CellWriteHandler) {
             if (!runOwn) {
                 if (cellHandlerExecutionChain == null) {
-                    cellHandlerExecutionChain = new CellHandlerExecutionChain((CellWriteHandler)writeHandler);
+                    cellHandlerExecutionChain = new CellHandlerExecutionChain((CellWriteHandler) writeHandler);
                 } else {
-                    cellHandlerExecutionChain.addLast((CellWriteHandler)writeHandler);
+                    cellHandlerExecutionChain.addLast((CellWriteHandler) writeHandler);
                 }
             }
         }
         if (writeHandler instanceof RowWriteHandler) {
             if (!runOwn) {
                 if (rowHandlerExecutionChain == null) {
-                    rowHandlerExecutionChain = new RowHandlerExecutionChain((RowWriteHandler)writeHandler);
+                    rowHandlerExecutionChain = new RowHandlerExecutionChain((RowWriteHandler) writeHandler);
                 } else {
-                    rowHandlerExecutionChain.addLast((RowWriteHandler)writeHandler);
+                    rowHandlerExecutionChain.addLast((RowWriteHandler) writeHandler);
                 }
             }
         }
         if (writeHandler instanceof SheetWriteHandler) {
             if (!runOwn) {
                 if (sheetHandlerExecutionChain == null) {
-                    sheetHandlerExecutionChain = new SheetHandlerExecutionChain((SheetWriteHandler)writeHandler);
+                    sheetHandlerExecutionChain = new SheetHandlerExecutionChain((SheetWriteHandler) writeHandler);
                 } else {
-                    sheetHandlerExecutionChain.addLast((SheetWriteHandler)writeHandler);
+                    sheetHandlerExecutionChain.addLast((SheetWriteHandler) writeHandler);
                 }
             } else {
                 if (ownSheetHandlerExecutionChain == null) {
-                    ownSheetHandlerExecutionChain = new SheetHandlerExecutionChain((SheetWriteHandler)writeHandler);
+                    ownSheetHandlerExecutionChain = new SheetHandlerExecutionChain((SheetWriteHandler) writeHandler);
                 } else {
-                    ownSheetHandlerExecutionChain.addLast((SheetWriteHandler)writeHandler);
+                    ownSheetHandlerExecutionChain.addLast((SheetWriteHandler) writeHandler);
                 }
             }
         }
         if (writeHandler instanceof WorkbookWriteHandler) {
             if (!runOwn) {
                 if (workbookHandlerExecutionChain == null) {
-                    workbookHandlerExecutionChain = new WorkbookHandlerExecutionChain(
-                        (WorkbookWriteHandler)writeHandler);
+                    workbookHandlerExecutionChain =
+                            new WorkbookHandlerExecutionChain((WorkbookWriteHandler) writeHandler);
                 } else {
-                    workbookHandlerExecutionChain.addLast((WorkbookWriteHandler)writeHandler);
+                    workbookHandlerExecutionChain.addLast((WorkbookWriteHandler) writeHandler);
                 }
             } else {
                 if (ownWorkbookHandlerExecutionChain == null) {
-                    ownWorkbookHandlerExecutionChain = new WorkbookHandlerExecutionChain(
-                        (WorkbookWriteHandler)writeHandler);
+                    ownWorkbookHandlerExecutionChain =
+                            new WorkbookHandlerExecutionChain((WorkbookWriteHandler) writeHandler);
                 } else {
-                    ownWorkbookHandlerExecutionChain.addLast((WorkbookWriteHandler)writeHandler);
+                    ownWorkbookHandlerExecutionChain.addLast((WorkbookWriteHandler) writeHandler);
                 }
             }
         }

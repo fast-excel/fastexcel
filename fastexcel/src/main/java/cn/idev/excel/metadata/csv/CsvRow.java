@@ -2,7 +2,6 @@ package cn.idev.excel.metadata.csv;
 
 import java.util.Iterator;
 import java.util.List;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,7 +16,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 /**
  * csv row
  *
- * @author Jiaju Zhuang
+ *
  */
 @Getter
 @Setter
@@ -111,7 +110,7 @@ public class CsvRow implements Row {
         if (CollectionUtils.isEmpty(cellList)) {
             return -1;
         }
-        return (short)cellList.size();
+        return (short) cellList.size();
     }
 
     @Override
@@ -120,14 +119,10 @@ public class CsvRow implements Row {
     }
 
     @Override
-    public void setHeight(short height) {
-
-    }
+    public void setHeight(short height) {}
 
     @Override
-    public void setZeroHeight(boolean zHeight) {
-
-    }
+    public void setZeroHeight(boolean zHeight) {}
 
     @Override
     public boolean getZeroHeight() {
@@ -135,9 +130,7 @@ public class CsvRow implements Row {
     }
 
     @Override
-    public void setHeightInPoints(float height) {
-
-    }
+    public void setHeightInPoints(float height) {}
 
     @Override
     public short getHeight() {
@@ -166,7 +159,7 @@ public class CsvRow implements Row {
 
     @Override
     public Iterator<Cell> cellIterator() {
-        return (Iterator<Cell>)(Iterator<? extends Cell>)cellList.iterator();
+        return (Iterator<Cell>) (Iterator<? extends Cell>) cellList.iterator();
     }
 
     @Override
@@ -180,14 +173,10 @@ public class CsvRow implements Row {
     }
 
     @Override
-    public void shiftCellsRight(int firstShiftColumnIndex, int lastShiftColumnIndex, int step) {
-
-    }
+    public void shiftCellsRight(int firstShiftColumnIndex, int lastShiftColumnIndex, int step) {}
 
     @Override
-    public void shiftCellsLeft(int firstShiftColumnIndex, int lastShiftColumnIndex, int step) {
-
-    }
+    public void shiftCellsLeft(int firstShiftColumnIndex, int lastShiftColumnIndex, int step) {}
 
     @Override
     public Iterator<Cell> iterator() {

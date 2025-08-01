@@ -1,20 +1,19 @@
 package cn.idev.excel.converters.bigdecimal;
 
-import java.math.BigDecimal;
-import java.text.ParseException;
-
 import cn.idev.excel.converters.Converter;
 import cn.idev.excel.enums.CellDataTypeEnum;
-import cn.idev.excel.util.NumberUtils;
 import cn.idev.excel.metadata.GlobalConfiguration;
 import cn.idev.excel.metadata.data.ReadCellData;
 import cn.idev.excel.metadata.data.WriteCellData;
 import cn.idev.excel.metadata.property.ExcelContentProperty;
+import cn.idev.excel.util.NumberUtils;
+import java.math.BigDecimal;
+import java.text.ParseException;
 
 /**
  * Converter for handling the conversion between BigDecimal and Excel string types.
  *
- * @author Jiaju Zhuang
+ *
  */
 public class BigDecimalStringConverter implements Converter<BigDecimal> {
 
@@ -49,8 +48,9 @@ public class BigDecimalStringConverter implements Converter<BigDecimal> {
      * @throws ParseException        If there is an error parsing the string to a BigDecimal.
      */
     @Override
-    public BigDecimal convertToJavaData(ReadCellData<?> cellData, ExcelContentProperty contentProperty,
-                                        GlobalConfiguration globalConfiguration) throws ParseException {
+    public BigDecimal convertToJavaData(
+            ReadCellData<?> cellData, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration)
+            throws ParseException {
         return NumberUtils.parseBigDecimal(cellData.getStringValue(), contentProperty);
     }
 
@@ -64,8 +64,8 @@ public class BigDecimalStringConverter implements Converter<BigDecimal> {
      * @return                       The WriteCellData object containing the formatted string.
      */
     @Override
-    public WriteCellData<?> convertToExcelData(BigDecimal value, ExcelContentProperty contentProperty,
-                                               GlobalConfiguration globalConfiguration) {
+    public WriteCellData<?> convertToExcelData(
+            BigDecimal value, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) {
         return NumberUtils.formatToCellDataString(value, contentProperty);
     }
 }

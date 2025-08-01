@@ -1,18 +1,15 @@
 package cn.idev.excel.test.demo.web;
 
+import cn.idev.excel.EasyExcel;
+import cn.idev.excel.util.ListUtils;
+import cn.idev.excel.util.MapUtils;
+import com.alibaba.fastjson2.JSON;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.http.HttpServletResponse;
-
-import cn.idev.excel.EasyExcel;
-import cn.idev.excel.util.ListUtils;
-import cn.idev.excel.util.MapUtils;
-import com.alibaba.fastjson2.JSON;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 /**
  * web读写案例
  *
- * @author Jiaju Zhuang
+ *
  **/
 @Controller
 public class WebTest {
@@ -49,7 +46,9 @@ public class WebTest {
         String fileName = URLEncoder.encode("测试", "UTF-8").replaceAll("\\+", "%20");
         response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
 
-        EasyExcel.write(response.getOutputStream(), DownloadData.class).sheet("模板").doWrite(data());
+        EasyExcel.write(response.getOutputStream(), DownloadData.class)
+                .sheet("模板")
+                .doWrite(data());
     }
 
     /**
@@ -67,8 +66,10 @@ public class WebTest {
             String fileName = URLEncoder.encode("测试", "UTF-8").replaceAll("\\+", "%20");
             response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
             // 这里需要设置不关闭流
-            EasyExcel.write(response.getOutputStream(), DownloadData.class).autoCloseStream(Boolean.FALSE).sheet("模板")
-                .doWrite(data());
+            EasyExcel.write(response.getOutputStream(), DownloadData.class)
+                    .autoCloseStream(Boolean.FALSE)
+                    .sheet("模板")
+                    .doWrite(data());
         } catch (Exception e) {
             // 重置response
             response.reset();
@@ -93,7 +94,9 @@ public class WebTest {
     @PostMapping("upload")
     @ResponseBody
     public String upload(MultipartFile file) throws IOException {
-        EasyExcel.read(file.getInputStream(), UploadData.class, new UploadDataListener(uploadDAO)).sheet().doRead();
+        EasyExcel.read(file.getInputStream(), UploadData.class, new UploadDataListener(uploadDAO))
+                .sheet()
+                .doRead();
         return "success";
     }
 

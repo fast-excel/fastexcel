@@ -3,7 +3,6 @@ package cn.idev.excel.metadata.property;
 import cn.idev.excel.annotation.write.style.ContentFontStyle;
 import cn.idev.excel.annotation.write.style.HeadFontStyle;
 import cn.idev.excel.util.StringUtils;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,7 +14,7 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 /**
  * Configuration from annotations
  *
- * @author Jiaju Zhuang
+ *
  */
 @Getter
 @Setter
@@ -63,7 +62,6 @@ public class FontProperty {
      * @see Font#U_SINGLE_ACCOUNTING
      * @see Font#U_DOUBLE_ACCOUNTING
      */
-
     private Byte underline;
     /**
      * Set character-set to use.
@@ -136,5 +134,4 @@ public class FontProperty {
         styleProperty.setBold(contentFontStyle.bold().getBooleanValue());
         return styleProperty;
     }
-
 }

@@ -7,7 +7,7 @@ import lombok.Setter;
 /**
  * formula
  *
- * @author Jiaju Zhuang
+ *
  */
 @Getter
 @Setter

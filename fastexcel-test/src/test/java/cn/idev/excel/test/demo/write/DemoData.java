@@ -2,16 +2,15 @@ package cn.idev.excel.test.demo.write;
 
 import cn.idev.excel.annotation.ExcelIgnore;
 import cn.idev.excel.annotation.ExcelProperty;
+import java.util.Date;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
-
 /**
  * Basic data class
  *
- * @author Jiaju Zhuang
+ *
  **/
 @Getter
 @Setter

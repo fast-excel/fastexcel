@@ -1,5 +1,11 @@
 package cn.idev.excel.metadata.csv;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.charset.Charset;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,17 +26,10 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.SheetVisibility;
 import org.apache.poi.ss.usermodel.Workbook;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.charset.Charset;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-
 /**
  * csv workbook
  *
- * @author Jiaju Zhuang
+ *
  */
 @Getter
 @Setter
@@ -83,14 +82,19 @@ public class CsvWorkbook implements Workbook {
      * Default true.
      */
     private Boolean withBom;
-    
+
     /**
      * Specifies CSVFormat for parsing.
      */
     private CSVFormat csvFormat;
 
-    public CsvWorkbook(Appendable out, Locale locale, Boolean use1904windowing, Boolean useScientificFormat,
-                       Charset charset, Boolean withBom) {
+    public CsvWorkbook(
+            Appendable out,
+            Locale locale,
+            Boolean use1904windowing,
+            Boolean useScientificFormat,
+            Charset charset,
+            Boolean withBom) {
         this.out = out;
         this.locale = locale;
         this.use1904windowing = use1904windowing;
@@ -105,9 +109,7 @@ public class CsvWorkbook implements Workbook {
     }
 
     @Override
-    public void setActiveSheet(int sheetIndex) {
-
-    }
+    public void setActiveSheet(int sheetIndex) {}
 
     @Override
     public int getFirstVisibleTab() {
@@ -115,24 +117,16 @@ public class CsvWorkbook implements Workbook {
     }
 
     @Override
-    public void setFirstVisibleTab(int sheetIndex) {
-
-    }
+    public void setFirstVisibleTab(int sheetIndex) {}
 
     @Override
-    public void setSheetOrder(String sheetname, int pos) {
-
-    }
+    public void setSheetOrder(String sheetname, int pos) {}
 
     @Override
-    public void setSelectedTab(int index) {
-
-    }
+    public void setSelectedTab(int index) {}
 
     @Override
-    public void setSheetName(int sheet, String name) {
-
-    }
+    public void setSheetName(int sheet, String name) {}
 
     @Override
     public String getSheetName(int sheet) {
@@ -190,9 +184,7 @@ public class CsvWorkbook implements Workbook {
     }
 
     @Override
-    public void removeSheetAt(int index) {
-
-    }
+    public void removeSheetAt(int index) {}
 
     @Override
     public Font createFont() {
@@ -200,8 +192,15 @@ public class CsvWorkbook implements Workbook {
     }
 
     @Override
-    public Font findFont(boolean bold, short color, short fontHeight, String name, boolean italic, boolean strikeout,
-                         short typeOffset, byte underline) {
+    public Font findFont(
+            boolean bold,
+            short color,
+            short fontHeight,
+            String name,
+            boolean italic,
+            boolean strikeout,
+            short typeOffset,
+            byte underline) {
         return null;
     }
 
@@ -249,9 +248,7 @@ public class CsvWorkbook implements Workbook {
     }
 
     @Override
-    public void close() throws IOException {
-
-    }
+    public void close() throws IOException {}
 
     @Override
     public int getNumberOfNames() {
@@ -279,9 +276,7 @@ public class CsvWorkbook implements Workbook {
     }
 
     @Override
-    public void removeName(Name name) {
-
-    }
+    public void removeName(Name name) {}
 
     @Override
     public int linkExternalWorkbook(String name, Workbook workbook) {
@@ -289,14 +284,10 @@ public class CsvWorkbook implements Workbook {
     }
 
     @Override
-    public void setPrintArea(int sheetIndex, String reference) {
-
-    }
+    public void setPrintArea(int sheetIndex, String reference) {}
 
     @Override
-    public void setPrintArea(int sheetIndex, int startColumn, int endColumn, int startRow, int endRow) {
-
-    }
+    public void setPrintArea(int sheetIndex, int startColumn, int endColumn, int startRow, int endRow) {}
 
     @Override
     public String getPrintArea(int sheetIndex) {
@@ -304,9 +295,7 @@ public class CsvWorkbook implements Workbook {
     }
 
     @Override
-    public void removePrintArea(int sheetIndex) {
-
-    }
+    public void removePrintArea(int sheetIndex) {}
 
     @Override
     public MissingCellPolicy getMissingCellPolicy() {
@@ -314,9 +303,7 @@ public class CsvWorkbook implements Workbook {
     }
 
     @Override
-    public void setMissingCellPolicy(MissingCellPolicy missingCellPolicy) {
-
-    }
+    public void setMissingCellPolicy(MissingCellPolicy missingCellPolicy) {}
 
     @Override
     public DataFormat createDataFormat() {
@@ -348,9 +335,7 @@ public class CsvWorkbook implements Workbook {
     }
 
     @Override
-    public void setHidden(boolean hiddenFlag) {
-
-    }
+    public void setHidden(boolean hiddenFlag) {}
 
     @Override
     public boolean isSheetHidden(int sheetIx) {
@@ -363,9 +348,7 @@ public class CsvWorkbook implements Workbook {
     }
 
     @Override
-    public void setSheetHidden(int sheetIx, boolean hidden) {
-
-    }
+    public void setSheetHidden(int sheetIx, boolean hidden) {}
 
     @Override
     public SheetVisibility getSheetVisibility(int sheetIx) {
@@ -373,19 +356,13 @@ public class CsvWorkbook implements Workbook {
     }
 
     @Override
-    public void setSheetVisibility(int sheetIx, SheetVisibility visibility) {
-
-    }
+    public void setSheetVisibility(int sheetIx, SheetVisibility visibility) {}
 
     @Override
-    public void addToolPack(UDFFinder toopack) {
-
-    }
+    public void addToolPack(UDFFinder toopack) {}
 
     @Override
-    public void setForceFormulaRecalculation(boolean value) {
-
-    }
+    public void setForceFormulaRecalculation(boolean value) {}
 
     @Override
     public boolean getForceFormulaRecalculation() {
@@ -413,9 +390,7 @@ public class CsvWorkbook implements Workbook {
     }
 
     @Override
-    public void setCellReferenceType(CellReferenceType cellReferenceType) {
-
-    }
+    public void setCellReferenceType(CellReferenceType cellReferenceType) {}
 
     @Override
     public Iterator<Sheet> iterator() {

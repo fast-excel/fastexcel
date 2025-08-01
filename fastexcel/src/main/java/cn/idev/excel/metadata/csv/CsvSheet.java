@@ -8,6 +8,13 @@ import cn.idev.excel.util.DateUtils;
 import cn.idev.excel.util.ListUtils;
 import cn.idev.excel.util.NumberDataFormatterUtils;
 import cn.idev.excel.util.StringUtils;
+import java.io.Closeable;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -36,18 +43,10 @@ import org.apache.poi.ss.util.CellAddress;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.PaneInformation;
 
-import java.io.Closeable;
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 /**
  * csv sheet
  *
- * @author Jiaju Zhuang
+ *
  */
 @Getter
 @Setter
@@ -114,7 +113,7 @@ public class CsvSheet implements Sheet, Closeable {
         try {
             if (csvWorkbook.getWithBom()) {
                 ByteOrderMarkEnum byteOrderMark = ByteOrderMarkEnum.valueOfByCharsetName(
-                    csvWorkbook.getCharset().name());
+                        csvWorkbook.getCharset().name());
                 if (byteOrderMark != null) {
                     out.append(byteOrderMark.getStringPrefix());
                 }
@@ -158,9 +157,7 @@ public class CsvSheet implements Sheet, Closeable {
     }
 
     @Override
-    public void setColumnHidden(int columnIndex, boolean hidden) {
-
-    }
+    public void setColumnHidden(int columnIndex, boolean hidden) {}
 
     @Override
     public boolean isColumnHidden(int columnIndex) {
@@ -168,9 +165,7 @@ public class CsvSheet implements Sheet, Closeable {
     }
 
     @Override
-    public void setRightToLeft(boolean value) {
-
-    }
+    public void setRightToLeft(boolean value) {}
 
     @Override
     public boolean isRightToLeft() {
@@ -178,9 +173,7 @@ public class CsvSheet implements Sheet, Closeable {
     }
 
     @Override
-    public void setColumnWidth(int columnIndex, int width) {
-
-    }
+    public void setColumnWidth(int columnIndex, int width) {}
 
     @Override
     public int getColumnWidth(int columnIndex) {
@@ -193,9 +186,7 @@ public class CsvSheet implements Sheet, Closeable {
     }
 
     @Override
-    public void setDefaultColumnWidth(int width) {
-
-    }
+    public void setDefaultColumnWidth(int width) {}
 
     @Override
     public int getDefaultColumnWidth() {
@@ -213,14 +204,10 @@ public class CsvSheet implements Sheet, Closeable {
     }
 
     @Override
-    public void setDefaultRowHeight(short height) {
-
-    }
+    public void setDefaultRowHeight(short height) {}
 
     @Override
-    public void setDefaultRowHeightInPoints(float height) {
-
-    }
+    public void setDefaultRowHeightInPoints(float height) {}
 
     @Override
     public CellStyle getColumnStyle(int column) {
@@ -238,19 +225,13 @@ public class CsvSheet implements Sheet, Closeable {
     }
 
     @Override
-    public void validateMergedRegions() {
-
-    }
+    public void validateMergedRegions() {}
 
     @Override
-    public void setVerticallyCenter(boolean value) {
-
-    }
+    public void setVerticallyCenter(boolean value) {}
 
     @Override
-    public void setHorizontallyCenter(boolean value) {
-
-    }
+    public void setHorizontallyCenter(boolean value) {}
 
     @Override
     public boolean getHorizontallyCenter() {
@@ -263,14 +244,10 @@ public class CsvSheet implements Sheet, Closeable {
     }
 
     @Override
-    public void removeMergedRegion(int index) {
-
-    }
+    public void removeMergedRegion(int index) {}
 
     @Override
-    public void removeMergedRegions(Collection<Integer> indices) {
-
-    }
+    public void removeMergedRegions(Collection<Integer> indices) {}
 
     @Override
     public int getNumMergedRegions() {
@@ -293,9 +270,7 @@ public class CsvSheet implements Sheet, Closeable {
     }
 
     @Override
-    public void setForceFormulaRecalculation(boolean value) {
-
-    }
+    public void setForceFormulaRecalculation(boolean value) {}
 
     @Override
     public boolean getForceFormulaRecalculation() {
@@ -303,19 +278,13 @@ public class CsvSheet implements Sheet, Closeable {
     }
 
     @Override
-    public void setAutobreaks(boolean value) {
-
-    }
+    public void setAutobreaks(boolean value) {}
 
     @Override
-    public void setDisplayGuts(boolean value) {
-
-    }
+    public void setDisplayGuts(boolean value) {}
 
     @Override
-    public void setDisplayZeros(boolean value) {
-
-    }
+    public void setDisplayZeros(boolean value) {}
 
     @Override
     public boolean isDisplayZeros() {
@@ -323,19 +292,13 @@ public class CsvSheet implements Sheet, Closeable {
     }
 
     @Override
-    public void setFitToPage(boolean value) {
-
-    }
+    public void setFitToPage(boolean value) {}
 
     @Override
-    public void setRowSumsBelow(boolean value) {
-
-    }
+    public void setRowSumsBelow(boolean value) {}
 
     @Override
-    public void setRowSumsRight(boolean value) {
-
-    }
+    public void setRowSumsRight(boolean value) {}
 
     @Override
     public boolean getAutobreaks() {
@@ -368,9 +331,7 @@ public class CsvSheet implements Sheet, Closeable {
     }
 
     @Override
-    public void setPrintGridlines(boolean show) {
-
-    }
+    public void setPrintGridlines(boolean show) {}
 
     @Override
     public boolean isPrintRowAndColumnHeadings() {
@@ -378,9 +339,7 @@ public class CsvSheet implements Sheet, Closeable {
     }
 
     @Override
-    public void setPrintRowAndColumnHeadings(boolean show) {
-
-    }
+    public void setPrintRowAndColumnHeadings(boolean show) {}
 
     @Override
     public PrintSetup getPrintSetup() {
@@ -398,9 +357,7 @@ public class CsvSheet implements Sheet, Closeable {
     }
 
     @Override
-    public void setSelected(boolean value) {
-
-    }
+    public void setSelected(boolean value) {}
 
     @Override
     public double getMargin(short margin) {
@@ -413,14 +370,10 @@ public class CsvSheet implements Sheet, Closeable {
     }
 
     @Override
-    public void setMargin(short margin, double size) {
-
-    }
+    public void setMargin(short margin, double size) {}
 
     @Override
-    public void setMargin(PageMargin pageMargin, double v) {
-
-    }
+    public void setMargin(PageMargin pageMargin, double v) {}
 
     @Override
     public boolean getProtect() {
@@ -428,9 +381,7 @@ public class CsvSheet implements Sheet, Closeable {
     }
 
     @Override
-    public void protectSheet(String password) {
-
-    }
+    public void protectSheet(String password) {}
 
     @Override
     public boolean getScenarioProtect() {
@@ -438,9 +389,7 @@ public class CsvSheet implements Sheet, Closeable {
     }
 
     @Override
-    public void setZoom(int scale) {
-
-    }
+    public void setZoom(int scale) {}
 
     @Override
     public short getTopRow() {
@@ -453,44 +402,28 @@ public class CsvSheet implements Sheet, Closeable {
     }
 
     @Override
-    public void showInPane(int topRow, int leftCol) {
-
-    }
+    public void showInPane(int topRow, int leftCol) {}
 
     @Override
-    public void shiftRows(int startRow, int endRow, int n) {
-
-    }
+    public void shiftRows(int startRow, int endRow, int n) {}
 
     @Override
-    public void shiftRows(int startRow, int endRow, int n, boolean copyRowHeight, boolean resetOriginalRowHeight) {
-
-    }
+    public void shiftRows(int startRow, int endRow, int n, boolean copyRowHeight, boolean resetOriginalRowHeight) {}
 
     @Override
-    public void shiftColumns(int startColumn, int endColumn, int n) {
-
-    }
+    public void shiftColumns(int startColumn, int endColumn, int n) {}
 
     @Override
-    public void createFreezePane(int colSplit, int rowSplit, int leftmostColumn, int topRow) {
-
-    }
+    public void createFreezePane(int colSplit, int rowSplit, int leftmostColumn, int topRow) {}
 
     @Override
-    public void createFreezePane(int colSplit, int rowSplit) {
-
-    }
+    public void createFreezePane(int colSplit, int rowSplit) {}
 
     @Override
-    public void createSplitPane(int xSplitPos, int ySplitPos, int leftmostColumn, int topRow, int activePane) {
-
-    }
+    public void createSplitPane(int xSplitPos, int ySplitPos, int leftmostColumn, int topRow, int activePane) {}
 
     @Override
-    public void createSplitPane(int i, int i1, int i2, int i3, PaneType paneType) {
-
-    }
+    public void createSplitPane(int i, int i1, int i2, int i3, PaneType paneType) {}
 
     @Override
     public PaneInformation getPaneInformation() {
@@ -498,9 +431,7 @@ public class CsvSheet implements Sheet, Closeable {
     }
 
     @Override
-    public void setDisplayGridlines(boolean show) {
-
-    }
+    public void setDisplayGridlines(boolean show) {}
 
     @Override
     public boolean isDisplayGridlines() {
@@ -508,9 +439,7 @@ public class CsvSheet implements Sheet, Closeable {
     }
 
     @Override
-    public void setDisplayFormulas(boolean show) {
-
-    }
+    public void setDisplayFormulas(boolean show) {}
 
     @Override
     public boolean isDisplayFormulas() {
@@ -518,9 +447,7 @@ public class CsvSheet implements Sheet, Closeable {
     }
 
     @Override
-    public void setDisplayRowColHeadings(boolean show) {
-
-    }
+    public void setDisplayRowColHeadings(boolean show) {}
 
     @Override
     public boolean isDisplayRowColHeadings() {
@@ -528,9 +455,7 @@ public class CsvSheet implements Sheet, Closeable {
     }
 
     @Override
-    public void setRowBreak(int row) {
-
-    }
+    public void setRowBreak(int row) {}
 
     @Override
     public boolean isRowBroken(int row) {
@@ -538,9 +463,7 @@ public class CsvSheet implements Sheet, Closeable {
     }
 
     @Override
-    public void removeRowBreak(int row) {
-
-    }
+    public void removeRowBreak(int row) {}
 
     @Override
     public int[] getRowBreaks() {
@@ -553,9 +476,7 @@ public class CsvSheet implements Sheet, Closeable {
     }
 
     @Override
-    public void setColumnBreak(int column) {
-
-    }
+    public void setColumnBreak(int column) {}
 
     @Override
     public boolean isColumnBroken(int column) {
@@ -563,54 +484,34 @@ public class CsvSheet implements Sheet, Closeable {
     }
 
     @Override
-    public void removeColumnBreak(int column) {
-
-    }
+    public void removeColumnBreak(int column) {}
 
     @Override
-    public void setColumnGroupCollapsed(int columnNumber, boolean collapsed) {
-
-    }
+    public void setColumnGroupCollapsed(int columnNumber, boolean collapsed) {}
 
     @Override
-    public void groupColumn(int fromColumn, int toColumn) {
-
-    }
+    public void groupColumn(int fromColumn, int toColumn) {}
 
     @Override
-    public void ungroupColumn(int fromColumn, int toColumn) {
-
-    }
+    public void ungroupColumn(int fromColumn, int toColumn) {}
 
     @Override
-    public void groupRow(int fromRow, int toRow) {
-
-    }
+    public void groupRow(int fromRow, int toRow) {}
 
     @Override
-    public void ungroupRow(int fromRow, int toRow) {
-
-    }
+    public void ungroupRow(int fromRow, int toRow) {}
 
     @Override
-    public void setRowGroupCollapsed(int row, boolean collapse) {
-
-    }
+    public void setRowGroupCollapsed(int row, boolean collapse) {}
 
     @Override
-    public void setDefaultColumnStyle(int column, CellStyle style) {
-
-    }
+    public void setDefaultColumnStyle(int column, CellStyle style) {}
 
     @Override
-    public void autoSizeColumn(int column) {
-
-    }
+    public void autoSizeColumn(int column) {}
 
     @Override
-    public void autoSizeColumn(int column, boolean useMergedCells) {
-
-    }
+    public void autoSizeColumn(int column, boolean useMergedCells) {}
 
     @Override
     public Comment getCellComment(CellAddress ref) {
@@ -648,8 +549,7 @@ public class CsvSheet implements Sheet, Closeable {
     }
 
     @Override
-    public CellRange<? extends Cell> setArrayFormula(
-        String formula, CellRangeAddress range) {
+    public CellRange<? extends Cell> setArrayFormula(String formula, CellRangeAddress range) {
         return null;
     }
 
@@ -669,9 +569,7 @@ public class CsvSheet implements Sheet, Closeable {
     }
 
     @Override
-    public void addValidationData(DataValidation dataValidation) {
-
-    }
+    public void addValidationData(DataValidation dataValidation) {}
 
     @Override
     public AutoFilter setAutoFilter(CellRangeAddress range) {
@@ -694,14 +592,10 @@ public class CsvSheet implements Sheet, Closeable {
     }
 
     @Override
-    public void setRepeatingRows(CellRangeAddress rowRangeRef) {
-
-    }
+    public void setRepeatingRows(CellRangeAddress rowRangeRef) {}
 
     @Override
-    public void setRepeatingColumns(CellRangeAddress columnRangeRef) {
-
-    }
+    public void setRepeatingColumns(CellRangeAddress columnRangeRef) {}
 
     @Override
     public int getColumnOutlineLevel(int columnIndex) {
@@ -729,9 +623,7 @@ public class CsvSheet implements Sheet, Closeable {
     }
 
     @Override
-    public void setActiveCell(CellAddress address) {
-
-    }
+    public void setActiveCell(CellAddress address) {}
 
     @Override
     public Iterator<Row> iterator() {
@@ -798,10 +690,14 @@ public class CsvSheet implements Sheet, Closeable {
                     if (dataFormatString == null) {
                         dataFormatString = csvWorkbook.createDataFormat().getFormat(dataFormat);
                     }
-                    return NumberDataFormatterUtils.format(BigDecimal.valueOf(
-                            DateUtil.getExcelDate(csvCell.getDateValue(), csvWorkbook.getUse1904windowing())),
-                        dataFormat, dataFormatString, csvWorkbook.getUse1904windowing(), csvWorkbook.getLocale(),
-                        csvWorkbook.getUseScientificFormat());
+                    return NumberDataFormatterUtils.format(
+                            BigDecimal.valueOf(
+                                    DateUtil.getExcelDate(csvCell.getDateValue(), csvWorkbook.getUse1904windowing())),
+                            dataFormat,
+                            dataFormatString,
+                            csvWorkbook.getUse1904windowing(),
+                            csvWorkbook.getLocale(),
+                            csvWorkbook.getUseScientificFormat());
                 } else {
                     if (csvCell.getNumberValue() == null) {
                         return null;
@@ -814,9 +710,13 @@ public class CsvSheet implements Sheet, Closeable {
                     if (dataFormatString == null) {
                         dataFormatString = csvWorkbook.createDataFormat().getFormat(dataFormat);
                     }
-                    return NumberDataFormatterUtils.format(csvCell.getNumberValue(), dataFormat, dataFormatString,
-                        csvWorkbook.getUse1904windowing(), csvWorkbook.getLocale(),
-                        csvWorkbook.getUseScientificFormat());
+                    return NumberDataFormatterUtils.format(
+                            csvCell.getNumberValue(),
+                            dataFormat,
+                            dataFormatString,
+                            csvWorkbook.getUse1904windowing(),
+                            csvWorkbook.getLocale(),
+                            csvWorkbook.getUseScientificFormat());
                 }
             case BOOLEAN:
                 return csvCell.getBooleanValue().toString();
@@ -826,5 +726,4 @@ public class CsvSheet implements Sheet, Closeable {
                 return null;
         }
     }
-
 }

@@ -4,14 +4,13 @@ import cn.idev.excel.ExcelReader;
 import cn.idev.excel.FastExcel;
 import cn.idev.excel.read.metadata.ReadSheet;
 import cn.idev.excel.test.util.TestFileUtil;
+import java.io.File;
+import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
-
-import java.io.File;
-import java.util.List;
 
 @TestMethodOrder(MethodOrderer.MethodName.class)
 public class HiddenSheetsTest {
@@ -58,20 +57,29 @@ public class HiddenSheetsTest {
         readHiddenList(file03);
         readHiddenList(file07);
     }
-    
+
     private void readHiddenList(File file) {
-        try (ExcelReader excelReader = FastExcel.read(file, HiddenSheetsData.class, new HiddenSheetsListener()).build()) {
+        try (ExcelReader excelReader = FastExcel.read(file, HiddenSheetsData.class, new HiddenSheetsListener())
+                .build()) {
             List<ReadSheet> allSheetList = excelReader.excelExecutor().sheetList();
-            Assertions.assertEquals(2, allSheetList.stream().filter(ReadSheet::isHidden).count());
-            Assertions.assertEquals(1, allSheetList.stream().filter(ReadSheet::isVeryHidden).count());
-            Assertions.assertEquals("Sheet5", allSheetList.stream().filter(ReadSheet::isVeryHidden)
-                .findFirst().get().getSheetName());
+            Assertions.assertEquals(
+                    2, allSheetList.stream().filter(ReadSheet::isHidden).count());
+            Assertions.assertEquals(
+                    1, allSheetList.stream().filter(ReadSheet::isVeryHidden).count());
+            Assertions.assertEquals(
+                    "Sheet5",
+                    allSheetList.stream()
+                            .filter(ReadSheet::isVeryHidden)
+                            .findFirst()
+                            .get()
+                            .getSheetName());
         }
     }
 
     private void read(File file, Boolean ignoreHidden) {
         try (ExcelReader excelReader = FastExcel.read(file, HiddenSheetsData.class, new HiddenSheetsListener())
-            .ignoreHiddenSheet(ignoreHidden).build()) {
+                .ignoreHiddenSheet(ignoreHidden)
+                .build()) {
             List<ReadSheet> sheets = excelReader.excelExecutor().sheetList();
             if (Boolean.TRUE.equals(ignoreHidden)) {
                 Assertions.assertEquals(3, sheets.size());
@@ -83,13 +91,12 @@ public class HiddenSheetsTest {
 
     private void readAll(File file, Boolean ignoreHidden) {
         List<HiddenSheetsData> dataList = FastExcel.read(file, HiddenSheetsData.class, new HiddenSheetsListener())
-            .ignoreHiddenSheet(ignoreHidden)
-            .doReadAllSync();
+                .ignoreHiddenSheet(ignoreHidden)
+                .doReadAllSync();
         if (Boolean.TRUE.equals(ignoreHidden)) {
             Assertions.assertEquals(3, dataList.size());
         } else {
             Assertions.assertEquals(6, dataList.size());
         }
     }
-
 }

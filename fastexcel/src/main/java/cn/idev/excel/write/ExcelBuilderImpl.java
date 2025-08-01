@@ -13,12 +13,13 @@ import cn.idev.excel.write.metadata.WriteSheet;
 import cn.idev.excel.write.metadata.WriteTable;
 import cn.idev.excel.write.metadata.WriteWorkbook;
 import cn.idev.excel.write.metadata.fill.FillConfig;
+import java.util.Collection;
 import org.apache.poi.ss.util.CellRangeAddress;
 
 import java.util.Collection;
 
 /**
- * @author jipengfei
+ *
  */
 public class ExcelBuilderImpl implements ExcelBuilder {
 

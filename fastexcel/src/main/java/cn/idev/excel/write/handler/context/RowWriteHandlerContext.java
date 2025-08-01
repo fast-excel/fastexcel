@@ -4,7 +4,6 @@ import cn.idev.excel.context.WriteContext;
 import cn.idev.excel.write.metadata.holder.WriteSheetHolder;
 import cn.idev.excel.write.metadata.holder.WriteTableHolder;
 import cn.idev.excel.write.metadata.holder.WriteWorkbookHolder;
-
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -14,7 +13,7 @@ import org.apache.poi.ss.usermodel.Row;
 /**
  * row context
  *
- * @author Jiaju Zhuang
+ *
  */
 @Getter
 @Setter

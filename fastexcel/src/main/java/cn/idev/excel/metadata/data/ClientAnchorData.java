@@ -20,7 +20,7 @@ import org.apache.poi.util.Internal;
  * Note this class only reports the current values for possibly calculated positions and sizes.
  * If the sheet row/column sizes or positions shift, this needs updating via external calculations.
  *
- * @author Jiaju Zhuang
+ *
  */
 @Getter
 @Setter

@@ -2,10 +2,9 @@ package cn.idev.excel.test.demo.write;
 
 import cn.idev.excel.EasyExcel;
 import cn.idev.excel.test.util.TestFileUtil;
-import org.junit.jupiter.api.Test;
-
 import java.util.LinkedList;
 import java.util.List;
+import org.junit.jupiter.api.Test;
 
 /**
  * Class for testing colors
@@ -13,13 +12,10 @@ import java.util.List;
  */
 public class WriteWithColorTest {
 
-
     @Test
     public void write() {
         String fileName = TestFileUtil.getPath() + "simpleWrite" + System.currentTimeMillis() + ".xlsx";
-        EasyExcel.write(fileName, ColorDemoData.class)
-            .sheet("模板")
-            .doWrite(this::data);
+        EasyExcel.write(fileName, ColorDemoData.class).sheet("模板").doWrite(this::data);
         System.out.println(fileName);
     }
 
@@ -30,5 +26,4 @@ public class WriteWithColorTest {
         }
         return list;
     }
-
 }

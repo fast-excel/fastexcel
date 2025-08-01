@@ -6,7 +6,7 @@ import cn.idev.excel.enums.HolderEnum;
  *
  * Get the corresponding holder
  *
- * @author Jiaju Zhuang
+ *
  **/
 public interface Holder {
 
@@ -16,5 +16,4 @@ public interface Holder {
      * @return Holder enum.
      */
     HolderEnum holderType();
-
 }

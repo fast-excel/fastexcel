@@ -2,7 +2,6 @@ package cn.idev.excel.write.handler.chain;
 
 import cn.idev.excel.write.handler.SheetWriteHandler;
 import cn.idev.excel.write.handler.context.SheetWriteHandlerContext;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,7 +9,7 @@ import lombok.Setter;
 /**
  * Execute the sheet handler chain
  *
- * @author Jiaju Zhuang
+ *
  */
 @Getter
 @Setter
@@ -42,6 +41,7 @@ public class SheetHandlerExecutionChain {
             this.next.afterSheetCreate(context);
         }
     }
+
     public void addLast(SheetWriteHandler handler) {
         SheetHandlerExecutionChain context = this;
         while (context.next != null) {

@@ -1,13 +1,13 @@
 package cn.idev.excel.metadata;
 
-import cn.idev.excel.enums.CellExtraTypeEnum;
 import cn.idev.excel.constant.ExcelXmlConstants;
+import cn.idev.excel.enums.CellExtraTypeEnum;
 import org.apache.poi.ss.util.CellReference;
 
 /**
  * Cell extra information.
  *
- * @author Jiaju Zhuang
+ *
  */
 public class CellExtra extends AbstractCell {
     /**
@@ -43,22 +43,27 @@ public class CellExtra extends AbstractCell {
         CellReference first = new CellReference(ranges[0]);
         CellReference last = first;
         this.firstRowIndex = first.getRow();
-        this.firstColumnIndex = (int)first.getCol();
+        this.firstColumnIndex = (int) first.getCol();
         setRowIndex(this.firstRowIndex);
         setColumnIndex(this.firstColumnIndex);
         if (ranges.length > 1) {
             last = new CellReference(ranges[1]);
         }
         this.lastRowIndex = last.getRow();
-        this.lastColumnIndex = (int)last.getCol();
+        this.lastColumnIndex = (int) last.getCol();
     }
 
     public CellExtra(CellExtraTypeEnum type, String text, Integer rowIndex, Integer columnIndex) {
         this(type, text, rowIndex, rowIndex, columnIndex, columnIndex);
     }
 
-    public CellExtra(CellExtraTypeEnum type, String text, Integer firstRowIndex, Integer lastRowIndex,
-        Integer firstColumnIndex, Integer lastColumnIndex) {
+    public CellExtra(
+            CellExtraTypeEnum type,
+            String text,
+            Integer firstRowIndex,
+            Integer lastRowIndex,
+            Integer firstColumnIndex,
+            Integer lastColumnIndex) {
         super();
         setRowIndex(firstRowIndex);
         setColumnIndex(firstColumnIndex);

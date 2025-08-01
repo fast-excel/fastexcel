@@ -7,7 +7,7 @@ import lombok.Setter;
 /**
  * cell
  *
- * @author Jiaju Zhuang
+ *
  **/
 @Getter
 @Setter

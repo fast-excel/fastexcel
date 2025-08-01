@@ -3,7 +3,7 @@ package cn.idev.excel.enums;
 /**
  * The types of holder
  *
- * @author Jiaju Zhuang
+ *
  **/
 public enum HolderEnum {
     /**

@@ -1,13 +1,11 @@
 package cn.idev.excel.cache;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.UUID;
-
 import cn.idev.excel.context.AnalysisContext;
 import cn.idev.excel.util.FileUtils;
 import cn.idev.excel.util.ListUtils;
-
+import java.io.File;
+import java.util.ArrayList;
+import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.ehcache.CacheManager;
@@ -21,7 +19,7 @@ import org.ehcache.config.units.MemoryUnit;
 /**
  * Default cache
  *
- * @author Jiaju Zhuang
+ *
  */
 @Slf4j
 public class Ehcache implements ReadCache {
@@ -30,6 +28,7 @@ public class Ehcache implements ReadCache {
      * Key index
      */
     private int activeIndex = 0;
+
     public static final int DEBUG_CACHE_MISS_SIZE = 1000;
     public static final int DEBUG_WRITE_SIZE = 100 * 10000;
     private ArrayList<String> dataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
@@ -47,6 +46,7 @@ public class Ehcache implements ReadCache {
      * Currently active cache
      */
     private org.ehcache.Cache<Integer, ArrayList> activeCache;
+
     private String cacheAlias;
     /**
      * Count the number of cache misses
@@ -62,29 +62,32 @@ public class Ehcache implements ReadCache {
         // In order to be compatible with the code
         // If the user set up `maxCacheActivateSize`, then continue using it
         if (maxCacheActivateSize != null) {
-            this.activeCacheConfiguration = CacheConfigurationBuilder
-                .newCacheConfigurationBuilder(Integer.class, ArrayList.class,
-                    ResourcePoolsBuilder.newResourcePoolsBuilder()
-                        .heap(maxCacheActivateSize, MemoryUnit.MB))
-                .build();
+            this.activeCacheConfiguration = CacheConfigurationBuilder.newCacheConfigurationBuilder(
+                            Integer.class,
+                            ArrayList.class,
+                            ResourcePoolsBuilder.newResourcePoolsBuilder().heap(maxCacheActivateSize, MemoryUnit.MB))
+                    .build();
         } else {
-            this.activeCacheConfiguration = CacheConfigurationBuilder
-                .newCacheConfigurationBuilder(Integer.class, ArrayList.class,
-                    ResourcePoolsBuilder.newResourcePoolsBuilder()
-                        .heap(maxCacheActivateBatchCount, EntryUnit.ENTRIES))
-                .build();
+            this.activeCacheConfiguration = CacheConfigurationBuilder.newCacheConfigurationBuilder(
+                            Integer.class,
+                            ArrayList.class,
+                            ResourcePoolsBuilder.newResourcePoolsBuilder()
+                                    .heap(maxCacheActivateBatchCount, EntryUnit.ENTRIES))
+                    .build();
         }
     }
 
     static {
         CACHE_PATH_FILE = FileUtils.createCacheTmpFile();
-        FILE_CACHE_MANAGER =
-            CacheManagerBuilder.newCacheManagerBuilder().with(CacheManagerBuilder.persistence(CACHE_PATH_FILE)).build(
-                true);
+        FILE_CACHE_MANAGER = CacheManagerBuilder.newCacheManagerBuilder()
+                .with(CacheManagerBuilder.persistence(CACHE_PATH_FILE))
+                .build(true);
         ACTIVE_CACHE_MANAGER = CacheManagerBuilder.newCacheManagerBuilder().build(true);
-        FILE_CACHE_CONFIGURATION = CacheConfigurationBuilder
-            .newCacheConfigurationBuilder(Integer.class, ArrayList.class, ResourcePoolsBuilder.newResourcePoolsBuilder()
-                .disk(20, MemoryUnit.GB)).build();
+        FILE_CACHE_CONFIGURATION = CacheConfigurationBuilder.newCacheConfigurationBuilder(
+                        Integer.class,
+                        ArrayList.class,
+                        ResourcePoolsBuilder.newResourcePoolsBuilder().disk(20, MemoryUnit.GB))
+                .build();
     }
 
     @Override
@@ -93,7 +96,7 @@ public class Ehcache implements ReadCache {
         try {
             fileCache = FILE_CACHE_MANAGER.createCache(cacheAlias, FILE_CACHE_CONFIGURATION);
         } catch (IllegalStateException e) {
-            //fix Issue #2693,Temporary files may be deleted if there is no operation for a long time, so they need
+            // fix Issue #2693,Temporary files may be deleted if there is no operation for a long time, so they need
             // to be recreated.
             if (CACHE_PATH_FILE.exists()) {
                 throw e;
@@ -159,5 +162,4 @@ public class Ehcache implements ReadCache {
         FILE_CACHE_MANAGER.removeCache(cacheAlias);
         ACTIVE_CACHE_MANAGER.removeCache(cacheAlias);
     }
-
 }

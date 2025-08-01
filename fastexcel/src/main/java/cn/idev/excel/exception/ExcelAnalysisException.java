@@ -2,7 +2,6 @@ package cn.idev.excel.exception;
 
 /**
  *
- * @author jipengfei
  */
 public class ExcelAnalysisException extends ExcelRuntimeException {
 

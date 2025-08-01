@@ -1,7 +1,6 @@
 package cn.idev.excel.metadata;
 
 import java.util.Map;
-
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -10,7 +9,7 @@ import lombok.Setter;
 /**
  * filed cache
  *
- * @author Jiaju Zhuang
+ *
  */
 @Getter
 @Setter

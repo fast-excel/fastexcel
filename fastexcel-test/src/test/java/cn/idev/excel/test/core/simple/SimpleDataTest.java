@@ -1,17 +1,15 @@
 package cn.idev.excel.test.core.simple;
 
+import cn.idev.excel.EasyExcel;
+import cn.idev.excel.read.listener.PageReadListener;
+import cn.idev.excel.support.ExcelTypeEnum;
+import cn.idev.excel.test.util.TestFileUtil;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import cn.idev.excel.EasyExcel;
-import cn.idev.excel.read.listener.PageReadListener;
-import cn.idev.excel.support.ExcelTypeEnum;
-import cn.idev.excel.test.util.TestFileUtil;
-
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -29,7 +27,7 @@ import org.junit.jupiter.api.TestMethodOrder;
  * <li>t1x: Synchronous reading tests</li>
  * <li>t2x: Specific feature tests (sheet name reading, pagination, etc.)</li>
  *
- * @author Jiaju Zhuang
+ *
  */
 @TestMethodOrder(MethodOrderer.MethodName.class)
 @Slf4j
@@ -68,7 +66,7 @@ public class SimpleDataTest {
      */
     private void readAndWrite(File file) {
         EasyExcel.write(file, SimpleData.class).sheet().doWrite(data());
-        //use a SimpleDataListener object to handle and check result
+        // use a SimpleDataListener object to handle and check result
         EasyExcel.read(file, SimpleData.class, new SimpleDataListener()).sheet().doRead();
     }
 
@@ -95,9 +93,14 @@ public class SimpleDataTest {
      * @throws Exception exception
      */
     private void readAndWriteInputStream(File file, ExcelTypeEnum excelTypeEnum) throws Exception {
-        EasyExcel.write(new FileOutputStream(file), SimpleData.class).excelType(excelTypeEnum).sheet().doWrite(data());
-        //use a SimpleDataListener object to handle and check result
-        EasyExcel.read(new FileInputStream(file), SimpleData.class, new SimpleDataListener()).sheet().doRead();
+        EasyExcel.write(new FileOutputStream(file), SimpleData.class)
+                .excelType(excelTypeEnum)
+                .sheet()
+                .doWrite(data());
+        // use a SimpleDataListener object to handle and check result
+        EasyExcel.read(new FileInputStream(file), SimpleData.class, new SimpleDataListener())
+                .sheet()
+                .doRead();
     }
 
     /**
@@ -130,10 +133,10 @@ public class SimpleDataTest {
     @Test
     public void t21SheetNameRead07() {
         List<Map<Integer, Object>> list = EasyExcel.read(
-                TestFileUtil.readFile("simple" + File.separator + "simple07.xlsx"))
-            //set the sheet name to read
-            .sheet("simple")
-            .doReadSync();
+                        TestFileUtil.readFile("simple" + File.separator + "simple07.xlsx"))
+                // set the sheet name to read
+                .sheet("simple")
+                .doReadSync();
         Assertions.assertEquals(1, list.size());
     }
 
@@ -143,10 +146,10 @@ public class SimpleDataTest {
     @Test
     public void t22SheetNoRead07() {
         List<Map<Integer, Object>> list = EasyExcel.read(
-                TestFileUtil.readFile("simple" + File.separator + "simple07.xlsx"))
-            // sheetNo begin with 0
-            .sheet(1)
-            .doReadSync();
+                        TestFileUtil.readFile("simple" + File.separator + "simple07.xlsx"))
+                // sheetNo begin with 0
+                .sheet(1)
+                .doReadSync();
         Assertions.assertEquals(1, list.size());
     }
 
@@ -160,12 +163,17 @@ public class SimpleDataTest {
      */
     @Test
     public void t23PageReadListener07() {
-        //Read the first 5 rows of an Excel file
-        EasyExcel.read(file07, SimpleData.class,
-                new PageReadListener<SimpleData>(dataList -> {
-                    Assertions.assertEquals(5, dataList.size());
-                }, 5))
-            .sheet().doRead();
+        // Read the first 5 rows of an Excel file
+        EasyExcel.read(
+                        file07,
+                        SimpleData.class,
+                        new PageReadListener<SimpleData>(
+                                dataList -> {
+                                    Assertions.assertEquals(5, dataList.size());
+                                },
+                                5))
+                .sheet()
+                .doRead();
     }
 
     /**
@@ -182,7 +190,7 @@ public class SimpleDataTest {
         List<Object> list = EasyExcel.read(file).head(SimpleData.class).sheet().doReadSync();
         Assertions.assertEquals(list.size(), 10);
         Assertions.assertTrue(list.get(0) instanceof SimpleData);
-        Assertions.assertEquals(((SimpleData)list.get(0)).getName(), "姓名0");
+        Assertions.assertEquals(((SimpleData) list.get(0)).getName(), "姓名0");
     }
 
     /**

@@ -1,12 +1,11 @@
 package cn.idev.excel.read.metadata.holder.xls;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import cn.idev.excel.enums.RowTypeEnum;
 import cn.idev.excel.read.metadata.ReadSheet;
 import cn.idev.excel.read.metadata.holder.ReadSheetHolder;
 import cn.idev.excel.read.metadata.holder.ReadWorkbookHolder;
+import java.util.HashMap;
+import java.util.Map;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +14,7 @@ import lombok.Setter;
 /**
  * sheet holder
  *
- * @author Jiaju Zhuang
+ *
  */
 @Getter
 @Setter

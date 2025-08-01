@@ -8,9 +8,6 @@ import cn.idev.excel.metadata.property.ExcelContentProperty;
 
 /**
  * Convert between Java objects and excel objects
- *
- * @param <T>
- * @author Dan Zheng
  */
 public interface Converter<T> {
 
@@ -41,8 +38,9 @@ public interface Converter<T> {
      * @return Data to put into a Java object
      * @throws Exception Exception.
      */
-    default T convertToJavaData(ReadCellData<?> cellData, ExcelContentProperty contentProperty,
-                                GlobalConfiguration globalConfiguration) throws Exception {
+    default T convertToJavaData(
+            ReadCellData<?> cellData, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration)
+            throws Exception {
         throw new UnsupportedOperationException("The current operation is not supported by the current converter.");
     }
 
@@ -54,8 +52,10 @@ public interface Converter<T> {
      * @throws Exception Exception.
      */
     default T convertToJavaData(ReadConverterContext<?> context) throws Exception {
-        return convertToJavaData(context.getReadCellData(), context.getContentProperty(),
-            context.getAnalysisContext().currentReadHolder().globalConfiguration());
+        return convertToJavaData(
+                context.getReadCellData(),
+                context.getContentProperty(),
+                context.getAnalysisContext().currentReadHolder().globalConfiguration());
     }
 
     /**
@@ -67,8 +67,8 @@ public interface Converter<T> {
      * @return Data to put into a Excel
      * @throws Exception Exception.
      */
-    default WriteCellData<?> convertToExcelData(T value, ExcelContentProperty contentProperty,
-                                                GlobalConfiguration globalConfiguration) throws Exception {
+    default WriteCellData<?> convertToExcelData(
+            T value, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) throws Exception {
         throw new UnsupportedOperationException("The current operation is not supported by the current converter.");
     }
 
@@ -80,7 +80,9 @@ public interface Converter<T> {
      * @throws Exception Exception.
      */
     default WriteCellData<?> convertToExcelData(WriteConverterContext<T> context) throws Exception {
-        return convertToExcelData(context.getValue(), context.getContentProperty(),
-            context.getWriteContext().currentWriteHolder().globalConfiguration());
+        return convertToExcelData(
+                context.getValue(),
+                context.getContentProperty(),
+                context.getWriteContext().currentWriteHolder().globalConfiguration());
     }
 }

@@ -8,7 +8,7 @@ package cn.idev.excel.exception;
  * The cn.idev.excel.read.listener.ReadListener#doAfterAllAnalysed(cn.idev.excel.context.AnalysisContext) method
  * is called after the call is stopped.
  *
- * @author Jiaju Zhuang
+ *
  * @see ExcelAnalysisStopException
  * @since 3.3.4
  */

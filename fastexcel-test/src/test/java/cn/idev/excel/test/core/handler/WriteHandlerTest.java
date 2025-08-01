@@ -1,19 +1,17 @@
 package cn.idev.excel.test.core.handler;
 
+import cn.idev.excel.EasyExcel;
+import cn.idev.excel.test.util.TestFileUtil;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import cn.idev.excel.test.util.TestFileUtil;
-import cn.idev.excel.EasyExcel;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
 /**
- * @author Jiaju Zhuang
+ *
  */
 @TestMethodOrder(MethodOrderer.MethodName.class)
 public class WriteHandlerTest {
@@ -76,20 +74,32 @@ public class WriteHandlerTest {
 
     private void workbookWrite(File file) {
         WriteHandler writeHandler = new WriteHandler();
-        EasyExcel.write(file).head(WriteHandlerData.class).registerWriteHandler(writeHandler).sheet().doWrite(data());
+        EasyExcel.write(file)
+                .head(WriteHandlerData.class)
+                .registerWriteHandler(writeHandler)
+                .sheet()
+                .doWrite(data());
         writeHandler.afterAll();
     }
 
     private void sheetWrite(File file) {
         WriteHandler writeHandler = new WriteHandler();
-        EasyExcel.write(file).head(WriteHandlerData.class).sheet().registerWriteHandler(writeHandler).doWrite(data());
+        EasyExcel.write(file)
+                .head(WriteHandlerData.class)
+                .sheet()
+                .registerWriteHandler(writeHandler)
+                .doWrite(data());
         writeHandler.afterAll();
     }
 
     private void tableWrite(File file) {
         WriteHandler writeHandler = new WriteHandler();
-        EasyExcel.write(file).head(WriteHandlerData.class).sheet().table(0).registerWriteHandler(writeHandler)
-            .doWrite(data());
+        EasyExcel.write(file)
+                .head(WriteHandlerData.class)
+                .sheet()
+                .table(0)
+                .registerWriteHandler(writeHandler)
+                .doWrite(data());
         writeHandler.afterAll();
     }
 

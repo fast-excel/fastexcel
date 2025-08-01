@@ -1,19 +1,17 @@
 package cn.idev.excel.test.core.head;
 
+import cn.idev.excel.EasyExcel;
+import cn.idev.excel.test.util.TestFileUtil;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import cn.idev.excel.test.util.TestFileUtil;
-import cn.idev.excel.EasyExcel;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
 /**
- * @author Jiaju Zhuang
+ *
  */
 @TestMethodOrder(MethodOrderer.MethodName.class)
 public class ComplexHeadDataTest {
@@ -53,7 +51,9 @@ public class ComplexHeadDataTest {
     private void readAndWrite(File file) {
         EasyExcel.write(file, ComplexHeadData.class).sheet().doWrite(data());
         EasyExcel.read(file, ComplexHeadData.class, new ComplexDataListener())
-            .xlsxSAXParserFactoryName("com.sun.org.apache.xerces.internal.jaxp.SAXParserFactoryImpl").sheet().doRead();
+                .xlsxSAXParserFactoryName("com.sun.org.apache.xerces.internal.jaxp.SAXParserFactoryImpl")
+                .sheet()
+                .doRead();
     }
 
     @Test
@@ -72,8 +72,13 @@ public class ComplexHeadDataTest {
     }
 
     private void readAndWriteAutomaticMergeHead(File file) {
-        EasyExcel.write(file, ComplexHeadData.class).automaticMergeHead(Boolean.FALSE).sheet().doWrite(data());
-        EasyExcel.read(file, ComplexHeadData.class, new ComplexDataListener()).sheet().doRead();
+        EasyExcel.write(file, ComplexHeadData.class)
+                .automaticMergeHead(Boolean.FALSE)
+                .sheet()
+                .doWrite(data());
+        EasyExcel.read(file, ComplexHeadData.class, new ComplexDataListener())
+                .sheet()
+                .doRead();
     }
 
     private List<ComplexHeadData> data() {

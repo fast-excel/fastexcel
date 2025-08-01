@@ -28,6 +28,7 @@
         <java.version>1.8</java.version>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
+        <maven-surefire-plugin.version>3.5.3</maven-surefire-plugin.version>
         <gpg.skip>true</gpg.skip>
         <maven.javadoc.skip>true</maven.javadoc.skip>
         <maven.test.skip>true</maven.test.skip>
@@ -47,6 +48,7 @@
         <log4j-over-slf4j.version>1.7.36</log4j-over-slf4j.version>
         <logback-classic.version>1.5.6</logback-classic.version>
         <mockserver.version>5.15.0</mockserver.version>
+        <jacoco.version>0.8.13</jacoco.version>
     </properties>
 
     <scm>
@@ -224,7 +226,12 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>3.3.0</version>
+                    <version>${maven-surefire-plugin.version}</version>
+                    <configuration>
+                        <argLine>
+                            ${argLine} ${surefireArgLine}
+                        </argLine>
+                    </configuration>
                     <!--                    please add below configuration if you are using JDK 9 or higher-->
                     <!--                    <configuration>-->
                     <!--                        <argLine>-->
@@ -249,11 +256,45 @@
                     <artifactId>central-publishing-maven-plugin</artifactId>
                     <version>0.4.0</version>
                 </plugin>
+                <plugin>
+                    <groupId>com.diffplug.spotless</groupId>
+                    <artifactId>spotless-maven-plugin</artifactId>
+                    <version>2.46.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>${jacoco.version}</version>
+                    <executions>
+                        <!-- enable JaCoCo Agent  -->
+                        <execution>
+                            <id>prepare-agent</id>
+                            <goals>
+                                <goal>prepare-agent</goal>
+                            </goals>
+                        </execution>
+                        <!-- generate module report -->
+                        <execution>
+                            <id>generate-report</id>
+                            <phase>test</phase>
+                            <goals>
+                                <goal>report</goal>
+                            </goals>
+                        </execution>
+                        <!-- generate aggregate report -->
+                        <execution>
+                            <id>generate-aggregate-report</id>
+                            <phase>test</phase>
+                            <goals>
+                                <goal>report-aggregate</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
             </plugins>
         </pluginManagement>
 
         <plugins>
-            <!-- code style -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -353,6 +394,37 @@
                 </executions>
             </plugin>
 
+            <plugin>
+                <groupId>com.diffplug.spotless</groupId>
+                <artifactId>spotless-maven-plugin</artifactId>
+                <configuration>
+                    <java>
+                        <palantirJavaFormat>
+                            <version>2.72.0</version>
+                        </palantirJavaFormat>
+                        <!-- static imports first, then others, no blank lines  -->
+                        <importOrder>
+                            <order>\#|</order>
+                        </importOrder>
+                        <removeUnusedImports/>
+                        <trimTrailingWhitespace/>
+                        <endWithNewline/>
+                        <indent>
+                            <spaces>true</spaces>
+                            <spacesPerTab>4</spacesPerTab>
+                        </indent>
+                    </java>
+                    <pom>
+                        <trimTrailingWhitespace/>
+                        <endWithNewline/>
+                        <indent>
+                            <spaces>true</spaces>
+                            <spacesPerTab>4</spacesPerTab>
+                        </indent>
+                    </pom>
+                </configuration>
+            </plugin>
+
             <!-- Publish package to the Maven Central Repository -->
             <!--            <plugin>-->
             <!--                <groupId>org.sonatype.plugins</groupId>-->
@@ -375,4 +447,24 @@
             </plugin>
         </plugins>
     </build>
+    <profiles>
+        <profile>
+            <id>jdk9plus</id>
+            <activation>
+                <jdk>[9,)</jdk>
+            </activation>
+            <properties>
+                    <surefireArgLine>--add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/sun.reflect.annotation=ALL-UNNAMED -Dfile.encoding=UTF-8</surefireArgLine>
+            </properties>
+        </profile>
+        <profile>
+            <id>jdk8</id>
+            <activation>
+                <jdk>1.8</jdk>
+            </activation>
+            <properties>
+                <surefireArgLine> -Dfile.encoding=UTF-8</surefireArgLine>
+            </properties>
+        </profile>
+    </profiles>
 </project>

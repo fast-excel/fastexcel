@@ -1,21 +1,19 @@
 package cn.idev.excel.test.core.fill;
 
+import cn.idev.excel.EasyExcel;
+import cn.idev.excel.ExcelWriter;
+import cn.idev.excel.enums.WriteDirectionEnum;
+import cn.idev.excel.exception.ExcelGenerateException;
+import cn.idev.excel.test.util.TestFileUtil;
+import cn.idev.excel.write.merge.LoopMergeStrategy;
+import cn.idev.excel.write.metadata.WriteSheet;
+import cn.idev.excel.write.metadata.fill.FillConfig;
+import cn.idev.excel.write.metadata.fill.FillWrapper;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import cn.idev.excel.enums.WriteDirectionEnum;
-import cn.idev.excel.write.merge.LoopMergeStrategy;
-import cn.idev.excel.test.util.TestFileUtil;
-import cn.idev.excel.EasyExcel;
-import cn.idev.excel.ExcelWriter;
-import cn.idev.excel.exception.ExcelGenerateException;
-import cn.idev.excel.write.metadata.WriteSheet;
-import cn.idev.excel.write.metadata.fill.FillConfig;
-import cn.idev.excel.write.metadata.fill.FillWrapper;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
@@ -23,7 +21,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
 /**
- * @author Jiaju Zhuang
+ *
  */
 @TestMethodOrder(MethodOrderer.MethodName.class)
 public class FillDataTest {
@@ -89,8 +87,8 @@ public class FillDataTest {
 
     @Test
     public void t03FillCsv() {
-        ExcelGenerateException excelGenerateException = Assertions.assertThrows(ExcelGenerateException.class,
-            () -> fill(fileCsv, simpleTemplateCsv));
+        ExcelGenerateException excelGenerateException =
+                Assertions.assertThrows(ExcelGenerateException.class, () -> fill(fileCsv, simpleTemplateCsv));
         Assertions.assertEquals("csv cannot use template.", excelGenerateException.getMessage());
     }
 
@@ -138,14 +136,20 @@ public class FillDataTest {
         FillData fillData = new FillData();
         fillData.setName("Zhang San");
         fillData.setNumber(5.2);
-        EasyExcel.write(file, FillData.class).withTemplate(template).sheet("Sheet2").doFill(fillData);
+        EasyExcel.write(file, FillData.class)
+                .withTemplate(template)
+                .sheet("Sheet2")
+                .doFill(fillData);
     }
 
     private void compositeFill(File file, File template) {
-        try (ExcelWriter excelWriter = EasyExcel.write(file).withTemplate(template).build()) {
+        try (ExcelWriter excelWriter =
+                EasyExcel.write(file).withTemplate(template).build()) {
             WriteSheet writeSheet = EasyExcel.writerSheet().build();
 
-            FillConfig fillConfig = FillConfig.builder().direction(WriteDirectionEnum.HORIZONTAL).build();
+            FillConfig fillConfig = FillConfig.builder()
+                    .direction(WriteDirectionEnum.HORIZONTAL)
+                    .build();
             excelWriter.fill(new FillWrapper("data1", data()), fillConfig, writeSheet);
             excelWriter.fill(new FillWrapper("data1", data()), fillConfig, writeSheet);
             excelWriter.fill(new FillWrapper("data2", data()), writeSheet);
@@ -157,19 +161,26 @@ public class FillDataTest {
             excelWriter.fill(map, writeSheet);
         }
 
-        List<Object> list = EasyExcel.read(file).ignoreEmptyRow(false).sheet().headRowNumber(0).doReadSync();
-        Map<String, String> map0 = (Map<String, String>)list.get(0);
+        List<Object> list = EasyExcel.read(file)
+                .ignoreEmptyRow(false)
+                .sheet()
+                .headRowNumber(0)
+                .doReadSync();
+        Map<String, String> map0 = (Map<String, String>) list.get(0);
         Assertions.assertEquals("Zhang San", map0.get(21));
-        Map<String, String> map27 = (Map<String, String>)list.get(27);
+        Map<String, String> map27 = (Map<String, String>) list.get(27);
         Assertions.assertEquals("Zhang San", map27.get(0));
-        Map<String, String> map29 = (Map<String, String>)list.get(29);
+        Map<String, String> map29 = (Map<String, String>) list.get(29);
         Assertions.assertEquals("Zhang San", map29.get(3));
     }
 
     private void horizontalFill(File file, File template) {
-        try (ExcelWriter excelWriter = EasyExcel.write(file).withTemplate(template).build()) {
+        try (ExcelWriter excelWriter =
+                EasyExcel.write(file).withTemplate(template).build()) {
             WriteSheet writeSheet = EasyExcel.writerSheet().build();
-            FillConfig fillConfig = FillConfig.builder().direction(WriteDirectionEnum.HORIZONTAL).build();
+            FillConfig fillConfig = FillConfig.builder()
+                    .direction(WriteDirectionEnum.HORIZONTAL)
+                    .build();
             excelWriter.fill(data(), fillConfig, writeSheet);
             excelWriter.fill(data(), fillConfig, writeSheet);
             Map<String, Object> map = new HashMap<String, Object>();
@@ -180,14 +191,18 @@ public class FillDataTest {
 
         List<Object> list = EasyExcel.read(file).sheet().headRowNumber(0).doReadSync();
         Assertions.assertEquals(list.size(), 5L);
-        Map<String, String> map0 = (Map<String, String>)list.get(0);
+        Map<String, String> map0 = (Map<String, String>) list.get(0);
         Assertions.assertEquals("Zhang San", map0.get(2));
     }
 
     private void complexFill(File file, File template) {
-        try (ExcelWriter excelWriter = EasyExcel.write(file).withTemplate(template).build()) {
-            WriteSheet writeSheet = EasyExcel.writerSheet().registerWriteHandler(new LoopMergeStrategy(2, 0)).build();
-            FillConfig fillConfig = FillConfig.builder().forceNewRow(Boolean.TRUE).build();
+        try (ExcelWriter excelWriter =
+                EasyExcel.write(file).withTemplate(template).build()) {
+            WriteSheet writeSheet = EasyExcel.writerSheet()
+                    .registerWriteHandler(new LoopMergeStrategy(2, 0))
+                    .build();
+            FillConfig fillConfig =
+                    FillConfig.builder().forceNewRow(Boolean.TRUE).build();
             excelWriter.fill(data(), fillConfig, writeSheet);
             excelWriter.fill(data(), fillConfig, writeSheet);
             Map<String, Object> map = new HashMap<String, Object>();
@@ -197,7 +212,7 @@ public class FillDataTest {
         }
         List<Object> list = EasyExcel.read(file).sheet().headRowNumber(3).doReadSync();
         Assertions.assertEquals(list.size(), 21L);
-        Map<String, String> map19 = (Map<String, String>)list.get(19);
+        Map<String, String> map19 = (Map<String, String>) list.get(19);
         Assertions.assertEquals("Zhang San", map19.get(0));
     }
 
@@ -221,5 +236,4 @@ public class FillDataTest {
         }
         return list;
     }
-
 }

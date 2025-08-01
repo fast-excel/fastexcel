@@ -1,13 +1,12 @@
 package cn.idev.excel.converters.bigdecimal;
 
-import java.math.BigDecimal;
-
 import cn.idev.excel.converters.Converter;
 import cn.idev.excel.enums.CellDataTypeEnum;
 import cn.idev.excel.metadata.GlobalConfiguration;
 import cn.idev.excel.metadata.data.ReadCellData;
 import cn.idev.excel.metadata.data.WriteCellData;
 import cn.idev.excel.metadata.property.ExcelContentProperty;
+import java.math.BigDecimal;
 
 /**
  * BigDecimal and boolean converter
@@ -15,7 +14,7 @@ import cn.idev.excel.metadata.property.ExcelContentProperty;
  * This converter is responsible for converting between Java type BigDecimal and Excel's boolean type.
  * It treats Excel's true as BigDecimal.ONE, and false as BigDecimal.ZERO.
  *
- * @author Jiaju Zhuang
+ *
  */
 public class BigDecimalBooleanConverter implements Converter<BigDecimal> {
 
@@ -49,8 +48,8 @@ public class BigDecimalBooleanConverter implements Converter<BigDecimal> {
      * @return                       Returns the converted BigDecimal object.
      */
     @Override
-    public BigDecimal convertToJavaData(ReadCellData<?> cellData, ExcelContentProperty contentProperty,
-                                        GlobalConfiguration globalConfiguration) {
+    public BigDecimal convertToJavaData(
+            ReadCellData<?> cellData, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) {
         if (cellData.getBooleanValue()) {
             return BigDecimal.ONE;
         }
@@ -67,12 +66,11 @@ public class BigDecimalBooleanConverter implements Converter<BigDecimal> {
      * @return                       Returns the converted Excel cell data.
      */
     @Override
-    public WriteCellData<?> convertToExcelData(BigDecimal value, ExcelContentProperty contentProperty,
-                                               GlobalConfiguration globalConfiguration) {
+    public WriteCellData<?> convertToExcelData(
+            BigDecimal value, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) {
         if (BigDecimal.ONE.equals(value)) {
             return new WriteCellData<>(Boolean.TRUE);
         }
         return new WriteCellData<>(Boolean.FALSE);
     }
-
 }

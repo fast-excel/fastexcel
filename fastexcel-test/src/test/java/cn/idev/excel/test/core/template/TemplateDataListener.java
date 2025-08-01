@@ -1,22 +1,19 @@
 package cn.idev.excel.test.core.template;
 
+import cn.idev.excel.context.AnalysisContext;
+import cn.idev.excel.event.AnalysisEventListener;
+import com.alibaba.fastjson2.JSON;
 import java.util.ArrayList;
 import java.util.List;
-
-import cn.idev.excel.event.AnalysisEventListener;
-import cn.idev.excel.test.core.simple.SimpleDataListener;
-import cn.idev.excel.context.AnalysisContext;
-import com.alibaba.fastjson2.JSON;
-
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
- * @author Jiaju Zhuang
+ *
  */
+@Slf4j
 public class TemplateDataListener extends AnalysisEventListener<TemplateData> {
-    private static final Logger LOGGER = LoggerFactory.getLogger(SimpleDataListener.class);
+
     List<TemplateData> list = new ArrayList<TemplateData>();
 
     @Override
@@ -29,6 +26,6 @@ public class TemplateDataListener extends AnalysisEventListener<TemplateData> {
         Assertions.assertEquals(list.size(), 2);
         Assertions.assertEquals(list.get(0).getString0(), "字符串0");
         Assertions.assertEquals(list.get(1).getString0(), "字符串1");
-        LOGGER.debug("First row:{}", JSON.toJSONString(list.get(0)));
+        log.debug("First row:{}", JSON.toJSONString(list.get(0)));
     }
 }

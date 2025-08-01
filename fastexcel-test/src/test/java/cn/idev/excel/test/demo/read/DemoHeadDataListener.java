@@ -6,15 +6,14 @@ import cn.idev.excel.metadata.data.ReadCellData;
 import cn.idev.excel.read.listener.ReadListener;
 import cn.idev.excel.util.ListUtils;
 import com.alibaba.fastjson2.JSON;
-import lombok.extern.slf4j.Slf4j;
-
 import java.util.List;
 import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Reading headers
  *
- * @author Jiaju Zhuang
+ *
  */
 @Slf4j
 public class DemoHeadDataListener implements ReadListener<DemoData> {
@@ -41,8 +40,11 @@ public class DemoHeadDataListener implements ReadListener<DemoData> {
         log.error("Parsing failed, but continue parsing the next row: {}", exception.getMessage());
         if (exception instanceof ExcelDataConvertException) {
             ExcelDataConvertException excelDataConvertException = (ExcelDataConvertException) exception;
-            log.error("Row {}, Column {} parsing exception, data is: {}", excelDataConvertException.getRowIndex(),
-                    excelDataConvertException.getColumnIndex(), excelDataConvertException.getCellData());
+            log.error(
+                    "Row {}, Column {} parsing exception, data is: {}",
+                    excelDataConvertException.getRowIndex(),
+                    excelDataConvertException.getColumnIndex(),
+                    excelDataConvertException.getCellData());
         }
     }
 

@@ -7,7 +7,6 @@ import lombok.Setter;
 /**
  * table
  *
- * @author jipengfei
  */
 @Getter
 @Setter

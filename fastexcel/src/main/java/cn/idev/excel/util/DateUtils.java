@@ -31,36 +31,32 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 import java.util.regex.Pattern;
-
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.util.LocaleUtil;
 
 /**
  * Date utils
- *
- * @author Jiaju Zhuang
- **/
+ */
 public class DateUtils {
     /**
      * Is a cache of dates
      */
-    private static final ThreadLocal<Map<Short, Boolean>> DATE_THREAD_LOCAL =
-        new ThreadLocal<>();
+    private static final ThreadLocal<Map<Short, Boolean>> DATE_THREAD_LOCAL = new ThreadLocal<>();
     /**
      * Is a cache of dates
      */
-    private static final ThreadLocal<Map<String, SimpleDateFormat>> DATE_FORMAT_THREAD_LOCAL =
-        new ThreadLocal<>();
+    private static final ThreadLocal<Map<String, SimpleDateFormat>> DATE_FORMAT_THREAD_LOCAL = new ThreadLocal<>();
 
     /**
      * The following patterns are used in {@link #isADateFormat(Short, String)}
      */
     private static final Pattern date_ptrn1 = Pattern.compile("^\\[\\$\\-.*?\\]");
+
     private static final Pattern date_ptrn2 = Pattern.compile("^\\[[a-zA-Z]+\\]");
     private static final Pattern date_ptrn3a = Pattern.compile("[yYmMdDhHsS]");
     // add "\u5e74 \u6708 \u65e5" for Chinese/Japanese date format:2017 \u5e74 2 \u6708 7 \u65e5
     private static final Pattern date_ptrn3b =
-        Pattern.compile("^[\\[\\]yYmMdDhHsS\\-T/\u5e74\u6708\u65e5,. :\"\\\\]+0*[ampAMP/]*$");
+            Pattern.compile("^[\\[\\]yYmMdDhHsS\\-T/\u5e74\u6708\u65e5,. :\"\\\\]+0*[ampAMP/]*$");
     // elapsed time patterns: [h],[m] and [s]
     private static final Pattern date_ptrn4 = Pattern.compile("^\\[([hH]+|[mM]+|[sS]+)\\]");
     // for format which start with "[DBNum1]" or "[DBNum2]" or "[DBNum3]" could be a Chinese date
@@ -87,7 +83,7 @@ public class DateUtils {
     public static final int SECONDS_PER_DAY = (HOURS_PER_DAY * MINUTES_PER_HOUR * SECONDS_PER_MINUTE);
 
     // used to specify that date is invalid
-    private static final int BAD_DATE         = -1;
+    private static final int BAD_DATE = -1;
     public static final long DAY_MILLISECONDS = SECONDS_PER_DAY * 1000L;
 
     private DateUtils() {}
@@ -292,8 +288,8 @@ public class DateUtils {
         if (date == null) {
             return null;
         }
-        LocalDateTime localDateTime = DateUtil.getLocalDateTime(date.doubleValue(),
-            BooleanUtils.isTrue(use1904windowing), true);
+        LocalDateTime localDateTime =
+                DateUtil.getLocalDateTime(date.doubleValue(), BooleanUtils.isTrue(use1904windowing), true);
         return format(localDateTime, dateFormat);
     }
 
@@ -341,12 +337,13 @@ public class DateUtils {
      * @param roundSeconds round to closest second
      * @return Java representation of the date, or null if date is not a valid Excel date
      */
-    public static Calendar getJavaCalendar(double date, boolean use1904windowing, TimeZone timeZone, boolean roundSeconds) {
+    public static Calendar getJavaCalendar(
+            double date, boolean use1904windowing, TimeZone timeZone, boolean roundSeconds) {
         if (!isValidExcelDate(date)) {
             return null;
         }
-        int wholeDays = (int)Math.floor(date);
-        int millisecondsInDay = (int)((date - wholeDays) * DAY_MILLISECONDS + 0.5);
+        int wholeDays = (int) Math.floor(date);
+        int millisecondsInDay = (int) ((date - wholeDays) * DAY_MILLISECONDS + 0.5);
         Calendar calendar;
         if (timeZone != null) {
             calendar = LocaleUtil.getLocaleCalendar(timeZone);
@@ -357,16 +354,14 @@ public class DateUtils {
         return calendar;
     }
 
-
-    public static void setCalendar(Calendar calendar, int wholeDays,
-        int millisecondsInDay, boolean use1904windowing, boolean roundSeconds) {
+    public static void setCalendar(
+            Calendar calendar, int wholeDays, int millisecondsInDay, boolean use1904windowing, boolean roundSeconds) {
         int startYear = 1900;
         int dayAdjust = -1; // Excel thinks 2/29/1900 is a valid date, which it isn't
         if (use1904windowing) {
             startYear = 1904;
             dayAdjust = 1; // 1904 date windowing uses 1/2/1904 as the first day
-        }
-        else if (wholeDays < 61) {
+        } else if (wholeDays < 61) {
             // Date is prior to 3/1/1900, so adjust because Excel thinks 2/29/1900 exists
             // If Excel date == 2/29/1900, will become 3/1/1900 in Java representation
             dayAdjust = 0;
@@ -383,19 +378,15 @@ public class DateUtils {
         }
     }
 
-
     /**
      * Given a double, checks if it is a valid Excel date.
      *
      * @return true if valid
      * @param  value the double value
      */
-
-    public static boolean isValidExcelDate(double value)
-    {
+    public static boolean isValidExcelDate(double value) {
         return (value > -Double.MIN_VALUE);
     }
-
 
     /**
      * Given an Excel date with either 1900 or 1904 date windowing,

@@ -6,7 +6,7 @@ import org.apache.poi.ss.usermodel.RichTextString;
 /**
  * rich text string
  *
- * @author Jiaju Zhuang
+ *
  */
 public class CsvRichTextString implements RichTextString {
     /**
@@ -19,24 +19,16 @@ public class CsvRichTextString implements RichTextString {
     }
 
     @Override
-    public void applyFont(int startIndex, int endIndex, short fontIndex) {
-
-    }
+    public void applyFont(int startIndex, int endIndex, short fontIndex) {}
 
     @Override
-    public void applyFont(int startIndex, int endIndex, Font font) {
-
-    }
+    public void applyFont(int startIndex, int endIndex, Font font) {}
 
     @Override
-    public void applyFont(Font font) {
-
-    }
+    public void applyFont(Font font) {}
 
     @Override
-    public void clearFormatting() {
-
-    }
+    public void clearFormatting() {}
 
     @Override
     public String getString() {
@@ -62,7 +54,5 @@ public class CsvRichTextString implements RichTextString {
     }
 
     @Override
-    public void applyFont(short fontIndex) {
-
-    }
+    public void applyFont(short fontIndex) {}
 }

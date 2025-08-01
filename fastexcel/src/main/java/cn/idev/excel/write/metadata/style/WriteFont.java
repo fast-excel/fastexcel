@@ -1,7 +1,6 @@
 package cn.idev.excel.write.metadata.style;
 
 import cn.idev.excel.util.StringUtils;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +12,6 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 /**
  * Font when writing
  *
- * @author jipengfei
  */
 @Getter
 @Setter
@@ -61,7 +59,6 @@ public class WriteFont {
      * @see Font#U_SINGLE_ACCOUNTING
      * @see Font#U_DOUBLE_ACCOUNTING
      */
-
     private Byte underline;
     /**
      * Set character-set to use.
@@ -115,7 +112,6 @@ public class WriteFont {
             target.setBold(source.getBold());
         }
     }
-
 
     @Override
     public WriteFont clone() {

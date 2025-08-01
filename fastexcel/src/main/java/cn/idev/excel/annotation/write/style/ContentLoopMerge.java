@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 /**
  * The regions of the loop merge
  *
- * @author Jiaju Zhuang
+ *
  */
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)

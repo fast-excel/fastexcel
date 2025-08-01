@@ -1,13 +1,11 @@
 package cn.idev.excel.write.metadata.holder;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import cn.idev.excel.enums.HolderEnum;
 import cn.idev.excel.enums.WriteLastRowTypeEnum;
 import cn.idev.excel.util.StringUtils;
 import cn.idev.excel.write.metadata.WriteSheet;
-
+import java.util.HashMap;
+import java.util.Map;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,7 +18,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 /**
  * sheet holder
  *
- * @author Jiaju Zhuang
+ *
  */
 @Getter
 @Setter

@@ -1,11 +1,9 @@
 package cn.idev.excel.metadata;
 
-import java.util.List;
-import java.util.Locale;
-
 import cn.idev.excel.converters.Converter;
 import cn.idev.excel.enums.CacheLocationEnum;
-
+import java.util.List;
+import java.util.Locale;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +11,7 @@ import lombok.Setter;
 /**
  * Basic parameter
  *
- * @author Jiaju Zhuang
+ *
  **/
 @Getter
 @Setter

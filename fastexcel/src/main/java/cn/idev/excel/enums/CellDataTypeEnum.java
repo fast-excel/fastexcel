@@ -1,14 +1,13 @@
 package cn.idev.excel.enums;
 
+import cn.idev.excel.util.StringUtils;
 import java.util.HashMap;
 import java.util.Map;
-
-import cn.idev.excel.util.StringUtils;
 
 /**
  * excel internal data type
  *
- * @author Jiaju Zhuang
+ *
  */
 public enum CellDataTypeEnum {
     /**

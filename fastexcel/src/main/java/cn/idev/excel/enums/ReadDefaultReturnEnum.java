@@ -1,14 +1,13 @@
 package cn.idev.excel.enums;
 
+import cn.idev.excel.metadata.data.ReadCellData;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-
-import cn.idev.excel.metadata.data.ReadCellData;
 
 /**
  * Read not to {@code cn.idev.excel.metadata.BasicParameter#clazz} value, the default will return type.
  *
- * @author Jiaju Zhuang
+ *
  */
 public enum ReadDefaultReturnEnum {
     /**
@@ -32,5 +31,4 @@ public enum ReadDefaultReturnEnum {
      * Return to {@link ReadCellData}, can decide which field you need.
      */
     READ_CELL_DATA
-
 }

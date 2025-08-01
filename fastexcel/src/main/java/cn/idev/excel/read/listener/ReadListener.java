@@ -1,17 +1,16 @@
 package cn.idev.excel.read.listener;
 
-import java.util.Map;
-
 import cn.idev.excel.context.AnalysisContext;
 import cn.idev.excel.event.Listener;
 import cn.idev.excel.metadata.CellExtra;
 import cn.idev.excel.metadata.data.ReadCellData;
 import cn.idev.excel.read.metadata.holder.ReadRowHolder;
+import java.util.Map;
 
 /**
  * Interface to listen for read results
  *
- * @author Jiaju Zhuang
+ *
  */
 public interface ReadListener<T> extends Listener {
     /**
@@ -32,8 +31,7 @@ public interface ReadListener<T> extends Listener {
      * @param headMap
      * @param context
      */
-    default void invokeHead(Map<Integer, ReadCellData<?>> headMap, AnalysisContext context) {
-    }
+    default void invokeHead(Map<Integer, ReadCellData<?>> headMap, AnalysisContext context) {}
 
     /**
      * When analysis one row trigger invoke function.
@@ -49,8 +47,7 @@ public interface ReadListener<T> extends Listener {
      * @param extra   extra information
      * @param context analysis context
      */
-    default void extra(CellExtra extra, AnalysisContext context) {
-    }
+    default void extra(CellExtra extra, AnalysisContext context) {}
 
     /**
      * if have something to do after all analysis
@@ -67,11 +64,10 @@ public interface ReadListener<T> extends Listener {
      */
     default boolean hasNext(AnalysisContext context) {
         if (context == null
-            || context.readRowHolder() == null
-            || context.readSheetHolder() == null
-            || context.readSheetHolder().getReadSheet() == null
-            || context.readWorkbookHolder().getReadWorkbook() == null
-        ) {
+                || context.readRowHolder() == null
+                || context.readSheetHolder() == null
+                || context.readSheetHolder().getReadSheet() == null
+                || context.readWorkbookHolder().getReadWorkbook() == null) {
             return true;
         }
         ReadRowHolder readRowHolder = context.readRowHolder();

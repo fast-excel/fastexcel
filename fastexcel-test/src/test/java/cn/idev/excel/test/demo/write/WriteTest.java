@@ -45,13 +45,19 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.streaming.SXSSFSheet;
+import org.junit.jupiter.api.Test;
 
 /**
  * 写的常见写法
  *
- * @author Jiaju Zhuang
+ *
  */
-
 public class WriteTest {
 
     /**
@@ -93,8 +99,10 @@ public class WriteTest {
     @Test
     public void testEscapeHex() {
         String fileName = TestFileUtil.getPath() + "simpleWrite" + System.currentTimeMillis() + ".xlsx";
-        EasyExcel.write(fileName, DemoData.class).sheet("template")
-                .registerWriteHandler(new EscapeHexCellWriteHandler()).doWrite(() -> {
+        EasyExcel.write(fileName, DemoData.class)
+                .sheet("template")
+                .registerWriteHandler(new EscapeHexCellWriteHandler())
+                .doWrite(() -> {
                     return dataHex();
                 });
     }
@@ -119,7 +127,9 @@ public class WriteTest {
         Set<String> excludeColumnFieldNames = new HashSet<>();
         excludeColumnFieldNames.add("date");
         // 这里 需要指定写用哪个class去写，然后写到第一个sheet，名字为模板 然后文件流会自动关闭
-        EasyExcel.write(fileName, DemoData.class).excludeColumnFieldNames(excludeColumnFieldNames).sheet("模板")
+        EasyExcel.write(fileName, DemoData.class)
+                .excludeColumnFieldNames(excludeColumnFieldNames)
+                .sheet("模板")
                 .doWrite(data());
 
         fileName = TestFileUtil.getPath() + "excludeOrIncludeWrite" + System.currentTimeMillis() + ".xlsx";
@@ -127,7 +137,9 @@ public class WriteTest {
         Set<String> includeColumnFieldNames = new HashSet<>();
         includeColumnFieldNames.add("date");
         // 这里 需要指定写用哪个class去写，然后写到第一个sheet，名字为模板 然后文件流会自动关闭
-        EasyExcel.write(fileName, DemoData.class).includeColumnFieldNames(includeColumnFieldNames).sheet("模板")
+        EasyExcel.write(fileName, DemoData.class)
+                .includeColumnFieldNames(includeColumnFieldNames)
+                .sheet("模板")
                 .doWrite(data());
     }
 
@@ -210,13 +222,13 @@ public class WriteTest {
             for (int i = 0; i < 5; i++) {
                 // 每次都要创建writeSheet 这里注意必须指定sheetNo 而且sheetName必须不一样。这里注意DemoData.class 可以每次都变，我这里为了方便 所以用的同一个class
                 // 实际上可以一直变
-                WriteSheet writeSheet = EasyExcel.writerSheet(i, "模板" + i).head(DemoData.class).build();
+                WriteSheet writeSheet =
+                        EasyExcel.writerSheet(i, "模板" + i).head(DemoData.class).build();
                 // 分页去数据库查询数据 这里可以去数据库查询每一页的数据
                 List<DemoData> data = data();
                 excelWriter.write(data, writeSheet);
             }
         }
-
     }
 
     /**
@@ -389,7 +401,10 @@ public class WriteTest {
 
         List<WriteCellDemoData> data = new ArrayList<>();
         data.add(writeCellDemoData);
-        EasyExcel.write(fileName, WriteCellDemoData.class).inMemory(true).sheet("模板").doWrite(data);
+        EasyExcel.write(fileName, WriteCellDemoData.class)
+                .inMemory(true)
+                .sheet("模板")
+                .doWrite(data);
     }
 
     /**
@@ -410,7 +425,10 @@ public class WriteTest {
         // 这里 需要指定写用哪个class去写，然后写到第一个sheet，名字为模板 然后文件流会自动关闭
         // 这里要注意 withTemplate 的模板文件会全量存储在内存里面，所以尽量不要用于追加文件，如果文件模板文件过大会OOM
         // 如果要再文件中追加（无法在一个线程里面处理，可以在一个线程的建议参照多次写入的demo） 建议临时存储到数据库 或者 磁盘缓存(ehcache) 然后再一次性写入
-        EasyExcel.write(fileName, DemoData.class).withTemplate(templateFileName).sheet().doWrite(data());
+        EasyExcel.write(fileName, DemoData.class)
+                .withTemplate(templateFileName)
+                .sheet()
+                .doWrite(data());
     }
 
     /**
@@ -478,69 +496,77 @@ public class WriteTest {
         contentWriteFont.setFontHeightInPoints((short) 20);
         contentWriteCellStyle.setWriteFont(contentWriteFont);
         // 这个策略是 头是头的样式 内容是内容的样式 其他的策略可以自己实现
-        HorizontalCellStyleStrategy horizontalCellStyleStrategy = new HorizontalCellStyleStrategy(headWriteCellStyle,
-                contentWriteCellStyle);
+        HorizontalCellStyleStrategy horizontalCellStyleStrategy =
+                new HorizontalCellStyleStrategy(headWriteCellStyle, contentWriteCellStyle);
 
         // 这里 需要指定写用哪个class去写，然后写到第一个sheet，名字为模板 然后文件流会自动关闭
-        EasyExcel.write(fileName, DemoData.class).registerWriteHandler(horizontalCellStyleStrategy).sheet("模板")
+        EasyExcel.write(fileName, DemoData.class)
+                .registerWriteHandler(horizontalCellStyleStrategy)
+                .sheet("模板")
                 .doWrite(data());
 
         // 方法2: 使用easyexcel的方式完全自己写 不太推荐 尽量使用已有策略
         // @since 3.0.0-beta2
         fileName = TestFileUtil.getPath() + "handlerStyleWrite" + System.currentTimeMillis() + ".xlsx";
-        EasyExcel.write(fileName, DemoData.class).registerWriteHandler(new CellWriteHandler() {
-            @Override
-            public void afterCellDispose(CellWriteHandlerContext context) {
-                // 当前事件会在 数据设置到poi的cell里面才会回调
-                // 判断不是头的情况 如果是fill 的情况 这里会==null 所以用not true
-                if (BooleanUtils.isNotTrue(context.getHead())) {
-                    // 第一个单元格
-                    // 只要不是头 一定会有数据 当然fill的情况 可能要context.getCellDataList() ,这个需要看模板，因为一个单元格会有多个 WriteCellData
-                    WriteCellData<?> cellData = context.getFirstCellData();
-                    // 这里需要去cellData 获取样式
-                    // 很重要的一个原因是 WriteCellStyle 和 dataFormatData绑定的 简单的说 比如你加了 DateTimeFormat
-                    // ，已经将writeCellStyle里面的dataFormatData 改了 如果你自己new了一个WriteCellStyle，可能注解的样式就失效了
-                    // 然后 getOrCreateStyle 用于返回一个样式，如果为空，则创建一个后返回
-                    WriteCellStyle writeCellStyle = cellData.getOrCreateStyle();
-                    writeCellStyle.setFillForegroundColor(IndexedColors.RED.getIndex());
-                    // 这里需要指定 FillPatternType 为FillPatternType.SOLID_FOREGROUND
-                    writeCellStyle.setFillPatternType(FillPatternType.SOLID_FOREGROUND);
+        EasyExcel.write(fileName, DemoData.class)
+                .registerWriteHandler(new CellWriteHandler() {
+                    @Override
+                    public void afterCellDispose(CellWriteHandlerContext context) {
+                        // 当前事件会在 数据设置到poi的cell里面才会回调
+                        // 判断不是头的情况 如果是fill 的情况 这里会==null 所以用not true
+                        if (BooleanUtils.isNotTrue(context.getHead())) {
+                            // 第一个单元格
+                            // 只要不是头 一定会有数据 当然fill的情况 可能要context.getCellDataList() ,这个需要看模板，因为一个单元格会有多个 WriteCellData
+                            WriteCellData<?> cellData = context.getFirstCellData();
+                            // 这里需要去cellData 获取样式
+                            // 很重要的一个原因是 WriteCellStyle 和 dataFormatData绑定的 简单的说 比如你加了 DateTimeFormat
+                            // ，已经将writeCellStyle里面的dataFormatData 改了 如果你自己new了一个WriteCellStyle，可能注解的样式就失效了
+                            // 然后 getOrCreateStyle 用于返回一个样式，如果为空，则创建一个后返回
+                            WriteCellStyle writeCellStyle = cellData.getOrCreateStyle();
+                            writeCellStyle.setFillForegroundColor(IndexedColors.RED.getIndex());
+                            // 这里需要指定 FillPatternType 为FillPatternType.SOLID_FOREGROUND
+                            writeCellStyle.setFillPatternType(FillPatternType.SOLID_FOREGROUND);
 
-                    // 这样样式就设置好了 后面有个FillStyleCellWriteHandler 默认会将 WriteCellStyle 设置到 cell里面去 所以可以不用管了
-                }
-            }
-        }).sheet("模板").doWrite(data());
+                            // 这样样式就设置好了 后面有个FillStyleCellWriteHandler 默认会将 WriteCellStyle 设置到 cell里面去 所以可以不用管了
+                        }
+                    }
+                })
+                .sheet("模板")
+                .doWrite(data());
 
         // 方法3: 使用poi的样式完全自己写 不推荐
         // @since 3.0.0-beta2
         // 坑1：style里面有dataformat 用来格式化数据的 所以自己设置可能导致格式化注解不生效
         // 坑2：不要一直去创建style 记得缓存起来 最多创建6W个就挂了
         fileName = TestFileUtil.getPath() + "handlerStyleWrite" + System.currentTimeMillis() + ".xlsx";
-        EasyExcel.write(fileName, DemoData.class).registerWriteHandler(new CellWriteHandler() {
-            @Override
-            public void afterCellDispose(CellWriteHandlerContext context) {
-                // 当前事件会在 数据设置到poi的cell里面才会回调
-                // 判断不是头的情况 如果是fill 的情况 这里会==null 所以用not true
-                if (BooleanUtils.isNotTrue(context.getHead())) {
-                    Cell cell = context.getCell();
-                    // 拿到poi的workbook
-                    Workbook workbook = context.getWriteWorkbookHolder().getWorkbook();
-                    // 这里千万记住 想办法能复用的地方把他缓存起来 一个表格最多创建6W个样式
-                    // 不同单元格尽量传同一个 cellStyle
-                    CellStyle cellStyle = workbook.createCellStyle();
-                    cellStyle.setFillForegroundColor(IndexedColors.RED.getIndex());
-                    // 这里需要指定 FillPatternType 为FillPatternType.SOLID_FOREGROUND
-                    cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-                    cell.setCellStyle(cellStyle);
+        EasyExcel.write(fileName, DemoData.class)
+                .registerWriteHandler(new CellWriteHandler() {
+                    @Override
+                    public void afterCellDispose(CellWriteHandlerContext context) {
+                        // 当前事件会在 数据设置到poi的cell里面才会回调
+                        // 判断不是头的情况 如果是fill 的情况 这里会==null 所以用not true
+                        if (BooleanUtils.isNotTrue(context.getHead())) {
+                            Cell cell = context.getCell();
+                            // 拿到poi的workbook
+                            Workbook workbook = context.getWriteWorkbookHolder().getWorkbook();
+                            // 这里千万记住 想办法能复用的地方把他缓存起来 一个表格最多创建6W个样式
+                            // 不同单元格尽量传同一个 cellStyle
+                            CellStyle cellStyle = workbook.createCellStyle();
+                            cellStyle.setFillForegroundColor(IndexedColors.RED.getIndex());
+                            // 这里需要指定 FillPatternType 为FillPatternType.SOLID_FOREGROUND
+                            cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+                            cell.setCellStyle(cellStyle);
 
-                    // 由于这里没有指定dataformat 最后展示的数据 格式可能会不太正确
+                            // 由于这里没有指定dataformat 最后展示的数据 格式可能会不太正确
 
-                    // 这里要把 WriteCellData的样式清空， 不然后面还有一个拦截器 FillStyleCellWriteHandler 默认会将 WriteCellStyle 设置到
-                    // cell里面去 会导致自己设置的不一样
-                    context.getFirstCellData().setWriteCellStyle(null);
-                }
-            }
-        }).sheet("模板").doWrite(data());
+                            // 这里要把 WriteCellData的样式清空， 不然后面还有一个拦截器 FillStyleCellWriteHandler 默认会将 WriteCellStyle 设置到
+                            // cell里面去 会导致自己设置的不一样
+                            context.getFirstCellData().setWriteCellStyle(null);
+                        }
+                    }
+                })
+                .sheet("模板")
+                .doWrite(data());
     }
 
     /**
@@ -567,7 +593,10 @@ public class WriteTest {
         // 每隔2行会合并 把eachColumn 设置成 3 也就是我们数据的长度，所以就第一列会合并。当然其他合并策略也可以自己写
         LoopMergeStrategy loopMergeStrategy = new LoopMergeStrategy(2, 0);
         // 这里 需要指定写用哪个class去写，然后写到第一个sheet，名字为模板 然后文件流会自动关闭
-        EasyExcel.write(fileName, DemoData.class).registerWriteHandler(loopMergeStrategy).sheet("模板").doWrite(data());
+        EasyExcel.write(fileName, DemoData.class)
+                .registerWriteHandler(loopMergeStrategy)
+                .sheet("模板")
+                .doWrite(data());
     }
 
     /**
@@ -584,10 +613,13 @@ public class WriteTest {
         // 这里 需要指定写用哪个class去写
         try (ExcelWriter excelWriter = EasyExcel.write(fileName, DemoData.class).build()) {
             // 把sheet设置为不需要头 不然会输出sheet的头 这样看起来第一个table 就有2个头了
-            WriteSheet writeSheet = EasyExcel.writerSheet("模板").needHead(Boolean.FALSE).build();
+            WriteSheet writeSheet =
+                    EasyExcel.writerSheet("模板").needHead(Boolean.FALSE).build();
             // 这里必须指定需要头，table 会继承sheet的配置，sheet配置了不需要，table 默认也是不需要
-            WriteTable writeTable0 = EasyExcel.writerTable(0).needHead(Boolean.TRUE).build();
-            WriteTable writeTable1 = EasyExcel.writerTable(1).needHead(Boolean.TRUE).build();
+            WriteTable writeTable0 =
+                    EasyExcel.writerTable(0).needHead(Boolean.TRUE).build();
+            WriteTable writeTable1 =
+                    EasyExcel.writerTable(1).needHead(Boolean.TRUE).build();
             // 第一次写入会创建头
             excelWriter.write(data(), writeSheet, writeTable0);
             // 第二次写如也会创建头，然后在第一次的后面写入数据
@@ -610,7 +642,8 @@ public class WriteTest {
         String fileName = TestFileUtil.getPath() + "dynamicHeadWrite" + System.currentTimeMillis() + ".xlsx";
         EasyExcel.write(fileName)
                 // 这里放入动态头
-                .head(head()).sheet("模板")
+                .head(head())
+                .sheet("模板")
                 // 当然这里数据也可以用 List<List<String>> 去传入
                 .doWrite(data());
     }
@@ -636,7 +669,9 @@ public class WriteTest {
                 TestFileUtil.getPath() + "longestMatchColumnWidthWrite" + System.currentTimeMillis() + ".xlsx";
         // 这里 需要指定写用哪个class去写，然后写到第一个sheet，名字为模板 然后文件流会自动关闭
         EasyExcel.write(fileName, LongestMatchColumnWidthData.class)
-                .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy()).sheet("模板").doWrite(dataLong());
+                .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
+                .sheet("模板")
+                .doWrite(dataLong());
     }
 
     /**
@@ -654,8 +689,11 @@ public class WriteTest {
     public void customHandlerWrite() {
         String fileName = TestFileUtil.getPath() + "customHandlerWrite" + System.currentTimeMillis() + ".xlsx";
         // 这里 需要指定写用哪个class去写，然后写到第一个sheet，名字为模板 然后文件流会自动关闭
-        EasyExcel.write(fileName, DemoData.class).registerWriteHandler(new CustomSheetWriteHandler())
-                .registerWriteHandler(new CustomCellWriteHandler()).sheet("模板").doWrite(data());
+        EasyExcel.write(fileName, DemoData.class)
+                .registerWriteHandler(new CustomSheetWriteHandler())
+                .registerWriteHandler(new CustomCellWriteHandler())
+                .sheet("模板")
+                .doWrite(data());
     }
 
     /**
@@ -672,8 +710,11 @@ public class WriteTest {
         String fileName = TestFileUtil.getPath() + "commentWrite" + System.currentTimeMillis() + ".xlsx";
         // 这里 需要指定写用哪个class去写，然后写到第一个sheet，名字为模板 然后文件流会自动关闭
         // 这里要注意inMemory 要设置为true，才能支持批注。目前没有好的办法解决 不在内存处理批注。这个需要自己选择。
-        EasyExcel.write(fileName, DemoData.class).inMemory(Boolean.TRUE).registerWriteHandler(new CommentWriteHandler())
-                .sheet("模板").doWrite(data());
+        EasyExcel.write(fileName, DemoData.class)
+                .inMemory(Boolean.TRUE)
+                .registerWriteHandler(new CommentWriteHandler())
+                .sheet("模板")
+                .doWrite(data());
     }
 
     /**
@@ -690,7 +731,10 @@ public class WriteTest {
         // 写法1
         String fileName = TestFileUtil.getPath() + "variableTitleWrite" + System.currentTimeMillis() + ".xlsx";
         // 这里 需要指定写用哪个class去写，然后写到第一个sheet，名字为模板 然后文件流会自动关闭
-        EasyExcel.write(fileName, ConverterData.class).head(variableTitleHead()).sheet("模板").doWrite(data());
+        EasyExcel.write(fileName, ConverterData.class)
+                .head(variableTitleHead())
+                .sheet("模板")
+                .doWrite(data());
     }
 
     /**
@@ -703,6 +747,7 @@ public class WriteTest {
         // 这里 需要指定写用哪个class去写，然后写到第一个sheet，名字为模板 然后文件流会自动关闭
         EasyExcel.write(fileName).head(head()).sheet("模板").doWrite(dataList());
     }
+
 
     @Test
     public void sheetDisposeTest(){
@@ -795,5 +840,4 @@ public class WriteTest {
         }
         return list;
     }
-
 }
