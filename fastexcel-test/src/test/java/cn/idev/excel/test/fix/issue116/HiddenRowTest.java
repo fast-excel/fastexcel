@@ -5,6 +5,7 @@ import cn.idev.excel.annotation.ExcelProperty;
 import cn.idev.excel.annotation.write.style.HeadStyle;
 import cn.idev.excel.enums.BooleanEnum;
 import cn.idev.excel.test.util.TestFileUtil;
+import cn.idev.excel.write.handler.impl.HiddenRowWriteHandler;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.*;
@@ -13,22 +14,25 @@ import org.junit.jupiter.api.Test;
 /**
  * @author zz_zhi
  */
-public class HiddenShellTest {
+public class HiddenRowTest {
 
     @Test
     public void test() {
-        String fileName = TestFileUtil.getPath() + "hiddenShellTest" + System.currentTimeMillis() + ".xlsx";
-        EasyExcel.write(fileName, DemoModel.class).sheet("模板").doWrite(listDemoModel());
-    }
-
-    public static List<DemoModel> listDemoModel() {
+        String fileName = TestFileUtil.getPath() + "hiddenRowTest" + System.currentTimeMillis() + ".xlsx";
         List<DemoModel> dataList = new ArrayList<>();
-        for (int i = 1; i <= 5; i++) {
+        HiddenRowWriteHandler hiddenRowWriteHandler = new HiddenRowWriteHandler();
+        for (int i = 2; i <= 50; i++) {
             String category = "我是姓名" + i;
-            DemoModel exportModel = new DemoModel(category, i, "test" + i);
+            DemoModel exportModel = new DemoModel(category, i, "test-" + i);
             dataList.add(exportModel);
+            if (i % 5 == 0) {
+                hiddenRowWriteHandler.addHiddenColumns(i - 2);
+            }
         }
-        return dataList;
+        EasyExcel.write(fileName, DemoModel.class)
+                .sheet("模板")
+                .registerWriteHandler(hiddenRowWriteHandler)
+                .doWrite(dataList);
     }
 
     @Data
@@ -37,10 +41,10 @@ public class HiddenShellTest {
     public static class DemoModel {
 
         @ExcelProperty("名字")
+        @HeadStyle(hidden = BooleanEnum.TRUE)
         private String name;
 
         @ExcelProperty("年龄")
-        @HeadStyle(hidden = BooleanEnum.TRUE)
         private Integer age;
 
         @ExcelProperty("test")
