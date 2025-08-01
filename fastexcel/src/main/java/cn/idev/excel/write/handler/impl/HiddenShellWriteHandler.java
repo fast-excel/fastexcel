@@ -10,7 +10,7 @@ import cn.idev.excel.write.property.ExcelWriteHeadProperty;
 import org.apache.poi.ss.usermodel.Sheet;
 
 /**
- * hidden she'll row
+ * Hides columns in the sheet.
  *
  * @author zz_zhi
  * @see HeadStyle#hidden()
