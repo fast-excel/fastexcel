@@ -7,7 +7,7 @@
     <parent>
         <groupId>cn.idev.excel</groupId>
         <artifactId>fastexcel-parent</artifactId>
-        <version>1.2.0</version>
+        <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -67,7 +67,6 @@
         <dependency>
             <groupId>cn.idev.excel</groupId>
             <artifactId>fastexcel-support</artifactId>
-            <version>0.0.1</version>
         </dependency>
     </dependencies>
 </project>
