@@ -1,5 +1,6 @@
 package cn.idev.excel.util;
 
+import static cn.idev.excel.util.ObjectUtils.setIfNotNull;
 import cn.idev.excel.constant.BuiltinFormats;
 import cn.idev.excel.metadata.data.DataFormatData;
 import cn.idev.excel.metadata.data.HyperlinkData;
@@ -23,8 +24,6 @@ import org.apache.poi.util.Units;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFRichTextString;
-
-import static cn.idev.excel.util.ObjectUtils.setIfNotNull;
 
 /**
  *
