@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.commons.collections4.CollectionUtils;
 
 public class TestFileUtil {
@@ -63,14 +62,13 @@ public class TestFileUtil {
             if (subPath.size() == 1) {
                 return TestFileUtil.class.getResource("/").getPath() + subPath.get(0);
             }
-            StringBuilder path = new StringBuilder(TestFileUtil.class.getResource("/").getPath());
+            StringBuilder path =
+                    new StringBuilder(TestFileUtil.class.getResource("/").getPath());
             path.append(subPath.get(0));
             for (int i = 1; i < subPath.size(); i++) {
                 path.append(File.separator).append(subPath.get(i));
             }
             return path.toString();
         }
-
     }
-
 }

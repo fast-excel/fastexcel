@@ -1,17 +1,15 @@
 package cn.idev.excel.write.handler.context;
 
-import java.util.List;
-
-import cn.idev.excel.write.handler.impl.FillStyleCellWriteHandler;
 import cn.idev.excel.context.WriteContext;
 import cn.idev.excel.enums.CellDataTypeEnum;
 import cn.idev.excel.metadata.Head;
 import cn.idev.excel.metadata.data.WriteCellData;
 import cn.idev.excel.metadata.property.ExcelContentProperty;
+import cn.idev.excel.write.handler.impl.FillStyleCellWriteHandler;
 import cn.idev.excel.write.metadata.holder.WriteSheetHolder;
 import cn.idev.excel.write.metadata.holder.WriteTableHolder;
 import cn.idev.excel.write.metadata.holder.WriteWorkbookHolder;
-
+import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,7 +19,7 @@ import org.apache.poi.ss.usermodel.Row;
 /**
  * cell context
  *
- * @author Jiaju Zhuang
+ *
  */
 @Getter
 @Setter
@@ -109,11 +107,21 @@ public class CellWriteHandlerContext {
      */
     private Boolean ignoreFillStyle;
 
-    public CellWriteHandlerContext(WriteContext writeContext,
-        WriteWorkbookHolder writeWorkbookHolder, WriteSheetHolder writeSheetHolder,
-        WriteTableHolder writeTableHolder, Row row, Integer rowIndex, Cell cell, Integer columnIndex,
-        Integer relativeRowIndex, Head headData, List<WriteCellData<?>> cellDataList, WriteCellData<?> firstCellData,
-        Boolean head, ExcelContentProperty excelContentProperty) {
+    public CellWriteHandlerContext(
+            WriteContext writeContext,
+            WriteWorkbookHolder writeWorkbookHolder,
+            WriteSheetHolder writeSheetHolder,
+            WriteTableHolder writeTableHolder,
+            Row row,
+            Integer rowIndex,
+            Cell cell,
+            Integer columnIndex,
+            Integer relativeRowIndex,
+            Head headData,
+            List<WriteCellData<?>> cellDataList,
+            WriteCellData<?> firstCellData,
+            Boolean head,
+            ExcelContentProperty excelContentProperty) {
         this.writeContext = writeContext;
         this.writeWorkbookHolder = writeWorkbookHolder;
         this.writeSheetHolder = writeSheetHolder;

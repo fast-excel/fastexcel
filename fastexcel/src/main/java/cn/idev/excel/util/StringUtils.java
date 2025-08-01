@@ -1,21 +1,24 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
 package cn.idev.excel.util;
 
-/**
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- * @author Apache Software Foundation (ASF)
- */
 public class StringUtils {
     private StringUtils() {}
 
@@ -151,10 +154,15 @@ public class StringUtils {
      * @param length     character length of the region
      * @return whether the region matched
      */
-    public static boolean regionMatches(final CharSequence cs, final boolean ignoreCase, final int thisStart,
-        final CharSequence substring, final int start, final int length) {
+    public static boolean regionMatches(
+            final CharSequence cs,
+            final boolean ignoreCase,
+            final int thisStart,
+            final CharSequence substring,
+            final int start,
+            final int length) {
         if (cs instanceof String && substring instanceof String) {
-            return ((String)cs).regionMatches(ignoreCase, thisStart, (String)substring, start, length);
+            return ((String) cs).regionMatches(ignoreCase, thisStart, (String) substring, start, length);
         }
         int index1 = thisStart;
         int index2 = start;
@@ -188,7 +196,7 @@ public class StringUtils {
 
             // The same check as in String.regionMatches():
             if (Character.toUpperCase(c1) != Character.toUpperCase(c2)
-                && Character.toLowerCase(c1) != Character.toLowerCase(c2)) {
+                    && Character.toLowerCase(c1) != Character.toLowerCase(c2)) {
                 return false;
             }
         }

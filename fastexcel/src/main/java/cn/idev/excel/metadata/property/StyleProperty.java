@@ -4,7 +4,6 @@ import cn.idev.excel.annotation.write.style.ContentStyle;
 import cn.idev.excel.annotation.write.style.HeadStyle;
 import cn.idev.excel.metadata.data.DataFormatData;
 import cn.idev.excel.write.metadata.style.WriteFont;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,7 +18,7 @@ import org.apache.poi.ss.usermodel.VerticalAlignment;
 /**
  * Configuration from annotations
  *
- * @author Jiaju Zhuang
+ *
  */
 @Getter
 @Setter

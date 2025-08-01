@@ -5,7 +5,7 @@ import cn.idev.excel.metadata.Head;
 /**
  * All the columns are the same width
  *
- * @author Jiaju Zhuang
+ *
  */
 public class SimpleColumnWidthStyleStrategy extends AbstractHeadColumnWidthStyleStrategy {
     private final Integer columnWidth;

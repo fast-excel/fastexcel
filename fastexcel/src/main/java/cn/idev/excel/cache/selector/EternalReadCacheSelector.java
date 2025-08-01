@@ -6,7 +6,7 @@ import org.apache.poi.openxml4j.opc.PackagePart;
 /**
  * Choose a eternal cache
  *
- * @author Jiaju Zhuang
+ *
  **/
 public class EternalReadCacheSelector implements ReadCacheSelector {
     private ReadCache readCache;

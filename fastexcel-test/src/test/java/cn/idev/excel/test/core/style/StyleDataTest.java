@@ -1,17 +1,5 @@
 package cn.idev.excel.test.core.style;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
-import cn.idev.excel.write.merge.LoopMergeStrategy;
-import cn.idev.excel.write.merge.OnceAbsoluteMergeStrategy;
-import cn.idev.excel.write.style.AbstractVerticalCellStyleStrategy;
-import cn.idev.excel.write.style.HorizontalCellStyleStrategy;
-import cn.idev.excel.write.style.column.SimpleColumnWidthStyleStrategy;
-import cn.idev.excel.write.style.row.SimpleRowHeightStyleStrategy;
-import cn.idev.excel.test.core.StyleTestUtils;
-import cn.idev.excel.test.util.TestFileUtil;
 import cn.idev.excel.EasyExcel;
 import cn.idev.excel.annotation.write.style.HeadFontStyle;
 import cn.idev.excel.annotation.write.style.HeadStyle;
@@ -19,9 +7,19 @@ import cn.idev.excel.metadata.Head;
 import cn.idev.excel.metadata.data.DataFormatData;
 import cn.idev.excel.metadata.property.FontProperty;
 import cn.idev.excel.metadata.property.StyleProperty;
+import cn.idev.excel.test.core.StyleTestUtils;
+import cn.idev.excel.test.util.TestFileUtil;
+import cn.idev.excel.write.merge.LoopMergeStrategy;
+import cn.idev.excel.write.merge.OnceAbsoluteMergeStrategy;
 import cn.idev.excel.write.metadata.style.WriteCellStyle;
 import cn.idev.excel.write.metadata.style.WriteFont;
-
+import cn.idev.excel.write.style.AbstractVerticalCellStyleStrategy;
+import cn.idev.excel.write.style.HorizontalCellStyleStrategy;
+import cn.idev.excel.write.style.column.SimpleColumnWidthStyleStrategy;
+import cn.idev.excel.write.style.row.SimpleRowHeightStyleStrategy;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.FillPatternType;
@@ -40,7 +38,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
 /**
- * @author Jiaju Zhuang
+ *
  */
 @TestMethodOrder(MethodOrderer.MethodName.class)
 public class StyleDataTest {
@@ -78,7 +76,7 @@ public class StyleDataTest {
                 WriteCellStyle writeCellStyle = new WriteCellStyle();
                 writeCellStyle.setFillPatternType(FillPatternType.SOLID_FOREGROUND);
                 DataFormatData dataFormatData = new DataFormatData();
-                dataFormatData.setIndex((short)0);
+                dataFormatData.setIndex((short) 0);
                 writeCellStyle.setDataFormatData(dataFormatData);
                 writeCellStyle.setHidden(false);
                 writeCellStyle.setLocked(true);
@@ -86,8 +84,8 @@ public class StyleDataTest {
                 writeCellStyle.setHorizontalAlignment(HorizontalAlignment.CENTER);
                 writeCellStyle.setWrapped(true);
                 writeCellStyle.setVerticalAlignment(VerticalAlignment.CENTER);
-                writeCellStyle.setRotation((short)0);
-                writeCellStyle.setIndent((short)10);
+                writeCellStyle.setRotation((short) 0);
+                writeCellStyle.setIndent((short) 10);
                 writeCellStyle.setBorderLeft(BorderStyle.THIN);
                 writeCellStyle.setBorderRight(BorderStyle.THIN);
                 writeCellStyle.setBorderTop(BorderStyle.THIN);
@@ -107,7 +105,7 @@ public class StyleDataTest {
                     writeFont.setTypeOffset(Font.SS_NONE);
                     writeFont.setUnderline(Font.U_DOUBLE);
                     writeFont.setBold(true);
-                    writeFont.setCharset((int)Font.DEFAULT_CHARSET);
+                    writeFont.setCharset((int) Font.DEFAULT_CHARSET);
                 } else {
                     writeCellStyle.setFillForegroundColor(IndexedColors.BLUE.getIndex());
                 }
@@ -126,10 +124,10 @@ public class StyleDataTest {
                 return writeCellStyle;
             }
         };
-        EasyExcel.write(fileVerticalCellStyleStrategy07, StyleData.class).registerWriteHandler(
-                verticalCellStyleStrategy).sheet()
-            .doWrite(data());
-
+        EasyExcel.write(fileVerticalCellStyleStrategy07, StyleData.class)
+                .registerWriteHandler(verticalCellStyleStrategy)
+                .sheet()
+                .doWrite(data());
     }
 
     @Test
@@ -149,7 +147,7 @@ public class StyleDataTest {
                     writeFont.setTypeOffset(Font.SS_NONE);
                     writeFont.setUnderline(Font.U_DOUBLE);
                     writeFont.setBold(true);
-                    writeFont.setCharset((int)Font.DEFAULT_CHARSET);
+                    writeFont.setCharset((int) Font.DEFAULT_CHARSET);
                 } else {
                     writeCellStyle.setFillForegroundColor(IndexedColors.BLUE.getIndex());
                 }
@@ -168,43 +166,49 @@ public class StyleDataTest {
                 return writeCellStyle;
             }
         };
-        EasyExcel.write(fileVerticalCellStyleStrategy207, StyleData.class).registerWriteHandler(
-                verticalCellStyleStrategy).sheet()
-            .doWrite(data());
+        EasyExcel.write(fileVerticalCellStyleStrategy207, StyleData.class)
+                .registerWriteHandler(verticalCellStyleStrategy)
+                .sheet()
+                .doWrite(data());
     }
 
     @Test
     public void t05LoopMergeStrategy() {
-        EasyExcel.write(fileLoopMergeStrategy, StyleData.class).sheet().registerWriteHandler(
-                new LoopMergeStrategy(2, 1))
-            .doWrite(data10());
+        EasyExcel.write(fileLoopMergeStrategy, StyleData.class)
+                .sheet()
+                .registerWriteHandler(new LoopMergeStrategy(2, 1))
+                .doWrite(data10());
     }
 
     private void readAndWrite(File file) throws Exception {
         SimpleColumnWidthStyleStrategy simpleColumnWidthStyleStrategy = new SimpleColumnWidthStyleStrategy(50);
         SimpleRowHeightStyleStrategy simpleRowHeightStyleStrategy =
-            new SimpleRowHeightStyleStrategy((short)40, (short)50);
+                new SimpleRowHeightStyleStrategy((short) 40, (short) 50);
 
         WriteCellStyle headWriteCellStyle = new WriteCellStyle();
         headWriteCellStyle.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
         WriteFont headWriteFont = new WriteFont();
-        headWriteFont.setFontHeightInPoints((short)20);
+        headWriteFont.setFontHeightInPoints((short) 20);
         headWriteFont.setColor(IndexedColors.DARK_YELLOW.getIndex());
         headWriteCellStyle.setWriteFont(headWriteFont);
         WriteCellStyle contentWriteCellStyle = new WriteCellStyle();
         contentWriteCellStyle.setFillPatternType(FillPatternType.SOLID_FOREGROUND);
         contentWriteCellStyle.setFillForegroundColor(IndexedColors.TEAL.getIndex());
         WriteFont contentWriteFont = new WriteFont();
-        contentWriteFont.setFontHeightInPoints((short)30);
+        contentWriteFont.setFontHeightInPoints((short) 30);
         contentWriteFont.setColor(IndexedColors.DARK_TEAL.getIndex());
         contentWriteCellStyle.setWriteFont(contentWriteFont);
         HorizontalCellStyleStrategy horizontalCellStyleStrategy =
-            new HorizontalCellStyleStrategy(headWriteCellStyle, contentWriteCellStyle);
+                new HorizontalCellStyleStrategy(headWriteCellStyle, contentWriteCellStyle);
 
         OnceAbsoluteMergeStrategy onceAbsoluteMergeStrategy = new OnceAbsoluteMergeStrategy(2, 2, 0, 1);
-        EasyExcel.write(file, StyleData.class).registerWriteHandler(simpleColumnWidthStyleStrategy)
-            .registerWriteHandler(simpleRowHeightStyleStrategy).registerWriteHandler(horizontalCellStyleStrategy)
-            .registerWriteHandler(onceAbsoluteMergeStrategy).sheet().doWrite(data());
+        EasyExcel.write(file, StyleData.class)
+                .registerWriteHandler(simpleColumnWidthStyleStrategy)
+                .registerWriteHandler(simpleRowHeightStyleStrategy)
+                .registerWriteHandler(horizontalCellStyleStrategy)
+                .registerWriteHandler(onceAbsoluteMergeStrategy)
+                .sheet()
+                .doWrite(data());
         EasyExcel.read(file, StyleData.class, new StyleDataListener()).sheet().doRead();
 
         Workbook workbook = WorkbookFactory.create(file);

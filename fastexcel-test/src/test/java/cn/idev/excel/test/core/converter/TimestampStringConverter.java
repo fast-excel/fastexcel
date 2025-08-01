@@ -6,7 +6,6 @@ import cn.idev.excel.metadata.GlobalConfiguration;
 import cn.idev.excel.metadata.data.WriteCellData;
 import cn.idev.excel.metadata.property.ExcelContentProperty;
 import cn.idev.excel.util.DateUtils;
-
 import java.sql.Timestamp;
 
 public class TimestampStringConverter implements Converter<Timestamp> {
@@ -21,15 +20,17 @@ public class TimestampStringConverter implements Converter<Timestamp> {
     }
 
     @Override
-    public WriteCellData<?> convertToExcelData(Timestamp value, ExcelContentProperty contentProperty,
-                                               GlobalConfiguration globalConfiguration) {
+    public WriteCellData<?> convertToExcelData(
+            Timestamp value, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) {
         WriteCellData<String> cellData = new WriteCellData<>();
         String cellValue;
         if (contentProperty == null || contentProperty.getDateTimeFormatProperty() == null) {
             cellValue = DateUtils.format(value.toLocalDateTime(), null, globalConfiguration.getLocale());
         } else {
-            cellValue = DateUtils.format(value.toLocalDateTime(), contentProperty.getDateTimeFormatProperty().getFormat(),
-                globalConfiguration.getLocale());
+            cellValue = DateUtils.format(
+                    value.toLocalDateTime(),
+                    contentProperty.getDateTimeFormatProperty().getFormat(),
+                    globalConfiguration.getLocale());
         }
         cellData.setType(CellDataTypeEnum.STRING);
         cellData.setStringValue(cellValue);

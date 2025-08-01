@@ -7,7 +7,7 @@ import cn.idev.excel.read.metadata.holder.xls.XlsReadWorkbookHolder;
 /**
  * A context is the main anchorage point of a ls xls reader.
  *
- * @author Jiaju Zhuang
+ *
  **/
 public interface XlsReadContext extends AnalysisContext {
     /**

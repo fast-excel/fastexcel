@@ -1,21 +1,19 @@
 package cn.idev.excel.test.core.head;
 
+import cn.idev.excel.context.AnalysisContext;
+import cn.idev.excel.event.AnalysisEventListener;
+import com.alibaba.fastjson2.JSON;
 import java.util.ArrayList;
 import java.util.List;
-
-import cn.idev.excel.event.AnalysisEventListener;
-import cn.idev.excel.context.AnalysisContext;
-import com.alibaba.fastjson2.JSON;
-
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
- * @author Jiaju Zhuang
+ *
  */
+@Slf4j
 public class NoHeadDataListener extends AnalysisEventListener<NoHeadData> {
-    private static final Logger LOGGER = LoggerFactory.getLogger(NoHeadData.class);
+
     List<NoHeadData> list = new ArrayList<NoHeadData>();
 
     @Override
@@ -28,6 +26,6 @@ public class NoHeadDataListener extends AnalysisEventListener<NoHeadData> {
         Assertions.assertEquals(list.size(), 1);
         NoHeadData data = list.get(0);
         Assertions.assertEquals(data.getString(), "字符串0");
-        LOGGER.debug("First row:{}", JSON.toJSONString(list.get(0)));
+        log.debug("First row:{}", JSON.toJSONString(list.get(0)));
     }
 }

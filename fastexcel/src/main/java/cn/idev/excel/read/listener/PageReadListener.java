@@ -1,16 +1,15 @@
 package cn.idev.excel.read.listener;
 
-import java.util.List;
-import java.util.function.Consumer;
-
 import cn.idev.excel.context.AnalysisContext;
 import cn.idev.excel.util.ListUtils;
+import java.util.List;
+import java.util.function.Consumer;
 import org.apache.commons.collections4.CollectionUtils;
 
 /**
  * page read listener
  *
- * @author Jiaju Zhuang
+ *
  */
 public class PageReadListener<T> implements ReadListener<T> {
     /**
@@ -55,5 +54,4 @@ public class PageReadListener<T> implements ReadListener<T> {
             consumer.accept(cachedDataList);
         }
     }
-
 }

@@ -1,7 +1,5 @@
 package cn.idev.excel.test.core.annotation;
 
-import java.util.Date;
-
 import cn.idev.excel.annotation.ExcelIgnore;
 import cn.idev.excel.annotation.ExcelProperty;
 import cn.idev.excel.annotation.format.DateTimeFormat;
@@ -9,13 +7,13 @@ import cn.idev.excel.annotation.format.NumberFormat;
 import cn.idev.excel.annotation.write.style.ColumnWidth;
 import cn.idev.excel.annotation.write.style.ContentRowHeight;
 import cn.idev.excel.annotation.write.style.HeadRowHeight;
-
+import java.util.Date;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 /**
- * @author Jiaju Zhuang
+ *
  */
 @Getter
 @Setter
@@ -34,6 +32,7 @@ public class AnnotationData {
 
     @ExcelIgnore
     private String ignore;
+
     private static final String staticFinal = "test";
     private transient String transientString;
 }

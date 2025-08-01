@@ -1,18 +1,16 @@
 package cn.idev.excel.test.demo.read;
 
-import java.util.List;
-
+import cn.idev.excel.context.AnalysisContext;
 import cn.idev.excel.read.listener.ReadListener;
 import cn.idev.excel.util.ListUtils;
-import cn.idev.excel.context.AnalysisContext;
 import com.alibaba.fastjson2.JSON;
-
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 
 /**
  * Template reading class
  *
- * @author Jiaju Zhuang
+ *
  */
 // An important point is that DemoDataListener should not be managed by Spring.
 // It needs to be newly created each time an Excel file is read.
@@ -60,7 +58,8 @@ public class DemoDataListener implements ReadListener<DemoData> {
     public void invoke(DemoData data, AnalysisContext context) {
         log.info("Parsed one row of data: {}", JSON.toJSONString(data));
         cachedDataList.add(data);
-        // When the number of records reaches BATCH_COUNT, the data needs to be stored in the database to prevent tens of
+        // When the number of records reaches BATCH_COUNT, the data needs to be stored in the database to prevent tens
+        // of
         // thousands of records from being held in memory, which can easily cause OutOfMemoryError (OOM).
         if (cachedDataList.size() >= BATCH_COUNT) {
             saveData();

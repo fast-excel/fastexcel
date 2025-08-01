@@ -6,7 +6,7 @@ import java.math.RoundingMode;
 /**
  * Used to store constant
  *
- * @author Jiaju Zhuang
+ *
  */
 public class EasyExcelConstants {
 
@@ -15,5 +15,4 @@ public class EasyExcelConstants {
      * will be a problem. So you need to set up 15 to deal with precision
      */
     public static final MathContext EXCEL_MATH_CONTEXT = new MathContext(15, RoundingMode.HALF_UP);
-
 }

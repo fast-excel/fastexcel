@@ -5,17 +5,14 @@ import cn.idev.excel.exception.ExcelAnalysisStopException;
 import cn.idev.excel.read.metadata.ReadSheet;
 import cn.idev.excel.read.metadata.holder.xls.XlsReadWorkbookHolder;
 import cn.idev.excel.util.SheetUtils;
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.poi.hssf.record.BOFRecord;
 import org.apache.poi.hssf.record.BoundSheetRecord;
 import org.apache.poi.hssf.record.Record;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Record handler
- *
- * @author Dan Zheng
  */
 public class BofRecordHandler extends AbstractXlsRecordHandler {
 
@@ -38,7 +35,8 @@ public class BofRecordHandler extends AbstractXlsRecordHandler {
             readSheetIndex = 0;
             xlsReadWorkbookHolder.setReadSheetIndex(readSheetIndex);
         }
-        ReadSheet actualReadSheet = xlsReadWorkbookHolder.getActualSheetDataList().get(readSheetIndex);
+        ReadSheet actualReadSheet =
+                xlsReadWorkbookHolder.getActualSheetDataList().get(readSheetIndex);
         assert actualReadSheet != null : "Can't find the sheet.";
         // Copy the parameter to the current sheet
         ReadSheet readSheet = SheetUtils.match(actualReadSheet, xlsReadContext);
@@ -58,7 +56,7 @@ public class BofRecordHandler extends AbstractXlsRecordHandler {
             return;
         }
         BoundSheetRecord[] boundSheetRecords =
-            BoundSheetRecord.orderByBofPosition(xlsReadWorkbookHolder.getBoundSheetRecordList());
+                BoundSheetRecord.orderByBofPosition(xlsReadWorkbookHolder.getBoundSheetRecordList());
         List<ReadSheet> readSheetDataList = new ArrayList<>();
         for (int i = 0; i < boundSheetRecords.length; i++) {
             BoundSheetRecord boundSheetRecord = boundSheetRecords[i];

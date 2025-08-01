@@ -17,6 +17,7 @@
  */
 package cn.idev.excel.metadata.format;
 
+import cn.idev.excel.util.DateUtils;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DateFormatSymbols;
@@ -33,15 +34,11 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import cn.idev.excel.util.DateUtils;
-
+import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.format.CellFormat;
 import org.apache.poi.ss.format.CellFormatResult;
 import org.apache.poi.ss.usermodel.ExcelStyleDateFormatter;
 import org.apache.poi.ss.usermodel.FractionFormat;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Written with reference to {@link org.apache.poi.ss.usermodel.DataFormatter}.Made some optimizations for date
@@ -49,14 +46,15 @@ import org.slf4j.LoggerFactory;
  * <p>
  * This is a non-thread-safe class.
  *
- * @author Jiaju Zhuang
+ *
  */
+@Slf4j
 public class DataFormatter {
     /**
      * For logging any problems we find
      */
-    private static final Logger LOGGER = LoggerFactory.getLogger(DataFormatter.class);
     private static final String defaultFractionWholePartFormat = "#";
+
     private static final String defaultFractionFractionPartFormat = "#/##";
     /**
      * Pattern to find a number format: "0" or "#"
@@ -72,13 +70,13 @@ public class DataFormatter {
      * Pattern to find "AM/PM" marker
      */
     private static final Pattern amPmPattern =
-        Pattern.compile("(([AP])[M/P]*)|(([上下])[午/下]*)", Pattern.CASE_INSENSITIVE);
+            Pattern.compile("(([AP])[M/P]*)|(([上下])[午/下]*)", Pattern.CASE_INSENSITIVE);
 
     /**
      * Pattern to find formats with condition ranges e.g. [>=100]
      */
     private static final Pattern rangeConditionalPattern =
-        Pattern.compile(".*\\[\\s*(>|>=|<|<=|=)\\s*[0-9]*\\.*[0-9].*");
+            Pattern.compile(".*\\[\\s*(>|>=|<|<=|=)\\s*[0-9]*\\.*[0-9].*");
 
     /**
      * A regex to find locale patterns like [$$-1009] and [$?-452]. Note that we don't currently process these into
@@ -91,9 +89,9 @@ public class DataFormatter {
      * White, Yellow, "Color n" (1<=n<=56)
      */
     private static final Pattern colorPattern = Pattern.compile(
-        "(\\[BLACK])|(\\[BLUE])|(\\[CYAN])|(\\[GREEN])|" + "(\\[MAGENTA])|(\\[RED])|(\\[WHITE])|(\\[YELLOW])|"
-            + "(\\[COLOR\\s*\\d])|(\\[COLOR\\s*[0-5]\\d])|(\\[DBNum(1|2|3)])|(\\[\\$-\\d{0,3}])",
-        Pattern.CASE_INSENSITIVE);
+            "(\\[BLACK])|(\\[BLUE])|(\\[CYAN])|(\\[GREEN])|" + "(\\[MAGENTA])|(\\[RED])|(\\[WHITE])|(\\[YELLOW])|"
+                    + "(\\[COLOR\\s*\\d])|(\\[COLOR\\s*[0-5]\\d])|(\\[DBNum(1|2|3)])|(\\[\\$-\\d{0,3}])",
+            Pattern.CASE_INSENSITIVE);
 
     /**
      * A regex to identify a fraction pattern. This requires that replaceAll("\\?", "#") has already been called
@@ -122,7 +120,9 @@ public class DataFormatter {
 
     static {
         StringBuilder buf = new StringBuilder();
-        for (int i = 0; i < 255; i++) {buf.append('#');}
+        for (int i = 0; i < 255; i++) {
+            buf.append('#');
+        }
         invalidDateTimeString = buf.toString();
     }
 
@@ -204,24 +204,24 @@ public class DataFormatter {
         //  handle these ourselves in a special way.
         // For now, if we detect 2+ parts, we call out to CellFormat to handle it
         // TODO Going forward, we should really merge the logic between the two classes
-        if (formatStr.contains(";") &&
-            (formatStr.indexOf(';') != formatStr.lastIndexOf(';')
-                || rangeConditionalPattern.matcher(formatStr).matches()
-            )) {
+        if (formatStr.contains(";")
+                && (formatStr.indexOf(';') != formatStr.lastIndexOf(';')
+                        || rangeConditionalPattern.matcher(formatStr).matches())) {
             try {
                 // Ask CellFormat to get a formatter for it
                 CellFormat cfmt = CellFormat.getInstance(locale, formatStr);
                 // CellFormat requires callers to identify date vs not, so do so
                 Object cellValueO = data;
-                if (DateUtils.isADateFormat(dataFormat, formatStr) &&
-                    // don't try to handle Date value 0, let a 3 or 4-part format take care of it
-                    data.doubleValue() != 0.0) {
+                if (DateUtils.isADateFormat(dataFormat, formatStr)
+                        &&
+                        // don't try to handle Date value 0, let a 3 or 4-part format take care of it
+                        data.doubleValue() != 0.0) {
                     cellValueO = DateUtils.getJavaDate(data, use1904windowing);
                 }
                 // Wrap and return (non-cachable - CellFormat does that)
                 return new CellFormatResultWrapper(cfmt.apply(cellValueO));
             } catch (Exception e) {
-                LOGGER.warn("Formatting failed for format {}, falling back", formatStr, e);
+                log.warn("Formatting failed for format {}, falling back", formatStr, e);
             }
         }
 
@@ -244,8 +244,6 @@ public class DataFormatter {
         return format;
     }
 
-
-
     private Format createFormat(Short dataFormat, String dataFormatString) {
         String formatStr = dataFormatString;
 
@@ -261,9 +259,13 @@ public class DataFormatter {
 
             // Paranoid replacement...
             int at = formatStr.indexOf(colour);
-            if (at == -1) {break;}
+            if (at == -1) {
+                break;
+            }
             String nFormatStr = formatStr.substring(0, at) + formatStr.substring(at + colour.length());
-            if (nFormatStr.equals(formatStr)) {break;}
+            if (nFormatStr.equals(formatStr)) {
+                break;
+            }
 
             // Try again in case there's multiple
             formatStr = nFormatStr;
@@ -328,9 +330,9 @@ public class DataFormatter {
             return new ZipPlusFourFormat();
         }
         if ("[<=9999999]###\\-####;\\(###\\)\\ ###\\-####".equals(dataFormatString)
-            || "[<=9999999]###-####;(###) ###-####".equals(dataFormatString)
-            || "###\\-####;\\(###\\)\\ ###\\-####".equals(dataFormatString)
-            || "###-####;(###) ###-####".equals(dataFormatString)) {
+                || "[<=9999999]###-####;(###) ###-####".equals(dataFormatString)
+                || "###\\-####;\\(###\\)\\ ###\\-####".equals(dataFormatString)
+                || "###-####;(###) ###-####".equals(dataFormatString)) {
             return new PhoneFormat();
         }
         if ("000\\-00\\-0000".equals(dataFormatString) || "000-00-0000".equals(dataFormatString)) {
@@ -371,10 +373,10 @@ public class DataFormatter {
         // Excel uses lower and upper case 'm' for both minutes and months.
         // From Excel help:
         /*
-            The "m" or "mm" code must appear immediately after the "h" or"hh"
-            code or immediately before the "ss" code; otherwise, Microsoft
-            Excel displays the month instead of minutes."
-          */
+          The "m" or "mm" code must appear immediately after the "h" or"hh"
+          code or immediately before the "ss" code; otherwise, Microsoft
+          Excel displays the month instead of minutes."
+        */
         StringBuilder sb = new StringBuilder();
         char[] chars = formatStr.toCharArray();
         boolean mIsMonth = true;
@@ -458,12 +460,11 @@ public class DataFormatter {
         try {
             return new ExcelStyleDateFormatter(formatStr, dateSymbols);
         } catch (IllegalArgumentException iae) {
-            LOGGER.debug("Formatting failed for format {}, falling back", formatStr, iae);
+            log.debug("Formatting failed for format {}, falling back", formatStr, iae);
             // the pattern could not be parsed correctly,
             // so fall back to the default number format
             return getDefaultFormat();
         }
-
     }
 
     private String cleanFormatForNumber(String formatStr) {
@@ -534,7 +535,7 @@ public class DataFormatter {
                 for (int i = 0; i < commas.length(); ++i) {
                     temp = temp.multiply(ONE_THOUSAND);
                 }
-                for (int i = 0; i < cnt ; i++) {
+                for (int i = 0; i < cnt; i++) {
                     temp = temp.multiply(TEN);
                 }
                 divider = temp;
@@ -546,9 +547,9 @@ public class DataFormatter {
         private Object scaleInput(Object obj) {
             if (divider != null) {
                 if (obj instanceof BigDecimal) {
-                    obj = ((BigDecimal)obj).divide(divider, RoundingMode.HALF_UP);
+                    obj = ((BigDecimal) obj).divide(divider, RoundingMode.HALF_UP);
                 } else if (obj instanceof Double) {
-                    obj = (Double)obj / divider.doubleValue();
+                    obj = (Double) obj / divider.doubleValue();
                 } else {
                     throw new UnsupportedOperationException();
                 }
@@ -593,7 +594,7 @@ public class DataFormatter {
         try {
             return new InternalDecimalFormatWithScale(format, symbols);
         } catch (IllegalArgumentException iae) {
-            LOGGER.error("Formatting failed for format {}, falling back", formatStr, iae);
+            log.error("Formatting failed for format {}, falling back", formatStr, iae);
             // the pattern could not be parsed correctly,
             // so fall back to the default number format
             return getDefaultFormat();
@@ -635,7 +636,7 @@ public class DataFormatter {
         Format dateFormat = getFormat(data, dataFormat, dataFormatString);
         if (dateFormat instanceof ExcelStyleDateFormatter) {
             // Hint about the raw excel value
-            ((ExcelStyleDateFormatter)dateFormat).setDateToBeFormatted(data);
+            ((ExcelStyleDateFormatter) dateFormat).setDateToBeFormatted(data);
         }
         return performDateFormatting(DateUtils.getJavaDate(data, use1904windowing), dateFormat);
     }
@@ -743,8 +744,6 @@ public class DataFormatter {
 
     /**
      * Format class for Excel's SSN format. This class mimics Excel's built-in SSN formatting.
-     *
-     * @author James May
      */
     @SuppressWarnings("serial")
     private static final class SSNFormat extends Format {
@@ -764,7 +763,7 @@ public class DataFormatter {
 
         @Override
         public StringBuffer format(Object obj, StringBuffer toAppendTo, FieldPosition pos) {
-            return toAppendTo.append(format((Number)obj));
+            return toAppendTo.append(format((Number) obj));
         }
 
         @Override
@@ -775,8 +774,6 @@ public class DataFormatter {
 
     /**
      * Format class for Excel Zip + 4 format. This class mimics Excel's built-in formatting for Zip + 4.
-     *
-     * @author James May
      */
     @SuppressWarnings("serial")
     private static final class ZipPlusFourFormat extends Format {
@@ -796,7 +793,7 @@ public class DataFormatter {
 
         @Override
         public StringBuffer format(Object obj, StringBuffer toAppendTo, FieldPosition pos) {
-            return toAppendTo.append(format((Number)obj));
+            return toAppendTo.append(format((Number) obj));
         }
 
         @Override
@@ -807,8 +804,6 @@ public class DataFormatter {
 
     /**
      * Format class for Excel phone number format. This class mimics Excel's built-in phone number formatting.
-     *
-     * @author James May
      */
     @SuppressWarnings("serial")
     private static final class PhoneFormat extends Format {
@@ -846,7 +841,7 @@ public class DataFormatter {
 
         @Override
         public StringBuffer format(Object obj, StringBuffer toAppendTo, FieldPosition pos) {
-            return toAppendTo.append(format((Number)obj));
+            return toAppendTo.append(format((Number) obj));
         }
 
         @Override
@@ -877,5 +872,4 @@ public class DataFormatter {
             return null; // Not supported
         }
     }
-
 }

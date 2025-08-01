@@ -5,6 +5,7 @@ import cn.idev.excel.analysis.v03.handlers.BlankRecordHandler;
 import cn.idev.excel.analysis.v03.handlers.BofRecordHandler;
 import cn.idev.excel.analysis.v03.handlers.BoolErrRecordHandler;
 import cn.idev.excel.analysis.v03.handlers.BoundSheetRecordHandler;
+import cn.idev.excel.analysis.v03.handlers.DateWindow1904RecordHandler;
 import cn.idev.excel.analysis.v03.handlers.DummyRecordHandler;
 import cn.idev.excel.analysis.v03.handlers.EofRecordHandler;
 import cn.idev.excel.analysis.v03.handlers.FormulaRecordHandler;
@@ -26,6 +27,11 @@ import cn.idev.excel.exception.ExcelAnalysisStopException;
 import cn.idev.excel.exception.ExcelAnalysisStopSheetException;
 import cn.idev.excel.read.metadata.ReadSheet;
 import cn.idev.excel.read.metadata.holder.xls.XlsReadWorkbookHolder;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.hssf.eventusermodel.EventWorkbookBuilder;
 import org.apache.poi.hssf.eventusermodel.FormatTrackingHSSFListener;
@@ -37,6 +43,7 @@ import org.apache.poi.hssf.record.BOFRecord;
 import org.apache.poi.hssf.record.BlankRecord;
 import org.apache.poi.hssf.record.BoolErrRecord;
 import org.apache.poi.hssf.record.BoundSheetRecord;
+import org.apache.poi.hssf.record.DateWindow1904Record;
 import org.apache.poi.hssf.record.EOFRecord;
 import org.apache.poi.hssf.record.FormulaRecord;
 import org.apache.poi.hssf.record.HyperlinkRecord;
@@ -52,14 +59,6 @@ import org.apache.poi.hssf.record.Record;
 import org.apache.poi.hssf.record.SSTRecord;
 import org.apache.poi.hssf.record.StringRecord;
 import org.apache.poi.hssf.record.TextObjectRecord;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * A text extractor for Excel files.
@@ -72,13 +71,11 @@ import java.util.stream.Collectors;
  * To turn an excel file into a CSV or similar, then see the XLS2CSVmra example
  * </p>
  *
- * @author jipengfei
  * @see <a href="http://svn.apache.org/repos/asf/poi/trunk/src/examples/src/org/apache/poi/hssf/eventusermodel/examples/XLS2CSVmra.java">XLS2CSVmra</a>
  */
 @Slf4j
 public class XlsSaxAnalyser implements HSSFListener, ExcelReadExecutor {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(XlsSaxAnalyser.class);
     private static final short DUMMY_RECORD_SID = -1;
     private final XlsReadContext xlsReadContext;
     private static final Map<Short, XlsRecordHandler> XLS_RECORD_HANDLER_MAP = new HashMap<Short, XlsRecordHandler>(32);
@@ -104,6 +101,7 @@ public class XlsSaxAnalyser implements HSSFListener, ExcelReadExecutor {
         XLS_RECORD_HANDLER_MAP.put(SSTRecord.sid, new SstRecordHandler());
         XLS_RECORD_HANDLER_MAP.put(StringRecord.sid, new StringRecordHandler());
         XLS_RECORD_HANDLER_MAP.put(TextObjectRecord.sid, new TextObjectRecordHandler());
+        XLS_RECORD_HANDLER_MAP.put(DateWindow1904Record.sid, new DateWindow1904RecordHandler());
     }
 
     /**
@@ -129,15 +127,16 @@ public class XlsSaxAnalyser implements HSSFListener, ExcelReadExecutor {
                 new XlsListSheetListener(xlsReadContext).execute();
             }
         } catch (ExcelAnalysisStopException e) {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Custom stop!");
+            if (log.isDebugEnabled()) {
+                log.debug("Custom stop!");
             }
         }
-        List<ReadSheet> actualSheetDataList = xlsReadContext.readWorkbookHolder().getActualSheetDataList();
+        List<ReadSheet> actualSheetDataList =
+                xlsReadContext.readWorkbookHolder().getActualSheetDataList();
         if (xlsReadContext.readWorkbookHolder().getIgnoreHiddenSheet()) {
             return actualSheetDataList.stream()
-                .filter(readSheet -> (!readSheet.isHidden() && !readSheet.isVeryHidden()))
-                .collect(Collectors.toList());
+                    .filter(readSheet -> (!readSheet.isHidden() && !readSheet.isVeryHidden()))
+                    .collect(Collectors.toList());
         }
         return actualSheetDataList;
     }
@@ -153,8 +152,8 @@ public class XlsSaxAnalyser implements HSSFListener, ExcelReadExecutor {
         MissingRecordAwareHSSFListener listener = new MissingRecordAwareHSSFListener(this);
         xlsReadWorkbookHolder.setFormatTrackingHSSFListener(new FormatTrackingHSSFListener(listener));
         EventWorkbookBuilder.SheetRecordCollectingListener workbookBuildingListener =
-            new EventWorkbookBuilder.SheetRecordCollectingListener(
-                xlsReadWorkbookHolder.getFormatTrackingHSSFListener());
+                new EventWorkbookBuilder.SheetRecordCollectingListener(
+                        xlsReadWorkbookHolder.getFormatTrackingHSSFListener());
         xlsReadWorkbookHolder.setHssfWorkbook(workbookBuildingListener.getStubHSSFWorkbook());
         HSSFEventFactory factory = new HSSFEventFactory();
         HSSFRequest request = new HSSFRequest();
@@ -183,8 +182,8 @@ public class XlsSaxAnalyser implements HSSFListener, ExcelReadExecutor {
         if (handler == null) {
             return;
         }
-        boolean ignoreRecord =
-            (handler instanceof IgnorableXlsRecordHandler) && xlsReadContext.xlsReadWorkbookHolder().getIgnoreRecord();
+        boolean ignoreRecord = (handler instanceof IgnorableXlsRecordHandler)
+                && xlsReadContext.xlsReadWorkbookHolder().getIgnoreRecord();
         if (ignoreRecord) {
             // No need to read the current sheet
             return;
@@ -203,5 +202,4 @@ public class XlsSaxAnalyser implements HSSFListener, ExcelReadExecutor {
             xlsReadContext.xlsReadWorkbookHolder().setCurrentSheetStopped(Boolean.TRUE);
         }
     }
-
 }

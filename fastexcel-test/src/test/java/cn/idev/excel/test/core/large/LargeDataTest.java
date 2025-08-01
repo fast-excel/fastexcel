@@ -1,15 +1,14 @@
 package cn.idev.excel.test.core.large;
 
+import cn.idev.excel.EasyExcel;
+import cn.idev.excel.ExcelWriter;
+import cn.idev.excel.test.util.TestFileUtil;
+import cn.idev.excel.write.metadata.WriteSheet;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
-
-import cn.idev.excel.test.util.TestFileUtil;
-import cn.idev.excel.EasyExcel;
-import cn.idev.excel.ExcelWriter;
-import cn.idev.excel.write.metadata.WriteSheet;
-
+import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.xssf.streaming.SXSSFCell;
 import org.apache.poi.xssf.streaming.SXSSFRow;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
@@ -19,15 +18,14 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
- * @author Jiaju Zhuang
+ *
  */
 @TestMethodOrder(MethodOrderer.MethodName.class)
+@Slf4j
 public class LargeDataTest {
-    private static final Logger LOGGER = LoggerFactory.getLogger(LargeDataTest.class);
+
     private static File fileFill07;
     private static File template07;
     private static File fileCsv;
@@ -50,18 +48,24 @@ public class LargeDataTest {
     @Test
     public void t01Read() throws Exception {
         long start = System.currentTimeMillis();
-        EasyExcel.read(TestFileUtil.getPath() + "large" + File.separator + "large07.xlsx", LargeData.class,
-            new LargeDataListener()).headRowNumber(2).sheet().doRead();
-        LOGGER.info("Large data total time spent:{}", System.currentTimeMillis() - start);
+        EasyExcel.read(
+                        TestFileUtil.getPath() + "large" + File.separator + "large07.xlsx",
+                        LargeData.class,
+                        new LargeDataListener())
+                .headRowNumber(2)
+                .sheet()
+                .doRead();
+        log.info("Large data total time spent:{}", System.currentTimeMillis() - start);
     }
 
     @Test
     public void t02Fill() {
-        try (ExcelWriter excelWriter = EasyExcel.write(fileFill07).withTemplate(template07).build()) {
+        try (ExcelWriter excelWriter =
+                EasyExcel.write(fileFill07).withTemplate(template07).build()) {
             WriteSheet writeSheet = EasyExcel.writerSheet().build();
             for (int j = 0; j < 5000; j++) {
                 excelWriter.fill(data(), writeSheet);
-                LOGGER.info("{} fill success.", j);
+                log.info("{} fill success.", j);
             }
         }
     }
@@ -74,20 +78,23 @@ public class LargeDataTest {
             WriteSheet writeSheet = EasyExcel.writerSheet().build();
             for (int j = 0; j < 5000; j++) {
                 excelWriter.write(data(), writeSheet);
-                LOGGER.info("{} write success.", j);
+                log.info("{} write success.", j);
             }
         }
-        LOGGER.info("CSV large data total time spent:{}", System.currentTimeMillis() - start);
+        log.info("CSV large data total time spent:{}", System.currentTimeMillis() - start);
 
         //  read
         start = System.currentTimeMillis();
-        EasyExcel.read(fileCsv, LargeData.class, new LargeDataListener()).sheet().doRead();
-        LOGGER.info("CSV large data total time spent:{}", System.currentTimeMillis() - start);
+        EasyExcel.read(fileCsv, LargeData.class, new LargeDataListener())
+                .sheet()
+                .doRead();
+        log.info("CSV large data total time spent:{}", System.currentTimeMillis() - start);
     }
 
     @Test
     public void t04Write() throws Exception {
-        ExcelWriter excelWriter = EasyExcel.write(fileWriteTemp07, LargeData.class).build();
+        ExcelWriter excelWriter =
+                EasyExcel.write(fileWriteTemp07, LargeData.class).build();
         WriteSheet writeSheet = EasyExcel.writerSheet().build();
         for (int j = 0; j < 2; j++) {
             excelWriter.write(data(), writeSheet);
@@ -99,11 +106,11 @@ public class LargeDataTest {
         writeSheet = EasyExcel.writerSheet().build();
         for (int j = 0; j < 5000; j++) {
             excelWriter.write(data(), writeSheet);
-            LOGGER.info("{} write success.", j);
+            log.info("{} write success.", j);
         }
         excelWriter.finish();
         long cost = System.currentTimeMillis() - start;
-        LOGGER.info("write cost:{}", cost);
+        log.info("write cost:{}", cost);
         start = System.currentTimeMillis();
         try (FileOutputStream fileOutputStream = new FileOutputStream(fileWritePoi07)) {
             SXSSFWorkbook workbook = new SXSSFWorkbook();
@@ -115,7 +122,7 @@ public class LargeDataTest {
                     cell.setCellValue("str-" + j + "-" + i);
                 }
                 if (i % 5000 == 0) {
-                    LOGGER.info("{} write success.", i);
+                    log.info("{} write success.", i);
                 }
             }
             workbook.write(fileOutputStream);
@@ -123,8 +130,8 @@ public class LargeDataTest {
             workbook.close();
         }
         long costPoi = System.currentTimeMillis() - start;
-        LOGGER.info("poi write cost:{}", System.currentTimeMillis() - start);
-        LOGGER.info("{} vs {}", cost, costPoi);
+        log.info("poi write cost:{}", System.currentTimeMillis() - start);
+        log.info("{} vs {}", cost, costPoi);
         Assertions.assertTrue(costPoi * 2 > cost);
     }
 

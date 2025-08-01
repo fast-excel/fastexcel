@@ -10,7 +10,7 @@ import cn.idev.excel.metadata.property.ExcelContentProperty;
 /**
  * Long and boolean converter
  *
- * @author Jiaju Zhuang
+ *
  */
 public class LongBooleanConverter implements Converter<Long> {
     private static final Long ONE = 1L;
@@ -27,8 +27,8 @@ public class LongBooleanConverter implements Converter<Long> {
     }
 
     @Override
-    public Long convertToJavaData(ReadCellData<?> cellData, ExcelContentProperty contentProperty,
-                                  GlobalConfiguration globalConfiguration) {
+    public Long convertToJavaData(
+            ReadCellData<?> cellData, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) {
         if (cellData.getBooleanValue()) {
             return ONE;
         }
@@ -36,12 +36,11 @@ public class LongBooleanConverter implements Converter<Long> {
     }
 
     @Override
-    public WriteCellData<?> convertToExcelData(Long value, ExcelContentProperty contentProperty,
-                                               GlobalConfiguration globalConfiguration) {
+    public WriteCellData<?> convertToExcelData(
+            Long value, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) {
         if (ONE.equals(value)) {
             return new WriteCellData<>(Boolean.TRUE);
         }
         return new WriteCellData<>(Boolean.FALSE);
     }
-
 }

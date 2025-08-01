@@ -1,11 +1,9 @@
 package cn.idev.excel.test.demo.write;
 
-import java.util.Date;
-
 import cn.idev.excel.annotation.ExcelProperty;
 import cn.idev.excel.annotation.format.DateTimeFormat;
 import cn.idev.excel.annotation.format.NumberFormat;
-
+import java.util.Date;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +11,7 @@ import lombok.Setter;
 /**
  * 基础数据类.这里的排序和excel里面的排序一致
  *
- * @author Jiaju Zhuang
+ *
  **/
 @Getter
 @Setter

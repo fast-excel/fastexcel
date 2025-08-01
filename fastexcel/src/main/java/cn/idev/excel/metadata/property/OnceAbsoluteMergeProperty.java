@@ -5,7 +5,7 @@ import cn.idev.excel.annotation.write.style.OnceAbsoluteMerge;
 /**
  * Configuration from annotations
  *
- * @author Jiaju Zhuang
+ *
  */
 public class OnceAbsoluteMergeProperty {
     /**
@@ -36,8 +36,11 @@ public class OnceAbsoluteMergeProperty {
         if (onceAbsoluteMerge == null) {
             return null;
         }
-        return new OnceAbsoluteMergeProperty(onceAbsoluteMerge.firstRowIndex(), onceAbsoluteMerge.lastRowIndex(),
-            onceAbsoluteMerge.firstColumnIndex(), onceAbsoluteMerge.lastColumnIndex());
+        return new OnceAbsoluteMergeProperty(
+                onceAbsoluteMerge.firstRowIndex(),
+                onceAbsoluteMerge.lastRowIndex(),
+                onceAbsoluteMerge.firstColumnIndex(),
+                onceAbsoluteMerge.lastColumnIndex());
     }
 
     public int getFirstRowIndex() {

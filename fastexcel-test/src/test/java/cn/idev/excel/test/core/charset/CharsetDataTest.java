@@ -1,17 +1,15 @@
 package cn.idev.excel.test.core.charset;
 
+import cn.idev.excel.EasyExcel;
+import cn.idev.excel.context.AnalysisContext;
+import cn.idev.excel.metadata.data.ReadCellData;
+import cn.idev.excel.read.listener.ReadListener;
+import cn.idev.excel.test.util.TestFileUtil;
 import java.io.File;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
-
-import cn.idev.excel.read.listener.ReadListener;
-import cn.idev.excel.test.util.TestFileUtil;
-import cn.idev.excel.EasyExcel;
-import cn.idev.excel.context.AnalysisContext;
-import cn.idev.excel.metadata.data.ReadCellData;
-
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.compress.utils.Lists;
 import org.junit.jupiter.api.Assertions;
@@ -23,7 +21,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 /**
  * charset
  *
- * @author Jiaju Zhuang
+ *
  */
 @Slf4j
 @TestMethodOrder(MethodOrderer.MethodName.class)
@@ -51,50 +49,55 @@ public class CharsetDataTest {
         EasyExcel.write(fileCsvError, CharsetData.class).charset(GBK).sheet().doWrite(data());
         EasyExcel.read(fileCsvError, CharsetData.class, new ReadListener<CharsetData>() {
 
-            private final List<CharsetData> dataList = Lists.newArrayList();
+                    private final List<CharsetData> dataList = Lists.newArrayList();
 
-            @Override
-            public void invokeHead(Map<Integer, ReadCellData<?>> headMap, AnalysisContext context) {
-                String head = headMap.get(0).getStringValue();
-                Assertions.assertNotEquals("姓名", head);
-            }
+                    @Override
+                    public void invokeHead(Map<Integer, ReadCellData<?>> headMap, AnalysisContext context) {
+                        String head = headMap.get(0).getStringValue();
+                        Assertions.assertNotEquals("姓名", head);
+                    }
 
-            @Override
-            public void invoke(CharsetData data, AnalysisContext context) {
-                dataList.add(data);
-            }
+                    @Override
+                    public void invoke(CharsetData data, AnalysisContext context) {
+                        dataList.add(data);
+                    }
 
-            @Override
-            public void doAfterAllAnalysed(AnalysisContext context) {
-            }
-        }).charset(StandardCharsets.UTF_8).sheet().doRead();
+                    @Override
+                    public void doAfterAllAnalysed(AnalysisContext context) {}
+                })
+                .charset(StandardCharsets.UTF_8)
+                .sheet()
+                .doRead();
     }
 
     private void readAndWrite(File file, Charset charset) {
         EasyExcel.write(file, CharsetData.class).charset(charset).sheet().doWrite(data());
         EasyExcel.read(file, CharsetData.class, new ReadListener<CharsetData>() {
 
-            private final List<CharsetData> dataList = Lists.newArrayList();
+                    private final List<CharsetData> dataList = Lists.newArrayList();
 
-            @Override
-            public void invokeHead(Map<Integer, ReadCellData<?>> headMap, AnalysisContext context) {
-                String head = headMap.get(0).getStringValue();
-                Assertions.assertEquals("姓名", head);
-            }
+                    @Override
+                    public void invokeHead(Map<Integer, ReadCellData<?>> headMap, AnalysisContext context) {
+                        String head = headMap.get(0).getStringValue();
+                        Assertions.assertEquals("姓名", head);
+                    }
 
-            @Override
-            public void invoke(CharsetData data, AnalysisContext context) {
-                dataList.add(data);
-            }
+                    @Override
+                    public void invoke(CharsetData data, AnalysisContext context) {
+                        dataList.add(data);
+                    }
 
-            @Override
-            public void doAfterAllAnalysed(AnalysisContext context) {
-                Assertions.assertEquals(dataList.size(), 10);
-                CharsetData charsetData = dataList.get(0);
-                Assertions.assertEquals("姓名0", charsetData.getName());
-                Assertions.assertEquals(0, (long)charsetData.getAge());
-            }
-        }).charset(charset).sheet().doRead();
+                    @Override
+                    public void doAfterAllAnalysed(AnalysisContext context) {
+                        Assertions.assertEquals(dataList.size(), 10);
+                        CharsetData charsetData = dataList.get(0);
+                        Assertions.assertEquals("姓名0", charsetData.getName());
+                        Assertions.assertEquals(0, (long) charsetData.getAge());
+                    }
+                })
+                .charset(charset)
+                .sheet()
+                .doRead();
     }
 
     private List<CharsetData> data() {

@@ -1,8 +1,5 @@
 package cn.idev.excel.context;
 
-import java.io.InputStream;
-import java.util.List;
-
 import cn.idev.excel.event.AnalysisEventListener;
 import cn.idev.excel.read.metadata.ReadSheet;
 import cn.idev.excel.read.metadata.holder.ReadHolder;
@@ -11,12 +8,13 @@ import cn.idev.excel.read.metadata.holder.ReadSheetHolder;
 import cn.idev.excel.read.metadata.holder.ReadWorkbookHolder;
 import cn.idev.excel.read.processor.AnalysisEventProcessor;
 import cn.idev.excel.support.ExcelTypeEnum;
+import java.io.InputStream;
+import java.util.List;
 
 /**
  *
  * A context is the main anchorage point of a excel reader.
  *
- * @author jipengfei
  */
 public interface AnalysisContext {
     /**

@@ -1,24 +1,21 @@
 package cn.idev.excel.test.core.head;
 
+import cn.idev.excel.context.AnalysisContext;
+import cn.idev.excel.metadata.data.ReadCellData;
+import cn.idev.excel.read.listener.ReadListener;
+import com.alibaba.fastjson2.JSON;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import cn.idev.excel.read.listener.ReadListener;
-import cn.idev.excel.context.AnalysisContext;
-import cn.idev.excel.metadata.data.ReadCellData;
-import com.alibaba.fastjson2.JSON;
-
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
- * @author Jiaju Zhuang
+ *
  */
+@Slf4j
 public class ListHeadDataListener implements ReadListener<Map<Integer, String>> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(NoHeadData.class);
     List<Map<Integer, String>> list = new ArrayList<Map<Integer, String>>();
 
     @Override
@@ -43,6 +40,6 @@ public class ListHeadDataListener implements ReadListener<Map<Integer, String>> 
         Assertions.assertEquals("1", data.get(1));
         Assertions.assertEquals("2020-01-01 01:01:01", data.get(2));
         Assertions.assertEquals("额外数据", data.get(3));
-        LOGGER.debug("First row:{}", JSON.toJSONString(list.get(0)));
+        log.debug("First row:{}", JSON.toJSONString(list.get(0)));
     }
 }

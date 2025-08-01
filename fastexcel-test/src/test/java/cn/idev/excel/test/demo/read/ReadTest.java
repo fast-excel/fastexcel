@@ -15,23 +15,19 @@ import cn.idev.excel.read.metadata.holder.csv.CsvReadWorkbookHolder;
 import cn.idev.excel.test.util.TestFileUtil;
 import cn.idev.excel.util.ListUtils;
 import com.alibaba.fastjson2.JSON;
+import java.io.File;
+import java.util.List;
+import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.springframework.core.io.ClassPathResource;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Common approaches for reading Excel files
  *
- * @author Jiaju Zhuang
+ *
  */
-
 @Slf4j
 public class ReadTest {
 
@@ -53,50 +49,56 @@ public class ReadTest {
         // By default, it reads 100 rows at a time. You can process the data directly.
         // The number of rows to read can be set in the constructor of `PageReadListener`.
         EasyExcel.read(fileName, DemoData.class, new PageReadListener<DemoData>(dataList -> {
-            for (DemoData demoData : dataList) {
-                log.info("Reading a row of data: {}", JSON.toJSONString(demoData));
-            }
-        })).numRows(2).sheet().doRead();
+                    for (DemoData demoData : dataList) {
+                        log.info("Reading a row of data: {}", JSON.toJSONString(demoData));
+                    }
+                }))
+                .numRows(2)
+                .sheet()
+                .doRead();
 
         // Approach 2:
         // Anonymous inner class, no need to create a separate DemoDataListener
         fileName = TestFileUtil.getPath() + "demo" + File.separator + "demo.xlsx";
         // Specify the class to read the data, then read the first sheet. The file stream will be automatically closed.
         EasyExcel.read(fileName, DemoData.class, new ReadListener<DemoData>() {
-            /**
-             * Batch size for caching data
-             */
-            public static final int BATCH_COUNT = 100;
-            /**
-             * Temporary storage
-             */
-            private List<DemoData> cachedDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
+                    /**
+                     * Batch size for caching data
+                     */
+                    public static final int BATCH_COUNT = 100;
+                    /**
+                     * Temporary storage
+                     */
+                    private List<DemoData> cachedDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
 
-            @Override
-            public void invoke(DemoData data, AnalysisContext context) {
-                cachedDataList.add(data);
-                if (cachedDataList.size() >= BATCH_COUNT) {
-                    saveData();
-                    // Clear the list after saving
-                    cachedDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
-                }
-            }
+                    @Override
+                    public void invoke(DemoData data, AnalysisContext context) {
+                        cachedDataList.add(data);
+                        if (cachedDataList.size() >= BATCH_COUNT) {
+                            saveData();
+                            // Clear the list after saving
+                            cachedDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
+                        }
+                    }
 
-            @Override
-            public void doAfterAllAnalysed(AnalysisContext context) {
-                saveData();
-            }
+                    @Override
+                    public void doAfterAllAnalysed(AnalysisContext context) {
+                        saveData();
+                    }
 
-            /**
-             * Simulate saving data to the database
-             */
-            private void saveData() {
-                log.info("Saving {} rows of data to the database!", cachedDataList.size());
-                log.info("Data saved successfully!");
-            }
-        }).sheet().doRead();
+                    /**
+                     * Simulate saving data to the database
+                     */
+                    private void saveData() {
+                        log.info("Saving {} rows of data to the database!", cachedDataList.size());
+                        log.info("Data saved successfully!");
+                    }
+                })
+                .sheet()
+                .doRead();
 
-        // Important note: DemoDataListener should not be managed by Spring. It needs to be instantiated every time you read an Excel file.
+        // Important note: DemoDataListener should not be managed by Spring. It needs to be instantiated every time you
+        // read an Excel file.
         // Approach 3:
         fileName = TestFileUtil.getPath() + "demo" + File.separator + "demo.xlsx";
         // Specify the class to read the data, then read the first sheet. The file stream will be automatically closed.
@@ -105,7 +107,8 @@ public class ReadTest {
         // Approach 4
         fileName = TestFileUtil.getPath() + "demo" + File.separator + "demo.xlsx";
         // One reader per file
-        try (ExcelReader excelReader = EasyExcel.read(fileName, DemoData.class, new DemoDataListener()).build()) {
+        try (ExcelReader excelReader =
+                EasyExcel.read(fileName, DemoData.class, new DemoDataListener()).build()) {
             // Build a sheet. You can specify the name or index.
             ReadSheet readSheet = EasyExcel.readSheet(0).build();
             readSheet.setNumRows(2);
@@ -119,7 +122,9 @@ public class ReadTest {
         String fileName = TestFileUtil.getPath() + "demo" + File.separator + "generic-demo.xlsx";
         // Simulate obtaining the Excel header's Class<?> object through any possible means
         Class<?> excelHeaderClass = DemoDataAnother.class;
-        EasyExcel.read(fileName, excelHeaderClass, GenericHeaderTypeDataListener.build(excelHeaderClass)).sheet().doRead();
+        EasyExcel.read(fileName, excelHeaderClass, GenericHeaderTypeDataListener.build(excelHeaderClass))
+                .sheet()
+                .doRead();
     }
 
     /**
@@ -135,7 +140,10 @@ public class ReadTest {
     public void indexOrNameRead() {
         String fileName = TestFileUtil.getPath() + "demo" + File.separator + "demo.xlsx";
         // By default, read the first sheet
-        EasyExcel.read(fileName, IndexOrNameData.class, new IndexOrNameDataListener()).numRows(1).sheet().doRead();
+        EasyExcel.read(fileName, IndexOrNameData.class, new IndexOrNameDataListener())
+                .numRows(1)
+                .sheet()
+                .doRead();
     }
 
     /**
@@ -162,10 +170,14 @@ public class ReadTest {
         try (ExcelReader excelReader = EasyExcel.read(fileName).build()) {
             // For simplicity, the same head and Listener are registered here.
             // In actual use, different Listeners must be used.
-            ReadSheet readSheet1 = EasyExcel.readSheet(0).head(DemoData.class)
-                    .registerReadListener(new DemoDataListener()).build();
-            ReadSheet readSheet2 = EasyExcel.readSheet(1).head(DemoData.class)
-                    .registerReadListener(new DemoDataListener()).build();
+            ReadSheet readSheet1 = EasyExcel.readSheet(0)
+                    .head(DemoData.class)
+                    .registerReadListener(new DemoDataListener())
+                    .build();
+            ReadSheet readSheet2 = EasyExcel.readSheet(1)
+                    .head(DemoData.class)
+                    .registerReadListener(new DemoDataListener())
+                    .build();
             // Note: All sheets (sheet1 and sheet2) must be passed together.
             // Otherwise, for Excel 2003 files, the same sheet may be read multiple times, wasting performance.
             excelReader.read(readSheet1, readSheet2);
@@ -190,11 +202,13 @@ public class ReadTest {
         // Specify the class to read, then read the first sheet
         EasyExcel.read(fileName, ConverterData.class, new ConverterDataListener())
                 // Note: We can also register a custom converter using `registerConverter`.
-                // However, this converter will be global, and all fields with Java type `String` and Excel type `String` will use this converter.
+                // However, this converter will be global, and all fields with Java type `String` and Excel type
+                // `String` will use this converter.
                 // If you want to use it for a single field, specify the converter using `@ExcelProperty`.
                 // .registerConverter(new CustomStringStringConverter())
                 // Read the sheet
-                .sheet().doRead();
+                .sheet()
+                .doRead();
     }
 
     /**
@@ -213,10 +227,13 @@ public class ReadTest {
     public void complexHeaderRead() {
         String fileName = TestFileUtil.getPath() + "demo" + File.separator + "demo.xlsx";
         // Specify the class to read, then read the first sheet
-        EasyExcel.read(fileName, DemoData.class, new DemoDataListener()).sheet()
+        EasyExcel.read(fileName, DemoData.class, new DemoDataListener())
+                .sheet()
                 // Set to 1 here because the header is one row. For multi-row headers, set to other values.
-                // You can also omit this, as the default behavior will parse based on DemoData, which does not specify a header, meaning the default is 1 row.
-                .headRowNumber(1).doRead();
+                // You can also omit this, as the default behavior will parse based on DemoData, which does not specify
+                // a header, meaning the default is 1 row.
+                .headRowNumber(1)
+                .doRead();
     }
 
     /**
@@ -242,7 +259,8 @@ public class ReadTest {
     public void compatibleHeaderRead() {
         String fileName = TestFileUtil.getPath() + "demo" + File.separator + "demo.xlsx";
         // Specify the class used for reading and choose to read the first sheet.
-        EasyExcel.read(fileName, DemoCompatibleHeaderData.class, new DemoCompatibleHeaderDataListener()).sheet()
+        EasyExcel.read(fileName, DemoCompatibleHeaderData.class, new DemoCompatibleHeaderDataListener())
+                .sheet()
                 .doRead();
     }
 
@@ -260,7 +278,9 @@ public class ReadTest {
     public void headerRead() {
         String fileName = TestFileUtil.getPath() + "demo" + File.separator + "demo.xlsx";
         // Specify the class to read, then read the first sheet
-        EasyExcel.read(fileName, DemoData.class, new DemoHeadDataListener()).sheet().doRead();
+        EasyExcel.read(fileName, DemoData.class, new DemoHeadDataListener())
+                .sheet()
+                .doRead();
     }
 
     /**
@@ -288,7 +308,9 @@ public class ReadTest {
                 // Read hyperlinks (default is not to read)
                 .extraRead(CellExtraTypeEnum.HYPERLINK)
                 // Read merged cell information (default is not to read)
-                .extraRead(CellExtraTypeEnum.MERGE).sheet().doRead();
+                .extraRead(CellExtraTypeEnum.MERGE)
+                .sheet()
+                .doRead();
     }
 
     /**
@@ -307,7 +329,9 @@ public class ReadTest {
     public void cellDataRead() {
         String fileName = TestFileUtil.getPath() + "demo" + File.separator + "cellDataDemo.xlsx";
         // Specify the class to read, then read the first sheet
-        EasyExcel.read(fileName, CellDataReadDemoData.class, new CellDataDemoHeadDataListener()).sheet().doRead();
+        EasyExcel.read(fileName, CellDataReadDemoData.class, new CellDataDemoHeadDataListener())
+                .sheet()
+                .doRead();
     }
 
     /**
@@ -324,7 +348,9 @@ public class ReadTest {
     public void exceptionRead() {
         String fileName = TestFileUtil.getPath() + "demo" + File.separator + "demo.xlsx";
         // Specify the class to read, then read the first sheet
-        EasyExcel.read(fileName, ExceptionDemoData.class, new DemoExceptionListener()).sheet().doRead();
+        EasyExcel.read(fileName, ExceptionDemoData.class, new DemoExceptionListener())
+                .sheet()
+                .doRead();
     }
 
     /**
@@ -334,7 +360,8 @@ public class ReadTest {
     public void synchronousRead() {
         String fileName = TestFileUtil.getPath() + "demo" + File.separator + "demo.xlsx";
         // Specify the class to read, then read the first sheet. Synchronous reading will automatically finish.
-        List<DemoData> list = EasyExcel.read(fileName).head(DemoData.class).sheet().doReadSync();
+        List<DemoData> list =
+                EasyExcel.read(fileName).head(DemoData.class).sheet().doReadSync();
         for (DemoData data : list) {
             log.info("Read data:{}", JSON.toJSONString(data));
         }
@@ -367,20 +394,22 @@ public class ReadTest {
         @Test
         void asNormalJavaBean() {
             String fileName = TestFileUtil.getPath() + "demo" + File.separator + "demo.csv";
-            try (ExcelReader excelReader = EasyExcel.read(fileName, DemoData.class, new DemoDataListener()).build()) {
+            try (ExcelReader excelReader = EasyExcel.read(fileName, DemoData.class, new DemoDataListener())
+                    .build()) {
                 // Check if it is a CSV file
                 if (excelReader.analysisContext().readWorkbookHolder() instanceof CsvReadWorkbookHolder) {
-                    CsvReadWorkbookHolder csvReadWorkbookHolder = (CsvReadWorkbookHolder) excelReader.analysisContext()
-                        .readWorkbookHolder();
+                    CsvReadWorkbookHolder csvReadWorkbookHolder = (CsvReadWorkbookHolder)
+                            excelReader.analysisContext().readWorkbookHolder();
                     // Set to comma-separated (default is also comma-separated)
                     // Note: `withDelimiter` will regenerate the format, so it needs to be set back.
-                    csvReadWorkbookHolder.setCsvFormat(csvReadWorkbookHolder.getCsvFormat().withDelimiter(','));
+                    csvReadWorkbookHolder.setCsvFormat(
+                            csvReadWorkbookHolder.getCsvFormat().withDelimiter(','));
                 }
 
                 // Get all sheets
                 List<ReadSheet> readSheetList = excelReader.excelExecutor().sheetList();
                 // If you only want to read the first sheet, you can pass the parameter accordingly.
-                //ReadSheet readSheet = EasyExcel.readSheet(0).build();
+                // ReadSheet readSheet = EasyExcel.readSheet(0).build();
                 excelReader.read(readSheetList);
             }
         }
@@ -388,18 +417,19 @@ public class ReadTest {
         @Test
         void asChainedAccessorsJavaBean() {
             String fileName = TestFileUtil.getPath() + "demo" + File.separator + "demo.csv";
-            try (ExcelReader excelReader = EasyExcel.read(fileName, DemoChainAccessorsData.class, new ReadListener<DemoChainAccessorsData>() {
-                @Override
-                public void invoke(DemoChainAccessorsData data, AnalysisContext context) {
-                    Assertions.assertNotNull(data.getString());
-                    Assertions.assertNotNull(data.getDate());
-                    Assertions.assertNotNull(data.getDoubleData());
-                }
+            try (ExcelReader excelReader = EasyExcel.read(
+                            fileName, DemoChainAccessorsData.class, new ReadListener<DemoChainAccessorsData>() {
+                                @Override
+                                public void invoke(DemoChainAccessorsData data, AnalysisContext context) {
+                                    Assertions.assertNotNull(data.getString());
+                                    Assertions.assertNotNull(data.getDate());
+                                    Assertions.assertNotNull(data.getDoubleData());
+                                }
 
-                @Override
-                public void doAfterAllAnalysed(AnalysisContext context) {
-                }
-            }).build()) {
+                                @Override
+                                public void doAfterAllAnalysed(AnalysisContext context) {}
+                            })
+                    .build()) {
                 excelReader.readAll();
             }
         }

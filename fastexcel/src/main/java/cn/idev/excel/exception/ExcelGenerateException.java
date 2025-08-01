@@ -1,7 +1,7 @@
 package cn.idev.excel.exception;
 
 /**
- * @author jipengfei
+ *
  */
 public class ExcelGenerateException extends ExcelRuntimeException {
 

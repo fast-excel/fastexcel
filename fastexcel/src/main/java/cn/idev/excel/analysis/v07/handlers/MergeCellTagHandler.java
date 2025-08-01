@@ -1,17 +1,16 @@
 package cn.idev.excel.analysis.v07.handlers;
 
+import cn.idev.excel.constant.ExcelXmlConstants;
+import cn.idev.excel.context.xlsx.XlsxReadContext;
 import cn.idev.excel.enums.CellExtraTypeEnum;
 import cn.idev.excel.metadata.CellExtra;
 import cn.idev.excel.util.StringUtils;
-import cn.idev.excel.context.xlsx.XlsxReadContext;
 import org.xml.sax.Attributes;
-
-import cn.idev.excel.constant.ExcelXmlConstants;
 
 /**
  * Cell Handler
  *
- * @author Jiaju Zhuang
+ *
  */
 public class MergeCellTagHandler extends AbstractXlsxTagHandler {
 
@@ -30,5 +29,4 @@ public class MergeCellTagHandler extends AbstractXlsxTagHandler {
         xlsxReadContext.readSheetHolder().setCellExtra(cellExtra);
         xlsxReadContext.analysisEventProcessor().extra(xlsxReadContext);
     }
-
 }

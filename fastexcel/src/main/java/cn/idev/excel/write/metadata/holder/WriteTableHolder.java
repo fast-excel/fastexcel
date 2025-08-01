@@ -2,7 +2,6 @@ package cn.idev.excel.write.metadata.holder;
 
 import cn.idev.excel.enums.HolderEnum;
 import cn.idev.excel.write.metadata.WriteTable;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,7 +9,7 @@ import lombok.Setter;
 /**
  * sheet holder
  *
- * @author Jiaju Zhuang
+ *
  */
 @Getter
 @Setter

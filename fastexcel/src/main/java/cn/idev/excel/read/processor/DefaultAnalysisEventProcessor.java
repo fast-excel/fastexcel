@@ -15,21 +15,18 @@ import cn.idev.excel.read.metadata.property.ExcelReadHeadProperty;
 import cn.idev.excel.util.BooleanUtils;
 import cn.idev.excel.util.ConverterUtils;
 import cn.idev.excel.util.StringUtils;
-import org.apache.commons.collections4.MapUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.MapUtils;
 
 /**
  * Analysis event
  *
- * @author jipengfei
  */
+@Slf4j
 public class DefaultAnalysisEventProcessor implements AnalysisEventProcessor {
-    private static final Logger LOGGER = LoggerFactory.getLogger(DefaultAnalysisEventProcessor.class);
 
     @Override
     public void extra(AnalysisContext analysisContext) {
@@ -49,8 +46,8 @@ public class DefaultAnalysisEventProcessor implements AnalysisEventProcessor {
         // Check if the current row is empty
         if (RowTypeEnum.EMPTY.equals(analysisContext.readRowHolder().getRowType())) {
             // Log debug information if the current row is empty
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Empty row!");
+            if (log.isDebugEnabled()) {
+                log.debug("Empty row!");
             }
             // If the workbook holder is set to ignore empty rows, then directly return
             if (analysisContext.readWorkbookHolder().getIgnoreEmptyRow()) {
@@ -89,7 +86,8 @@ public class DefaultAnalysisEventProcessor implements AnalysisEventProcessor {
     }
 
     private void onException(AnalysisContext analysisContext, Exception e) {
-        for (ReadListener readListenerException : analysisContext.currentReadHolder().readListenerList()) {
+        for (ReadListener readListenerException :
+                analysisContext.currentReadHolder().readListenerList()) {
             try {
                 readListenerException.onException(e, analysisContext);
             } catch (RuntimeException re) {
@@ -102,7 +100,7 @@ public class DefaultAnalysisEventProcessor implements AnalysisEventProcessor {
 
     private void dealData(AnalysisContext analysisContext) {
         ReadRowHolder readRowHolder = analysisContext.readRowHolder();
-        Map<Integer, ReadCellData<?>> cellDataMap = (Map)readRowHolder.getCellMap();
+        Map<Integer, ReadCellData<?>> cellDataMap = (Map) readRowHolder.getCellMap();
         readRowHolder.setCurrentRowAnalysisResult(cellDataMap);
         int rowIndex = readRowHolder.getRowIndex();
         int currentHeadRowNumber = analysisContext.readSheetHolder().getHeadRowNumber();
@@ -137,17 +135,18 @@ public class DefaultAnalysisEventProcessor implements AnalysisEventProcessor {
     private void buildHead(AnalysisContext analysisContext, Map<Integer, ReadCellData<?>> cellDataMap) {
         // Rule out empty head, and then take the largest column
         if (MapUtils.isNotEmpty(cellDataMap)) {
-            cellDataMap.entrySet()
-                .stream()
-                .filter(entry -> CellDataTypeEnum.EMPTY != entry.getValue().getType())
-                .forEach(entry -> analysisContext.readSheetHolder().setMaxNotEmptyDataHeadSize(entry.getKey()));
+            cellDataMap.entrySet().stream()
+                    .filter(entry -> CellDataTypeEnum.EMPTY != entry.getValue().getType())
+                    .forEach(entry -> analysisContext.readSheetHolder().setMaxNotEmptyDataHeadSize(entry.getKey()));
         }
 
-        if (!HeadKindEnum.CLASS.equals(analysisContext.currentReadHolder().excelReadHeadProperty().getHeadKind())) {
+        if (!HeadKindEnum.CLASS.equals(
+                analysisContext.currentReadHolder().excelReadHeadProperty().getHeadKind())) {
             return;
         }
         Map<Integer, String> dataMap = ConverterUtils.convertToStringMap(cellDataMap, analysisContext);
-        ExcelReadHeadProperty excelHeadPropertyData = analysisContext.readSheetHolder().excelReadHeadProperty();
+        ExcelReadHeadProperty excelHeadPropertyData =
+                analysisContext.readSheetHolder().excelReadHeadProperty();
         Map<Integer, Head> headMapData = excelHeadPropertyData.getHeadMap();
         Map<Integer, Head> tmpHeadMap = new HashMap<Integer, Head>(headMapData.size() * 4 / 3 + 1);
         for (Map.Entry<Integer, Head> entry : headMapData.entrySet()) {

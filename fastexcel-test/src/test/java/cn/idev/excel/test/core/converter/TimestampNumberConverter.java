@@ -5,10 +5,9 @@ import cn.idev.excel.enums.CellDataTypeEnum;
 import cn.idev.excel.metadata.GlobalConfiguration;
 import cn.idev.excel.metadata.data.WriteCellData;
 import cn.idev.excel.metadata.property.ExcelContentProperty;
-import org.apache.poi.ss.usermodel.DateUtil;
-
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import org.apache.poi.ss.usermodel.DateUtil;
 
 public class TimestampNumberConverter implements Converter<Timestamp> {
     @Override
@@ -22,14 +21,14 @@ public class TimestampNumberConverter implements Converter<Timestamp> {
     }
 
     @Override
-    public WriteCellData<?> convertToExcelData(Timestamp value, ExcelContentProperty contentProperty,
-                                               GlobalConfiguration globalConfiguration) {
+    public WriteCellData<?> convertToExcelData(
+            Timestamp value, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) {
         if (contentProperty == null || contentProperty.getDateTimeFormatProperty() == null) {
             return new WriteCellData<>(
-                BigDecimal.valueOf(DateUtil.getExcelDate(value, globalConfiguration.getUse1904windowing())));
+                    BigDecimal.valueOf(DateUtil.getExcelDate(value, globalConfiguration.getUse1904windowing())));
         } else {
-            return new WriteCellData<>(
-                BigDecimal.valueOf(DateUtil.getExcelDate(value, contentProperty.getDateTimeFormatProperty().getUse1904windowing())));
+            return new WriteCellData<>(BigDecimal.valueOf(DateUtil.getExcelDate(
+                    value, contentProperty.getDateTimeFormatProperty().getUse1904windowing())));
         }
     }
 }

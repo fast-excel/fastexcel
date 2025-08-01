@@ -3,7 +3,7 @@ package cn.idev.excel.metadata;
 /**
  * Cell
  *
- * @author Jiaju Zhuang
+ *
  **/
 public interface Cell {
     /**

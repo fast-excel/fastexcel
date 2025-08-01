@@ -1,9 +1,8 @@
 package cn.idev.excel.exception;
 
-import cn.idev.excel.write.builder.ExcelWriterBuilder;
 import cn.idev.excel.metadata.data.CellData;
 import cn.idev.excel.metadata.property.ExcelContentProperty;
-
+import cn.idev.excel.write.builder.ExcelWriterBuilder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,7 +10,7 @@ import lombok.Setter;
 /**
  * Data convert exception
  *
- * @author Jiaju Zhuang
+ *
  */
 @Getter
 @Setter
@@ -36,8 +35,12 @@ public class ExcelDataConvertException extends ExcelRuntimeException {
      */
     private ExcelContentProperty excelContentProperty;
 
-    public ExcelDataConvertException(Integer rowIndex, Integer columnIndex, CellData<?> cellData,
-        ExcelContentProperty excelContentProperty, String message) {
+    public ExcelDataConvertException(
+            Integer rowIndex,
+            Integer columnIndex,
+            CellData<?> cellData,
+            ExcelContentProperty excelContentProperty,
+            String message) {
         super(message);
         this.rowIndex = rowIndex;
         this.columnIndex = columnIndex;
@@ -45,13 +48,17 @@ public class ExcelDataConvertException extends ExcelRuntimeException {
         this.excelContentProperty = excelContentProperty;
     }
 
-    public ExcelDataConvertException(Integer rowIndex, Integer columnIndex, CellData<?> cellData,
-        ExcelContentProperty excelContentProperty, String message, Throwable cause) {
+    public ExcelDataConvertException(
+            Integer rowIndex,
+            Integer columnIndex,
+            CellData<?> cellData,
+            ExcelContentProperty excelContentProperty,
+            String message,
+            Throwable cause) {
         super(message, cause);
         this.rowIndex = rowIndex;
         this.columnIndex = columnIndex;
         this.cellData = cellData;
         this.excelContentProperty = excelContentProperty;
     }
-
 }

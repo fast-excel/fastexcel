@@ -1,17 +1,16 @@
 package cn.idev.excel.write.builder;
 
-import java.util.Collection;
-import java.util.function.Supplier;
-
 import cn.idev.excel.ExcelWriter;
 import cn.idev.excel.exception.ExcelGenerateException;
 import cn.idev.excel.write.metadata.WriteSheet;
 import cn.idev.excel.write.metadata.WriteTable;
+import java.util.Collection;
+import java.util.function.Supplier;
 
 /**
  * Build sheet
  *
- * @author Jiaju Zhuang
+ *
  */
 public class ExcelWriterTableBuilder extends AbstractExcelWriterParameterBuilder<ExcelWriterTableBuilder, WriteTable> {
 

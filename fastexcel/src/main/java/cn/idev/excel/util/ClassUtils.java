@@ -1,20 +1,5 @@
 package cn.idev.excel.util;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.concurrent.ConcurrentHashMap;
-
 import cn.idev.excel.annotation.ExcelIgnore;
 import cn.idev.excel.annotation.ExcelIgnoreUnannotated;
 import cn.idev.excel.annotation.ExcelProperty;
@@ -35,7 +20,20 @@ import cn.idev.excel.metadata.property.NumberFormatProperty;
 import cn.idev.excel.metadata.property.StyleProperty;
 import cn.idev.excel.support.cglib.beans.BeanMap;
 import cn.idev.excel.write.metadata.holder.WriteHolder;
-
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.concurrent.ConcurrentHashMap;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -73,26 +71,26 @@ public class ClassUtils {
     /**
      * The cache configuration information for each of the class
      */
-    public static final ConcurrentHashMap<Class<?>, Map<String, ExcelContentProperty>> CLASS_CONTENT_CACHE
-        = new ConcurrentHashMap<>();
+    public static final ConcurrentHashMap<Class<?>, Map<String, ExcelContentProperty>> CLASS_CONTENT_CACHE =
+            new ConcurrentHashMap<>();
 
     /**
      * The cache configuration information for each of the class
      */
-    private static final ThreadLocal<Map<Class<?>, Map<String, ExcelContentProperty>>> CLASS_CONTENT_THREAD_LOCAL
-        = new ThreadLocal<>();
+    private static final ThreadLocal<Map<Class<?>, Map<String, ExcelContentProperty>>> CLASS_CONTENT_THREAD_LOCAL =
+            new ThreadLocal<>();
 
     /**
      * The cache configuration information for each of the class
      */
-    public static final ConcurrentHashMap<ContentPropertyKey, ExcelContentProperty> CONTENT_CACHE
-        = new ConcurrentHashMap<>();
+    public static final ConcurrentHashMap<ContentPropertyKey, ExcelContentProperty> CONTENT_CACHE =
+            new ConcurrentHashMap<>();
 
     /**
      * The cache configuration information for each of the class
      */
-    private static final ThreadLocal<Map<ContentPropertyKey, ExcelContentProperty>> CONTENT_THREAD_LOCAL
-        = new ThreadLocal<>();
+    private static final ThreadLocal<Map<ContentPropertyKey, ExcelContentProperty>> CONTENT_THREAD_LOCAL =
+            new ThreadLocal<>();
 
     /**
      * Calculate the configuration information for the class
@@ -102,12 +100,11 @@ public class ClassUtils {
      * @param fieldName
      * @return
      */
-    public static ExcelContentProperty declaredExcelContentProperty(Map<?, ?> dataMap, Class<?> headClazz,
-        String fieldName,
-        ConfigurationHolder configurationHolder) {
+    public static ExcelContentProperty declaredExcelContentProperty(
+            Map<?, ?> dataMap, Class<?> headClazz, String fieldName, ConfigurationHolder configurationHolder) {
         Class<?> clazz = null;
         if (dataMap instanceof BeanMap) {
-            Object bean = ((BeanMap)dataMap).getBean();
+            Object bean = ((BeanMap) dataMap).getBean();
             if (bean != null) {
                 clazz = bean.getClass();
             }
@@ -115,8 +112,8 @@ public class ClassUtils {
         return getExcelContentProperty(clazz, headClazz, fieldName, configurationHolder);
     }
 
-    private static ExcelContentProperty getExcelContentProperty(Class<?> clazz, Class<?> headClass, String fieldName,
-        ConfigurationHolder configurationHolder) {
+    private static ExcelContentProperty getExcelContentProperty(
+            Class<?> clazz, Class<?> headClass, String fieldName, ConfigurationHolder configurationHolder) {
         switch (configurationHolder.globalConfiguration().getFiledCacheLocation()) {
             case THREAD_LOCAL:
                 Map<ContentPropertyKey, ExcelContentProperty> contentCacheMap = CONTENT_THREAD_LOCAL.get();
@@ -138,17 +135,16 @@ public class ClassUtils {
         }
     }
 
-    private static ExcelContentProperty doGetExcelContentProperty(Class<?> clazz, Class<?> headClass,
-        String fieldName,
-        ConfigurationHolder configurationHolder) {
+    private static ExcelContentProperty doGetExcelContentProperty(
+            Class<?> clazz, Class<?> headClass, String fieldName, ConfigurationHolder configurationHolder) {
         ExcelContentProperty excelContentProperty = Optional.ofNullable(
-                declaredFieldContentMap(clazz, configurationHolder))
-            .map(map -> map.get(fieldName))
-            .orElse(null);
+                        declaredFieldContentMap(clazz, configurationHolder))
+                .map(map -> map.get(fieldName))
+                .orElse(null);
         ExcelContentProperty headExcelContentProperty = Optional.ofNullable(
-                declaredFieldContentMap(headClass, configurationHolder))
-            .map(map -> map.get(fieldName))
-            .orElse(null);
+                        declaredFieldContentMap(headClass, configurationHolder))
+                .map(map -> map.get(fieldName))
+                .orElse(null);
         ExcelContentProperty combineExcelContentProperty = new ExcelContentProperty();
 
         combineExcelContentProperty(combineExcelContentProperty, headExcelContentProperty);
@@ -158,8 +154,8 @@ public class ClassUtils {
         return combineExcelContentProperty;
     }
 
-    public static void combineExcelContentProperty(ExcelContentProperty combineExcelContentProperty,
-        ExcelContentProperty excelContentProperty) {
+    public static void combineExcelContentProperty(
+            ExcelContentProperty combineExcelContentProperty, ExcelContentProperty excelContentProperty) {
         if (excelContentProperty == null) {
             return;
         }
@@ -187,15 +183,15 @@ public class ClassUtils {
         return new ContentPropertyKey(clazz, headClass, fieldName);
     }
 
-    private static Map<String, ExcelContentProperty> declaredFieldContentMap(Class<?> clazz,
-        ConfigurationHolder configurationHolder) {
+    private static Map<String, ExcelContentProperty> declaredFieldContentMap(
+            Class<?> clazz, ConfigurationHolder configurationHolder) {
         if (clazz == null) {
             return null;
         }
         switch (configurationHolder.globalConfiguration().getFiledCacheLocation()) {
             case THREAD_LOCAL:
-                Map<Class<?>, Map<String, ExcelContentProperty>> classContentCacheMap
-                    = CLASS_CONTENT_THREAD_LOCAL.get();
+                Map<Class<?>, Map<String, ExcelContentProperty>> classContentCacheMap =
+                        CLASS_CONTENT_THREAD_LOCAL.get();
                 if (classContentCacheMap == null) {
                     classContentCacheMap = MapUtils.newHashMap();
                     CLASS_CONTENT_THREAD_LOCAL.set(classContentCacheMap);
@@ -212,7 +208,6 @@ public class ClassUtils {
             default:
                 throw new UnsupportedOperationException("unsupported enum");
         }
-
     }
 
     private static Map<String, ExcelContentProperty> doDeclaredFieldContentMap(Class<?> clazz) {
@@ -229,8 +224,7 @@ public class ClassUtils {
 
         ContentStyle parentContentStyle = clazz.getAnnotation(ContentStyle.class);
         ContentFontStyle parentContentFontStyle = clazz.getAnnotation(ContentFontStyle.class);
-        Map<String, ExcelContentProperty> fieldContentMap = MapUtils.newHashMapWithExpectedSize(
-            tempFieldList.size());
+        Map<String, ExcelContentProperty> fieldContentMap = MapUtils.newHashMapWithExpectedSize(tempFieldList.size());
         for (Field field : tempFieldList) {
             ExcelContentProperty excelContentProperty = new ExcelContentProperty();
             excelContentProperty.setField(field);
@@ -240,11 +234,11 @@ public class ClassUtils {
                 Class<? extends Converter<?>> convertClazz = excelProperty.converter();
                 if (convertClazz != AutoConverter.class) {
                     try {
-                        Converter<?> converter = convertClazz.getDeclaredConstructor().newInstance();
+                        Converter<?> converter =
+                                convertClazz.getDeclaredConstructor().newInstance();
                         excelContentProperty.setConverter(converter);
                     } catch (Exception e) {
-                        throw new ExcelCommonException(
-                            "Can not instance custom converter:" + convertClazz.getName());
+                        throw new ExcelCommonException("Can not instance custom converter:" + convertClazz.getName());
                     }
                 }
             }
@@ -262,9 +256,9 @@ public class ClassUtils {
             excelContentProperty.setContentFontProperty(FontProperty.build(contentFontStyle));
 
             excelContentProperty.setDateTimeFormatProperty(
-                DateTimeFormatProperty.build(field.getAnnotation(DateTimeFormat.class)));
+                    DateTimeFormatProperty.build(field.getAnnotation(DateTimeFormat.class)));
             excelContentProperty.setNumberFormatProperty(
-                NumberFormatProperty.build(field.getAnnotation(NumberFormat.class)));
+                    NumberFormatProperty.build(field.getAnnotation(NumberFormat.class)));
 
             fieldContentMap.put(field.getName(), excelContentProperty);
         }
@@ -301,21 +295,35 @@ public class ClassUtils {
 
     private static FieldCache doDeclaredFields(Class<?> clazz, ConfigurationHolder configurationHolder) {
         List<Field> tempFieldList = new ArrayList<>();
+        Map<String, Field> fieldNameToField = new HashMap<>();
         Class<?> tempClass = clazz;
-        // When the parent class is null, it indicates that the parent class (Object class) has reached the top
-        // level.
+        // Prefer subclass fields, only process the bottom-most (subclass) definition for fields with the same name
         while (tempClass != null) {
-            Collections.addAll(tempFieldList, tempClass.getDeclaredFields());
-            // Get the parent class and give it to yourself
+            for (Field field : tempClass.getDeclaredFields()) {
+                String fieldName = FieldUtils.resolveCglibFieldName(field);
+                if (!fieldNameToField.containsKey(fieldName)) {
+                    fieldNameToField.put(fieldName, field);
+                    tempFieldList.add(field);
+                }
+            }
             tempClass = tempClass.getSuperclass();
         }
-        // Screening of field
+        ExcelIgnoreUnannotated excelIgnoreUnannotated = clazz.getAnnotation(ExcelIgnoreUnannotated.class);
+        Set<String> ignoreSet = new HashSet<>();
+        // First collect all field names annotated with ExcelIgnore (including subclass overrides)
+        for (Field field : tempFieldList) {
+            if (field.getAnnotation(ExcelIgnore.class) != null) {
+                ignoreSet.add(FieldUtils.resolveCglibFieldName(field));
+            }
+        }
         Map<Integer, List<FieldWrapper>> orderFieldMap = new TreeMap<>();
         Map<Integer, FieldWrapper> indexFieldMap = new TreeMap<>();
-        Set<String> ignoreSet = new HashSet<>();
-
-        ExcelIgnoreUnannotated excelIgnoreUnannotated = clazz.getAnnotation(ExcelIgnoreUnannotated.class);
         for (Field field : tempFieldList) {
+            String fieldName = FieldUtils.resolveCglibFieldName(field);
+            // Skip if ignored
+            if (ignoreSet.contains(fieldName)) {
+                continue;
+            }
             declaredOneField(field, orderFieldMap, indexFieldMap, ignoreSet, excelIgnoreUnannotated);
         }
         Map<Integer, FieldWrapper> sortedFieldMap = buildSortedAllFieldMap(orderFieldMap, indexFieldMap);
@@ -325,12 +333,12 @@ public class ClassUtils {
             return fieldCache;
         }
 
-        WriteHolder writeHolder = (WriteHolder)configurationHolder;
+        WriteHolder writeHolder = (WriteHolder) configurationHolder;
 
         boolean needIgnore = !CollectionUtils.isEmpty(writeHolder.excludeColumnFieldNames())
-            || !CollectionUtils.isEmpty(writeHolder.excludeColumnIndexes())
-            || !CollectionUtils.isEmpty(writeHolder.includeColumnFieldNames())
-            || !CollectionUtils.isEmpty(writeHolder.includeColumnIndexes());
+                || !CollectionUtils.isEmpty(writeHolder.excludeColumnIndexes())
+                || !CollectionUtils.isEmpty(writeHolder.includeColumnFieldNames())
+                || !CollectionUtils.isEmpty(writeHolder.includeColumnIndexes());
 
         if (!needIgnore) {
             return fieldCache;
@@ -427,11 +435,11 @@ public class ClassUtils {
         }
     }
 
-    private static Map<Integer, FieldWrapper> buildSortedAllFieldMap(Map<Integer, List<FieldWrapper>> orderFieldMap,
-        Map<Integer, FieldWrapper> indexFieldMap) {
+    private static Map<Integer, FieldWrapper> buildSortedAllFieldMap(
+            Map<Integer, List<FieldWrapper>> orderFieldMap, Map<Integer, FieldWrapper> indexFieldMap) {
 
-        Map<Integer, FieldWrapper> sortedAllFieldMap = new HashMap<>(
-            (orderFieldMap.size() + indexFieldMap.size()) * 4 / 3 + 1);
+        Map<Integer, FieldWrapper> sortedAllFieldMap =
+                new HashMap<>((orderFieldMap.size() + indexFieldMap.size()) * 4 / 3 + 1);
 
         Map<Integer, FieldWrapper> tempIndexFieldMap = new HashMap<>(indexFieldMap);
         int index = 0;
@@ -450,30 +458,27 @@ public class ClassUtils {
         return sortedAllFieldMap;
     }
 
-    private static void declaredOneField(Field field, Map<Integer, List<FieldWrapper>> orderFieldMap,
-        Map<Integer, FieldWrapper> indexFieldMap, Set<String> ignoreSet,
-        ExcelIgnoreUnannotated excelIgnoreUnannotated) {
+    private static void declaredOneField(
+            Field field,
+            Map<Integer, List<FieldWrapper>> orderFieldMap,
+            Map<Integer, FieldWrapper> indexFieldMap,
+            Set<String> ignoreSet,
+            ExcelIgnoreUnannotated excelIgnoreUnannotated) {
         String fieldName = FieldUtils.resolveCglibFieldName(field);
+        // skip if the field is in ignoreSet
+        if (ignoreSet.contains(fieldName)) {
+            return;
+        }
         FieldWrapper fieldWrapper = new FieldWrapper();
         fieldWrapper.setField(field);
         fieldWrapper.setFieldName(fieldName);
 
-        ExcelIgnore excelIgnore = field.getAnnotation(ExcelIgnore.class);
-
-        if (excelIgnore != null) {
-            ignoreSet.add(fieldName);
-            return;
-        }
         ExcelProperty excelProperty = field.getAnnotation(ExcelProperty.class);
         boolean noExcelProperty = excelProperty == null && excelIgnoreUnannotated != null;
-        if (noExcelProperty) {
-            ignoreSet.add(fieldName);
-            return;
-        }
         boolean isStaticFinalOrTransient =
-            (Modifier.isStatic(field.getModifiers()) && Modifier.isFinal(field.getModifiers()))
-                || Modifier.isTransient(field.getModifiers());
-        if (excelProperty == null && isStaticFinalOrTransient) {
+                (Modifier.isStatic(field.getModifiers()) && Modifier.isFinal(field.getModifiers()))
+                        || Modifier.isTransient(field.getModifiers());
+        if (noExcelProperty || (excelProperty == null && isStaticFinalOrTransient)) {
             ignoreSet.add(fieldName);
             return;
         }
@@ -481,17 +486,15 @@ public class ClassUtils {
         if (excelProperty != null) {
             fieldWrapper.setHeads(excelProperty.value());
         }
-
         if (excelProperty != null && excelProperty.index() >= 0) {
             if (indexFieldMap.containsKey(excelProperty.index())) {
-                throw new ExcelCommonException(
-                    "The index of '" + indexFieldMap.get(excelProperty.index()).getFieldName()
-                        + "' and '" + field.getName() + "' must be inconsistent");
+                throw new ExcelCommonException("The index of '"
+                        + indexFieldMap.get(excelProperty.index()).getFieldName() + "' and '" + field.getName()
+                        + "' must be inconsistent");
             }
             indexFieldMap.put(excelProperty.index(), fieldWrapper);
             return;
         }
-
         int order = Integer.MAX_VALUE;
         if (excelProperty != null) {
             order = excelProperty.order();
@@ -565,7 +568,7 @@ public class ClassUtils {
         FieldCacheKey(Class<?> clazz, ConfigurationHolder configurationHolder) {
             this.clazz = clazz;
             if (configurationHolder instanceof WriteHolder) {
-                WriteHolder writeHolder = (WriteHolder)configurationHolder;
+                WriteHolder writeHolder = (WriteHolder) configurationHolder;
                 this.excludeColumnFieldNames = writeHolder.excludeColumnFieldNames();
                 this.excludeColumnIndexes = writeHolder.excludeColumnIndexes();
                 this.includeColumnFieldNames = writeHolder.includeColumnFieldNames();
@@ -580,4 +583,3 @@ public class ClassUtils {
         CONTENT_THREAD_LOCAL.remove();
     }
 }
-

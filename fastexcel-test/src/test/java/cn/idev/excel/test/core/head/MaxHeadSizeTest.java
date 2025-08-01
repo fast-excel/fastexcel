@@ -5,21 +5,19 @@ import cn.idev.excel.support.ExcelTypeEnum;
 import cn.idev.excel.test.util.TestFileUtil;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONWriter;
+import java.io.File;
+import java.util.List;
+import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.File;
-import java.util.List;
-import java.util.Map;
 
 @TestMethodOrder(MethodOrderer.MethodName.class)
+@Slf4j
 public class MaxHeadSizeTest {
-    private static final Logger log = LoggerFactory.getLogger(MaxHeadSizeTest.class);
 
     private static String headFile01;
     private static String headFile02;
@@ -56,10 +54,7 @@ public class MaxHeadSizeTest {
     private void readFileWithMap(String file, int expectHeadSize) {
         List<Map<Integer, String>> dataList;
         // default
-        dataList = FastExcel.read(file)
-            .excelType(ExcelTypeEnum.XLSX)
-            .sheet()
-            .doReadSync();
+        dataList = FastExcel.read(file).excelType(ExcelTypeEnum.XLSX).sheet().doReadSync();
         dataList.forEach(d -> {
             log.info(JSON.toJSONString(d, JSONWriter.Feature.WriteMapNullValue));
             Assertions.assertTrue(d.size() >= expectHeadSize);
@@ -67,9 +62,9 @@ public class MaxHeadSizeTest {
 
         // custom listener
         dataList = FastExcel.read(file, new MaxHeadReadListener(expectHeadSize))
-            .excelType(ExcelTypeEnum.XLSX)
-            .sheet()
-            .doReadSync();
+                .excelType(ExcelTypeEnum.XLSX)
+                .sheet()
+                .doReadSync();
         dataList.forEach(d -> {
             log.info(JSON.toJSONString(d, JSONWriter.Feature.WriteMapNullValue));
             Assertions.assertTrue(d.size() >= expectHeadSize);
@@ -77,9 +72,11 @@ public class MaxHeadSizeTest {
     }
 
     private void readFileWithPOJO(String file) {
-        List<MaxHeadSizeData> dataList = FastExcel.read(file).head(MaxHeadSizeData.class).excelType(ExcelTypeEnum.XLSX)
-            .sheet()
-            .doReadSync();
+        List<MaxHeadSizeData> dataList = FastExcel.read(file)
+                .head(MaxHeadSizeData.class)
+                .excelType(ExcelTypeEnum.XLSX)
+                .sheet()
+                .doReadSync();
         dataList.forEach(d -> {
             log.info(JSON.toJSONString(d, JSONWriter.Feature.WriteMapNullValue));
         });

@@ -9,7 +9,6 @@ import java.text.FieldPosition;
 import java.text.Format;
 import java.text.ParsePosition;
 import java.util.Locale;
-
 import org.apache.poi.ss.usermodel.DataFormatter;
 
 /**
@@ -17,7 +16,7 @@ import org.apache.poi.ss.usermodel.DataFormatter;
  * <p>
  * Supported Do not use scientific notation.
  *
- * @author JiaJu Zhuang
+ *
  **/
 public class ExcelGeneralNumberFormat extends Format {
 
@@ -77,5 +76,4 @@ public class ExcelGeneralNumberFormat extends Format {
     public Object parseObject(String source, ParsePosition pos) {
         throw new UnsupportedOperationException();
     }
-
 }

@@ -14,8 +14,11 @@ public class CsvDataListener extends AnalysisEventListener<Object> {
         log.error("Parsing failed, but continue parsing the next row: {}", exception.getMessage());
         if (exception instanceof ExcelDataConvertException) {
             ExcelDataConvertException excelDataConvertException = (ExcelDataConvertException) exception;
-            log.error("Row {}, Column {} parsing exception, data is: {}", excelDataConvertException.getRowIndex(),
-                excelDataConvertException.getColumnIndex(), excelDataConvertException.getCellData());
+            log.error(
+                    "Row {}, Column {} parsing exception, data is: {}",
+                    excelDataConvertException.getRowIndex(),
+                    excelDataConvertException.getColumnIndex(),
+                    excelDataConvertException.getCellData());
         }
     }
 
@@ -25,6 +28,5 @@ public class CsvDataListener extends AnalysisEventListener<Object> {
     }
 
     @Override
-    public void doAfterAllAnalysed(AnalysisContext context) {
-    }
+    public void doAfterAllAnalysed(AnalysisContext context) {}
 }

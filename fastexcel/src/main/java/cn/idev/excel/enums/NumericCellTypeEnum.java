@@ -7,7 +7,7 @@ import org.apache.poi.ss.usermodel.CellType;
  *
  * Cannot distinguish between date and number in write case.
  *
- * @author Jiaju Zhuang
+ *
  */
 public enum NumericCellTypeEnum {
     /**

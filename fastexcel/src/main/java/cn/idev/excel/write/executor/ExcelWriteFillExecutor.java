@@ -33,6 +33,16 @@ import cn.idev.excel.write.metadata.fill.AnalysisCell;
 import cn.idev.excel.write.metadata.fill.FillConfig;
 import cn.idev.excel.write.metadata.fill.FillWrapper;
 import cn.idev.excel.write.metadata.holder.WriteSheetHolder;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -48,7 +58,7 @@ import org.apache.poi.ss.util.CellRangeAddress;
 /**
  * Fill the data into excel
  *
- * @author Jiaju Zhuang
+ *
  */
 public class ExcelWriteFillExecutor extends AbstractExcelWriteExecutor {
 
@@ -69,8 +79,8 @@ public class ExcelWriteFillExecutor extends AbstractExcelWriteExecutor {
     /**
      * Style cache for collection fields
      */
-    private final Map<UniqueDataFlagKey, Map<AnalysisCell, CellStyle>> collectionFieldStyleCache
-        = MapUtils.newHashMap();
+    private final Map<UniqueDataFlagKey, Map<AnalysisCell, CellStyle>> collectionFieldStyleCache =
+            MapUtils.newHashMap();
     /**
      * Record the merged region information of the initial row, to be used for setting the merged regions for newly added rows
      */
@@ -108,7 +118,7 @@ public class ExcelWriteFillExecutor extends AbstractExcelWriteExecutor {
         String currentDataPrefix;
 
         if (data instanceof FillWrapper) {
-            FillWrapper fillWrapper = (FillWrapper)data;
+            FillWrapper fillWrapper = (FillWrapper) data;
             currentDataPrefix = fillWrapper.getName();
             realData = fillWrapper.getCollectionData();
         } else {
@@ -120,7 +130,7 @@ public class ExcelWriteFillExecutor extends AbstractExcelWriteExecutor {
         // processing data
         if (realData instanceof Collection) {
             List<AnalysisCell> analysisCellList = readTemplateData(templateCollectionAnalysisCache);
-            Collection<?> collectionData = (Collection<?>)realData;
+            Collection<?> collectionData = (Collection<?>) realData;
             if (CollectionUtils.isEmpty(collectionData)) {
                 return;
             }
@@ -190,12 +200,12 @@ public class ExcelWriteFillExecutor extends AbstractExcelWriteExecutor {
         increaseRowIndex(templateCollectionAnalysisCache, number, maxRowIndex);
     }
 
-    private void increaseRowIndex(Map<UniqueDataFlagKey, List<AnalysisCell>> templateAnalysisCache, int number,
-        int maxRowIndex) {
+    private void increaseRowIndex(
+            Map<UniqueDataFlagKey, List<AnalysisCell>> templateAnalysisCache, int number, int maxRowIndex) {
         for (Map.Entry<UniqueDataFlagKey, List<AnalysisCell>> entry : templateAnalysisCache.entrySet()) {
             UniqueDataFlagKey uniqueDataFlagKey = entry.getKey();
-            if (!Objects.equals(currentUniqueDataFlag.getSheetNo(), uniqueDataFlagKey.getSheetNo()) || !Objects.equals(
-                currentUniqueDataFlag.getSheetName(), uniqueDataFlagKey.getSheetName())) {
+            if (!Objects.equals(currentUniqueDataFlag.getSheetNo(), uniqueDataFlagKey.getSheetNo())
+                    || !Objects.equals(currentUniqueDataFlag.getSheetName(), uniqueDataFlagKey.getSheetName())) {
                 continue;
             }
             for (AnalysisCell analysisCell : entry.getValue()) {
@@ -206,26 +216,32 @@ public class ExcelWriteFillExecutor extends AbstractExcelWriteExecutor {
         }
     }
 
-    private void doFill(List<AnalysisCell> analysisCellList, Object oneRowData, FillConfig fillConfig,
-        Integer relativeRowIndex) {
+    private void doFill(
+            List<AnalysisCell> analysisCellList, Object oneRowData, FillConfig fillConfig, Integer relativeRowIndex) {
         if (CollectionUtils.isEmpty(analysisCellList) || oneRowData == null) {
             return;
         }
         Map dataMap;
         if (oneRowData instanceof Map) {
-            dataMap = (Map)oneRowData;
+            dataMap = (Map) oneRowData;
         } else {
             dataMap = BeanMapUtils.create(oneRowData);
         }
         Set<String> dataKeySet = new HashSet<>(dataMap.keySet());
 
-        RowWriteHandlerContext rowWriteHandlerContext = WriteHandlerUtils.createRowWriteHandlerContext(writeContext,
-            null, relativeRowIndex, Boolean.FALSE);
+        RowWriteHandlerContext rowWriteHandlerContext =
+                WriteHandlerUtils.createRowWriteHandlerContext(writeContext, null, relativeRowIndex, Boolean.FALSE);
 
         for (AnalysisCell analysisCell : analysisCellList) {
             CellWriteHandlerContext cellWriteHandlerContext = WriteHandlerUtils.createCellWriteHandlerContext(
-                writeContext, null, analysisCell.getRowIndex(), null, analysisCell.getColumnIndex(),
-                relativeRowIndex, Boolean.FALSE, ExcelContentProperty.EMPTY);
+                    writeContext,
+                    null,
+                    analysisCell.getRowIndex(),
+                    null,
+                    analysisCell.getColumnIndex(),
+                    relativeRowIndex,
+                    Boolean.FALSE,
+                    ExcelContentProperty.EMPTY);
 
             if (analysisCell.getOnlyOneVariable()) {
                 String variable = analysisCell.getVariableList().get(0);
@@ -233,9 +249,14 @@ public class ExcelWriteFillExecutor extends AbstractExcelWriteExecutor {
                 if (dataKeySet.contains(variable)) {
                     value = dataMap.get(variable);
                 }
-                ExcelContentProperty excelContentProperty = ClassUtils.declaredExcelContentProperty(dataMap,
-                    writeContext.currentWriteHolder().excelWriteHeadProperty().getHeadClazz(), variable,
-                    writeContext.currentWriteHolder());
+                ExcelContentProperty excelContentProperty = ClassUtils.declaredExcelContentProperty(
+                        dataMap,
+                        writeContext
+                                .currentWriteHolder()
+                                .excelWriteHeadProperty()
+                                .getHeadClazz(),
+                        variable,
+                        writeContext.currentWriteHolder());
                 cellWriteHandlerContext.setExcelContentProperty(excelContentProperty);
 
                 createCell(analysisCell, fillConfig, cellWriteHandlerContext, rowWriteHandlerContext);
@@ -248,8 +269,8 @@ public class ExcelWriteFillExecutor extends AbstractExcelWriteExecutor {
                 // Restyle
                 if (fillConfig.getAutoStyle()) {
                     Optional.ofNullable(collectionFieldStyleCache.get(currentUniqueDataFlag))
-                        .map(collectionFieldStyleMap -> collectionFieldStyleMap.get(analysisCell))
-                        .ifPresent(cellData::setOriginCellStyle);
+                            .map(collectionFieldStyleMap -> collectionFieldStyleMap.get(analysisCell))
+                            .ifPresent(cellData::setOriginCellStyle);
                 }
             } else {
                 StringBuilder cellValueBuild = new StringBuilder();
@@ -268,9 +289,14 @@ public class ExcelWriteFillExecutor extends AbstractExcelWriteExecutor {
                     if (dataKeySet.contains(variable)) {
                         value = dataMap.get(variable);
                     }
-                    ExcelContentProperty excelContentProperty = ClassUtils.declaredExcelContentProperty(dataMap,
-                        writeContext.currentWriteHolder().excelWriteHeadProperty().getHeadClazz(), variable,
-                        writeContext.currentWriteHolder());
+                    ExcelContentProperty excelContentProperty = ClassUtils.declaredExcelContentProperty(
+                            dataMap,
+                            writeContext
+                                    .currentWriteHolder()
+                                    .excelWriteHeadProperty()
+                                    .getHeadClazz(),
+                            variable,
+                            writeContext.currentWriteHolder());
                     cellWriteHandlerContext.setOriginalValue(value);
                     cellWriteHandlerContext.setOriginalFieldClass(FieldUtils.getFieldClass(dataMap, variable, value));
                     cellWriteHandlerContext.setExcelContentProperty(excelContentProperty);
@@ -306,8 +332,8 @@ public class ExcelWriteFillExecutor extends AbstractExcelWriteExecutor {
                 // Restyle
                 if (fillConfig.getAutoStyle()) {
                     Optional.ofNullable(collectionFieldStyleCache.get(currentUniqueDataFlag))
-                        .map(collectionFieldStyleMap -> collectionFieldStyleMap.get(analysisCell))
-                        .ifPresent(cell::setCellStyle);
+                            .map(collectionFieldStyleMap -> collectionFieldStyleMap.get(analysisCell))
+                            .ifPresent(cell::setCellStyle);
                 }
             }
             WriteHandlerUtils.afterCellDispose(cellWriteHandlerContext);
@@ -330,8 +356,11 @@ public class ExcelWriteFillExecutor extends AbstractExcelWriteExecutor {
         return relativeRowIndex;
     }
 
-    private void createCell(AnalysisCell analysisCell, FillConfig fillConfig,
-        CellWriteHandlerContext cellWriteHandlerContext, RowWriteHandlerContext rowWriteHandlerContext) {
+    private void createCell(
+            AnalysisCell analysisCell,
+            FillConfig fillConfig,
+            CellWriteHandlerContext cellWriteHandlerContext,
+            RowWriteHandlerContext rowWriteHandlerContext) {
         Sheet cachedSheet = writeContext.writeSheetHolder().getCachedSheet();
         if (WriteTemplateAnalysisCellTypeEnum.COMMON.equals(analysisCell.getCellType())) {
             Row row = cachedSheet.getRow(analysisCell.getRowIndex());
@@ -344,8 +373,8 @@ public class ExcelWriteFillExecutor extends AbstractExcelWriteExecutor {
         }
         Sheet sheet = writeContext.writeSheetHolder().getSheet();
 
-        Map<AnalysisCell, Integer> collectionLastIndexMap = collectionLastIndexCache
-            .computeIfAbsent(currentUniqueDataFlag, key -> MapUtils.newHashMap());
+        Map<AnalysisCell, Integer> collectionLastIndexMap =
+                collectionLastIndexCache.computeIfAbsent(currentUniqueDataFlag, key -> MapUtils.newHashMap());
 
         boolean isOriginalCell = false;
         Integer lastRowIndex;
@@ -377,8 +406,8 @@ public class ExcelWriteFillExecutor extends AbstractExcelWriteExecutor {
                 throw new ExcelGenerateException("The wrong direction.");
         }
 
-        Row row = createRowIfNecessary(sheet, cachedSheet, lastRowIndex, fillConfig, analysisCell, isOriginalCell,
-            rowWriteHandlerContext);
+        Row row = createRowIfNecessary(
+                sheet, cachedSheet, lastRowIndex, fillConfig, analysisCell, isOriginalCell, rowWriteHandlerContext);
         cellWriteHandlerContext.setRow(row);
 
         cellWriteHandlerContext.setRowIndex(lastRowIndex);
@@ -407,8 +436,8 @@ public class ExcelWriteFillExecutor extends AbstractExcelWriteExecutor {
         }
     }
 
-    private Cell createCellIfNecessary(Row row, Integer lastColumnIndex,
-        CellWriteHandlerContext cellWriteHandlerContext) {
+    private Cell createCellIfNecessary(
+            Row row, Integer lastColumnIndex, CellWriteHandlerContext cellWriteHandlerContext) {
         Cell cell = row.getCell(lastColumnIndex);
         if (cell != null) {
             return cell;
@@ -421,8 +450,14 @@ public class ExcelWriteFillExecutor extends AbstractExcelWriteExecutor {
         return cell;
     }
 
-    private Row createRowIfNecessary(Sheet sheet, Sheet cachedSheet, Integer lastRowIndex, FillConfig fillConfig,
-        AnalysisCell analysisCell, boolean isOriginalCell, RowWriteHandlerContext rowWriteHandlerContext) {
+    private Row createRowIfNecessary(
+            Sheet sheet,
+            Sheet cachedSheet,
+            Integer lastRowIndex,
+            FillConfig fillConfig,
+            AnalysisCell analysisCell,
+            boolean isOriginalCell,
+            RowWriteHandlerContext rowWriteHandlerContext) {
         rowWriteHandlerContext.setRowIndex(lastRowIndex);
         Row row = sheet.getRow(lastRowIndex);
         if (row != null) {
@@ -511,8 +546,8 @@ public class ExcelWriteFillExecutor extends AbstractExcelWriteExecutor {
      * @param firstRowCache first row cache
      * @return Returns the data that the cell needs to replace
      */
-    private String prepareData(Cell cell, int rowIndex, int columnIndex,
-        Map<UniqueDataFlagKey, Set<Integer>> firstRowCache) {
+    private String prepareData(
+            Cell cell, int rowIndex, int columnIndex, Map<UniqueDataFlagKey, Set<Integer>> firstRowCache) {
         if (!CellType.STRING.equals(cell.getCellType())) {
             return null;
         }
@@ -590,12 +625,18 @@ public class ExcelWriteFillExecutor extends AbstractExcelWriteExecutor {
         if (analysisCell != null && CollectionUtils.isNotEmpty(analysisCell.getVariableList())) {
             cell.setBlank();
         }
-        return dealAnalysisCell(analysisCell, value, rowIndex, lastPrepareDataIndex, length, firstRowCache,
-            preparedData);
+        return dealAnalysisCell(
+                analysisCell, value, rowIndex, lastPrepareDataIndex, length, firstRowCache, preparedData);
     }
 
-    private String dealAnalysisCell(AnalysisCell analysisCell, String value, int rowIndex, int lastPrepareDataIndex,
-        int length, Map<UniqueDataFlagKey, Set<Integer>> firstRowCache, StringBuilder preparedData) {
+    private String dealAnalysisCell(
+            AnalysisCell analysisCell,
+            String value,
+            int rowIndex,
+            int lastPrepareDataIndex,
+            int length,
+            Map<UniqueDataFlagKey, Set<Integer>> firstRowCache,
+            StringBuilder preparedData) {
         if (analysisCell != null) {
             if (lastPrepareDataIndex == length) {
                 analysisCell.getPrepareDataList().add(StringUtils.EMPTY);
@@ -603,15 +644,15 @@ public class ExcelWriteFillExecutor extends AbstractExcelWriteExecutor {
                 analysisCell.getPrepareDataList().add(convertPrepareData(value.substring(lastPrepareDataIndex)));
                 analysisCell.setOnlyOneVariable(Boolean.FALSE);
             }
-            UniqueDataFlagKey uniqueDataFlag = uniqueDataFlag(writeContext.writeSheetHolder(),
-                analysisCell.getPrefix());
+            UniqueDataFlagKey uniqueDataFlag =
+                    uniqueDataFlag(writeContext.writeSheetHolder(), analysisCell.getPrefix());
             if (WriteTemplateAnalysisCellTypeEnum.COMMON.equals(analysisCell.getCellType())) {
-                List<AnalysisCell> analysisCellList = templateAnalysisCache.computeIfAbsent(uniqueDataFlag,
-                    key -> ListUtils.newArrayList());
+                List<AnalysisCell> analysisCellList =
+                        templateAnalysisCache.computeIfAbsent(uniqueDataFlag, key -> ListUtils.newArrayList());
                 analysisCellList.add(analysisCell);
             } else {
-                Set<Integer> uniqueFirstRowCache = firstRowCache.computeIfAbsent(uniqueDataFlag,
-                    key -> new HashSet<>());
+                Set<Integer> uniqueFirstRowCache =
+                        firstRowCache.computeIfAbsent(uniqueDataFlag, key -> new HashSet<>());
 
                 if (!uniqueFirstRowCache.contains(rowIndex)) {
                     analysisCell.setFirstRow(Boolean.TRUE);
@@ -619,7 +660,7 @@ public class ExcelWriteFillExecutor extends AbstractExcelWriteExecutor {
                 }
 
                 List<AnalysisCell> collectionAnalysisCellList = templateCollectionAnalysisCache.computeIfAbsent(
-                    uniqueDataFlag, key -> ListUtils.newArrayList());
+                        uniqueDataFlag, key -> ListUtils.newArrayList());
 
                 collectionAnalysisCellList.add(analysisCell);
             }

@@ -7,7 +7,7 @@ import org.apache.poi.hssf.record.Record;
 /**
  * Abstract xls record handler
  *
- * @author Jiaju Zhuang
+ *
  **/
 public abstract class AbstractXlsRecordHandler implements XlsRecordHandler {
 

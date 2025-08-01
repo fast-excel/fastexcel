@@ -1,14 +1,12 @@
 package cn.idev.excel.analysis;
 
-import java.util.List;
-
-import cn.idev.excel.read.metadata.ReadSheet;
 import cn.idev.excel.context.AnalysisContext;
+import cn.idev.excel.read.metadata.ReadSheet;
+import java.util.List;
 
 /**
  * Excel file analyser
  *
- * @author jipengfei
  */
 public interface ExcelAnalyser {
     /**
@@ -39,5 +37,4 @@ public interface ExcelAnalyser {
      * @return analysis context
      */
     AnalysisContext analysisContext();
-
 }

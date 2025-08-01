@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 /**
  * Set the width of the table
  *
- * @author Jiaju Zhuang
+ *
  */
 @Target({ElementType.FIELD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)

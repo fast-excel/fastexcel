@@ -16,6 +16,7 @@
 
     <properties>
         <maven.deploy.skip>true</maven.deploy.skip>
+        <surefire.test.includes>cn/idev/excel/test/core/**/*.java</surefire.test.includes>
     </properties>
 
     <dependencies>
@@ -71,10 +72,14 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
                     <includes>
-                        <include>/cn/idev/excel/test/core/**/*.java</include>
+                        <include>${surefire.test.includes}</include>
                     </includes>
                     <testFailureIgnore>false</testFailureIgnore>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>

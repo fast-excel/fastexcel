@@ -1,16 +1,14 @@
 package cn.idev.excel.event;
 
-import java.util.Map;
-
 import cn.idev.excel.context.AnalysisContext;
 import cn.idev.excel.metadata.data.ReadCellData;
 import cn.idev.excel.read.listener.ReadListener;
 import cn.idev.excel.util.ConverterUtils;
+import java.util.Map;
 
 /**
  * Receives the return of each piece of data parsed
  *
- * @author jipengfei
  */
 public abstract class AnalysisEventListener<T> implements ReadListener<T> {
 
@@ -26,5 +24,4 @@ public abstract class AnalysisEventListener<T> implements ReadListener<T> {
      * @param context
      */
     public void invokeHeadMap(Map<Integer, String> headMap, AnalysisContext context) {}
-
 }

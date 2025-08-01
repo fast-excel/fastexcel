@@ -7,7 +7,6 @@ import cn.idev.excel.read.listener.ReadListener;
 /**
  * Receives the return of each piece of data parsed
  *
- * @author jipengfei
  * @deprecated Use directly {@link ReadListener}
  */
 @Deprecated

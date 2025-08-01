@@ -1,14 +1,12 @@
 package cn.idev.excel.test.demo.write;
 
-import java.util.Date;
-
-import cn.idev.excel.enums.poi.FillPatternTypeEnum;
 import cn.idev.excel.annotation.ExcelProperty;
 import cn.idev.excel.annotation.write.style.ContentFontStyle;
 import cn.idev.excel.annotation.write.style.ContentStyle;
 import cn.idev.excel.annotation.write.style.HeadFontStyle;
 import cn.idev.excel.annotation.write.style.HeadStyle;
-
+import cn.idev.excel.enums.poi.FillPatternTypeEnum;
+import java.util.Date;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,7 +14,7 @@ import lombok.Setter;
 /**
  * 样式的数据类
  *
- * @author Jiaju Zhuang
+ *
  **/
 @Getter
 @Setter
@@ -40,8 +38,10 @@ public class DemoStyleData {
     @ContentFontStyle(fontHeightInPoints = 30)
     @ExcelProperty("字符串标题")
     private String string;
+
     @ExcelProperty("日期标题")
     private Date date;
+
     @ExcelProperty("数字标题")
     private Double doubleData;
 }
