@@ -1,17 +1,5 @@
 package cn.idev.excel.write.executor;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import cn.idev.excel.context.WriteContext;
 import cn.idev.excel.enums.CellDataTypeEnum;
 import cn.idev.excel.enums.WriteDirectionEnum;
@@ -19,46 +7,26 @@ import cn.idev.excel.enums.WriteTemplateAnalysisCellTypeEnum;
 import cn.idev.excel.exception.ExcelGenerateException;
 import cn.idev.excel.metadata.data.WriteCellData;
 import cn.idev.excel.metadata.property.ExcelContentProperty;
-import cn.idev.excel.util.BeanMapUtils;
-import cn.idev.excel.util.ClassUtils;
-import cn.idev.excel.util.FieldUtils;
-import cn.idev.excel.util.ListUtils;
-import cn.idev.excel.util.MapUtils;
-import cn.idev.excel.util.PoiUtils;
-import cn.idev.excel.util.StringUtils;
-import cn.idev.excel.util.WriteHandlerUtils;
+import cn.idev.excel.util.*;
 import cn.idev.excel.write.handler.context.CellWriteHandlerContext;
 import cn.idev.excel.write.handler.context.RowWriteHandlerContext;
 import cn.idev.excel.write.metadata.fill.AnalysisCell;
 import cn.idev.excel.write.metadata.fill.FillConfig;
 import cn.idev.excel.write.metadata.fill.FillWrapper;
 import cn.idev.excel.write.metadata.holder.WriteSheetHolder;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Fill the data into excel
- *
- *
  */
 public class ExcelWriteFillExecutor extends AbstractExcelWriteExecutor {
 
@@ -84,7 +52,7 @@ public class ExcelWriteFillExecutor extends AbstractExcelWriteExecutor {
     /**
      * Record the merged region information of the initial row, to be used for setting the merged regions for newly added rows
      */
-    private final Map<AnalysisCell,List<CellRangeAddress>> originalMergeRegionMap = MapUtils.newHashMap();
+    private final Map<AnalysisCell, List<CellRangeAddress>> originalMergeRegionMap = MapUtils.newHashMap();
     /**
      * Row height cache for collection
      */
@@ -418,17 +386,17 @@ public class ExcelWriteFillExecutor extends AbstractExcelWriteExecutor {
         if (isOriginalCell) {
             // Record the style of the original row so that the subsequent rows can inherit its style
             Map<AnalysisCell, CellStyle> collectionFieldStyleMap = collectionFieldStyleCache.computeIfAbsent(
-                currentUniqueDataFlag, key -> MapUtils.newHashMap());
+                    currentUniqueDataFlag, key -> MapUtils.newHashMap());
             collectionFieldStyleMap.put(analysisCell, cell.getCellStyle());
             // Find the column merges in the initial row
             List<CellRangeAddress> mergedRegions = cachedSheet.getMergedRegions();
             if (WriteDirectionEnum.VERTICAL.equals(fillConfig.getDirection()) && fillConfig.getForceNewRow()
-                && fillConfig.getAutoStyle()) {
+                    && fillConfig.getAutoStyle()) {
                 List<CellRangeAddress> oneRowRegionList = mergedRegions.stream()
-                    // if the merge spans across rows, do not process it
-                    .filter(region -> region.getFirstRow() == region.getLastRow() && region.getFirstRow() == row.getRowNum())
-                    .filter(region -> region.getFirstColumn() <= cell.getColumnIndex() && region.getLastColumn() >= cell.getColumnIndex())
-                    .collect(Collectors.toList());
+                        // if the merge spans across rows, do not process it
+                        .filter(region -> region.getFirstRow() == region.getLastRow() && region.getFirstRow() == row.getRowNum())
+                        .filter(region -> region.getFirstColumn() <= cell.getColumnIndex() && region.getLastColumn() >= cell.getColumnIndex())
+                        .collect(Collectors.toList());
                 if (!CollectionUtils.isEmpty(oneRowRegionList)) {
                     originalMergeRegionMap.put(analysisCell, oneRowRegionList);
                 }
