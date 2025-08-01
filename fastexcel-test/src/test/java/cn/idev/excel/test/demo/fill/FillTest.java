@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -258,6 +259,43 @@ public class FillTest {
         // Fill the template with data.
         // The dates in the data will be formatted according to the template's settings.
         EasyExcel.write(fileName).withTemplate(templateFileName).sheet().doFill(data());
+    }
+
+    /**
+     * Example for filling a unconventional template.
+     */
+    @Test
+    public void unconventionalFill() {
+        String templateFileName =
+                TestFileUtil.getPath() + "demo" + File.separator + "fill" + File.separator + "unconventional.xlsx";
+        String fileName = TestFileUtil.getPath() + "unconventionalFill" + System.currentTimeMillis() + ".xlsx";
+
+        try (ExcelWriter excelWriter =
+                EasyExcel.write(fileName).withTemplate(templateFileName).build()) {
+            Map<String, String> map = MapUtils.newHashMap();
+            map.put("foo", "foo-value");
+            map.put("bar", "bar-value");
+            String[] sheetNames = {"merge", "multi", "escape", "empty"};
+            for (String sheetName : sheetNames) {
+                excelWriter.fill(map, EasyExcel.writerSheet(sheetName).build());
+            }
+
+            Function<Integer, List<Map<String, String>>> getListMap = size -> {
+                List<Map<String, String>> listMap = ListUtils.newArrayListWithCapacity(size);
+                for (int j = 0; j < size; j++) {
+                    Map<String, String> currentMap = MapUtils.newHashMap();
+                    currentMap.put("bar1", "Bar1-" + j);
+                    currentMap.put("bar2", "Bar2-" + j);
+                    currentMap.put("bar3", "Bar3-" + j);
+                    currentMap.put("bar4", "Bar4-" + j);
+                    currentMap.put("bar5", "Bar5-" + j);
+                    listMap.add(currentMap);
+                }
+                return listMap;
+            };
+            excelWriter.fill(map, EasyExcel.writerSheet("list").build());
+            excelWriter.fill(getListMap.apply(10), EasyExcel.writerSheet("list").build());
+        }
     }
 
     private List<FillData> data() {

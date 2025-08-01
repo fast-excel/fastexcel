@@ -47,16 +47,19 @@ public class DefaultTemplateStringParseHandler implements TemplateStringParseHan
             if (prefixIndex < 0) {
                 break;
             }
+            startIndex = prefixIndex + 1;
             if (prefixIndex != 0) {
                 char prefixPrefixChar = value.charAt(prefixIndex - 1);
                 if (prefixPrefixChar == IGNORE_CHAR) {
-                    startIndex = prefixIndex + 1;
                     continue;
                 }
             }
             int suffixIndex = -1;
-            while (suffixIndex == -1 && startIndex < length) {
-                suffixIndex = value.indexOf(FILL_SUFFIX, startIndex + 1);
+            while (suffixIndex == -1) {
+                if (startIndex >= length) {
+                    break out;
+                }
+                suffixIndex = value.indexOf(FILL_SUFFIX, startIndex);
                 if (suffixIndex < 0) {
                     break out;
                 }
