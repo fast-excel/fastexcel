@@ -3,15 +3,14 @@ package cn.idev.excel.test.core.template;
 import cn.idev.excel.FastExcel;
 import cn.idev.excel.test.util.TestFileUtil;
 import cn.idev.excel.write.metadata.fill.FillConfig;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author wangmeng
@@ -32,12 +31,11 @@ public class TemplateMergeTest {
 
     public static void write(File file) {
         FastExcel.write(file)
-            .withTemplate(TestFileUtil.readFile("template" + File.separator + "template01.xlsx"))
-            .sheet()
-            .doFill(data(), FillConfig.builder()
-                .forceNewRow(true)
-                .autoStyle(true)
-                .build());
+                .withTemplate(TestFileUtil.readFile("template" + File.separator + "template01.xlsx"))
+                .sheet()
+                .doFill(
+                        data(),
+                        FillConfig.builder().forceNewRow(true).autoStyle(true).build());
     }
 
     private static List<Map<String, String>> data() {
@@ -53,6 +51,4 @@ public class TemplateMergeTest {
         }
         return list;
     }
-
-
 }
