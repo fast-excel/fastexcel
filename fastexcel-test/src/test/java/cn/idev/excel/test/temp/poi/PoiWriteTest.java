@@ -11,8 +11,6 @@ import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * 测试poi
@@ -20,8 +18,6 @@ import org.slf4j.LoggerFactory;
  *
  **/
 public class PoiWriteTest {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(PoiWriteTest.class);
 
     @Test
     public void write0(@TempDir Path path) throws IOException {

@@ -7,17 +7,17 @@ import com.alibaba.fastjson2.JSON;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Define an AnalysisEventListener to handler the Analysis event
  *
  *
  */
+@Slf4j
 public class SimpleDataListener extends AnalysisEventListener<SimpleData> {
-    private static final Logger LOGGER = LoggerFactory.getLogger(SimpleDataListener.class);
+
     List<SimpleData> list = new ArrayList<SimpleData>();
 
     /**
@@ -28,7 +28,7 @@ public class SimpleDataListener extends AnalysisEventListener<SimpleData> {
      */
     @Override
     public void invokeHeadMap(Map<Integer, String> headMap, AnalysisContext context) {
-        LOGGER.debug("Head is:{}", JSON.toJSONString(headMap));
+        log.debug("Head is:{}", JSON.toJSONString(headMap));
         Assertions.assertEquals(headMap.get(0), "姓名");
     }
 
@@ -66,6 +66,6 @@ public class SimpleDataListener extends AnalysisEventListener<SimpleData> {
                         .getHeadNameList()
                         .get(0),
                 "姓名");
-        LOGGER.debug("First row:{}", JSON.toJSONString(list.get(0)));
+        log.debug("First row:{}", JSON.toJSONString(list.get(0)));
     }
 }

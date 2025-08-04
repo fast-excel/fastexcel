@@ -31,16 +31,12 @@ import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
  */
 @Slf4j
 public class WriteLargeTest {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(WriteLargeTest.class);
 
     @Test
     public void test() throws Exception {
@@ -73,7 +69,7 @@ public class WriteLargeTest {
         WriteSheet writeSheet = EasyExcel.writerSheet().build();
         for (int j = 0; j < 100; j++) {
             excelWriter.write(data(), writeSheet);
-            LOGGER.info("{} fill success.", j);
+            log.info("{} fill success.", j);
         }
         excelWriter.finish();
     }
@@ -172,7 +168,7 @@ public class WriteLargeTest {
         WriteSheet writeSheet = EasyExcel.writerSheet().build();
         for (int j = 0; j < 100; j++) {
             excelWriter.write(data(), writeSheet);
-            LOGGER.info("{} fill success.", j);
+            log.info("{} fill success.", j);
         }
         excelWriter.finish();
     }

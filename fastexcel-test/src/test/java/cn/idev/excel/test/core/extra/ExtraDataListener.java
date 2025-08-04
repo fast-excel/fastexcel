@@ -4,15 +4,14 @@ import cn.idev.excel.context.AnalysisContext;
 import cn.idev.excel.event.AnalysisEventListener;
 import cn.idev.excel.metadata.CellExtra;
 import com.alibaba.fastjson2.JSON;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
  */
+@Slf4j
 public class ExtraDataListener extends AnalysisEventListener<ExtraData> {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ExtraData.class);
 
     @Override
     public void invoke(ExtraData data, AnalysisContext context) {}
@@ -22,7 +21,7 @@ public class ExtraDataListener extends AnalysisEventListener<ExtraData> {
 
     @Override
     public void extra(CellExtra extra, AnalysisContext context) {
-        LOGGER.info("extra data:{}", JSON.toJSONString(extra));
+        log.info("extra data:{}", JSON.toJSONString(extra));
         switch (extra.getType()) {
             case COMMENT:
                 Assertions.assertEquals("批注的内容", extra.getText());

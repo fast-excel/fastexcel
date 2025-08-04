@@ -11,15 +11,14 @@ import java.math.BigInteger;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
  */
+@Slf4j
 public class ReadAllConverterDataListener extends AnalysisEventListener<ReadAllConverterData> {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ReadAllConverterDataListener.class);
     List<ReadAllConverterData> list = new ArrayList<ReadAllConverterData>();
 
     @Override
@@ -79,6 +78,6 @@ public class ReadAllConverterDataListener extends AnalysisEventListener<ReadAllC
         double doubleStringFormulaNumber = new BigDecimal(data.getStringFormulaNumber()).doubleValue();
         Assertions.assertEquals(doubleStringFormulaNumber, 2.0, 0.0);
         Assertions.assertEquals(data.getStringFormulaString(), "1测试");
-        LOGGER.debug("First row:{}", JSON.toJSONString(list.get(0)));
+        log.debug("First row:{}", JSON.toJSONString(list.get(0)));
     }
 }

@@ -32,8 +32,6 @@ import org.apache.poi.ss.util.CellReference;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * 临时测试
@@ -43,8 +41,6 @@ import org.slf4j.LoggerFactory;
 @Slf4j
 public class Lock2Test {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(Lock2Test.class);
-
     @Test
     public void test() throws Exception {
         List<Object> list = EasyExcel.read("src/test/resources/converter/converter07.xlsx")
@@ -52,10 +48,10 @@ public class Lock2Test {
                 .sheet(0)
                 .headRowNumber(0)
                 .doReadSync();
-        LOGGER.info("数据：{}", list.size());
+        log.info("数据：{}", list.size());
         for (Object data : list) {
-            LOGGER.info("返回数据：{}", CollectionUtils.size(data));
-            LOGGER.info("返回数据：{}", JSON.toJSONString(data));
+            log.info("返回数据：{}", CollectionUtils.size(data));
+            log.info("返回数据：{}", JSON.toJSONString(data));
         }
     }
 
@@ -128,7 +124,7 @@ public class Lock2Test {
 
     @Test
     public void testc() throws Exception {
-        LOGGER.info("reslut:{}", JSON.toJSONString(new CellReference("B3")));
+        log.info("reslut:{}", JSON.toJSONString(new CellReference("B3")));
     }
 
     @Test
@@ -147,54 +143,54 @@ public class Lock2Test {
         File file = tempDir.resolve(System.currentTimeMillis() + ".xlsx").toFile();
         EasyExcel.write().file(file).sheet().doWrite(dataList());
         List<Object> list = EasyExcel.read(file).sheet().headRowNumber(0).doReadSync();
-        LOGGER.info("数据：{}", list.size());
+        log.info("数据：{}", list.size());
         for (Object data : list) {
-            LOGGER.info("返回数据：{}", JSON.toJSONString(data));
+            log.info("返回数据：{}", JSON.toJSONString(data));
         }
-        LOGGER.info("文件状态：{}", file.exists());
+        log.info("文件状态：{}", file.exists());
         file.delete();
     }
 
     @Test
     public void test335() throws Exception {
 
-        LOGGER.info("reslut:{}", PositionUtils.getCol("A10", null));
-        LOGGER.info("reslut:{}", PositionUtils.getRow("A10"));
-        LOGGER.info("reslut:{}", PositionUtils.getCol("AB10", null));
-        LOGGER.info("reslut:{}", PositionUtils.getRow("AB10"));
+        log.info("reslut:{}", PositionUtils.getCol("A10", null));
+        log.info("reslut:{}", PositionUtils.getRow("A10"));
+        log.info("reslut:{}", PositionUtils.getCol("AB10", null));
+        log.info("reslut:{}", PositionUtils.getRow("AB10"));
 
-        // LOGGER.info("reslut:{}", PositionUtils2.getCol("A10",null));
-        // LOGGER.info("reslut:{}", PositionUtils2.getRow("A10"));
-        // LOGGER.info("reslut:{}", PositionUtils2.getCol("AB10",null));
-        // LOGGER.info("reslut:{}", PositionUtils2.getRow("AB10"));
+        // log.info("reslut:{}", PositionUtils2.getCol("A10",null));
+        // log.info("reslut:{}", PositionUtils2.getRow("A10"));
+        // log.info("reslut:{}", PositionUtils2.getCol("AB10",null));
+        // log.info("reslut:{}", PositionUtils2.getRow("AB10"));
     }
 
     @Test
     public void numberforamt() throws Exception {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 
-        // LOGGER.info("date:{}",
+        // log.info("date:{}",
         //    NumberDataFormatterUtils.format(BigDecimal.valueOf(44727.99998842592), (short)200, "yyyy-MM-dd HH:mm:ss",
         //        null,
         //        null, null));
         //
-        // LOGGER.info("date:{}",
+        // log.info("date:{}",
         //    NumberDataFormatterUtils.format(BigDecimal.valueOf(44728.99998842592), (short)200, "yyyy-MM-dd HH:mm:ss",
         //        null,
         //        null, null));
         //
-        // LOGGER.info("date:{}",
+        // log.info("date:{}",
         //    NumberDataFormatterUtils.format(BigDecimal.valueOf(44729.99998836806), (short)200, "yyyy-MM-dd HH:mm:ss",
         //        null,
         //        null, null));
         //
-        // LOGGER.info("date:{}",
+        // log.info("date:{}",
         //    NumberDataFormatterUtils.format(BigDecimal.valueOf(44727.99998842592).setScale(10, RoundingMode
         //    .HALF_UP), (short)200, "yyyy-MM-dd HH:mm:ss",
         //        null,
         //        null, null));
         //
-        // LOGGER.info("date:{}",
+        // log.info("date:{}",
         //    NumberDataFormatterUtils.format(BigDecimal.valueOf(44728.99998842592).setScale(10, RoundingMode
         //    .HALF_UP), (short)200, "yyyy-MM-dd HH:mm:ss",
         //        null,
@@ -202,46 +198,46 @@ public class Lock2Test {
 
         // 44729.9999883681
         // 44729.999988368058
-        // LOGGER.info("date:{}",
+        // log.info("date:{}",
         //    NumberDataFormatterUtils.format(BigDecimal.valueOf(44729.999988368058).setScale(10, RoundingMode
         //    .HALF_UP), (short)200, "yyyy-MM-dd HH:mm:ss",
         //        null,
         //        null, null));
-        // LOGGER.info("date:{}",BigDecimal.valueOf(44729.999988368058).setScale(10, RoundingMode.HALF_UP).doubleValue
+        // log.info("date:{}",BigDecimal.valueOf(44729.999988368058).setScale(10, RoundingMode.HALF_UP).doubleValue
         // ());
 
         // 2022/6/17 23:59:59
         // 期望 44729.99998842592
-        // LOGGER.info("data:{}", DateUtil.getJavaDate(44729.9999883681, true));
-        LOGGER.info(
+        // log.info("data:{}", DateUtil.getJavaDate(44729.9999883681, true));
+        log.info(
                 "data4:{}",
                 DateUtil.getJavaDate(
                         BigDecimal.valueOf(44729.999988368058)
                                 .setScale(4, RoundingMode.HALF_UP)
                                 .doubleValue(),
                         false));
-        LOGGER.info(
+        log.info(
                 "data5:{}",
                 DateUtil.getJavaDate(
                         BigDecimal.valueOf(44729.999988368058)
                                 .setScale(5, RoundingMode.HALF_UP)
                                 .doubleValue(),
                         false));
-        LOGGER.info(
+        log.info(
                 "data6:{}",
                 DateUtil.getJavaDate(
                         BigDecimal.valueOf(44729.999988368058)
                                 .setScale(6, RoundingMode.HALF_UP)
                                 .doubleValue(),
                         false));
-        LOGGER.info(
+        log.info(
                 "data7:{}",
                 DateUtil.getJavaDate(
                         BigDecimal.valueOf(44729.999988368058)
                                 .setScale(7, RoundingMode.HALF_UP)
                                 .doubleValue(),
                         false));
-        LOGGER.info(
+        log.info(
                 "data8:{}",
                 DateUtil.getJavaDate(
                         BigDecimal.valueOf(44729.999988368058)
@@ -249,11 +245,11 @@ public class Lock2Test {
                                 .doubleValue(),
                         false));
 
-        LOGGER.info("data:{}", format.format(DateUtil.getJavaDate(44729.999988368058, false)));
-        LOGGER.info("data:{}", format.format(DateUtil.getJavaDate(44729.9999883681, false)));
+        log.info("data:{}", format.format(DateUtil.getJavaDate(44729.999988368058, false)));
+        log.info("data:{}", format.format(DateUtil.getJavaDate(44729.9999883681, false)));
 
-        LOGGER.info("data:{}", DateUtil.getJavaDate(Double.parseDouble("44729.999988368058"), false));
-        LOGGER.info("data:{}", DateUtil.getJavaDate(Double.parseDouble("44729.9999883681"), false));
+        log.info("data:{}", DateUtil.getJavaDate(Double.parseDouble("44729.999988368058"), false));
+        log.info("data:{}", DateUtil.getJavaDate(Double.parseDouble("44729.9999883681"), false));
 
         // 44729.999976851854
         // 44729.999988368058
@@ -261,14 +257,14 @@ public class Lock2Test {
         // 44729.99998842592
         Assertions.assertThrows(ParseException.class, () -> DateUtil.getExcelDate(format.parse("2022-06-17 23:59:59")));
 
-        LOGGER.info(
+        log.info(
                 "data:{}",
                 DateUtil.getJavaDate(
                         BigDecimal.valueOf(44729.999976851854)
                                 .setScale(10, RoundingMode.HALF_UP)
                                 .doubleValue(),
                         false));
-        LOGGER.info(
+        log.info(
                 "data:{}",
                 DateUtil.getJavaDate(
                         BigDecimal.valueOf(44729.99998842592)
@@ -276,14 +272,14 @@ public class Lock2Test {
                                 .doubleValue(),
                         false));
 
-        LOGGER.info(
+        log.info(
                 "data:{}",
                 DateUtil.getJavaDate(
                         BigDecimal.valueOf(44729.999976851854)
                                 .setScale(5, RoundingMode.HALF_UP)
                                 .doubleValue(),
                         false));
-        LOGGER.info(
+        log.info(
                 "data:{}",
                 DateUtil.getJavaDate(
                         BigDecimal.valueOf(44729.99998842592)
@@ -314,7 +310,7 @@ public class Lock2Test {
             //            Assertions.assertEquals("测试精度5转换错误" + dateTime, format.format(date),
             //                format.format(DateUtil.getJavaDate(BigDecimal.valueOf(excelDate)
             //                    .setScale(10, RoundingMode.HALF_UP).doubleValue(), false)));
-            LOGGER.info(
+            log.info(
                     "date:{}",
                     format2.format(DateUtil.getJavaDate(BigDecimal.valueOf(excelDate)
                             .setScale(10, RoundingMode.HALF_UP)
@@ -341,10 +337,10 @@ public class Lock2Test {
                 .sheet(0)
                 .headRowNumber(0)
                 .doReadSync();
-        LOGGER.info("数据：{}", list.size());
+        log.info("数据：{}", list.size());
         for (Map<Integer, ReadCellData> readCellDataMap : list) {
             ReadCellData data = readCellDataMap.get(0);
-            LOGGER.info(
+            log.info(
                     "data:{}",
                     format.format(DateUtil.getJavaDate(
                             data.getNumberValue()
@@ -353,8 +349,8 @@ public class Lock2Test {
                             false)));
         }
         //
-        // LOGGER.info("data:{}", format.format(DateUtil.getJavaDate(44727.999988425923, false)));
-        // LOGGER.info("data:{}", format.format(DateUtil.getJavaDate(44729.999988368058, false)));
+        // log.info("data:{}", format.format(DateUtil.getJavaDate(44727.999988425923, false)));
+        // log.info("data:{}", format.format(DateUtil.getJavaDate(44729.999988368058, false)));
 
     }
 

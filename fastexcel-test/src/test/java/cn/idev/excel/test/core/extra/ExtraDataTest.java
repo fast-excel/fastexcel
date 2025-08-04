@@ -8,17 +8,16 @@ import cn.idev.excel.read.listener.ReadListener;
 import cn.idev.excel.test.util.TestFileUtil;
 import com.alibaba.fastjson2.JSON;
 import java.io.File;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
  */
+@Slf4j
 public class ExtraDataTest {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ExtraDataTest.class);
     private static File file03;
     private static File file07;
 
@@ -52,7 +51,7 @@ public class ExtraDataTest {
 
                     @Override
                     public void extra(CellExtra extra, AnalysisContext context) {
-                        LOGGER.info("extra data:{}", JSON.toJSONString(extra));
+                        log.info("extra data:{}", JSON.toJSONString(extra));
                         switch (extra.getType()) {
                             case HYPERLINK:
                                 if ("222222222".equals(extra.getText())) {

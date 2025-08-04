@@ -2,20 +2,18 @@ package cn.idev.excel.test.temp;
 
 import cn.idev.excel.context.AnalysisContext;
 import cn.idev.excel.event.AnalysisEventListener;
-import cn.idev.excel.test.demo.read.DemoDataListener;
 import com.alibaba.fastjson2.JSON;
 import java.util.ArrayList;
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 模板的读取类
  *
  *
  */
+@Slf4j
 public class LockDataListener extends AnalysisEventListener<LockData> {
-    private static final Logger LOGGER = LoggerFactory.getLogger(DemoDataListener.class);
     /**
      * 每隔5条存储数据库，实际使用中可以100条，然后清理list ，方便内存回收
      */
@@ -25,7 +23,7 @@ public class LockDataListener extends AnalysisEventListener<LockData> {
 
     @Override
     public void invoke(LockData data, AnalysisContext context) {
-        LOGGER.info("解析到一条数据:{}", JSON.toJSONString(data));
+        log.info("解析到一条数据:{}", JSON.toJSONString(data));
         list.add(data);
         if (list.size() >= BATCH_COUNT) {
             saveData();
@@ -36,14 +34,14 @@ public class LockDataListener extends AnalysisEventListener<LockData> {
     @Override
     public void doAfterAllAnalysed(AnalysisContext context) {
         saveData();
-        LOGGER.info("所有数据解析完成！");
+        log.info("所有数据解析完成！");
     }
 
     /**
      * 加上存储数据库
      */
     private void saveData() {
-        LOGGER.info("{}条数据，开始存储数据库！", list.size());
-        LOGGER.info("存储数据库成功！");
+        log.info("{}条数据，开始存储数据库！", list.size());
+        log.info("存储数据库成功！");
     }
 }

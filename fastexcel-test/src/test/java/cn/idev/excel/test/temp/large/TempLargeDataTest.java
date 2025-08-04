@@ -11,6 +11,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.openxml4j.util.ZipSecureFile;
 import org.apache.poi.xssf.streaming.SXSSFCell;
 import org.apache.poi.xssf.streaming.SXSSFRow;
@@ -19,15 +20,12 @@ import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
  */
+@Slf4j
 public class TempLargeDataTest {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(TempLargeDataTest.class);
 
     private int i = 0;
 
@@ -63,7 +61,7 @@ public class TempLargeDataTest {
                 .headRowNumber(2)
                 .sheet()
                 .doRead();
-        LOGGER.info("Large data total time spent:{}", System.currentTimeMillis() - start);
+        log.info("Large data total time spent:{}", System.currentTimeMillis() - start);
     }
 
     @Test
@@ -73,7 +71,7 @@ public class TempLargeDataTest {
         EasyExcel.read("src/test/resources/simple/no_model_10000_rows.xlsx", new NoModelLargeDataListener())
                 .sheet()
                 .doRead();
-        LOGGER.info("Large data total time spent:{}", System.currentTimeMillis() - start);
+        log.info("Large data total time spent:{}", System.currentTimeMillis() - start);
     }
 
     @Test
@@ -92,11 +90,11 @@ public class TempLargeDataTest {
         writeSheet = EasyExcel.writerSheet().build();
         for (int j = 0; j < 5000; j++) {
             excelWriter.write(data(), writeSheet);
-            LOGGER.info("{} write success.", j);
+            log.info("{} write success.", j);
         }
         excelWriter.finish();
         long cost = System.currentTimeMillis() - start;
-        LOGGER.info("write cost:{}", cost);
+        log.info("write cost:{}", cost);
         start = System.currentTimeMillis();
         try (FileOutputStream fileOutputStream = new FileOutputStream(fileWritePoi07)) {
             SXSSFWorkbook workbook = new SXSSFWorkbook();
@@ -108,15 +106,15 @@ public class TempLargeDataTest {
                     cell.setCellValue("str-" + j + "-" + i);
                 }
                 if (i % 5000 == 0) {
-                    LOGGER.info("{} write success.", i);
+                    log.info("{} write success.", i);
                 }
             }
             workbook.write(fileOutputStream);
             workbook.close();
         }
         long costPoi = System.currentTimeMillis() - start;
-        LOGGER.info("poi write cost:{}", System.currentTimeMillis() - start);
-        LOGGER.info("{} vs {}", cost, costPoi);
+        log.info("poi write cost:{}", System.currentTimeMillis() - start);
+        log.info("{} vs {}", cost, costPoi);
         Assertions.assertTrue(costPoi * 2 > cost);
     }
 
@@ -132,7 +130,7 @@ public class TempLargeDataTest {
                 }
                 excelWriter.finish();
             }
-            LOGGER.info("{} 完成", index);
+            log.info("{} 完成", index);
         });
     }
 
@@ -148,7 +146,7 @@ public class TempLargeDataTest {
                 }
                 excelWriter.finish();
             }
-            LOGGER.info("{} 完成", index);
+            log.info("{} 完成", index);
         });
     }
 
@@ -170,15 +168,15 @@ public class TempLargeDataTest {
                         // }
                     }
                     if (i % 5000 == 0) {
-                        LOGGER.info("{} write success.", i);
+                        log.info("{} write success.", i);
                     }
                 }
                 workbook.write(fileOutputStream);
                 workbook.close();
             } catch (Exception e) {
-                LOGGER.error(e.getMessage(), e);
+                log.error(e.getMessage(), e);
             }
-            LOGGER.info("{} 完成", index);
+            log.info("{} 完成", index);
         });
     }
 

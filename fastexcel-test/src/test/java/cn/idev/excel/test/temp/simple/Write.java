@@ -15,8 +15,6 @@ import java.util.List;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * 测试poi
@@ -25,7 +23,6 @@ import org.slf4j.LoggerFactory;
  **/
 @Slf4j
 public class Write {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Write.class);
 
     @Test
     public void simpleWrite1() {

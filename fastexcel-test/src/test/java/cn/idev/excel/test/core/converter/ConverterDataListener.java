@@ -8,15 +8,14 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
  */
+@Slf4j
 public class ConverterDataListener extends AnalysisEventListener<ConverterReadData> {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ConverterDataListener.class);
     private final List<ConverterReadData> list = new ArrayList<>();
 
     @Override
@@ -42,6 +41,6 @@ public class ConverterDataListener extends AnalysisEventListener<ConverterReadDa
         Assertions.assertEquals(data.getFloatData(), (float) 1.0, 0.0);
         Assertions.assertEquals(data.getString(), "测试");
         Assertions.assertEquals(data.getCellData().getStringValue(), "自定义");
-        LOGGER.debug("First row:{}", JSON.toJSONString(list.get(0)));
+        log.debug("First row:{}", JSON.toJSONString(list.get(0)));
     }
 }

@@ -5,15 +5,14 @@ import cn.idev.excel.event.AnalysisEventListener;
 import com.alibaba.fastjson2.JSON;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
  */
+@Slf4j
 public class SimpleDataSheetNameListener extends AnalysisEventListener<SimpleData> {
-    private static final Logger LOGGER = LoggerFactory.getLogger(SimpleDataSheetNameListener.class);
     List<SimpleData> list = new ArrayList<SimpleData>();
 
     @Override
@@ -25,6 +24,6 @@ public class SimpleDataSheetNameListener extends AnalysisEventListener<SimpleDat
     public void doAfterAllAnalysed(AnalysisContext context) {
         Assertions.assertEquals(list.size(), 1);
         Assertions.assertEquals(list.get(0).getName(), "张三");
-        LOGGER.debug("First row:{}", JSON.toJSONString(list.get(0)));
+        log.debug("First row:{}", JSON.toJSONString(list.get(0)));
     }
 }

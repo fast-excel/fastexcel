@@ -4,16 +4,15 @@ import cn.idev.excel.context.AnalysisContext;
 import cn.idev.excel.event.AnalysisEventListener;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
  */
+@Slf4j
 public class SortDataListener extends AnalysisEventListener<SortData> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SortDataListener.class);
     List<SortData> list = new ArrayList<SortData>();
 
     @Override

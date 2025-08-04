@@ -5,6 +5,7 @@ import java.lang.reflect.Field;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Date;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.BuiltinFormats;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DateUtil;
@@ -15,17 +16,14 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * 临时测试
  *
  *
  **/
+@Slf4j
 public class StyleTest {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(StyleTest.class);
 
     @Test
     public void poi07Test() throws Exception {
@@ -86,18 +84,18 @@ public class StyleTest {
     public void testFormatter2() throws Exception {
         StyleData styleData = new StyleData();
         Field field = styleData.getClass().getDeclaredField("byteValue");
-        LOGGER.info("field:{}", field.getType().getName());
+        log.info("field:{}", field.getType().getName());
         field = styleData.getClass().getDeclaredField("byteValue2");
-        LOGGER.info("field:{}", field.getType().getName());
+        log.info("field:{}", field.getType().getName());
         field = styleData.getClass().getDeclaredField("byteValue4");
-        LOGGER.info("field:{}", field.getType());
+        log.info("field:{}", field.getType());
         field = styleData.getClass().getDeclaredField("byteValue3");
-        LOGGER.info("field:{}", field.getType());
+        log.info("field:{}", field.getType());
     }
 
     @Test
     public void testFormatter3() throws Exception {
-        LOGGER.info("field:{}", Byte.class == Byte.class);
+        log.info("field:{}", Byte.class == Byte.class);
     }
 
     private boolean isDate(Cell cell) {

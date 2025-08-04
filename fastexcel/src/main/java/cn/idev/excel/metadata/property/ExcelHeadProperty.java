@@ -16,8 +16,7 @@ import java.util.TreeMap;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Define the header attribute of excel
@@ -26,9 +25,9 @@ import org.slf4j.LoggerFactory;
 @Getter
 @Setter
 @EqualsAndHashCode
+@Slf4j
 public class ExcelHeadProperty {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ExcelHeadProperty.class);
     /**
      * Custom class
      */
@@ -68,8 +67,8 @@ public class ExcelHeadProperty {
         initColumnProperties(configurationHolder);
 
         initHeadRowNumber();
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("The initialization sheet/table 'ExcelHeadProperty' is complete , head kind is {}", headKind);
+        if (log.isDebugEnabled()) {
+            log.debug("The initialization sheet/table 'ExcelHeadProperty' is complete , head kind is {}", headKind);
         }
     }
 

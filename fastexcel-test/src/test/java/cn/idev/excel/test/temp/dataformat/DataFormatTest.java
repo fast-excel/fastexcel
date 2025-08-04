@@ -3,7 +3,6 @@ package cn.idev.excel.test.temp.dataformat;
 import cn.idev.excel.EasyExcel;
 import cn.idev.excel.metadata.data.FormulaData;
 import cn.idev.excel.test.core.dataformat.DateFormatData;
-import cn.idev.excel.test.temp.Lock2Test;
 import cn.idev.excel.test.util.TestFileUtil;
 import com.alibaba.fastjson2.JSON;
 import java.io.File;
@@ -13,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
@@ -20,17 +20,14 @@ import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * 格式测试
  *
  *
  **/
+@Slf4j
 public class DataFormatTest {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(Lock2Test.class);
 
     @Test
     public void test() throws Exception {
@@ -41,7 +38,7 @@ public class DataFormatTest {
                 .sheet()
                 .headRowNumber(1)
                 .doReadSync();
-        LOGGER.info("数据：{}", list.size());
+        log.info("数据：{}", list.size());
         for (DataFormatData data : list) {
             cn.idev.excel.metadata.data.DataFormatData dataFormat =
                     data.getDate().getDataFormatData();
@@ -51,14 +48,14 @@ public class DataFormatTest {
             if (dataFormat == null || dataFormatString == null) {
 
             } else {
-                LOGGER.info(
+                log.info(
                         "格式化：{};{}：{}",
                         dataFormat.getIndex(),
                         dataFormatString.getFormulaValue(),
                         DateUtil.isADateFormat(dataFormat.getIndex(), dataFormatString.getFormulaValue()));
             }
 
-            LOGGER.info("返回数据：{}", JSON.toJSONString(data));
+            log.info("返回数据：{}", JSON.toJSONString(data));
         }
     }
 
@@ -70,7 +67,7 @@ public class DataFormatTest {
                 .sheet()
                 .headRowNumber(1)
                 .doReadSync();
-        LOGGER.info("数据：{}", list.size());
+        log.info("数据：{}", list.size());
         for (DataFormatData data : list) {
             cn.idev.excel.metadata.data.DataFormatData dataFormat =
                     data.getDate().getDataFormatData();
@@ -80,14 +77,14 @@ public class DataFormatTest {
             if (dataFormat == null || dataFormatString == null) {
 
             } else {
-                LOGGER.info(
+                log.info(
                         "格式化：{};{}：{}",
                         dataFormat.getIndex(),
                         dataFormatString.getFormulaValue(),
                         DateUtil.isADateFormat(dataFormat.getIndex(), dataFormatString.getFormulaValue()));
             }
 
-            LOGGER.info("返回数据：{}", JSON.toJSONString(data));
+            log.info("返回数据：{}", JSON.toJSONString(data));
         }
     }
 
@@ -155,7 +152,7 @@ public class DataFormatTest {
         List<DateFormatData> list =
                 EasyExcel.read(file, DateFormatData.class, null).sheet().doReadSync();
         for (DateFormatData data : list) {
-            LOGGER.info("返回:{}", JSON.toJSONString(data));
+            log.info("返回:{}", JSON.toJSONString(data));
         }
     }
 

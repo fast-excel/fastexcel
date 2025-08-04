@@ -32,6 +32,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.util.Map;
 import java.util.UUID;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.hssf.record.crypto.Biff8EncryptionKey;
 import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.openxml4j.opc.PackageAccess;
@@ -45,8 +46,6 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of the WriteContext interface, which serves as the main anchorage point for writing Excel files.
@@ -54,9 +53,9 @@ import org.slf4j.LoggerFactory;
  * and finishing the write process.
  *
  */
+@Slf4j
 public class WriteContextImpl implements WriteContext {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(WriteContextImpl.class);
     private static final String NO_SHEETS = "no sheets";
 
     /**
@@ -93,8 +92,8 @@ public class WriteContextImpl implements WriteContext {
         if (writeWorkbook == null) {
             throw new IllegalArgumentException("Workbook argument cannot be null");
         }
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Begin to Initialization 'WriteContextImpl'");
+        if (log.isDebugEnabled()) {
+            log.debug("Begin to Initialization 'WriteContextImpl'");
         }
         initCurrentWorkbookHolder(writeWorkbook);
 
@@ -107,8 +106,8 @@ public class WriteContextImpl implements WriteContext {
             throw new ExcelGenerateException("Create workbook failure", e);
         }
         WriteHandlerUtils.afterWorkbookCreate(workbookWriteHandlerContext);
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Initialization 'WriteContextImpl' complete");
+        if (log.isDebugEnabled()) {
+            log.debug("Initialization 'WriteContextImpl' complete");
         }
     }
 
@@ -120,8 +119,8 @@ public class WriteContextImpl implements WriteContext {
     private void initCurrentWorkbookHolder(WriteWorkbook writeWorkbook) {
         writeWorkbookHolder = new WriteWorkbookHolder(writeWorkbook);
         currentWriteHolder = writeWorkbookHolder;
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("CurrentConfiguration is writeWorkbookHolder");
+        if (log.isDebugEnabled()) {
+            log.debug("CurrentConfiguration is writeWorkbookHolder");
         }
     }
 
@@ -175,14 +174,14 @@ public class WriteContextImpl implements WriteContext {
         if (writeSheetHolder == null) {
             return false;
         }
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Sheet:{},{} is already existed", writeSheet.getSheetNo(), writeSheet.getSheetName());
+        if (log.isDebugEnabled()) {
+            log.debug("Sheet:{},{} is already existed", writeSheet.getSheetNo(), writeSheet.getSheetName());
         }
         writeSheetHolder.setNewInitialization(Boolean.FALSE);
         writeTableHolder = null;
         currentWriteHolder = writeSheetHolder;
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("CurrentConfiguration is writeSheetHolder");
+        if (log.isDebugEnabled()) {
+            log.debug("CurrentConfiguration is writeSheetHolder");
         }
         return true;
     }
@@ -196,8 +195,8 @@ public class WriteContextImpl implements WriteContext {
         writeSheetHolder = new WriteSheetHolder(writeSheet, writeWorkbookHolder);
         writeTableHolder = null;
         currentWriteHolder = writeSheetHolder;
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("CurrentConfiguration is writeSheetHolder");
+        if (log.isDebugEnabled()) {
+            log.debug("CurrentConfiguration is writeSheetHolder");
         }
     }
 
@@ -249,8 +248,8 @@ public class WriteContextImpl implements WriteContext {
      * @return The newly created sheet.
      */
     private Sheet createSheet() {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Can not find sheet:{} ,now create it", writeSheetHolder.getSheetNo());
+        if (log.isDebugEnabled()) {
+            log.debug("Can not find sheet:{} ,now create it", writeSheetHolder.getSheetNo());
         }
         if (StringUtils.isEmpty(writeSheetHolder.getSheetName())) {
             writeSheetHolder.setSheetName(writeSheetHolder.getSheetNo().toString());
@@ -363,14 +362,14 @@ public class WriteContextImpl implements WriteContext {
             writeTable.setTableNo(0);
         }
         if (writeSheetHolder.getHasBeenInitializedTable().containsKey(writeTable.getTableNo())) {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Table:{} is already existed", writeTable.getTableNo());
+            if (log.isDebugEnabled()) {
+                log.debug("Table:{} is already existed", writeTable.getTableNo());
             }
             writeTableHolder = writeSheetHolder.getHasBeenInitializedTable().get(writeTable.getTableNo());
             writeTableHolder.setNewInitialization(Boolean.FALSE);
             currentWriteHolder = writeTableHolder;
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("CurrentConfiguration is writeTableHolder");
+            if (log.isDebugEnabled()) {
+                log.debug("CurrentConfiguration is writeTableHolder");
             }
             return;
         }
@@ -399,8 +398,8 @@ public class WriteContextImpl implements WriteContext {
         writeTableHolder = new WriteTableHolder(writeTable, writeSheetHolder);
         writeSheetHolder.getHasBeenInitializedTable().put(writeTable.getTableNo(), writeTableHolder);
         currentWriteHolder = writeTableHolder;
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("CurrentConfiguration is writeTableHolder");
+        if (log.isDebugEnabled()) {
+            log.debug("CurrentConfiguration is writeTableHolder");
         }
     }
 
@@ -518,8 +517,8 @@ public class WriteContextImpl implements WriteContext {
         if (throwable != null) {
             throw new ExcelGenerateException("Can not close IO.", throwable);
         }
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Finished write.");
+        if (log.isDebugEnabled()) {
+            log.debug("Finished write.");
         }
     }
 

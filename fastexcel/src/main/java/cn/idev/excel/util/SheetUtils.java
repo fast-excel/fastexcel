@@ -3,16 +3,15 @@ package cn.idev.excel.util;
 import cn.idev.excel.context.AnalysisContext;
 import cn.idev.excel.read.metadata.ReadSheet;
 import cn.idev.excel.read.metadata.holder.ReadWorkbookHolder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Sheet utils
  *
  *
  */
+@Slf4j
 public class SheetUtils {
-    private static final Logger LOGGER = LoggerFactory.getLogger(SheetUtils.class);
 
     private SheetUtils() {}
 
@@ -37,8 +36,8 @@ public class SheetUtils {
                 continue;
             }
             if (parameterReadSheet.getSheetNo() == null && parameterReadSheet.getSheetName() == null) {
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("The first is read by default.");
+                if (log.isDebugEnabled()) {
+                    log.debug("The first is read by default.");
                 }
                 parameterReadSheet.setSheetNo(0);
             }
