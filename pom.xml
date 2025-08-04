@@ -49,6 +49,9 @@
         <logback-classic.version>1.5.6</logback-classic.version>
         <mockserver.version>5.15.0</mockserver.version>
         <jacoco.version>0.8.13</jacoco.version>
+        <junit.version>5.13.4</junit.version>
+        <mockito.version>4.11.0</mockito.version>
+
     </properties>
 
     <scm>
@@ -191,6 +194,23 @@
                 <version>${mockserver.version}</version>
                 <scope>test</scope>
             </dependency>
+
+            <dependency>
+                <groupId>org.junit</groupId>
+                <artifactId>junit-bom</artifactId>
+                <version>${junit.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-bom</artifactId>
+                <version>${mockito.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
