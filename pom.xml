@@ -249,6 +249,7 @@
                     <version>${maven-surefire-plugin.version}</version>
                     <configuration>
                         <argLine>
+                            -Xmx4g -Xms4g -XX:+HeapDumpOnOutOfMemoryError
                             ${argLine} ${surefireArgLine}
                         </argLine>
                     </configuration>
