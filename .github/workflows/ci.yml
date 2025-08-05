@@ -35,9 +35,9 @@ jobs:
     strategy:
       matrix:
         java: [ 8, 11, 17, 21]
-        distribution: [ 'adopt' ]
+        distribution: [ 'temurin' ]
       fail-fast: false
-      max-parallel: 4
+      max-parallel: 2
 
     name: Test JDK ${{ matrix.java }}
     steps:
