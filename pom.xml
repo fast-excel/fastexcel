@@ -51,6 +51,9 @@
         <jacoco.version>0.8.13</jacoco.version>
         <junit.version>5.13.4</junit.version>
         <mockito.version>4.11.0</mockito.version>
+        <surefire.jvm.args>-Xmx2g -Xms2g -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8</surefire.jvm.args>
+        <surefire.jdk9plus.args></surefire.jdk9plus.args>
+        <argLine></argLine>
 
     </properties>
 
@@ -249,18 +252,9 @@
                     <version>${maven-surefire-plugin.version}</version>
                     <configuration>
                         <argLine>
-                            -Xmx4g -Xms4g -XX:+HeapDumpOnOutOfMemoryError
-                            ${argLine} ${surefireArgLine}
+                            ${surefire.jvm.args} ${surefire.jdk9plus.args} ${argLine}
                         </argLine>
                     </configuration>
-                    <!--                    please add below configuration if you are using JDK 9 or higher-->
-                    <!--                    <configuration>-->
-                    <!--                        <argLine>-->
-                    <!--                            &#45;&#45;add-opens=java.base/java.lang=ALL-UNNAMED-->
-                    <!--                            &#45;&#45;add-opens=java.base/java.util=ALL-UNNAMED-->
-                    <!--                            &#45;&#45;add-opens=java.base/sun.reflect.annotation=ALL-UNNAMED-->
-                    <!--                        </argLine>-->
-                    <!--                    </configuration>-->
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -475,7 +469,7 @@
                 <jdk>[9,)</jdk>
             </activation>
             <properties>
-                    <surefireArgLine>--add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/sun.reflect.annotation=ALL-UNNAMED -Dfile.encoding=UTF-8</surefireArgLine>
+                <surefire.jdk9plus.args>--add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/sun.reflect.annotation=ALL-UNNAMED</surefire.jdk9plus.args>
             </properties>
         </profile>
         <profile>
