@@ -61,23 +61,27 @@ git remote set-url --push upstream no-pushing
 
 提交 PR 时，请确保变更基于 `main` 分支。
 
-
 ### 提交规则
 
 #### 提交信息
 
-请确保提交消息清晰且具有描述性，遵循以下格式：
+请确保提交消息清晰且具有描述性，且使用**英文**，且不超过100个字符。
 
-- **docs**: 更新文档，例如 `docs: 更新 PR 提交指南`。
-- **feature**: 新功能，例如 `feature: 支持 并发写入`。
-- **bugfix**: 修复 Bug，例如 `bugfix: 修复空指针异常`。
-- **refactor**: 重构代码，例如 `refactor: 优化数据处理逻辑`。
-- **test**: 增加或改进测试，例如 `test: 添加单元测试`。
+允许提交信息的类型且需遵循以下格式：
+
+- **docs**: 更新文档，例如 `docs: update README.md`
+- **feature/feat**: 新功能，例如 `feature: support for xxx`
+- **bugfix/fix**: 修复 Bug，例如 `fix: fix NPE in the A class`
+- **refactor**: 代码重构（不涉及功能变动），例如 `refactor: optimise data processing logic`
+- **style**: 代码格式，例如 `style: update code style`
+- **test**: 增加或改进测试，例如 `test: add new test cases`
+- **chore**: 构建过程或辅助工具的变动，例如 `chore: improve issue template`
+- **dependency**: 第三方依赖库的修改，例如 `dependency: upgrade poi version to 5.4.1`
 
 不建议使用模糊的提交信息，如：
 
-- ~~修复问题~~
-- ~~更新代码~~
+- ~~fixed issue~~
+- ~~update code~~
 
 如果需要帮助，请参考 [如何编写 Git 提交消息](http://chris.beams.io/posts/git-commit/)。
 
@@ -97,13 +101,13 @@ git config --get user.email
 
 ### PR 说明
 
-为了帮助审阅者快速了解 PR 的内容和目的，请使用 [PR 模板](.github/pull_request_template.md)。详细的描述将极大提高代码审阅效率。
+为了帮助审阅者快速了解 PR 的内容和目的，请使用 [PR 模板](https://github.com/fast-excel/fastexcel/blob/main/.github/pull_request_template.md)。详细的描述将极大提高代码审阅效率。
 
 ---
 
 ## 测试用例贡献
 
-任何测试用例的贡献都值得鼓励，尤其是单元测试。建议在对应模块的 `test` 目录中创建 `XXXTest.java` 文件，推荐使用 JUnit5 框架。
+任何测试用例的贡献都值得鼓励，尤其是单元测试。建议在对应模块的 `test` 目录中创建 `XXXTest.java` 文件，推荐使用 `JUnit5` 框架。
 
 ---
 
