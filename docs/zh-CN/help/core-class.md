@@ -545,4 +545,82 @@ public void readWithExceptionHandling() {
       总的来说，`ReadListener` 是更为简化的接口，适用于较为简单的场景，而 `AnalysisEventListener` 提供了更强的控制力和扩展性，适合复杂的数据处理需求。开发者可以根据实际需求选择合适的监听器。
 
 ## Converter
-TODO
+
+### 概述
+
+`Converter`是 FastExcel 提供的接口，用于在处理 Excel 文件时对数据进行转换。允许开发者自定义操作，通过实现`Converter`接口，自定义数据转换逻辑。
+
+### 方法
+
+`Converter`是一个泛型接口，泛型类型是需要被转换的对象类型（如 `Date`)。其核心方法如下：
+
+| 方法名                          | 描述                                      |
+|---------------------------------|-----------------------------------------|
+| `Class<?> supportJavaTypeKey()`*(可选)*   | 返回支持的 Java 对象类型                         |
+| `CellDataTypeEnum supportExcelTypeKey()`*(可选)* | 返回支持的 Excel 单元格类型，枚举类为 CellDataTypeEnum |
+| `T convertToJavaData(ReadCellData<?> cellData, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration)` *(可选)* | 将 Excel 单元格数据转换为 Java 对象                |
+| `WriteCellData<?> convertToExcelData(T value, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration)` *(可选)* | 将 Java  对象转换为 Excel 单元格数据对象             |
+| `WriteCellData<?> convertToExcelData(WriteConverterContext<T> context)` *(可选)* | 将 Java  对象转换为 Excel 单元格数据对象                 |
+
+FastExcel 默认提供了很多常用类型的转换器， 并已默认在`DefaultConverterLoader`中注册。
+
+您可以自定义转换器，但类型不能与默认的类型重复，类型的注册时，使用的`ConverterKeyBuild.buildKey(converter.supportJavaTypeKey(), converter.supportExcelTypeKey())`进行 key 值
+
+### 使用场景
+- **数据转换**：对 Excel 数据进行转换，如将日期转换为字符串、将字符串转换为日期等。
+
+### 实现步骤
+1. 实现 `Converter` 接口并实现其方法。
+2. 在读取或写入时传入自定义转换器。
+
+### 示例
+
+#### TimestampNumber 转换器
+
+实现 `Converter`
+```java
+@Slf4j
+public class TimestampNumberConverter implements Converter<Timestamp> {
+    @Override
+    public Class<Timestamp> supportJavaTypeKey() {
+        return Timestamp.class;
+    }
+
+    @Override
+    public CellDataTypeEnum supportExcelTypeKey() {
+        return CellDataTypeEnum.NUMBER;
+    }
+
+    @Override
+    public WriteCellData<?> convertToExcelData(
+            Timestamp value, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) {
+        if (contentProperty == null || contentProperty.getDateTimeFormatProperty() == null) {
+            return new WriteCellData<>(
+                    BigDecimal.valueOf(DateUtil.getExcelDate(value, globalConfiguration.getUse1904windowing())));
+        } else {
+            return new WriteCellData<>(BigDecimal.valueOf(DateUtil.getExcelDate(
+                    value, contentProperty.getDateTimeFormatProperty().getUse1904windowing())));
+        }
+    }
+}
+```
+
+使用
+```java
+@Test
+public void simpleRead() {
+    String fileName = "path/to/demo.xlsx";
+
+    // 读取
+    FastExcel.read(fileName, DemoData.class, new DemoDataListener())
+        .registerConverter(new TimestampNumberConverter())
+        .sheet()
+        .doRead();
+
+    // 写入
+    FastExcel.write(fileName)
+         .registerConverter(new TimestampNumberConverter())
+         .sheet()
+         .doWrite(data());
+}
+```
