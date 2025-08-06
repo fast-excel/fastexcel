@@ -3,8 +3,6 @@ package cn.idev.excel.test.temp.issue406;
 import cn.idev.excel.read.metadata.ReadSheet;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-
 
 class ReadSheetTest {
 
@@ -26,23 +24,22 @@ class ReadSheetTest {
         testEquals_DifferentVeryHiddenState();
     }
 
-
     @Test
     void testEquals_SameInstance() {
         ReadSheet sheet = new ReadSheet(1, "Sheet1");
-        Assertions.assertTrue(sheet.equals(sheet));
+        Assertions.assertEquals(sheet, sheet);
     }
 
     @Test
     void testEquals_Null() {
         ReadSheet sheet = new ReadSheet(1, "Sheet1");
-        assertFalse(sheet.equals(null));
+        Assertions.assertNotEquals(null, sheet);
     }
 
     @Test
     void testEquals_DifferentClass() {
         ReadSheet sheet = new ReadSheet(1, "Sheet1");
-        assertFalse(sheet.equals("Not a ReadSheet object"));
+        Assertions.assertNotEquals("Not a ReadSheet object", sheet);
     }
 
     @Test
@@ -57,21 +54,21 @@ class ReadSheetTest {
         sheet2.setHidden(false);
         sheet2.setVeryHidden(true);
 
-        Assertions.assertTrue(sheet1.equals(sheet2));
+        Assertions.assertEquals(sheet1, sheet2);
     }
 
     @Test
     void testEquals_DifferentSheetNo() {
         ReadSheet sheet1 = new ReadSheet(1, "Sheet1");
         ReadSheet sheet2 = new ReadSheet(2, "Sheet1");
-        Assertions.assertFalse(sheet1.equals(sheet2));
+        Assertions.assertNotEquals(sheet1, sheet2);
     }
 
     @Test
     void testEquals_DifferentSheetName() {
         ReadSheet sheet1 = new ReadSheet(1, "Sheet1");
         ReadSheet sheet2 = new ReadSheet(1, "Sheet2");
-        Assertions.assertFalse(sheet1.equals(sheet2));
+        Assertions.assertNotEquals(sheet1, sheet2);
     }
 
     @Test
@@ -80,7 +77,7 @@ class ReadSheetTest {
         sheet1.setNumRows(100);
         ReadSheet sheet2 = new ReadSheet(1, "Sheet1");
         sheet2.setNumRows(200);
-        Assertions.assertFalse(sheet1.equals(sheet2));
+        Assertions.assertNotEquals(sheet1, sheet2);
     }
 
     @Test
@@ -89,7 +86,7 @@ class ReadSheetTest {
         sheet1.setHidden(true);
         ReadSheet sheet2 = new ReadSheet(1, "Sheet1");
         sheet2.setHidden(false);
-        Assertions.assertFalse(sheet1.equals(sheet2));
+        Assertions.assertNotEquals(sheet1, sheet2);
     }
 
     @Test
@@ -98,7 +95,7 @@ class ReadSheetTest {
         sheet1.setVeryHidden(true);
         ReadSheet sheet2 = new ReadSheet(1, "Sheet1");
         sheet2.setVeryHidden(false);
-        Assertions.assertFalse(sheet1.equals(sheet2));
+        Assertions.assertNotEquals(sheet1, sheet2);
     }
 
     @Test
@@ -122,5 +119,4 @@ class ReadSheetTest {
 
         Assertions.assertEquals(sheet1.hashCode(), sheet2.hashCode());
     }
-
 }
