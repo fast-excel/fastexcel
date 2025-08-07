@@ -1,6 +1,8 @@
 package cn.idev.excel.write.metadata.fill;
 
 import cn.idev.excel.enums.WriteDirectionEnum;
+import cn.idev.excel.write.handler.TemplateStringParseHandler;
+import cn.idev.excel.write.handler.impl.DefaultTemplateStringParseHandler;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -36,6 +38,11 @@ public class FillConfig {
      */
     private Boolean autoStyle;
 
+    /**
+     * template string parse handler
+     */
+    private TemplateStringParseHandler templateStringParseHandler;
+
     private boolean hasInit;
 
     public void init() {
@@ -50,6 +57,9 @@ public class FillConfig {
         }
         if (autoStyle == null) {
             autoStyle = Boolean.TRUE;
+        }
+        if (templateStringParseHandler == null) {
+            templateStringParseHandler = DefaultTemplateStringParseHandler.getInstance();
         }
         hasInit = true;
     }

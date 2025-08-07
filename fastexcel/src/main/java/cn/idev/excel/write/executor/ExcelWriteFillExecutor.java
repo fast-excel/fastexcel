@@ -2,6 +2,7 @@ package cn.idev.excel.write.executor;
 
 import cn.idev.excel.context.WriteContext;
 import cn.idev.excel.enums.CellDataTypeEnum;
+import cn.idev.excel.enums.TemplateStringPartType;
 import cn.idev.excel.enums.WriteDirectionEnum;
 import cn.idev.excel.enums.WriteTemplateAnalysisCellTypeEnum;
 import cn.idev.excel.exception.ExcelGenerateException;
@@ -15,22 +16,16 @@ import cn.idev.excel.util.MapUtils;
 import cn.idev.excel.util.PoiUtils;
 import cn.idev.excel.util.StringUtils;
 import cn.idev.excel.util.WriteHandlerUtils;
+import cn.idev.excel.write.handler.TemplateStringParseHandler;
 import cn.idev.excel.write.handler.context.CellWriteHandlerContext;
 import cn.idev.excel.write.handler.context.RowWriteHandlerContext;
 import cn.idev.excel.write.metadata.fill.AnalysisCell;
 import cn.idev.excel.write.metadata.fill.FillConfig;
 import cn.idev.excel.write.metadata.fill.FillWrapper;
+import cn.idev.excel.write.metadata.fill.TemplateStringPart;
 import cn.idev.excel.write.metadata.holder.WriteSheetHolder;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -44,17 +39,8 @@ import org.apache.poi.ss.usermodel.Sheet;
 
 /**
  * Fill the data into excel
- *
- *
  */
 public class ExcelWriteFillExecutor extends AbstractExcelWriteExecutor {
-
-    private static final String ESCAPE_FILL_PREFIX = "\\\\\\{";
-    private static final String ESCAPE_FILL_SUFFIX = "\\\\\\}";
-    private static final String FILL_PREFIX = "{";
-    private static final String FILL_SUFFIX = "}";
-    private static final char IGNORE_CHAR = '\\';
-    private static final String COLLECTION_PREFIX = ".";
     /**
      * Fields to replace in the template
      */
@@ -83,6 +69,11 @@ public class ExcelWriteFillExecutor extends AbstractExcelWriteExecutor {
      */
     private UniqueDataFlagKey currentUniqueDataFlag;
 
+    /**
+     * The template string parse handler for this fill
+     */
+    private TemplateStringParseHandler currentTemplateStringParseHandler;
+
     public ExcelWriteFillExecutor(WriteContext writeContext) {
         super(writeContext);
     }
@@ -109,6 +100,7 @@ public class ExcelWriteFillExecutor extends AbstractExcelWriteExecutor {
             currentDataPrefix = null;
         }
         currentUniqueDataFlag = uniqueDataFlag(writeContext.writeSheetHolder(), currentDataPrefix);
+        currentTemplateStringParseHandler = fillConfig.getTemplateStringParseHandler();
 
         // processing data
         if (realData instanceof Collection) {
@@ -510,95 +502,91 @@ public class ExcelWriteFillExecutor extends AbstractExcelWriteExecutor {
         if (StringUtils.isEmpty(value)) {
             return null;
         }
-        StringBuilder preparedData = new StringBuilder();
-        AnalysisCell analysisCell = null;
-
-        int startIndex = 0;
-        int length = value.length();
-        int lastPrepareDataIndex = 0;
-        out:
-        while (startIndex < length) {
-            int prefixIndex = value.indexOf(FILL_PREFIX, startIndex);
-            if (prefixIndex < 0) {
-                break;
+        Collection<TemplateStringPart> templateStringParts = currentTemplateStringParseHandler.parse(value);
+        if (CollectionUtils.isEmpty(templateStringParts)) {
+            return null;
+        }
+        AnalysisCell analysisCell = analysisByTemplateStringParts(value, rowIndex, columnIndex, templateStringParts);
+        if (analysisCell != null) {
+            List<String> variableList = analysisCell.getVariableList(),
+                    prepareDataList = analysisCell.getPrepareDataList();
+            // fix https://github.com/fast-excel/fastexcel/issues/1552
+            // When read template, XLSX data may be in `is` labels, and set the time set in `v` label, lead to can't set
+            // up successfully, so all data format to empty first.
+            if (CollectionUtils.isNotEmpty(variableList)) {
+                cell.setBlank();
+            } else if (CollectionUtils.isNotEmpty(prepareDataList)) {
+                return String.join(StringUtils.EMPTY, analysisCell.getPrepareDataList());
             }
-            if (prefixIndex != 0) {
-                char prefixPrefixChar = value.charAt(prefixIndex - 1);
-                if (prefixPrefixChar == IGNORE_CHAR) {
-                    startIndex = prefixIndex + 1;
+        }
+        return dealAnalysisCell(analysisCell, rowIndex, firstRowCache);
+    }
+
+    private AnalysisCell analysisByTemplateStringParts(
+            String value, Integer rowIndex, Integer columnIndex, Collection<TemplateStringPart> templateStringParts) {
+        List<TemplateStringPart> orderedTemplateStringParts = templateStringParts.stream()
+                .filter(part -> part != null && part.getType() != null)
+                .sorted(Comparator.comparing(TemplateStringPart::getOrder, Comparator.nullsLast(Integer::compareTo)))
+                .collect(Collectors.toList());
+        AnalysisCell analysisCell = null;
+        StringBuilder textAppender = new StringBuilder();
+        int partsSize = orderedTemplateStringParts.size();
+        for (int i = 0; i < partsSize; i++) {
+            TemplateStringPart templateStringPart = orderedTemplateStringParts.get(i);
+            TemplateStringPartType currentPartType = templateStringPart.getType();
+            boolean tail = i == partsSize - 1;
+            if (TemplateStringPartType.TEXT == currentPartType) {
+                textAppender.append(templateStringPart.getText());
+                if (!tail) {
                     continue;
                 }
-            }
-            int suffixIndex = -1;
-            while (suffixIndex == -1 && startIndex < length) {
-                suffixIndex = value.indexOf(FILL_SUFFIX, startIndex + 1);
-                if (suffixIndex < 0) {
-                    break out;
+                String trailingText = textAppender.toString();
+                if (analysisCell == null) {
+                    if (!trailingText.equals(value)) {
+                        AnalysisCell cell = new AnalysisCell();
+                        cell.setPrepareDataList(Collections.singletonList(trailingText));
+                        return cell;
+                    }
+                    continue;
                 }
-                startIndex = suffixIndex + 1;
-                char prefixSuffixChar = value.charAt(suffixIndex - 1);
-                if (prefixSuffixChar == IGNORE_CHAR) {
-                    suffixIndex = -1;
+                analysisCell.getPrepareDataList().add(trailingText);
+                if (Boolean.TRUE.equals(analysisCell.getOnlyOneVariable()) && !StringUtils.isEmpty(trailingText)) {
+                    analysisCell.setOnlyOneVariable(Boolean.FALSE);
                 }
+                continue;
             }
             if (analysisCell == null) {
                 analysisCell = initAnalysisCell(rowIndex, columnIndex);
             }
-            String variable = value.substring(prefixIndex + 1, suffixIndex);
-            if (StringUtils.isEmpty(variable)) {
-                continue;
+            String previousText = textAppender.toString();
+            analysisCell.getPrepareDataList().add(previousText);
+            if (textAppender.length() > 0) {
+                textAppender.setLength(0);
             }
-            int collectPrefixIndex = variable.indexOf(COLLECTION_PREFIX);
-            if (collectPrefixIndex > -1) {
-                if (collectPrefixIndex != 0) {
-                    analysisCell.setPrefix(variable.substring(0, collectPrefixIndex));
-                }
-                variable = variable.substring(collectPrefixIndex + 1);
-                if (StringUtils.isEmpty(variable)) {
-                    continue;
-                }
-                analysisCell.setCellType(WriteTemplateAnalysisCellTypeEnum.COLLECTION);
+            if (tail) {
+                analysisCell.getPrepareDataList().add(textAppender.toString());
             }
-            analysisCell.getVariableList().add(variable);
-            if (lastPrepareDataIndex == prefixIndex) {
-                analysisCell.getPrepareDataList().add(StringUtils.EMPTY);
-                // fix https://github.com/fast-excel/fastexcel/issues/2035
-                if (lastPrepareDataIndex != 0) {
-                    analysisCell.setOnlyOneVariable(Boolean.FALSE);
-                }
-            } else {
-                String data = convertPrepareData(value.substring(lastPrepareDataIndex, prefixIndex));
-                preparedData.append(data);
-                analysisCell.getPrepareDataList().add(data);
+            List<String> variableList = analysisCell.getVariableList();
+            if (Boolean.TRUE.equals(analysisCell.getOnlyOneVariable())
+                    && (!variableList.isEmpty() || !StringUtils.isEmpty(previousText))) {
                 analysisCell.setOnlyOneVariable(Boolean.FALSE);
             }
-            lastPrepareDataIndex = suffixIndex + 1;
+            if (TemplateStringPartType.COMMON_VARIABLE.equals(currentPartType)) {
+                variableList.add(templateStringPart.getVariableName());
+                analysisCell.setCellType(WriteTemplateAnalysisCellTypeEnum.COMMON);
+                continue;
+            }
+            variableList.add(templateStringPart.getVariableName());
+            analysisCell.setCellType(WriteTemplateAnalysisCellTypeEnum.COLLECTION);
+            String collectionName = templateStringPart.getCollectionName();
+            analysisCell.setPrefix(StringUtils.isEmpty(collectionName) ? null : collectionName);
         }
-        // fix https://github.com/fast-excel/fastexcel/issues/1552
-        // When read template, XLSX data may be in `is` labels, and set the time set in `v` label, lead to can't set
-        // up successfully, so all data format to empty first.
-        if (analysisCell != null && CollectionUtils.isNotEmpty(analysisCell.getVariableList())) {
-            cell.setBlank();
-        }
-        return dealAnalysisCell(
-                analysisCell, value, rowIndex, lastPrepareDataIndex, length, firstRowCache, preparedData);
+        return analysisCell;
     }
 
     private String dealAnalysisCell(
-            AnalysisCell analysisCell,
-            String value,
-            int rowIndex,
-            int lastPrepareDataIndex,
-            int length,
-            Map<UniqueDataFlagKey, Set<Integer>> firstRowCache,
-            StringBuilder preparedData) {
+            AnalysisCell analysisCell, int rowIndex, Map<UniqueDataFlagKey, Set<Integer>> firstRowCache) {
         if (analysisCell != null) {
-            if (lastPrepareDataIndex == length) {
-                analysisCell.getPrepareDataList().add(StringUtils.EMPTY);
-            } else {
-                analysisCell.getPrepareDataList().add(convertPrepareData(value.substring(lastPrepareDataIndex)));
-                analysisCell.setOnlyOneVariable(Boolean.FALSE);
-            }
             UniqueDataFlagKey uniqueDataFlag =
                     uniqueDataFlag(writeContext.writeSheetHolder(), analysisCell.getPrefix());
             if (WriteTemplateAnalysisCellTypeEnum.COMMON.equals(analysisCell.getCellType())) {
@@ -619,7 +607,12 @@ public class ExcelWriteFillExecutor extends AbstractExcelWriteExecutor {
 
                 collectionAnalysisCellList.add(analysisCell);
             }
-            return preparedData.toString();
+            List<String> prepareDataList = analysisCell.getPrepareDataList();
+            return String.join(
+                    StringUtils.EMPTY,
+                    prepareDataList.size() > 1
+                            ? prepareDataList.subList(0, prepareDataList.size() - 1)
+                            : prepareDataList);
         }
         return null;
     }
@@ -636,12 +629,6 @@ public class ExcelWriteFillExecutor extends AbstractExcelWriteExecutor {
         analysisCell.setCellType(WriteTemplateAnalysisCellTypeEnum.COMMON);
         analysisCell.setFirstRow(Boolean.FALSE);
         return analysisCell;
-    }
-
-    private String convertPrepareData(String prepareData) {
-        prepareData = prepareData.replaceAll(ESCAPE_FILL_PREFIX, FILL_PREFIX);
-        prepareData = prepareData.replaceAll(ESCAPE_FILL_SUFFIX, FILL_SUFFIX);
-        return prepareData;
     }
 
     private UniqueDataFlagKey uniqueDataFlag(WriteSheetHolder writeSheetHolder, String wrapperName) {
