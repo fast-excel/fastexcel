@@ -5,6 +5,7 @@ import cn.idev.excel.exception.ExcelGenerateException;
 import cn.idev.excel.write.metadata.WriteSheet;
 import cn.idev.excel.write.metadata.fill.FillConfig;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.function.Supplier;
 
 /**
@@ -39,6 +40,13 @@ public class ExcelWriterSheetBuilder extends AbstractExcelWriterParameterBuilder
         return this;
     }
 
+    public ExcelWriterSheetBuilder sheetNoIfNotNull(Integer sheetNo) {
+        if (Objects.nonNull(sheetNo)) {
+            writeSheet.setSheetNo(sheetNo);
+        }
+        return this;
+    }
+
     /**
      * sheet name
      *
@@ -47,6 +55,13 @@ public class ExcelWriterSheetBuilder extends AbstractExcelWriterParameterBuilder
      */
     public ExcelWriterSheetBuilder sheetName(String sheetName) {
         writeSheet.setSheetName(sheetName);
+        return this;
+    }
+
+    public ExcelWriterSheetBuilder sheetNameIfNotNull(String sheetName) {
+        if (Objects.nonNull(sheetName)) {
+            writeSheet.setSheetName(sheetName);
+        }
         return this;
     }
 
