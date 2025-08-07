@@ -9,6 +9,7 @@ import cn.idev.excel.write.metadata.holder.WriteWorkbookHolder;
 import cn.idev.excel.write.metadata.style.WriteCellStyle;
 import cn.idev.excel.write.metadata.style.WriteFont;
 import java.util.Optional;
+import java.util.function.Consumer;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.poi.common.usermodel.HyperlinkType;
@@ -54,66 +55,26 @@ public class StyleUtil {
     }
 
     private static void buildCellStyle(CellStyle cellStyle, WriteCellStyle writeCellStyle) {
-        if (writeCellStyle.getHidden() != null) {
-            cellStyle.setHidden(writeCellStyle.getHidden());
-        }
-        if (writeCellStyle.getLocked() != null) {
-            cellStyle.setLocked(writeCellStyle.getLocked());
-        }
-        if (writeCellStyle.getQuotePrefix() != null) {
-            cellStyle.setQuotePrefixed(writeCellStyle.getQuotePrefix());
-        }
-        if (writeCellStyle.getHorizontalAlignment() != null) {
-            cellStyle.setAlignment(writeCellStyle.getHorizontalAlignment());
-        }
-        if (writeCellStyle.getWrapped() != null) {
-            cellStyle.setWrapText(writeCellStyle.getWrapped());
-        }
-        if (writeCellStyle.getVerticalAlignment() != null) {
-            cellStyle.setVerticalAlignment(writeCellStyle.getVerticalAlignment());
-        }
-        if (writeCellStyle.getRotation() != null) {
-            cellStyle.setRotation(writeCellStyle.getRotation());
-        }
-        if (writeCellStyle.getIndent() != null) {
-            cellStyle.setIndention(writeCellStyle.getIndent());
-        }
-        if (writeCellStyle.getBorderLeft() != null) {
-            cellStyle.setBorderLeft(writeCellStyle.getBorderLeft());
-        }
-        if (writeCellStyle.getBorderRight() != null) {
-            cellStyle.setBorderRight(writeCellStyle.getBorderRight());
-        }
-        if (writeCellStyle.getBorderTop() != null) {
-            cellStyle.setBorderTop(writeCellStyle.getBorderTop());
-        }
-        if (writeCellStyle.getBorderBottom() != null) {
-            cellStyle.setBorderBottom(writeCellStyle.getBorderBottom());
-        }
-        if (writeCellStyle.getLeftBorderColor() != null) {
-            cellStyle.setLeftBorderColor(writeCellStyle.getLeftBorderColor());
-        }
-        if (writeCellStyle.getRightBorderColor() != null) {
-            cellStyle.setRightBorderColor(writeCellStyle.getRightBorderColor());
-        }
-        if (writeCellStyle.getTopBorderColor() != null) {
-            cellStyle.setTopBorderColor(writeCellStyle.getTopBorderColor());
-        }
-        if (writeCellStyle.getBottomBorderColor() != null) {
-            cellStyle.setBottomBorderColor(writeCellStyle.getBottomBorderColor());
-        }
-        if (writeCellStyle.getFillPatternType() != null) {
-            cellStyle.setFillPattern(writeCellStyle.getFillPatternType());
-        }
-        if (writeCellStyle.getFillBackgroundColor() != null) {
-            cellStyle.setFillBackgroundColor(writeCellStyle.getFillBackgroundColor());
-        }
-        if (writeCellStyle.getFillForegroundColor() != null) {
-            cellStyle.setFillForegroundColor(writeCellStyle.getFillForegroundColor());
-        }
-        if (writeCellStyle.getShrinkToFit() != null) {
-            cellStyle.setShrinkToFit(writeCellStyle.getShrinkToFit());
-        }
+        setIfNotNull(cellStyle::setHidden, writeCellStyle.getHidden());
+        setIfNotNull(cellStyle::setLocked, writeCellStyle.getLocked());
+        setIfNotNull(cellStyle::setQuotePrefixed, writeCellStyle.getQuotePrefix());
+        setIfNotNull(cellStyle::setAlignment, writeCellStyle.getHorizontalAlignment());
+        setIfNotNull(cellStyle::setWrapText, writeCellStyle.getWrapped());
+        setIfNotNull(cellStyle::setVerticalAlignment, writeCellStyle.getVerticalAlignment());
+        setIfNotNull(cellStyle::setRotation, writeCellStyle.getRotation());
+        setIfNotNull(cellStyle::setIndention, writeCellStyle.getIndent());
+        setIfNotNull(cellStyle::setBorderLeft, writeCellStyle.getBorderLeft());
+        setIfNotNull(cellStyle::setBorderRight, writeCellStyle.getBorderRight());
+        setIfNotNull(cellStyle::setBorderTop, writeCellStyle.getBorderTop());
+        setIfNotNull(cellStyle::setBorderBottom, writeCellStyle.getBorderBottom());
+        setIfNotNull(cellStyle::setLeftBorderColor, writeCellStyle.getLeftBorderColor());
+        setIfNotNull(cellStyle::setRightBorderColor, writeCellStyle.getRightBorderColor());
+        setIfNotNull(cellStyle::setTopBorderColor, writeCellStyle.getTopBorderColor());
+        setIfNotNull(cellStyle::setBottomBorderColor, writeCellStyle.getBottomBorderColor());
+        setIfNotNull(cellStyle::setFillPattern, writeCellStyle.getFillPatternType());
+        setIfNotNull(cellStyle::setFillBackgroundColor, writeCellStyle.getFillBackgroundColor());
+        setIfNotNull(cellStyle::setFillForegroundColor, writeCellStyle.getFillForegroundColor());
+        setIfNotNull(cellStyle::setShrinkToFit, writeCellStyle.getShrinkToFit());
     }
 
     public static short buildDataFormat(Workbook workbook, DataFormatData dataFormatData) {
@@ -125,7 +86,7 @@ public class StyleUtil {
         }
         if (StringUtils.isNotBlank(dataFormatData.getFormat())) {
             if (log.isDebugEnabled()) {
-                log.info("create new data format:{}", dataFormatData);
+                log.debug("create new data format:{}", dataFormatData);
             }
             DataFormat dataFormatCreate = workbook.createDataFormat();
             return dataFormatCreate.getFormat(dataFormatData.getFormat());
@@ -135,7 +96,7 @@ public class StyleUtil {
 
     public static Font buildFont(Workbook workbook, Font originFont, WriteFont writeFont) {
         if (log.isDebugEnabled()) {
-            log.info("create new font:{},{}", writeFont, originFont);
+            log.debug("create new font:{},{}", writeFont, originFont);
         }
         if (writeFont == null && originFont == null) {
             return null;
@@ -144,33 +105,15 @@ public class StyleUtil {
         if (writeFont == null || font == null) {
             return font;
         }
-        if (writeFont.getFontName() != null) {
-            font.setFontName(writeFont.getFontName());
-        }
-        if (writeFont.getFontHeightInPoints() != null) {
-            font.setFontHeightInPoints(writeFont.getFontHeightInPoints());
-        }
-        if (writeFont.getItalic() != null) {
-            font.setItalic(writeFont.getItalic());
-        }
-        if (writeFont.getStrikeout() != null) {
-            font.setStrikeout(writeFont.getStrikeout());
-        }
-        if (writeFont.getColor() != null) {
-            font.setColor(writeFont.getColor());
-        }
-        if (writeFont.getTypeOffset() != null) {
-            font.setTypeOffset(writeFont.getTypeOffset());
-        }
-        if (writeFont.getUnderline() != null) {
-            font.setUnderline(writeFont.getUnderline());
-        }
-        if (writeFont.getCharset() != null) {
-            font.setCharSet(writeFont.getCharset());
-        }
-        if (writeFont.getBold() != null) {
-            font.setBold(writeFont.getBold());
-        }
+        setIfNotNull(font::setFontName, writeFont.getFontName());
+        setIfNotNull(font::setFontHeightInPoints, writeFont.getFontHeightInPoints());
+        setIfNotNull(font::setItalic, writeFont.getItalic());
+        setIfNotNull(font::setStrikeout, writeFont.getStrikeout());
+        setIfNotNull(font::setColor, writeFont.getColor());
+        setIfNotNull(font::setTypeOffset, writeFont.getTypeOffset());
+        setIfNotNull(font::setUnderline, writeFont.getUnderline());
+        setIfNotNull(font::setCharSet, writeFont.getCharset());
+        setIfNotNull(font::setBold, writeFont.getBold());
         return font;
     }
 
@@ -264,5 +207,11 @@ public class StyleUtil {
             return currentCoordinate + relativeCoordinate;
         }
         return currentCoordinate;
+    }
+
+    public static <T> void setIfNotNull(Consumer<T> setter, T value) {
+        if (value != null) {
+            setter.accept(value);
+        }
     }
 }
