@@ -24,3 +24,4 @@ Related: #ISSUE
 
 - [ ] I have written the necessary doc or comment.
 - [ ] I have added the necessary unit tests and all cases have passed.
+- [ ] I have read the [CONTRIBUTING](../CONTRIBUTING.md) guide.
