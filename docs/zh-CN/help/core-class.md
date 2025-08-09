@@ -2,18 +2,30 @@
 本章节介绍读取 FastExcel 中的核心类。
 
 ## 概述
-如果你需要对 Excel 进行大量或者详细的读写操作，你需要知道一些类，FastExcel 中比较重要的概念和类。它们在你尝试自定义操作时，能够提供丰富的选项。
+如果使用 FastExcel 进行自定义读写操作，需要理解其重要的概念和类。
 
 
 ## 核心概念
 
-- **`FastExcel`**：入口类，用于构建开始各种操作
-- **`ExcelReaderBuilder`**：ExcelWriterBuilder 构建出一个 ReadWorkbook WriteWorkbook，可以理解成一个excel对象，一个excel只要构建一个
-- **`ExcelReaderSheetBuilder`**：ExcelWriterSheetBuilder 构建出一个 ReadSheet WriteSheet对象，可以理解成excel里面的一页,每一页都要构建一个
-- **`ReadListener`**：在每一行读取完毕后都会调用ReadListener来处理数据
-- **`WriteHandler`**：在每一个操作包括创建单元格、创建表格等都会调用WriteHandler来处理数据
+### FastExcel
+入口类，用于构建开始各种操作
 
-所有配置都是继承的，Workbook的配置会被Sheet继承，所以在用FastExcel设置参数的时候，在FastExcel...sheet()方法之前作用域是整个sheet,之后针对单个sheet
+### 多种 Builder
+
+对读和写操作分别有对应的 Builder 类：
+
+- **`ExcelReaderBuilder` 和 `ExcelWriterBuilder`**：分别为构建出一个 ReadWorkbook 和 WriteWorkbook，可以理解成一个excel对象，一个excel只要构建一个
+- **`ExcelReaderSheetBuilder`和`ExcelWriterSheetBuilder`**：分别构建出一个 ReadSheet 和 WriteSheet对象，可以理解成excel里面的一页,每一页都要构建一个
+- **`CsvReaderBuilder`和`CsvWriterBuilder`**：构建内部所需的 CsvFormat
+
+
+### ReadListener
+在每一行读取完毕后都会调用ReadListener来处理数据
+
+### WriteHandler
+在每一个操作包括创建单元格、创建表格等都会调用WriteHandler来处理数据
+
+所有配置都是继承的，Workbook 的配置会被 Sheet 继承，所以在用 FastExcel 设置参数的时候，在 FastExcel...sheet() 方法之前作用域是整个 sheet,在 FastExcel...csv() 方法之前作用域是整个 csv,
 
 ---
 
@@ -47,7 +59,7 @@ FastExcel 提供了以下几种 WriteHandler 接口，分别用于处理不同�
 ### 示例
 
 #### 设置单元格样式
-功能：为所有内容单元格设置背景颜色为黄色，字体为蓝色。
+为所有内容单元格设置背景颜色为黄色，字体为蓝色。
 
 自定义 `CellWriteHandler`
 ```java
@@ -89,10 +101,8 @@ public void customCellStyleWrite() {
 }
 ```
 
-
-
 #### 插入批注
-功能：为表头的第一行第二列插入批注
+为表头的第一行第二列插入批注
 
 自定义 `RowWriteHandler`
 ```java
@@ -131,7 +141,7 @@ public void commentWrite() {
 
 
 #### 添加下拉框
-功能：为第一列的前两行数据添加下拉框。
+为第一列的前两行数据添加下拉框。
 
 自定义 `SheetWriteHandler`
 ```java
