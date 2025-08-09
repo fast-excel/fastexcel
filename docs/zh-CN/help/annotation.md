@@ -14,7 +14,6 @@
 | order           | Integer.MAX_VALUE | 优先级高于`value`，会根据`order`的顺序来匹配实体和excel中数据的顺序                                                                                                  |
 | index           | &#45;1            | 优先级高于`value`和`order`，会根据`index`直接指定到excel中具体的哪一列                                                                                             |
 | converter           | 自动选择              | 指定当前字段用什么转换器，默认会自动选择。读的情况下只要实现`cn.idev.excel.converters.Converter#convertToJavaData(com.idev.excel.converters.ReadConverterContext<?>)` 方法即可 |
-| format           | 空                 | 格式化字符串                                                                                                                                       |
 
 ### `@ExcelIgnore`
 
