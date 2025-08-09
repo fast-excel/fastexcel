@@ -8,24 +8,24 @@
 ## 核心概念
 
 ### FastExcel
-入口类，用于构建开始各种操作
+入口类，用于构建开始各种操作。
 
 ### 多种 Builder
 
 对读和写操作分别有对应的 Builder 类：
 
-- **`ExcelReaderBuilder` 和 `ExcelWriterBuilder`**：分别为构建出一个 ReadWorkbook 和 WriteWorkbook，可以理解成一个excel对象，一个excel只要构建一个
-- **`ExcelReaderSheetBuilder`和`ExcelWriterSheetBuilder`**：分别构建出一个 ReadSheet 和 WriteSheet对象，可以理解成excel里面的一页,每一页都要构建一个
-- **`CsvReaderBuilder`和`CsvWriterBuilder`**：构建内部所需的 CsvFormat
+- **`ExcelReaderBuilder` 和 `ExcelWriterBuilder`**：分别为构建出一个 ReadWorkbook 和 WriteWorkbook，可以理解成一个excel对象，一个excel只要构建一个。
+- **`ExcelReaderSheetBuilder`和`ExcelWriterSheetBuilder`**：分别构建出一个 ReadSheet 和 WriteSheet对象，可以理解成excel里面的一页,每一页都要构建一个。
+- **`CsvReaderBuilder`和`CsvWriterBuilder`**：构建内部所需的 CsvFormat。
 
 
 ### ReadListener
-在每一行读取完毕后都会调用ReadListener来处理数据
+在每一行读取完毕后都会调用ReadListener来处理数据。
 
 ### WriteHandler
-在每一个操作包括创建单元格、创建表格等都会调用WriteHandler来处理数据
+在每一个操作包括创建单元格、创建表格等都会调用WriteHandler来处理数据。
 
-所有配置都是继承的，Workbook 的配置会被 Sheet 继承，所以在用 FastExcel 设置参数的时候，在 FastExcel...sheet() 方法之前作用域是整个 sheet,在 FastExcel...csv() 方法之前作用域是整个 csv,
+所有配置都是继承的，Workbook 的配置会被 Sheet 继承，所以在用 FastExcel 设置参数的时候，在 FastExcel...sheet() 方法之前作用域是整个 sheet,在 FastExcel...csv() 方法之前作用域是整个 csv。
 
 ---
 
@@ -102,7 +102,7 @@ public void customCellStyleWrite() {
 ```
 
 #### 插入批注
-为表头的第一行第二列插入批注
+为表头的第一行第二列插入批注。
 
 自定义 `RowWriteHandler`
 ```java
@@ -574,7 +574,7 @@ public void readWithExceptionHandling() {
 
 FastExcel 默认提供了很多常用类型的转换器， 并已默认在`DefaultConverterLoader`中注册。
 
-您可以自定义转换器，但类型不能与默认的类型重复，类型的注册时，使用的`ConverterKeyBuild.buildKey(converter.supportJavaTypeKey(), converter.supportExcelTypeKey())`进行 key 值
+您可以自定义转换器，但类型不能与默认的类型重复。类型注册时，使用的`ConverterKeyBuild.buildKey(converter.supportJavaTypeKey(), converter.supportExcelTypeKey())`作为 key 值。
 
 ### 使用场景
 - **数据转换**：对 Excel 数据进行转换，如将日期转换为字符串、将字符串转换为日期等。
