@@ -1,18 +1,12 @@
----
-title: 填充Excel
-description: 填充Excel
----
+# 填充
+本章节介绍如何使用 FastExcel 来填充数据到文件中。
 
-## **简单填充**
+## 简单填充
 
 ### 概述
 基于模板文件，通过对象或 Map 填充数据到 Excel 中。
 
-### 示例填充模板
-![img](../../images/fill/simpleFill_file.png)
-### 示例填充结果
-![img](../../images/fill/simpleFill_result.png)
-#### 示例对象
+### POJO 类
 ```java
 @Getter
 @Setter
@@ -24,7 +18,7 @@ public class FillData {
 }
 ```
 
-#### 示例代码
+### 代码示例
 ```java
 @Test
 public void simpleFill() {
@@ -49,20 +43,20 @@ public void simpleFill() {
         .doFill(map);
 }
 ```
+### 模板
+![img](../../images/fill/simpleFill_file.png)
+
+### 结果
+![img](../../images/fill/simpleFill_result.png)
 
 ---
 
-## **填充列表**
+## 填充列表
 
 ### 概述
 填充多个数据项到模板列表中，支持内存批量操作和文件缓存分批填充。
 
-### 示例填充模板
-![img](../../images/fill/listFill_file.png)
-### 示例填充结果
-![img](../../images/fill/listFill_result.png)
-
-#### 示例代码
+### 代码示例
 ```java
 @Test
 public void listFill() {
@@ -83,19 +77,20 @@ public void listFill() {
 }
 ```
 
+### 模板
+![img](../../images/fill/listFill_file.png)
+
+### 结果
+![img](../../images/fill/listFill_result.png)
+
 ---
 
-## **复杂的填充**
+## 复杂填充
 
 ### 概述
 在模板中填充多种数据类型，包括列表和普通变量。
 
-### 示例填充模板
-![img](../../images/fill/complexFill_file.png)
-### 示例填充结果
-![img](../../images/fill/complexFill_result.png)
-
-#### 示例代码
+### 代码示例
 ```java
 @Test
 public void complexFill() {
@@ -117,19 +112,20 @@ public void complexFill() {
 }
 ```
 
+### 模板
+![img](../../images/fill/complexFill_file.png)
+
+### 结果
+![img](../../images/fill/complexFill_result.png)
+
 ---
 
-## **数据量大的复杂填充**
+## 大数据量填充
 
 ### 概述
 优化大数据量填充性能，确保模板列表在最后一行，后续数据通过 `WriteTable` 填充。
 
-### 示例填充模板
-![img](../../images/fill/complexFillWithTable_file.png)
-### 示例填充结果
-![img](../../images/fill/complexFillWithTable_result.png)
-
-#### 示例代码
+### 代码示例
 ```java
 @Test
 public void complexFillWithTable() {
@@ -154,19 +150,20 @@ public void complexFillWithTable() {
 }
 ```
 
+### 模板
+![img](../../images/fill/complexFillWithTable_file.png)
+
+### 结果
+![img](../../images/fill/complexFillWithTable_result.png)
+
 ---
 
-## **横向填充**
+## 横向填充
 
 ### 概述
 将列表数据横向填充，适用于动态列数场景。
 
-### 示例填充模板
-![img](../../images/fill/horizontalFill_file.png)
-### 示例填充结果
-![img](../../images/fill/horizontalFill_result.png)
-
-#### 示例代码
+### 代码示例
 ```java
 @Test
 public void horizontalFill() {
@@ -185,19 +182,20 @@ public void horizontalFill() {
 }
 ```
 
+### 模板
+![img](../../images/fill/horizontalFill_file.png)
+
+### 结果
+![img](../../images/fill/horizontalFill_result.png)
+
 ---
 
-## **多列表组合填充**
+## 多列表组合填充
 
 ### 概述
 支持多个列表同时填充，列表之间通过前缀区分。
 
-### 示例填充模板
-![img](../../images/fill/compositeFill_file.png)
-### 示例填充结果
-![img](../../images/fill/compositeFill_result.png)
-
-#### 示例代码
+### 代码示例
 ```java
 @Test
 public void compositeFill() {
@@ -218,15 +216,8 @@ public void compositeFill() {
 }
 ```
 
----
+### 模板
+![img](../../images/fill/compositeFill_file.png)
 
-## **填充使用场景总结**
-
-| 功能               | 描述                                                                                      | 示例代码              |
-|--------------------|-------------------------------------------------------------------------------------------|-----------------------|
-| 最简单的填充        | 通过对象或 Map 填充简单数据                                                              | [simpleFill](#1)      |
-| 填充列表           | 将列表数据填充到模板，支持分批填充                                                        | [listFill](#2)        |
-| 复杂填充            | 在同一模板中填充多种数据类型，包括列表与普通变量                                           | [complexFill](#3)     |
-| 大数据量复杂填充    | 优化大数据量填充性能，模板列表需放在最后一行                                               | [complexFillWithTable](#4) |
-| 横向填充            | 将列表数据横向排列填充，适合动态列数据                                                    | [horizontalFill](#5)  |
-| 多列表组合填充      | 支持多个列表同时填充，列表间通过前缀区分                                                   | [compositeFill](#6)   |
+### 结果
+![img](../../images/fill/compositeFill_result.png)
