@@ -47,8 +47,6 @@ import org.apache.commons.collections4.CollectionUtils;
 
 /**
  * Write holder configuration
- *
- *
  */
 @Getter
 @Setter
