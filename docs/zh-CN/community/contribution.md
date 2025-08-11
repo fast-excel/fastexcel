@@ -28,7 +28,7 @@
 
 ### 工作区准备
 
-开发 FastExcel 需要 **Maven 3.8** 和 **JDK (Java Development Kit)** 。目前，开发环境要求 **Java 21** 及以上的版本，但在编译过程中必须使用 **Java 1.8** 兼容的语言特性，保证 FastExcel 能在 Java 1.8 及以上版本环境中运行。
+开发 FastExcel 需要 **3.8.1及以上版本的Maven** 和 **17及以上版本的JDK (Java Development Kit)** 。目前，开发环境推荐 **3.9.0** 及以上版本的Maven和 **21** 及以上的版本Java，但在编译过程中必须使用 **Java 1.8** 兼容的语言特性，保证 FastExcel 能在 Java 1.8 及以上版本环境中运行。
 
 您可以使用 [SDKMAN](https://sdkman.io/) 等工具配置多版本的 Java 工具链。
 
