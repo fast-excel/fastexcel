@@ -18,7 +18,7 @@ sidebar_position: 2
 
 ## 版本更新
 
-您可以在 [版本升级详情](./CHANGELOG.md) 中查询到具体的版本更新细节。您也可以在[Maven 中心仓库](https://mvnrepository.com/artifact/cn.idev.excel/fastexcel)中查询到所有的版本。
+您可以在 [版本升级详情](https://github.com/fast-excel/fastexcel/blob/main/CHANGELOG.md) 中查询到具体的版本更新细节。您也可以在[Maven 中心仓库](https://mvnrepository.com/artifact/cn.idev.excel/fastexcel)中查询到所有的版本。
 
 ## Maven
 

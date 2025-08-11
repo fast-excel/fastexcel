@@ -81,7 +81,7 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       // Replace with your project's social card
-      image: 'img/docusaurus-social-card.jpg',
+      image: 'img/logo.svg',
       navbar: {
         title: '',
         logo: {
@@ -90,7 +90,7 @@ const config = {
         },
         items: [
           {
-            href: 'https://github.com/alibaba/easyexcel',
+            href: 'https://github.com/fast-excel/fastexcel',
             label: 'GitHub',
             position: 'right',
           }
