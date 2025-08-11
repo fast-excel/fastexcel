@@ -1,0 +1,22 @@
+name: Deploy Docusaurus to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]  # 或 master，取决于你的默认分支
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - run: cd website && npm ci
+      - run: cd website && npm run build
+      - uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: website/build
