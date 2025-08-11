@@ -1,22 +1,20 @@
----
-title: fastexcel和springboot整合
-description: fastexcel和springboot整合
----
+# 与 Spring 集成指南
+本章节介绍如何在 Spring 框架中集成和使用 FastExcel 来处理用户上传的 Excel 文件。
 
-## FastExcel 与 Spring 集成指南
-### 概述
+## 概述
 
-本指南介绍如何在 Spring 框架中集成和使用 FastExcel 来处理用户上传的 Excel 文件。通过创建 RESTful API 接口，用户可以使用 HTTP 请求上传 Excel 文件，服务器端使用 FastExcel 解析数据。
+通过创建 RESTful API 接口，用户可以使用 HTTP 请求上传 Excel 文件，服务器端使用 FastExcel 解析数据。
 
-### 1. 环境依赖
-#### Maven 依赖
+## 环境依赖
+
+### Maven
 确保在 pom.xml 文件中包括必要的依赖项：
 
 ```xml
 <dependency>
     <groupId>cn.idev.excel</groupId>
     <artifactId>fastexcel</artifactId>
-    <version>1.0.0</version> <!-- 请确保使用最新版本 -->
+    <version>版本号</version>
 </dependency>
 <dependency>
     <groupId>org.springframework.boot</groupId>
@@ -28,9 +26,10 @@ description: fastexcel和springboot整合
 </dependency>
 ```
 
-### 2. 创建上传接口
-#### 模型类
-首先，定义一个用于映射 Excel 数据的模型类：
+## 创建上传接口
+
+### POJO类
+首先，定义一个用于映射 Excel 数据的 POJO 类：
 
 ```java
 @Getter
@@ -42,7 +41,8 @@ public class UploadData {
     private Double doubleData;
 }
 ```
-#### 数据监听器
+
+### 数据监听器
 创建一个监听器来处理每一行数据：
 
 ```java
@@ -52,19 +52,19 @@ public class UploadDataListener extends AnalysisEventListener<UploadData> {
 
     @Override
     public void invoke(UploadData data, AnalysisContext context) {
-        log.info("解析到一条数据: {}", JSON.toJSONString(data));
+        log.info("读取到一条数据: {}", JSON.toJSONString(data));
         list.add(data);
     }
 
     @Override
     public void doAfterAllAnalysed(AnalysisContext context) {
-        log.info("所有数据解析完成！");
+        log.info("所有数据读取完成！");
         // 在此处可以进行数据的存储操作，如保存到数据库
     }
 }
 ```
 
-#### Spring 控制器
+### Spring 控制器
 创建一个控制器来处理文件上传请求：
 
 ```java
@@ -79,7 +79,9 @@ public class ExcelController {
         }
 
         try {
-            FastExcel.read(file.getInputStream(), UploadData.class, new UploadDataListener()).sheet().doRead();
+            FastExcel.read(file.getInputStream(), UploadData.class, new UploadDataListener())
+                    .sheet()
+                    .doRead();
             return ResponseEntity.ok("文件上传并处理成功！");
         } catch (IOException e) {
             log.error("文件处理失败", e);
@@ -89,15 +91,13 @@ public class ExcelController {
 }
 ```
 
-### 4. 处理复杂场景
-#### 多模板解析
+## 复杂场景
+
+### 多模板解析
 通过在同一个监听器中定义多个不同的模型类和处理方法，可以根据需要扩展支持多模板解析。
 
-#### 异常处理
-为了改善用户体验并保证程序健壮性，需要在数据处理过程中加入异常处理逻辑，可以在自定义监听器中重写 onException 方法进行详细的异常处理。
+### 异常处理
+为了改善用户体验并保证程序健壮性，需要在数据处理过程中加入异常处理逻辑，可以在自定义监听器中重写 `onException` 方法进行详细的异常处理。
 
-#### 实际应用
-在实际场景中，解析的数据可能需要存储到数据库中。可以在 doAfterAllAnalysed 方法中实现数据库交互逻辑，确保数据的持久化。
-
-通过这种方式，您可以灵活地将 FastExcel 与 Spring 框架结合，在业务系统中安全、有效地处理各种 Excel 文件上传和解析需求。
-
+### 实际应用
+在实际场景中，解析的数据可能需要存储到数据库中。可以在 `doAfterAllAnalysed` 方法中实现数据库交互逻辑，确保数据的持久化。

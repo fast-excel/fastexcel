@@ -1,10 +1,6 @@
----
-title: 安装与配置
-description: 快速开始使用 FastExcel 安装与配置
----
+# 安装
 
-## 安装
-
+## 兼容说明
 下表列出了各版本 FastExcel 基础库对 Java 语言版本最低要求的情况：
 
 | 版本    |  jdk版本支持范围   | 备注            |
@@ -17,11 +13,11 @@ description: 快速开始使用 FastExcel 安装与配置
 
 > 当前 FastExcel 底层使用 poi 作为基础包，如果您的项目中已经有 poi 相关组件，需要您手动排除 poi 的相关 jar 包。
 
-### 版本更新
+## 版本更新
 
 您可以在 [版本升级详情](./CHANGELOG.md) 中查询到具体的版本更新细节。您也可以在[Maven 中心仓库](https://mvnrepository.com/artifact/cn.idev.excel/fastexcel)中查询到所有的版本。
 
-### Maven
+## Maven
 
 如果您使用 Maven 进行项目构建，请在 `pom.xml` 文件中引入以下配置：
 
@@ -33,7 +29,7 @@ description: 快速开始使用 FastExcel 安装与配置
 </dependency>
 ```
 
-### Gradle
+## Gradle
 
 如果您使用 Gradle 进行项目构建，请在 `build.gradle` 文件中引入以下配置：
 
@@ -43,7 +39,6 @@ dependencies {
 }
 ```
 
-
 ## EasyExcel 与 FastExcel
 
 ### 区别
@@ -52,7 +47,7 @@ dependencies {
 - FastExcel 与 EasyExcel 的 API 完全一致，可以无缝切换。
 - FastExcel 会持续的更新，修复 bug，优化性能，增加新功能。
 
-### 如何升级到 FastExcel
+### 升级到 FastExcel
 
 #### 替换依赖
 
