@@ -20,7 +20,6 @@
     <modules>
         <module>fastexcel</module>
         <module>fastexcel-support</module>
-        <module>fastexcel-test</module>
     </modules>
 
     <properties>
@@ -46,9 +45,13 @@
         <slf4j-simple.version>1.7.36</slf4j-simple.version>
         <jcl-over-slf4j.version>1.7.36</jcl-over-slf4j.version>
         <log4j-over-slf4j.version>1.7.36</log4j-over-slf4j.version>
-        <logback-classic.version>1.5.6</logback-classic.version>
+        <logback-classic.version>1.5.18</logback-classic.version>
         <mockserver.version>5.15.0</mockserver.version>
         <jacoco.version>0.8.13</jacoco.version>
+        <surefire.jvm.args>-Xmx2g -Xms2g -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8</surefire.jvm.args>
+        <surefire.jdk9plus.args></surefire.jdk9plus.args>
+        <argLine></argLine>
+
     </properties>
 
     <scm>
@@ -191,6 +194,9 @@
                 <version>${mockserver.version}</version>
                 <scope>test</scope>
             </dependency>
+
+
+
         </dependencies>
     </dependencyManagement>
 
@@ -229,17 +235,9 @@
                     <version>${maven-surefire-plugin.version}</version>
                     <configuration>
                         <argLine>
-                            ${argLine} ${surefireArgLine}
+                            ${surefire.jvm.args} ${surefire.jdk9plus.args} ${argLine}
                         </argLine>
                     </configuration>
-                    <!--                    please add below configuration if you are using JDK 9 or higher-->
-                    <!--                    <configuration>-->
-                    <!--                        <argLine>-->
-                    <!--                            &#45;&#45;add-opens=java.base/java.lang=ALL-UNNAMED-->
-                    <!--                            &#45;&#45;add-opens=java.base/java.util=ALL-UNNAMED-->
-                    <!--                            &#45;&#45;add-opens=java.base/sun.reflect.annotation=ALL-UNNAMED-->
-                    <!--                        </argLine>-->
-                    <!--                    </configuration>-->
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -301,6 +299,13 @@
                 <configuration>
                     <source>${maven.compiler.source}</source>
                     <target>${maven.compiler.target}</target>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
                 </configuration>
             </plugin>
             <plugin>
@@ -454,7 +459,7 @@
                 <jdk>[9,)</jdk>
             </activation>
             <properties>
-                    <surefireArgLine>--add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/sun.reflect.annotation=ALL-UNNAMED -Dfile.encoding=UTF-8</surefireArgLine>
+                <surefire.jdk9plus.args>--add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/sun.reflect.annotation=ALL-UNNAMED</surefire.jdk9plus.args>
             </properties>
         </profile>
         <profile>

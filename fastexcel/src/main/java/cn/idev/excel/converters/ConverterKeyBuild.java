@@ -10,8 +10,6 @@ import lombok.Setter;
 
 /**
  * Converter unique key.Consider that you can just use class as the key.
- *
- *
  */
 public class ConverterKeyBuild {
 
