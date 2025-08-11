@@ -2,21 +2,19 @@ package cn.idev.excel.read.processor;
 
 import cn.idev.excel.read.metadata.ValidateError;
 import cn.idev.excel.read.metadata.holder.ValidateErrorHolder;
-
 import java.util.List;
 import java.util.Map;
 
 /**
  * handle the error message as text
  *
- * @author wangmeng
  */
 public class TextErrorHandler implements ValidateErrorHandler<String> {
 
-    private final static String ERROR_STRING = "error message:";
-    private final static String LINE_ERROR_STRING = " Line %s: %s";
+    private static final String ERROR_STRING = "error message:";
+    private static final String LINE_ERROR_STRING = " Line %s: %s";
 
-    public final static TextErrorHandler INSTANCE = new TextErrorHandler();
+    public static final TextErrorHandler INSTANCE = new TextErrorHandler();
 
     @Override
     public String handleError(ValidateErrorHolder errorHolder) {

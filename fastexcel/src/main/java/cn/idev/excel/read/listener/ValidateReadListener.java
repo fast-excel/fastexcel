@@ -1,6 +1,5 @@
 package cn.idev.excel.read.listener;
 
-
 import cn.idev.excel.annotation.ExcelProperty;
 import cn.idev.excel.context.AnalysisContext;
 import cn.idev.excel.exception.ExcelDataConvertException;
@@ -9,17 +8,15 @@ import cn.idev.excel.metadata.data.ReadCellData;
 import cn.idev.excel.read.metadata.ValidateError;
 import cn.idev.excel.read.metadata.holder.ValidateErrorHolder;
 import cn.idev.excel.read.metadata.property.ExcelReadHeadProperty;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.File;
 import java.lang.reflect.Field;
 import java.util.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * validate read listener
  *
- * @author wangmeng
  */
 public class ValidateReadListener<T> implements ReadListener<T>, ValidateErrorHolder {
 
@@ -31,14 +28,12 @@ public class ValidateReadListener<T> implements ReadListener<T>, ValidateErrorHo
 
     private final Map<Integer, List<ValidateError>> errorMap = new TreeMap<>();
 
-
-    private final static String CHECK_EMPTY_TEXT = "%s cannot be null or empty";
-    private final static String CONVERSION_FAIL_TEXT = "the '%s' field type conversion failed, please enter the correct content";
-
+    private static final String CHECK_EMPTY_TEXT = "%s cannot be null or empty";
+    private static final String CONVERSION_FAIL_TEXT =
+            "the '%s' field type conversion failed, please enter the correct content";
 
     private File sourceFile = null;
     private Integer sheetNo;
-
 
     /**
      * Record {@link ExcelDataConvertException}
@@ -53,13 +48,13 @@ public class ValidateReadListener<T> implements ReadListener<T>, ValidateErrorHo
             ExcelDataConvertException convertException = ((ExcelDataConvertException) exception);
             Field field = convertException.getExcelContentProperty().getField();
             String headName = fieldMap.get(field);
-            ValidateError error = new ValidateError(context.readRowHolder().getRowIndex(), headName, String.format(CONVERSION_FAIL_TEXT, headName));
+            ValidateError error = new ValidateError(
+                    context.readRowHolder().getRowIndex(), headName, String.format(CONVERSION_FAIL_TEXT, headName));
             // mark conversion failure
             error.setConvertError(true);
             addError(error);
         }
     }
-
 
     /**
      * Initialize all fields that require validation
@@ -69,7 +64,8 @@ public class ValidateReadListener<T> implements ReadListener<T>, ValidateErrorHo
      */
     @Override
     public void invokeHead(Map<Integer, ReadCellData<?>> headMap, AnalysisContext context) {
-        ExcelReadHeadProperty excelReadHeadProperty = context.currentReadHolder().excelReadHeadProperty();
+        ExcelReadHeadProperty excelReadHeadProperty =
+                context.currentReadHolder().excelReadHeadProperty();
         for (Head head : excelReadHeadProperty.getHeadMap().values()) {
             Field field = head.getField();
             String headName = String.join("-", head.getHeadNameList());
@@ -77,9 +73,7 @@ public class ValidateReadListener<T> implements ReadListener<T>, ValidateErrorHo
             fieldMap.put(field, headName);
 
             ExcelProperty excelProperty = field.getAnnotation(ExcelProperty.class);
-            if (excelProperty != null && excelProperty.notNull()) {
-
-            }
+            if (excelProperty != null && excelProperty.notNull()) {}
         }
         if (fieldMap.isEmpty()) {
             existValidate = false;
@@ -97,14 +91,12 @@ public class ValidateReadListener<T> implements ReadListener<T>, ValidateErrorHo
         }
     }
 
-
     private void checkNotNull(T data, AnalysisContext context) {
         Integer rowIndex = context.readRowHolder().getRowIndex();
         fieldMap.forEach((field, headName) -> {
             try {
                 Object attribute = field.get(data);
-                if (attribute == null ||
-                        (field.getType().equals(String.class) && ((String) attribute).isEmpty())) {
+                if (attribute == null || (field.getType().equals(String.class) && ((String) attribute).isEmpty())) {
                     addError(rowIndex, String.format(CHECK_EMPTY_TEXT, headName));
                 }
             } catch (IllegalAccessException e) {
@@ -113,10 +105,8 @@ public class ValidateReadListener<T> implements ReadListener<T>, ValidateErrorHo
         });
     }
 
-
     @Override
-    public void doAfterAllAnalysed(AnalysisContext context) {
-    }
+    public void doAfterAllAnalysed(AnalysisContext context) {}
 
     @Override
     public Map<Integer, List<ValidateError>> getError() {
@@ -130,12 +120,10 @@ public class ValidateReadListener<T> implements ReadListener<T>, ValidateErrorHo
         errorMap.get(rowNum).add(error);
     }
 
-
     public void addError(ValidateError error) {
         errorMap.computeIfAbsent(error.getRowNum(), key -> new ArrayList<>());
         errorMap.get(error.getRowNum()).add(error);
     }
-
 
     @Override
     public File getSourceFile() {

@@ -3,6 +3,12 @@ package cn.idev.excel.read.processor;
 import cn.idev.excel.read.metadata.ValidateError;
 import cn.idev.excel.read.metadata.holder.ValidateErrorHolder;
 import cn.idev.excel.util.FileUtils;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -11,25 +17,17 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-
 /**
  * handle the error message as file
  *
- * @author wangmeng
  */
 public class FileErrorHandler implements ValidateErrorHandler<File> {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(FileErrorHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FileErrorHandler.class);
 
-    private final static String COLUMN_NAME = "Error message";
+    private static final String COLUMN_NAME = "Error message";
 
-    public final static FileErrorHandler INSTANCE = new FileErrorHandler();
+    public static final FileErrorHandler INSTANCE = new FileErrorHandler();
 
     @Override
     public File handleError(ValidateErrorHolder errorHolder) {
@@ -43,7 +41,6 @@ public class FileErrorHandler implements ValidateErrorHandler<File> {
         }
         return null;
     }
-
 
     /**
      * fill error data into the Excel file
@@ -105,5 +102,4 @@ public class FileErrorHandler implements ValidateErrorHandler<File> {
             workbook.close();
         }
     }
-
 }

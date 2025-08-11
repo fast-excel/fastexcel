@@ -1,7 +1,6 @@
 package cn.idev.excel.read.metadata.holder;
 
 import cn.idev.excel.read.metadata.ValidateError;
-
 import java.io.File;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +26,6 @@ public interface ValidateErrorHolder {
      * @param message  error message
      */
     void addError(Integer rowNum, String message);
-
 
     /**
      * get the source file for reading

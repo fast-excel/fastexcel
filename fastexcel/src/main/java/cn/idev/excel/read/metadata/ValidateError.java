@@ -37,13 +37,11 @@ public class ValidateError {
      */
     private boolean convertError = false;
 
-
     public ValidateError(Integer rowNum, String headName, String message) {
         this.rowNum = rowNum;
         this.headName = headName;
         this.message = message;
     }
-
 
     public ValidateError(Integer rowNum, String message) {
         this.rowNum = rowNum;

@@ -55,7 +55,6 @@ public class FileUtils {
      */
     private static String cachePath = tempFilePrefix + EX_CACHE + File.separator;
 
-
     /**
      * Used to store error temporary files
      */
@@ -214,8 +213,6 @@ public class FileUtils {
             file.delete();
         }
     }
-
-
 
     /**
      * Generate a temporary error file based on the source file

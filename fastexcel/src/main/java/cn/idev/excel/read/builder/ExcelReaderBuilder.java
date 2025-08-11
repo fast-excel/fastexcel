@@ -16,15 +16,13 @@ import cn.idev.excel.read.metadata.holder.ValidateErrorHolder;
 import cn.idev.excel.read.processor.TextErrorHandler;
 import cn.idev.excel.read.processor.ValidateErrorHandler;
 import cn.idev.excel.support.ExcelTypeEnum;
-import lombok.Getter;
-
-import javax.xml.parsers.SAXParserFactory;
 import java.io.File;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.HashSet;
 import java.util.List;
 import javax.xml.parsers.SAXParserFactory;
+import lombok.Getter;
 
 /**
  * Build ExcelReader
@@ -39,6 +37,7 @@ public class ExcelReaderBuilder extends AbstractExcelReaderParameterBuilder<Exce
 
     @Getter
     private ValidateErrorHandler<?> errorHandler;
+
     @Getter
     private ValidateErrorHolder errorHolder;
 
@@ -295,12 +294,10 @@ public class ExcelReaderBuilder extends AbstractExcelReaderParameterBuilder<Exce
         return this;
     }
 
-
     public ExcelReaderBuilder setErrorHandler(ValidateErrorHandler<?> validateErrorHandler) {
         this.errorHandler = validateErrorHandler;
         return this;
     }
-
 
     /**
      * enable validate,
