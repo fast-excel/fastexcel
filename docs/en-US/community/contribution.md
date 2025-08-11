@@ -29,7 +29,7 @@ All improvements can be implemented through Pull Request (PR). Before submitting
 
 ### Workspace Preparation
 
-Developing FastExcel requires **Maven 3.8** and **JDK (Java Development Kit)**. Currently, the development environment requires **Java 21** or higher, but during compilation, you must use language features compatible with **Java 1.8** to ensure that FastExcel can run in Java 1.8 or higher environments.
+To develop FastExcel, you need **Maven 3.8.1 or above** and **JDK (Java Development Kit) 17 or above**. Currently, it is recommended to use **Maven 3.9.0 or above** and **Java 21 or above** for the development environment. However, you must use **Java 1.8** compatible language features during compilation to ensure FastExcel can run in environments with Java 1.8 or above.
 
 > You can use tools such as [SDKMAN](https://sdkman.io/) to configure multiple versions of the Java toolchain.
 
