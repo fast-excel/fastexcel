@@ -44,10 +44,10 @@ public void simpleFill() {
 }
 ```
 ### 模板
-![img](../../images/fill/simpleFill_file.png)
+![img](../images/fill/simpleFill_file.png)
 
 ### 结果
-![img](../../images/fill/simpleFill_result.png)
+![img](../images/fill/simpleFill_result.png)
 
 ---
 
