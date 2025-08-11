@@ -18,16 +18,15 @@ import cn.idev.excel.util.StringUtils;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.MapUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Analysis event
  *
  */
+@Slf4j
 public class DefaultAnalysisEventProcessor implements AnalysisEventProcessor {
-    private static final Logger LOGGER = LoggerFactory.getLogger(DefaultAnalysisEventProcessor.class);
 
     @Override
     public void extra(AnalysisContext analysisContext) {
@@ -47,8 +46,8 @@ public class DefaultAnalysisEventProcessor implements AnalysisEventProcessor {
         // Check if the current row is empty
         if (RowTypeEnum.EMPTY.equals(analysisContext.readRowHolder().getRowType())) {
             // Log debug information if the current row is empty
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Empty row!");
+            if (log.isDebugEnabled()) {
+                log.debug("Empty row!");
             }
             // If the workbook holder is set to ignore empty rows, then directly return
             if (analysisContext.readWorkbookHolder().getIgnoreEmptyRow()) {

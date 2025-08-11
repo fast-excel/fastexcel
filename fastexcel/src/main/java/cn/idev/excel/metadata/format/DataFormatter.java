@@ -34,12 +34,11 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.format.CellFormat;
 import org.apache.poi.ss.format.CellFormatResult;
 import org.apache.poi.ss.usermodel.ExcelStyleDateFormatter;
 import org.apache.poi.ss.usermodel.FractionFormat;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Written with reference to {@link org.apache.poi.ss.usermodel.DataFormatter}.Made some optimizations for date
@@ -49,13 +48,13 @@ import org.slf4j.LoggerFactory;
  *
  *
  */
+@Slf4j
 public class DataFormatter {
     /**
      * For logging any problems we find
      */
-    private static final Logger LOGGER = LoggerFactory.getLogger(DataFormatter.class);
-
     private static final String defaultFractionWholePartFormat = "#";
+
     private static final String defaultFractionFractionPartFormat = "#/##";
     /**
      * Pattern to find a number format: "0" or "#"
@@ -222,7 +221,7 @@ public class DataFormatter {
                 // Wrap and return (non-cachable - CellFormat does that)
                 return new CellFormatResultWrapper(cfmt.apply(cellValueO));
             } catch (Exception e) {
-                LOGGER.warn("Formatting failed for format {}, falling back", formatStr, e);
+                log.warn("Formatting failed for format {}, falling back", formatStr, e);
             }
         }
 
@@ -461,7 +460,7 @@ public class DataFormatter {
         try {
             return new ExcelStyleDateFormatter(formatStr, dateSymbols);
         } catch (IllegalArgumentException iae) {
-            LOGGER.debug("Formatting failed for format {}, falling back", formatStr, iae);
+            log.debug("Formatting failed for format {}, falling back", formatStr, iae);
             // the pattern could not be parsed correctly,
             // so fall back to the default number format
             return getDefaultFormat();
@@ -595,7 +594,7 @@ public class DataFormatter {
         try {
             return new InternalDecimalFormatWithScale(format, symbols);
         } catch (IllegalArgumentException iae) {
-            LOGGER.error("Formatting failed for format {}, falling back", formatStr, iae);
+            log.error("Formatting failed for format {}, falling back", formatStr, iae);
             // the pattern could not be parsed correctly,
             // so fall back to the default number format
             return getDefaultFormat();
