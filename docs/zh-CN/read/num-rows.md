@@ -29,8 +29,8 @@ public void allSheetRead() {
 ```java
 @Test
 public void singleSheetRead() {
-    try (ExcelReader excelReader = EasyExcel.read(fileName, DemoData.class, new DemoDataListener()).build()) {
-        ReadSheet readSheet = EasyExcel.readSheet(0).build();
+    try (ExcelReader excelReader = FastExcel.read(fileName, DemoData.class, new DemoDataListener()).build()) {
+        ReadSheet readSheet = FastExcel.readSheet(0).build();
         readSheet.setNumRows(100); // 读取前100行
         excelReader.read(readSheet);
     }

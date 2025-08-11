@@ -2,18 +2,30 @@
 本章节介绍读取 FastExcel 中的核心类。
 
 ## 概述
-如果你需要对 Excel 进行大量或者详细的读写操作，你需要知道一些类，FastExcel 中比较重要的概念和类。它们在你尝试自定义操作时，能够提供丰富的选项。
+如果使用 FastExcel 进行自定义读写操作，需要理解其重要的概念和类。
 
 
 ## 核心概念
 
-- **`FastExcel`**：入口类，用于构建开始各种操作
-- **`ExcelReaderBuilder`**：ExcelWriterBuilder 构建出一个 ReadWorkbook WriteWorkbook，可以理解成一个excel对象，一个excel只要构建一个
-- **`ExcelReaderSheetBuilder`**：ExcelWriterSheetBuilder 构建出一个 ReadSheet WriteSheet对象，可以理解成excel里面的一页,每一页都要构建一个
-- **`ReadListener`**：在每一行读取完毕后都会调用ReadListener来处理数据
-- **`WriteHandler`**：在每一个操作包括创建单元格、创建表格等都会调用WriteHandler来处理数据
+### FastExcel
+入口类，用于构建开始各种操作。
 
-所有配置都是继承的，Workbook的配置会被Sheet继承，所以在用FastExcel设置参数的时候，在FastExcel...sheet()方法之前作用域是整个sheet,之后针对单个sheet
+### 多种 Builder
+
+对读和写操作分别有对应的 Builder 类：
+
+- **`ExcelReaderBuilder` 和 `ExcelWriterBuilder`**：分别为构建出一个 ReadWorkbook 和 WriteWorkbook，可以理解成一个excel对象，一个excel只要构建一个。
+- **`ExcelReaderSheetBuilder`和`ExcelWriterSheetBuilder`**：分别构建出一个 ReadSheet 和 WriteSheet对象，可以理解成excel里面的一页,每一页都要构建一个。
+- **`CsvReaderBuilder`和`CsvWriterBuilder`**：构建内部所需的 CsvFormat。
+
+
+### ReadListener
+在每一行读取完毕后都会调用ReadListener来处理数据。
+
+### WriteHandler
+在每一个操作包括创建单元格、创建表格等都会调用WriteHandler来处理数据。
+
+所有配置都是继承的，Workbook 的配置会被 Sheet 继承，所以在用 FastExcel 设置参数的时候，在 FastExcel...sheet() 方法之前作用域是整个 sheet,在 FastExcel...csv() 方法之前作用域是整个 csv。
 
 ---
 
@@ -47,7 +59,7 @@ FastExcel 提供了以下几种 WriteHandler 接口，分别用于处理不同�
 ### 示例
 
 #### 设置单元格样式
-功能：为所有内容单元格设置背景颜色为黄色，字体为蓝色。
+为所有内容单元格设置背景颜色为黄色，字体为蓝色。
 
 自定义 `CellWriteHandler`
 ```java
@@ -89,10 +101,8 @@ public void customCellStyleWrite() {
 }
 ```
 
-
-
 #### 插入批注
-功能：为表头的第一行第二列插入批注
+为表头的第一行第二列插入批注。
 
 自定义 `RowWriteHandler`
 ```java
@@ -131,7 +141,7 @@ public void commentWrite() {
 
 
 #### 添加下拉框
-功能：为第一列的前两行数据添加下拉框。
+为第一列的前两行数据添加下拉框。
 
 自定义 `SheetWriteHandler`
 ```java
@@ -545,4 +555,82 @@ public void readWithExceptionHandling() {
       总的来说，`ReadListener` 是更为简化的接口，适用于较为简单的场景，而 `AnalysisEventListener` 提供了更强的控制力和扩展性，适合复杂的数据处理需求。开发者可以根据实际需求选择合适的监听器。
 
 ## Converter
-TODO
+
+### 概述
+
+`Converter`是 FastExcel 提供的接口，用于在处理 Excel 文件时对数据进行转换。允许开发者自定义操作，通过实现`Converter`接口，自定义数据转换逻辑。
+
+### 方法
+
+`Converter`是一个泛型接口，泛型类型是需要被转换的对象类型（如 `Date`)。其核心方法如下：
+
+| 方法名                          | 描述                                      |
+|---------------------------------|-----------------------------------------|
+| `Class<?> supportJavaTypeKey()`*(可选)*   | 返回支持的 Java 对象类型                         |
+| `CellDataTypeEnum supportExcelTypeKey()`*(可选)* | 返回支持的 Excel 单元格类型，枚举类为 CellDataTypeEnum |
+| `T convertToJavaData(ReadCellData<?> cellData, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration)` *(可选)* | 将 Excel 单元格数据转换为 Java 对象                |
+| `WriteCellData<?> convertToExcelData(T value, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration)` *(可选)* | 将 Java  对象转换为 Excel 单元格数据对象             |
+| `WriteCellData<?> convertToExcelData(WriteConverterContext<T> context)` *(可选)* | 将 Java  对象转换为 Excel 单元格数据对象                 |
+
+FastExcel 默认提供了很多常用类型的转换器， 并已默认在`DefaultConverterLoader`中注册。
+
+您可以自定义转换器，但类型不能与默认的类型重复。类型注册时，使用的`ConverterKeyBuild.buildKey(converter.supportJavaTypeKey(), converter.supportExcelTypeKey())`作为 key 值。
+
+### 使用场景
+- **数据转换**：对 Excel 数据进行转换，如将日期转换为字符串、将字符串转换为日期等。
+
+### 实现步骤
+1. 实现 `Converter` 接口并实现其方法。
+2. 在读取或写入时传入自定义转换器。
+
+### 示例
+
+#### TimestampNumber 转换器
+
+实现 `Converter`
+```java
+@Slf4j
+public class TimestampNumberConverter implements Converter<Timestamp> {
+    @Override
+    public Class<Timestamp> supportJavaTypeKey() {
+        return Timestamp.class;
+    }
+
+    @Override
+    public CellDataTypeEnum supportExcelTypeKey() {
+        return CellDataTypeEnum.NUMBER;
+    }
+
+    @Override
+    public WriteCellData<?> convertToExcelData(
+            Timestamp value, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) {
+        if (contentProperty == null || contentProperty.getDateTimeFormatProperty() == null) {
+            return new WriteCellData<>(
+                    BigDecimal.valueOf(DateUtil.getExcelDate(value, globalConfiguration.getUse1904windowing())));
+        } else {
+            return new WriteCellData<>(BigDecimal.valueOf(DateUtil.getExcelDate(
+                    value, contentProperty.getDateTimeFormatProperty().getUse1904windowing())));
+        }
+    }
+}
+```
+
+使用
+```java
+@Test
+public void simpleRead() {
+    String fileName = "path/to/demo.xlsx";
+
+    // 读取
+    FastExcel.read(fileName, DemoData.class, new DemoDataListener())
+        .registerConverter(new TimestampNumberConverter())
+        .sheet()
+        .doRead();
+
+    // 写入
+    FastExcel.write(fileName)
+         .registerConverter(new TimestampNumberConverter())
+         .sheet()
+         .doWrite(data());
+}
+```

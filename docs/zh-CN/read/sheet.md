@@ -62,5 +62,4 @@ public void exceptionRead() {
 }
 ```
 
-### 说明
-微软 Excel 中，Sheet 有“普通隐藏(xlSheetHidden)”和“绝对隐藏(xlSheetVeryHidden)”两种状态，绝对隐藏可通过 `VBA` 来设置，此时隐藏的 Sheet 无法通过“取消隐藏”的操作来取消。
+> 微软 Excel 中，Sheet 有“普通隐藏(xlSheetHidden)”和“绝对隐藏(xlSheetVeryHidden)”两种状态，绝对隐藏可通过 `VBA` 来设置，此时隐藏的 Sheet 无法通过“取消隐藏”的操作来取消。
