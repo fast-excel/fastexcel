@@ -10,7 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Row;
 
 /**
- * @author zz_zhi
+ * Hides rows in the sheet.
  */
 @Getter
 public class HiddenRowWriteHandler implements RowWriteHandler {

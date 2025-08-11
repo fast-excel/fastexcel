@@ -7,11 +7,13 @@ import cn.idev.excel.enums.BooleanEnum;
 import cn.idev.excel.test.util.TestFileUtil;
 import java.util.ArrayList;
 import java.util.List;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.junit.jupiter.api.Test;
 
 /**
- * @author zz_zhi
+ * @see cn.idev.excel.write.handler.impl.HiddenShellWriteHandler
  */
 public class HiddenShellTest {
 

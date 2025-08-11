@@ -12,7 +12,6 @@ import org.apache.poi.ss.usermodel.Sheet;
 /**
  * Hides columns in the sheet.
  *
- * @author zz_zhi
  * @see HeadStyle#hidden()
  */
 public class HiddenShellWriteHandler implements SheetWriteHandler {
