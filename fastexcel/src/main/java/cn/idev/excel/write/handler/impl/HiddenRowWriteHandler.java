@@ -3,7 +3,9 @@ package cn.idev.excel.write.handler.impl;
 import cn.idev.excel.write.handler.RowWriteHandler;
 import cn.idev.excel.write.metadata.holder.WriteSheetHolder;
 import cn.idev.excel.write.metadata.holder.WriteTableHolder;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Objects;
 import lombok.Getter;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -14,6 +16,7 @@ import org.apache.poi.ss.usermodel.Row;
  */
 @Getter
 public class HiddenRowWriteHandler implements RowWriteHandler {
+
     /***
      * sheetNo
      */
