@@ -1,4 +1,4 @@
-package cn.idev.excel.test.fix.issue116;
+package cn.idev.excel.fix.issue116;
 
 import cn.idev.excel.EasyExcel;
 import cn.idev.excel.annotation.ExcelProperty;
