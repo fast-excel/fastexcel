@@ -18,5 +18,5 @@ jobs:
       - run: cd website && npm run build
       - uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.DOC_PAT_TOKEN }}
           publish_dir: website/build
