@@ -20,14 +20,14 @@ const config = {
   },
 
   // Set the production url of your site here
-  url: 'https://psxjoy.github.io',
+  url: 'https://fast-excel.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/fastexcel/',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'psxjoy', // Usually your GitHub org/user name.
+  organizationName: 'fast-excel', // Usually your GitHub org/user name.
   projectName: 'fastexcel', // Usually your repo name.
 
   onBrokenLinks: 'throw',
@@ -101,7 +101,7 @@ const config = {
         links: [
 
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} FastExcel, Inc. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} FastExcel. Built with Docusaurus.`,
       },
       prism: {
         theme: prismThemes.github,
