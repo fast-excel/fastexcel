@@ -17,7 +17,9 @@
 - 优化代码结构
 - 改进或完善文档
 
-**原则**：**任何有助于项目改进的 PR 都值得鼓励！**
+**原则**：
+- 任何有助于项目改进的 PR 都值得鼓励！
+- 贡献一个新的功能，请先在 `issue` 或 `discussion` 中提出和讨论。我们不会合并**未经讨论和确认的**的功能
 
 ---
 
@@ -29,6 +31,8 @@
 开发 FastExcel 需要 **Maven 3.8** 和 **JDK (Java Development Kit)** 。目前，开发环境要求 **Java 21** 及以上的版本，但在编译过程中必须使用 **Java 1.8** 兼容的语言特性，保证 FastExcel 能在 Java 1.8 及以上版本环境中运行。
 
 您可以使用 [SDKMAN](https://sdkman.io/) 等工具配置多版本的 Java 工具链。
+
+### Fork 仓库
 
 确保您已注册 GitHub 账号，并按照以下步骤完成本地开发环境配置：
 
@@ -55,29 +59,33 @@ git remote set-url --push upstream no-pushing
 
 在 FastExcel 中，所有贡献应基于 `main` 开发分支。此外，还有以下分支类型：
 
-- **release 分支**：用于版本发布（如 `0.6.0`, `0.6.1`）。
+- **release 分支**：用于版本发布（如 `1.1.0`, `1.1.1`）。
 - **feature 分支**：用于开发较大的功能。
 - **hotfix 分支**：用于修复重要 Bug。
 
 提交 PR 时，请确保变更基于 `main` 分支。
 
-
 ### 提交规则
 
 #### 提交信息
 
-请确保提交消息清晰且具有描述性，遵循以下格式：
+请确保提交消息清晰且具有描述性，务必使用**英文**，且不超过 100 个字符。
 
-- **docs**: 更新文档，例如 `docs: 更新 PR 提交指南`。
-- **feature**: 新功能，例如 `feature: 支持 并发写入`。
-- **bugfix**: 修复 Bug，例如 `bugfix: 修复空指针异常`。
-- **refactor**: 重构代码，例如 `refactor: 优化数据处理逻辑`。
-- **test**: 增加或改进测试，例如 `test: 添加单元测试`。
+允许提交信息的类型且需遵循以下格式：
+
+- **docs**: 更新文档，例如 `docs: update README.md`
+- **feature/feat**: 新功能，例如 `feature: support for xxx`
+- **bugfix/fix**: 修复 Bug，例如 `fix: fix NPE in the A class`
+- **refactor**: 代码重构（不涉及功能变动），例如 `refactor: optimise data processing logic`
+- **style**: 代码格式，例如 `style: update code style`
+- **test**: 增加或改进测试，例如 `test: add new test cases`
+- **chore**: 构建过程或辅助工具的变动，例如 `chore: improve issue template`
+- **dependency**: 第三方依赖库的修改，例如 `dependency: upgrade poi version to 5.4.1`
 
 不建议使用模糊的提交信息，如：
 
-- ~~修复问题~~
-- ~~更新代码~~
+- ~~fixed issue~~
+- ~~update code~~
 
 如果需要帮助，请参考 [如何编写 Git 提交消息](http://chris.beams.io/posts/git-commit/)。
 
@@ -97,13 +105,13 @@ git config --get user.email
 
 ### PR 说明
 
-为了帮助审阅者快速了解 PR 的内容和目的，请使用 [PR 模板](.github/pull_request_template.md)。详细的描述将极大提高代码审阅效率。
+为了帮助审阅者快速了解 PR 的内容和目的，请使用 [PR 模板](https://github.com/fast-excel/fastexcel/blob/main/.github/pull_request_template.md)。详细的描述将极大提高代码审阅效率。
 
 ---
 
 ## 测试用例贡献
 
-任何测试用例的贡献都值得鼓励，尤其是单元测试。建议在对应模块的 `test` 目录中创建 `XXXTest.java` 文件，推荐使用 JUnit5 框架。
+任何测试用例的贡献都值得鼓励，尤其是单元测试。建议在对应模块的 `test` 目录中创建 `XXXTest.java` 文件，推荐使用 `JUnit5` 框架。
 
 ---
 
@@ -164,4 +172,4 @@ mvn spotless:apply
 
 ---
 
-**最后，感谢您对 FastExcel 的支持！每一份帮助，都是我们前进的动力。**
+最后，感谢您对 FastExcel 的支持！
