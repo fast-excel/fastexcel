@@ -78,10 +78,10 @@ public void listFill() {
 ```
 
 ### 模板
-![img](../images/fill/listFill_file.png)
+![img](../../images/fill/listFill_file.png)
 
 ### 结果
-![img](../images/fill/listFill_result.png)
+![img](../../images/fill/listFill_result.png)
 
 ---
 
@@ -113,10 +113,10 @@ public void complexFill() {
 ```
 
 ### 模板
-![img](../images/fill/complexFill_file.png)
+![img](../../images/fill/complexFill_file.png)
 
 ### 结果
-![img](../images/fill/complexFill_result.png)
+![img](../../images/fill/complexFill_result.png)
 
 ---
 
@@ -151,10 +151,10 @@ public void complexFillWithTable() {
 ```
 
 ### 模板
-![img](../images/fill/complexFillWithTable_file.png)
+![img](../../images/fill/complexFillWithTable_file.png)
 
 ### 结果
-![img](../images/fill/complexFillWithTable_result.png)
+![img](../../images/fill/complexFillWithTable_result.png)
 
 ---
 
@@ -183,10 +183,10 @@ public void horizontalFill() {
 ```
 
 ### 模板
-![img](../images/fill/horizontalFill_file.png)
+![img](../../images/fill/horizontalFill_file.png)
 
 ### 结果
-![img](../images/fill/horizontalFill_result.png)
+![img](../../images/fill/horizontalFill_result.png)
 
 ---
 
@@ -217,7 +217,7 @@ public void compositeFill() {
 ```
 
 ### 模板
-![img](../images/fill/compositeFill_file.png)
+![img](../../images/fill/compositeFill_file.png)
 
 ### 结果
-![img](../images/fill/compositeFill_result.png)
+![img](../../images/fill/compositeFill_result.png)
