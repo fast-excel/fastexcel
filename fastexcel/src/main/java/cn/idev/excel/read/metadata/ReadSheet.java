@@ -1,9 +1,12 @@
 package cn.idev.excel.read.metadata;
 
+import lombok.EqualsAndHashCode;
+
 /**
  * Read sheet
  *
  */
+@EqualsAndHashCode
 public class ReadSheet extends ReadBasicParameter {
     /**
      * Starting from 0

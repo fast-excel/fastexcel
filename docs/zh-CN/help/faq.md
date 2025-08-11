@@ -15,7 +15,7 @@
 
 ## 字段匹配
 - **Q:** 如何解决部分字段无法正确读取或写入的问题？
-- **A:** 确保实体类字段遵循驼峰命名规则，避免使用`@Accessors(chain = true)`，推荐使用`@Builder`替代。另外，确保实体类中使用了`@ExcelProperty`注解标记参与读写的字
+- **A:** 确保实体类字段遵循驼峰命名规则，避免使用`@Accessors(chain = true)`，推荐使用`@Builder`替代。另外，确保实体类中使用了`@ExcelProperty`注解标记参与读写的字段。
 
 ## 兼容性问题
 - **Q:** 使用FastExcel时遇到兼容性问题怎么办？
@@ -94,21 +94,6 @@
   FastExcel.write(fileName, DemoData.class).inMemory(true).sheet("模板").doWrite(fillData());
   ```
 
-## CSV分隔符
-- **Q:** 如何修改CSV文件的分隔符？
-- **A:** 可以通过设置`CsvFormat`来修改CSV文件的分隔符。例如：
-  ```java
-  try (ExcelReader excelReader = FastExcel.read(fileName, DemoData.class, new DemoDataListener()).build()) {
-      ReadWorkbookHolder readWorkbookHolder = excelReader.analysisContext().readWorkbookHolder();
-      if (readWorkbookHolder instanceof CsvReadWorkbookHolder) {
-          CsvReadWorkbookHolder csvReadWorkbookHolder = (CsvReadWorkbookHolder) readWorkbookHolder;
-          csvReadWorkbookHolder.setCsvFormat(csvReadWorkbookHolder.getCsvFormat().withDelimiter(';'));
-      }
-      ReadSheet readSheet = FastExcel.readSheet(0).build();
-      excelReader.read(readSheet);
-  }
-  ```
-
 ## 错误处理
 - **Q:** 如何处理读取过程中抛出的异常？
 - **A:** 可以在`ReadListener`中捕获并处理异常。例如：
@@ -177,18 +162,10 @@
 
 ## 读取CSV文件
 - **Q:** 如何读取CSV文件并修改分隔符？
-- **A:** 可以通过设置`CsvFormat`来修改CSV文件的分隔符。例如：
+- **A:** 可以通过设置`csv()`中的分隔符来读取CSV文件。例如：
   ```java
-  String fileName = TestFileUtil.getPath() + "demo" + File.separator + "demo.csv";
-  try (ExcelReader excelReader = FastExcel.read(fileName, DemoData.class, new DemoDataListener()).build()) {
-      ReadWorkbookHolder readWorkbookHolder = excelReader.analysisContext().readWorkbookHolder();
-      if (readWorkbookHolder instanceof CsvReadWorkbookHolder) {
-          CsvReadWorkbookHolder csvReadWorkbookHolder = (CsvReadWorkbookHolder) readWorkbookHolder;
-          csvReadWorkbookHolder.setCsvFormat(csvReadWorkbookHolder.getCsvFormat().withDelimiter(';'));
-      }
-      ReadSheet readSheet = FastExcel.readSheet(0).build();
-      excelReader.read(readSheet);
-  }
+  FastExcel.read(csvFile, DemoData.class, new DemoDataListener())
+            .csv().delimiter(CsvConstant.UNICODE_EMPTY).doReadSync();
   ```
 
 ## 自定义读取监听器
