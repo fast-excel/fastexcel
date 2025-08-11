@@ -10,16 +10,32 @@ This website is built using [Docusaurus](https://docusaurus.io/), a modern stati
 ## Installation
 
 ```bash
-yarn
+yarn install
+# yarn install --registry=https://registry.npmmirror.com
 ```
 
 ## Local Development
 
 ```bash
+# English
 yarn start
+
+# Chinese
+yarn start --locale zh-cn
 ```
 
 This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
+
+## I18N
+
+```bash
+# Chinese
+yarn write-translations --locale zh-cn
+
+# English
+yarn write-translations --locale en
+```
+
 
 ## Build
 
@@ -44,3 +60,25 @@ GIT_USER=<Your GitHub username> yarn deploy
 ```
 
 If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
+
+## Directory Structure
+
+```bash
+|-- community             # community directory
+|-- docs                  # document directory
+|-- i18n
+|   `-- zh-cn             # internationalized chinese
+|       |-- code.json
+|       |-- docusaurus-plugin-content-docs
+|       |-- docusaurus-plugin-content-community
+|       `-- docusaurus-theme-classic
+|-- src
+|-- static
+|   |-- img               # picture static resource
+|   |   |-- blog          # blog picture
+|   |   |-- docs          # document picture
+|   |   |-- index         # homepage picture
+|-- docusaurus.config.js
+|-- sidebars.js           # document sidebar menu configuration
+|-- sidebarsCommunity.js  # community document sidebar menu configuration
+```

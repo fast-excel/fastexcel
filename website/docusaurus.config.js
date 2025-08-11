@@ -3,111 +3,147 @@
 // (when paired with `@ts-check`).
 // There are various equivalent ways to declare your Docusaurus config.
 // See: https://docusaurus.io/docs/api/docusaurus-config
-
 import {themes as prismThemes} from 'prism-react-renderer';
 
-// This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
+const branch = 'main';
+const repoUrl = `https://github.com/fast-excel/fastexcel`;
 
+// This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'FastExcel',
-  tagline: ' 快速、简洁、解决大文件内存溢出的java处理Excel工具',
-  favicon: 'img/favicon.ico',
+    title: 'FastExcel',
+    favicon: 'img/favicon.ico',
 
-  // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
-  future: {
-    v4: true, // Improve compatibility with the upcoming Docusaurus v4
-  },
+    // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
+    future: {
+        v4: true,
+        // Improve compatibility with the upcoming Docusaurus v4
+    },
 
-  // Set the production url of your site here
-  url: 'https://fast-excel.github.io',
-  // Set the /<baseUrl>/ pathname under which your site is served
-  // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/fastexcel/',
+    customFields: {
+        repoUrl,
+    },
 
-  // GitHub pages deployment config.
-  // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'fast-excel', // Usually your GitHub org/user name.
-  projectName: 'fastexcel', // Usually your repo name.
+    // Set the production url of your site here
+    url: 'https://fast-excel.github.io',
+    // Set the /<baseUrl>/ pathname under which your site is served
+    // For GitHub pages deployment, it is often '/<projectName>/'
+    baseUrl: '/fastexcel/',
 
-  onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
+    // GitHub pages deployment config.
+    // If you aren't using GitHub pages, you don't need these.
+    organizationName: 'fast-excel',
+    // Usually your GitHub org/user name.
+    projectName: 'fastexcel',
+    // Usually your repo name.
+    onBrokenLinks: 'throw',
+    onBrokenMarkdownLinks: 'warn',
 
-  deploymentBranch: 'gh-pages',
+    deploymentBranch: 'gh-pages',
 
-  // Even if you don't use internationalization, you can use this field to set
-  // useful metadata like html lang. For example, if your site is Chinese, you
-  // may want to replace "en" with "zh-Hans".
-  i18n: {
-    defaultLocale: 'zh',  // 默认语言，这里设为中文
-    locales: ['zh'],  // 支持的语言列表
-  },
-
-  presets: [
-    [
-      'classic',
-      /** @type {import('@docusaurus/preset-classic').Options} */
-      ({
-        docs: {
-          sidebarPath: './sidebars.js',
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+    // Even if you don't use internationalization, you can use this field to set
+    // useful metadata like html lang. For example, if your site is Chinese, you
+    // may want to replace "en" with "zh-Hans".
+    i18n: {
+        defaultLocale: 'en',
+        locales: ['en', 'zh-cn'],
+        localeConfigs: {
+            en: {
+                label: 'English',
+                htmlLang: 'en',
+                path: 'en',
+            },
+            'zh-cn': {
+                label: '简体中文',
+                path: 'zh-cn',
+            },
         },
-        blog: {
-          showReadingTime: true,
-          feedOptions: {
-            type: ['rss', 'atom'],
-            xslt: true,
-          },
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
-          // Useful options to enforce blogging best practices
-          onInlineTags: 'warn',
-          onInlineAuthors: 'warn',
-          onUntruncatedBlogPosts: 'warn',
-        },
-        theme: {
-          customCss: './src/css/custom.css',
-        },
-      }),
+    },
+
+    presets: [
+        [
+            'classic',
+            {
+                docs: {
+                    sidebarPath: './sidebars.js',
+                    editUrl: `${repoUrl}/edit/${branch}/website`
+                },
+                theme: {
+                    customCss: './src/css/custom.css'
+                },
+            }
+        ],
     ],
-  ],
 
-  themeConfig:
+    plugins: [
+        [
+            '@docusaurus/plugin-content-docs',
+            {
+                id: 'community',
+                path: 'community',
+                routeBasePath: 'community',
+                sidebarPath: './sidebarsCommunity.js',
+                editUrl: `${repoUrl}/edit/${branch}/website`
+            },
+        ],
+    ],
+
+    themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
-    ({
-      // Replace with your project's social card
-      image: 'img/logo.svg',
-      navbar: {
-        title: '',
-        logo: {
-          alt: '',
-          src: 'img/logo.svg',
-        },
-        items: [
-          {
-            href: 'https://github.com/fast-excel/fastexcel',
-            label: 'GitHub',
-            position: 'right',
-          }
-        ],
-      },
-      footer: {
-        style: 'dark',
-        links: [
-
-        ],
-        copyright: `Copyright © ${new Date().getFullYear()} FastExcel. Built with Docusaurus.`,
-      },
-      prism: {
-        theme: prismThemes.github,
-        darkTheme: prismThemes.dracula,
-      },
-    }),
+        ({
+            // Replace with your project's social card
+            image: 'img/logo.svg',
+            navbar: {
+                title: '',
+                logo: {
+                    alt: '',
+                    src: 'img/logo.svg',
+                },
+                items: [
+                    {
+                        label: 'Docs',
+                        position: 'left',
+                        to: '/docs/',
+                    },
+                    {
+                        label: 'Community',
+                        position: 'left',
+                        to: '/community/contact',
+                    },
+                    {
+                        type: 'localeDropdown',
+                        position: 'right',
+                    },
+                    {
+                        href: repoUrl,
+                        position: 'right',
+                        className: 'header-github-link',
+                    },
+                ],
+            },
+            metadata: [
+                {
+                    name: 'keywords',
+                    content: 'fastexcel, fast-excel, excel.poi, opensource',
+                }
+            ],
+            footer: {
+                style: 'dark',
+                links: [],
+                copyright: `Copyright © ${new Date().getFullYear()} FastExcel, Licensed under the Apache License, Version 2.0.`,
+            },
+            prism: {
+                theme: prismThemes.dracula,
+                darkTheme: prismThemes.dracula,
+                additionalLanguages: ['java', 'bash']
+            },
+        }),
+    themes: ['@docusaurus/theme-mermaid'],
+    markdown: {
+        format: 'md',
+        mermaid: true,
+    }
 };
 
-export default config;
+export
+default config;

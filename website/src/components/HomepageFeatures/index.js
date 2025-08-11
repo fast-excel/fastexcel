@@ -1,33 +1,46 @@
 import clsx from 'clsx';
 import Heading from '@theme/Heading';
 import styles from './styles.module.css';
+import {translate} from '@docusaurus/Translate';
 
 const FeatureList = [
   {
-    title: '快速',
-    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
-    description: (
-      <>
-        快速的读取 Excel 中的数据。
-      </>
+    title: translate(
+        {
+            id: 'homepage.feature.quick.title',
+        },
+    ),
+    Svg: require('@site/static/img/index/undraw_spreadsheet.svg').default,
+    description: translate(
+        {
+            id: 'homepage.feature.quick.description',
+        },
     ),
   },
   {
-    title: '简洁',
-    Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
-    description: (
-      <>
-        映射 Excel 和实体类，让代码变的更加简洁。
-      </>
+    title: translate(
+        {
+            id: 'homepage.feature.simple.title',
+        },
+    ),
+    Svg: require('@site/static/img/index/undraw_programming.svg').default,
+    description: translate(
+        {
+            id: 'homepage.feature.simple.description',
+        },
     ),
   },
   {
-    title: '大文件',
-    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
-    description: (
-      <>
-        在读写大文件的时候使用磁盘做缓存，更加的节约内存。
-      </>
+    title: translate(
+        {
+            id: 'homepage.feature.bigdata',
+        },
+    ),
+    Svg: require('@site/static/img/index/undraw_files.svg').default,
+    description: translate(
+        {
+            id: 'homepage.feature.bigdata.description',
+        },
     ),
   },
 ];
