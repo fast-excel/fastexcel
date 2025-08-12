@@ -19,7 +19,7 @@ However, by setting the `numRows` parameter, you can limit the number of rows to
 ```java
 @Test
 public void allSheetRead() {
-    // 读取前100行
+    // Read the first 100 rows
     FastExcel.read(fileName, DemoData.class, new PageReadListener<DemoData>(dataList -> {
             for (DemoData demoData : dataList) {
                 log.info("Read one record: {}", JSON.toJSONString(demoData));

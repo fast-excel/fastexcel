@@ -167,7 +167,7 @@ public class DemoData {
 public void synchronousReadToObjectList() {
     String fileName = "path/to/demo.xlsx";
 
-    // POJO 列表
+    // POJO Object List
     List<DemoData> list = FastExcel.read(fileName)
             .head(DemoData.class)
             .sheet()

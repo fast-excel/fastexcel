@@ -3,7 +3,7 @@ id: 'sheet'
 title: 'Sheet'
 ---
 
-# Sheet Pages
+# Sheet
 This chapter introduces how to configure Sheets to read data.
 
 ## Reading Multiple Sheets
