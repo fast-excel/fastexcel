@@ -1,4 +1,4 @@
-package cn.idev.excel.util;
+package cn.idev.excel.test.util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -12,6 +12,7 @@ import static org.mockito.Mockito.verify;
 import cn.idev.excel.constant.BuiltinFormats;
 import cn.idev.excel.metadata.data.DataFormatData;
 import cn.idev.excel.metadata.data.HyperlinkData;
+import cn.idev.excel.util.StyleUtil;
 import cn.idev.excel.write.metadata.holder.WriteWorkbookHolder;
 import cn.idev.excel.write.metadata.style.WriteCellStyle;
 import cn.idev.excel.write.metadata.style.WriteFont;
