@@ -1,6 +1,3 @@
-// @ts-check
-// `@type` JSDoc annotations allow editor autocompletion and type checking
-// (when paired with `@ts-check`).
 // There are various equivalent ways to declare your Docusaurus config.
 // See: https://docusaurus.io/docs/api/docusaurus-config
 import {themes as prismThemes} from 'prism-react-renderer';
@@ -8,21 +5,9 @@ import {themes as prismThemes} from 'prism-react-renderer';
 const branch = 'main';
 const repoUrl = `https://github.com/fast-excel/fastexcel`;
 
-// This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
-/** @type {import('@docusaurus/types').Config} */
 const config = {
     title: 'FastExcel',
     favicon: 'img/favicon.ico',
-
-    // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
-    future: {
-        v4: true,
-        // Improve compatibility with the upcoming Docusaurus v4
-    },
-
-    customFields: {
-        repoUrl,
-    },
 
     // Set the production url of your site here
     url: 'https://fast-excel.github.io',
@@ -31,19 +16,20 @@ const config = {
     baseUrl: '/fastexcel/',
 
     // GitHub pages deployment config.
-    // If you aren't using GitHub pages, you don't need these.
     organizationName: 'fast-excel',
-    // Usually your GitHub org/user name.
     projectName: 'fastexcel',
-    // Usually your repo name.
+    deploymentBranch: 'gh-pages',
+
     onBrokenLinks: 'throw',
     onBrokenMarkdownLinks: 'warn',
 
-    deploymentBranch: 'gh-pages',
-
-    // Even if you don't use internationalization, you can use this field to set
-    // useful metadata like html lang. For example, if your site is Chinese, you
-    // may want to replace "en" with "zh-Hans".
+    future: {
+        v4: true,
+        // Improve compatibility with the upcoming Docusaurus v4
+    },
+    customFields: {
+        repoUrl,
+    },
     i18n: {
         defaultLocale: 'en',
         locales: ['en', 'zh-cn'],
@@ -59,14 +45,14 @@ const config = {
             },
         },
     },
-
     presets: [
         [
             'classic',
             {
                 docs: {
                     sidebarPath: './sidebars.js',
-                    editUrl: `${repoUrl}/edit/${branch}/website`
+                    editUrl: `${repoUrl}/edit/${branch}/website/`,
+                    editLocalizedFiles: true
                 },
                 theme: {
                     customCss: './src/css/custom.css'
@@ -74,7 +60,6 @@ const config = {
             }
         ],
     ],
-
     plugins: [
         [
             '@docusaurus/plugin-content-docs',
@@ -83,61 +68,58 @@ const config = {
                 path: 'community',
                 routeBasePath: 'community',
                 sidebarPath: './sidebarsCommunity.js',
-                editUrl: `${repoUrl}/edit/${branch}/website`
+                editUrl: `${repoUrl}/edit/${branch}/website/`,
+                editLocalizedFiles: true,
             },
         ],
     ],
-
-    themeConfig:
-    /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
-        ({
-            // Replace with your project's social card
-            image: 'img/logo.svg',
-            navbar: {
-                title: '',
-                logo: {
-                    alt: '',
-                    src: 'img/logo.svg',
-                },
-                items: [
-                    {
-                        label: 'Docs',
-                        position: 'left',
-                        to: '/docs/',
-                    },
-                    {
-                        label: 'Community',
-                        position: 'left',
-                        to: '/community/contact',
-                    },
-                    {
-                        type: 'localeDropdown',
-                        position: 'right',
-                    },
-                    {
-                        href: repoUrl,
-                        position: 'right',
-                        className: 'header-github-link',
-                    },
-                ],
+    themeConfig: ({
+        image: 'img/logo.svg',
+        navbar: {
+            title: '',
+            logo: {
+                alt: '',
+                src: 'img/logo.svg',
             },
-            metadata: [
+            items: [
                 {
-                    name: 'keywords',
-                    content: 'fastexcel, fast-excel, excel.poi, opensource',
-                }
+                    label: 'Docs',
+                    position: 'left',
+                    to: '/docs/',
+                },
+                {
+                    label: 'Community',
+                    position: 'left',
+                    to: '/community/contact',
+                },
+                {
+                    type: 'localeDropdown',
+                    position: 'right',
+                },
+                {
+                    href: repoUrl,
+                    position: 'right',
+                    className: 'header-github-link',
+                },
             ],
-            footer: {
-                style: 'dark',
-                links: [],
-                copyright: `Copyright © ${new Date().getFullYear()} FastExcel, Licensed under the Apache License, Version 2.0.`,
-            },
-            prism: {
-                theme: prismThemes.dracula,
-                darkTheme: prismThemes.dracula,
-                additionalLanguages: ['java', 'bash']
-            },
-        }),
+        },
+        metadata: [
+            {
+                name: 'keywords',
+                content: 'fastexcel, fast-excel, excel, poi, opensource',
+            }
+        ],
+        footer: {
+            style: 'dark',
+            links: [],
+            copyright: `Copyright © ${new Date().getFullYear()} FastExcel, Licensed under the Apache License, Version 2.0.`,
+        },
+        prism: {
+            theme: prismThemes.github,
+            darkTheme: prismThemes.oneDark,
+            additionalLanguages: ['java', 'bash']
+        }
+    }),
     themes: ['@docusaurus/theme-mermaid'],
     markdown: {
         format: 'md',
@@ -145,5 +127,4 @@ const config = {
     }
 };
 
-export
-default config;
+export default config;
