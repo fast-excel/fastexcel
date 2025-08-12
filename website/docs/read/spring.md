@@ -3,23 +3,23 @@ id: 'spring'
 title: 'Spring'
 ---
 
-# 与 Spring 集成指南
-本章节介绍如何在 Spring 框架中集成和使用 FastExcel 来处理用户上传的 Excel 文件。
+# Spring Integration Guide
+This chapter introduces how to integrate and use FastExcel in the Spring framework to handle Excel files uploaded by users.
 
-## 概述
+## Overview
 
-通过创建 RESTful API 接口，用户可以使用 HTTP 请求上传 Excel 文件，服务器端使用 FastExcel 解析数据。
+By creating RESTful API endpoints, users can upload Excel files using HTTP requests, and the server uses FastExcel to parse the data.
 
-## 环境依赖
+## Environment Dependencies
 
 ### Maven
-确保在 pom.xml 文件中包括必要的依赖项：
+Ensure the necessary dependencies are included in your pom.xml file:
 
 ```xml
 <dependency>
     <groupId>cn.idev.excel</groupId>
     <artifactId>fastexcel</artifactId>
-    <version>版本号</version>
+    <version>{version.number}</version>
 </dependency>
 <dependency>
     <groupId>org.springframework.boot</groupId>
@@ -31,10 +31,10 @@ title: 'Spring'
 </dependency>
 ```
 
-## 创建上传接口
+## Creating Upload Endpoints
 
-### POJO类
-首先，定义一个用于映射 Excel 数据的 POJO 类：
+### POJO Class
+First, define a POJO class for mapping Excel data:
 
 ```java
 @Getter
@@ -47,8 +47,8 @@ public class UploadData {
 }
 ```
 
-### 数据监听器
-创建一个监听器来处理每一行数据：
+### Data Listener
+Create a listener to handle each row of data:
 
 ```java
 @Slf4j
@@ -57,20 +57,20 @@ public class UploadDataListener extends AnalysisEventListener<UploadData> {
 
     @Override
     public void invoke(UploadData data, AnalysisContext context) {
-        log.info("读取到一条数据: {}", JSON.toJSONString(data));
+        log.info("Read one record: {}", JSON.toJSONString(data));
         list.add(data);
     }
 
     @Override
     public void doAfterAllAnalysed(AnalysisContext context) {
-        log.info("所有数据读取完成！");
-        // 在此处可以进行数据的存储操作，如保存到数据库
+        log.info("All data reading completed!");
+        // Data storage operations can be performed here, such as saving to database
     }
 }
 ```
 
-### Spring 控制器
-创建一个控制器来处理文件上传请求：
+### Spring Controller
+Create a controller to handle file upload requests:
 
 ```java
 @RestController
@@ -80,29 +80,31 @@ public class ExcelController {
     @PostMapping("/upload")
     public ResponseEntity<String> upload(@RequestParam("file") MultipartFile file) {
         if (file.isEmpty()) {
-            return ResponseEntity.badRequest().body("请选择一个文件上传！");
+            return ResponseEntity.badRequest().body("Please select a file to upload!");
         }
 
         try {
             FastExcel.read(file.getInputStream(), UploadData.class, new UploadDataListener())
                     .sheet()
                     .doRead();
-            return ResponseEntity.ok("文件上传并处理成功！");
+            return ResponseEntity.ok("File uploaded and processed successfully!");
         } catch (IOException e) {
-            log.error("文件处理失败", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("文件处理失败！");
+            log.error("File processing failed", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("File processing failed");
         }
     }
 }
 ```
 
-## 复杂场景
+## Complex Scenarios
 
-### 多模板解析
-通过在同一个监听器中定义多个不同的模型类和处理方法，可以根据需要扩展支持多模板解析。
+### Multi-Template Parsing
+By defining multiple different model classes and processing methods within the same listener, you can extend support for multi-template parsing as needed.
 
-### 异常处理
-为了改善用户体验并保证程序健壮性，需要在数据处理过程中加入异常处理逻辑，可以在自定义监听器中重写 `onException` 方法进行详细的异常处理。
+### Exception Handling
+To improve user experience and ensure program robustness, exception handling logic needs to be added during data processing. 
+You can override the `onException` method in custom listeners for detailed exception handling.
 
-### 实际应用
-在实际场景中，解析的数据可能需要存储到数据库中。可以在 `doAfterAllAnalysed` 方法中实现数据库交互逻辑，确保数据的持久化。
+### Practical Applications
+In real-world scenarios, parsed data may be stored in a database. 
+Database interaction logic can be implemented in the `doAfterAllAnalysed` method to ensure data persistence.

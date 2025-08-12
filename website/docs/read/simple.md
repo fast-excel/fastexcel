@@ -3,20 +3,20 @@ id: 'simple'
 title: 'Simple'
 ---
 
-# 简单读取
-本章节介绍如何使用 FastExcel 完成简单 Excel 读取
+# Simple Reading
+This chapter introduces how to use FastExcel to perform simple Excel reading operations.
 
-## 数据监听器
-### 概述
-FastExcel 提供监听器机制，用于在读取 Excel 文件时对每一行数据进行处理。
+## Data Listeners
+### Overview
+FastExcel provides a listener mechanism for processing each row of data while reading Excel files.
 
-### 使用
-数据监听器需要实例化并支持多种不同的使用方式。
+### Usage
+Data listeners need to be instantiated and support various usage patterns.
 
-#### 实例化
-监听器不能被 Spring 管理，每次读取 Excel 文件时需要重新实例化。
+#### Instantiation
+Listeners cannot be managed by Spring and must be re-instantiated each time an Excel file is read.
 
-#### `Lambda`表达式
+#### `Lambda` Expressions
 ```java
 @Test
 public void simpleRead() {
@@ -24,13 +24,13 @@ public void simpleRead() {
 
     FastExcel.read(fileName, DemoData.class, new PageReadListener<>(dataList -> {
         for (DemoData demoData : dataList) {
-            log.info("读取到一条数据: {}", JSON.toJSONString(demoData));
+            log.info("Read one record: {}", JSON.toJSONString(demoData));
         }
     })).sheet().doRead();
 }
 ```
 
-#### 匿名内部类
+#### Anonymous Inner Classes
 ```java
 @Test
 public void simpleRead() {
@@ -39,18 +39,18 @@ public void simpleRead() {
     FastExcel.read(fileName, DemoData.class, new ReadListener<DemoData>() {
         @Override
         public void invoke(DemoData data, AnalysisContext context) {
-           log.info("读取到一条数据: {}", JSON.toJSONString(data));
+           log.info("Read one record: {}", JSON.toJSONString(data));
         }
 
         @Override
         public void doAfterAllAnalysed(AnalysisContext context) {
-            log.info("所有数据读取完成！");
+            log.info("All data reading completed!");
         }
     }).sheet().doRead();
 }
 ```
 
-#### 数据监听器
+#### Data Listeners
 ```java
 @Test
 public void simpleRead() {
@@ -64,13 +64,13 @@ public void simpleRead() {
 
 ---
 
-## POJO 类与监听器
-### 概述
+## POJO Classes and Listeners
+### Overview
 
-FastExcel 提供了一种简单的方式来读取 Excel 文件。用户只需定义一个 POJO 类来表示数据结构，然后通过 FastExcel 的监听器机制读取数据。
+FastExcel provides a simple way to read Excel files. Users only need to define a POJO class to represent the data structure, then read data through FastExcel's listener mechanism.
 
-### POJO 类
-与 Excel 结构对应的 POJO 类 `DemoData`
+### POJO Class
+The `DemoData` POJO class corresponding to the Excel structure:
 ```java
 @Getter
 @Setter
@@ -82,8 +82,8 @@ public class DemoData {
 }
 ```
 
-### 数据监听器
-`DemoDataListener` 是一个自定义监听器，用于处理从 Excel 中读取的数据。
+### Data Listener
+`DemoDataListener` is a custom listener used to process data read from Excel.
 
 ```java
 @Slf4j
@@ -91,17 +91,17 @@ public class DemoDataListener implements ReadListener<DemoData> {
 
     @Override
     public void invoke(DemoData data, AnalysisContext context) {
-        log.info("读取到一条数据: {}", JSON.toJSONString(data));
+        log.info("Read one record: {}", JSON.toJSONString(data));
     }
 
     @Override
     public void doAfterAllAnalysed(AnalysisContext context) {
-        log.info("所有数据读取完成！");
+        log.info("All data reading completed!");
     }
 }
 ```
 
-### 代码示例
+### Code Example
 
 ```java
 @Test
@@ -116,37 +116,37 @@ public void simpleRead() {
 
 ---
 
-## 无 POJO 类与监听器
+## Without POJO Classes and Listeners
 
-### 概述
-FastExcel 支持不定义 POJO 类直接读取 Excel 文件，通过 `Map<Integer, String>` 直接读取数据，其中的键为**列索引**，值为**单元格数据**。
+### Overview
+FastExcel supports reading Excel files directly without defining POJO classes, using `Map<Integer, String>` to read data directly, where the key is the **column index** and the value is the **cell data**.
 
-### 数据监听器
+### Data Listener
 ```java
 @Slf4j
 public class NoModelDataListener extends AnalysisEventListener<Map<Integer, String>> {
 
     @Override
     public void invoke(Map<Integer, String> data, AnalysisContext context) {
-        log.info("读取到一条数据: {}", JSON.toJSONString(data));
+        log.info("Read one record: {}", JSON.toJSONString(data));
     }
 
     @Override
     public void doAfterAllAnalysed(AnalysisContext context) {
-        log.info("所有数据读取完成！");
+        log.info("All data reading completed!");
     }
 }
 ```
 
 ---
 
-## 同步读取
+## Synchronous Reading
 
-### 概述
-使用 `doReadSync` 方法直接将 Excel 数据读取为**内存**中的列表，这种方法推荐用于**数据量较小**的场景。读取的数据可以是 POJO 对象列表或 Map 列表。
+### Overview
+Use the `doReadSync` method to directly read Excel data into a list **in memory**. This method is recommended for scenarios with **small data volumes**. The read data can be either a list of POJO objects or a list of Maps.
 
-### POJO 类
-与 Excel 结构对应的 POJO 类 `DemoData`
+### POJO Class
+The `DemoData` POJO class corresponding to the Excel structure:
 
 ```java
 @Getter
@@ -159,9 +159,9 @@ public class DemoData {
 }
 ```
 
-### 代码示例
+### Code Examples
 
-#### 读取为 POJO 对象列表
+#### Reading as POJO Object List
 ```java
 @Test
 public void synchronousReadToObjectList() {
@@ -174,26 +174,26 @@ public void synchronousReadToObjectList() {
             .doReadSync();
 
     for (DemoData data : list) {
-        log.info("读取到的数据: {}", JSON.toJSONString(data));
+        log.info("Read data: {}", JSON.toJSONString(data));
     }
 }
 ```
 
-#### 读取为 Map 列表
-在不使用 POJO 情况下，可以将每一行读取为 Map，键为列索引，值为单元格内容。
+#### Reading as Map List
+When not using POJOs, each row can be read as a Map, where the key is the column index and the value is the cell content.
 
 ```java
 @Test
 public void synchronousReadToMapList() {
     String fileName = "path/to/demo.xlsx";
 
-    // Map 列表
+    // Map List
     List<Map<Integer, String>> list = FastExcel.read(fileName)
             .sheet()
             .doReadSync();
 
     for (Map<Integer, String> data : list) {
-        log.info("读取到的数据: {}", JSON.toJSONString(data));
+        log.info("Read data: {}", JSON.toJSONString(data));
     }
 }
 ```

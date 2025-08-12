@@ -3,15 +3,15 @@ id: 'converter'
 title: 'Converter'
 ---
 
-# 格式转换
-FastExcel 支持日期、数字、自定义格式转换。
+# Format Conversion
+FastExcel supports date, number, and custom format conversions.
 
-## 概述
-在使用过程中，我们可能需要对读取或写入的数据进行特定格式的转换。FastExcel 提供了灵活的转换器机制，允许用户自定义数据转换规则，以满足各种业务需求。
+## Overview
+During usage, we may need to convert read or written data into specific formats. FastExcel provides a flexible converter mechanism that allows users to define custom data conversion rules to meet various business requirements.
 
-## 示例
+## Example
 
-### POJO 类
+### POJO Class
 ```java
 @Getter
 @Setter
@@ -20,7 +20,7 @@ public class ConverterData {
     @ExcelProperty(converter = CustomStringStringConverter.class)
     private String string;
 
-    @DateTimeFormat("yyyy年MM月dd日HH时mm分ss秒")
+    @DateTimeFormat("yyyyMMddHHmmss")
     private String date;
 
     @NumberFormat("#.##%")
@@ -28,7 +28,7 @@ public class ConverterData {
 }
 ```
 
-### 转换器
+### Converter
 ```java
 public class CustomStringStringConverter implements Converter<String> {
     @Override
@@ -43,7 +43,7 @@ public class CustomStringStringConverter implements Converter<String> {
 
     @Override
     public String convertToJavaData(ReadConverterContext<?> context) {
-        return "自定义：" + context.getReadCellData().getStringValue();
+        return "Custom: " + context.getReadCellData().getStringValue();
     }
 
     @Override
@@ -53,14 +53,14 @@ public class CustomStringStringConverter implements Converter<String> {
 }
 ```
 
-### 代码示例
+### Code Example
 ```java
 @Test
 public void converterRead() {
     String fileName = "path/to/demo.xlsx";
 
     FastExcel.read(fileName, ConverterData.class, new DemoDataListener())
-            .registerConverter(new CustomStringStringConverter()) // 注册自定义转换器
+            .registerConverter(new CustomStringStringConverter()) // Register custom converter
             .sheet()
             .doRead();
 }
