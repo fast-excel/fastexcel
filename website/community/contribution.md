@@ -168,8 +168,8 @@ yarn md-lint
 yarn md-lint-fix
 ```
 
-For formatting rules for MD articles you can refer to: [Markdown-lint-rules](https://github.com/DavidAnson/markdownlint/blob/main/doc/Rules.md)
-MD format configuration file in the project: [.markdownlint-cli2.jsonc](https://github.com/fast-excel/fastexcel/blob/main/website/.markdownlint-cli2.jsonc)
+For formatting rules for Markdown articles you can refer to: [Markdown-lint-rules](https://github.com/DavidAnson/markdownlint/blob/main/doc/Rules.md)
+Markdown format configuration file in the project: [.markdownlint-cli2.jsonc](https://github.com/fast-excel/fastexcel/blob/main/website/.markdownlint-cli2.jsonc)
 
 ---
 
