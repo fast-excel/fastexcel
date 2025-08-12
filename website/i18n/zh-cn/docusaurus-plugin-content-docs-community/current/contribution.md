@@ -140,18 +140,36 @@ git config --get user.email
 
 - 使用带有 `.md` 扩展名的文件路径
 ``` markdown
-[Example](quickstart/example.md)
+[Example](docs/quickstart/example.md)
 ```
 
 - 使用相对于 docs/ 目录的路径
 ``` markdown
-[Example](quickstart/example.md)
+[Example](docs/quickstart/example.md)
 ```
 
-- 图片文件需要存储在 `docs/images` 目录，并使用相对目录的形式引用.
+- 图片文件需要存储在 `static/img` 目录，并使用相对目录的形式引用.
 ``` markdown
-[img](../../images/fill/listFill_file.png)
+[img](/img/docs/fill/listFill_file.png)
 ```
+
+### 文档格式校验
+
+FastExcel 使用 [markdownlint-cli2](https://github.com/DavidAnson/markdownlint-cli2) 来检查文档格式。您在编写了相关 Markdown 文章后，可以在本地执行以下命令，来预先检查 Markdown 的格式内容是否符合要求:
+
+```shell
+cd website && yarn
+
+yarn md-lint
+
+# 如果文档错误，可以使用以下命令来尝试自动修复
+yarn md-lint-fix
+```
+
+Markdown 文章的相关格式规则可以参考 [Markdown-lint-rules](https://github.com/DavidAnson/markdownlint/blob/main/doc/Rules.md)
+
+项目中的 Markdown 格式配置文件位于: [.markdownlint-cli2.jsonc](https://github.com/fast-excel/fastexcel/blob/main/website/.markdownlint-cli2.jsonc)
+
 
 ---
 

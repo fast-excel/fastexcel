@@ -141,19 +141,35 @@ Documentation is an important component of the FastExcel official website and se
 ### Documentation Writing Guidelines
 
 - Use file paths with the `.md` extension
-``` markdown
-[Example](quickstart/example.md)
+```markdown
+[Example](docs/quickstart/example.md)
 ```
 
 - Use paths relative to the docs/ directory
-``` markdown
-[Example](quickstart/example.md)
+```markdown
+[Example](docs/quickstart/example.md)
 ```
 
-- Image files must be stored in the `docs/images` directory and referenced using relative directory paths.
-``` markdown
+- Image files must be stored in the `static/img` directory and referenced using relative directory paths.
+```markdown
 [img](/img/docs/fill/listFill_file.png)
 ```
+
+### Document Format Inspection
+
+FastExcel uses [markdownlint-cli2](https://github.com/DavidAnson/markdownlint-cli2) to check document formatting. After writing the relevant Markdown articles, you can run the following command locally to pre-check whether the Markdown formatting meets the requirements:
+
+```bash
+cd website && yarn
+
+yarn md-lint
+
+# If the documentation is wrong, you can use the following command to attempt an automatic repair.
+yarn md-lint-fix
+```
+
+For formatting rules for MD articles you can refer to: [Markdown-lint-rules](https://github.com/DavidAnson/markdownlint/blob/main/doc/Rules.md)
+MD format configuration file in the project: [.markdownlint-cli2.jsonc](https://github.com/fast-excel/fastexcel/blob/main/website/.markdownlint-cli2.jsonc)
 
 ---
 
