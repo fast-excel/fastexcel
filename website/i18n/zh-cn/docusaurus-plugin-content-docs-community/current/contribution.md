@@ -33,16 +33,16 @@ title: '贡献指南'
 
 ### 工作区准备
 
-开发 FastExcel 需要 **3.8.1及以上版本的Maven** 和 **17及以上版本的JDK (Java Development Kit)** 。目前，开发环境推荐 **3.9.0** 及以上版本的Maven和 **21** 及以上的版本Java，但在编译过程中必须使用 **Java 1.8** 兼容的语言特性，保证 FastExcel 能在 Java 1.8 及以上版本环境中运行。
+开发 FastExcel 需要 **3.9及以上版本的 Maven** 和 **17 及以上版本的 JDK (Java Development Kit)** ，但在编译过程中必须使用 **Java 1.8** 兼容的语言特性，保证 FastExcel 能在 Java 1.8 及以上版本环境中运行。
 
-您可以使用 [SDKMAN](https://sdkman.io/) 等工具配置多版本的 Java 工具链。
+> 您可以使用 [SDKMAN](https://sdkman.io/) 等工具配置多版本的 Java 工具链。
 
 ### Fork 仓库
 
 确保您已注册 GitHub 账号，并按照以下步骤完成本地开发环境配置：
 
 **Fork 仓库**：在 FastExcel 的 [GitHub 页面](https://github.com/fast-excel/fastexcel) 点击 `Fork` 按钮，将项目复制到您的 GitHub 账户下，
-```
+```bash
 https://github.com/<your-username>/fastexcel
 ```
 
@@ -122,11 +122,32 @@ git config --get user.email
 
 ## 贡献文档
 
-文档是 FastExcel 官方网站的重要构建内容，是项目与社区之间的重要桥梁。
+文档是 FastExcel 官方网站的重要构建内容，是项目与社区之间的重要桥梁。FastExcel 官方网站使用 [Docusaurus](https://docusaurus.io/) 进行构建，其中文档在 [website](https://github.com/fast-excel/fastexcel/tree/main/website) 目录中进行维护。
+
+### 环境要求
+
+- [Node.js](https://nodejs.org/en/download/) 版本 18.0 或更高版本（可通过运行 `node -v` 命令进行检查）。您可使用 [nvm](https://github.com/nvm-sh/nvm) 在同一台机器上管理多个 Node 版本。
+- 安装 Node.js 时，建议勾选所有与依赖项相关的复选框。
 
 ### 目录结构说明
 
-```shell
+Docusaurus 支持国际化，主要需要维护的文档目录结构如下:
+
+```bash
+.
+├── community      # 社区(英文)
+├── docs           # 文档(英文)
+└── i18n           # 国际化
+    └── zh-cn
+        ├── docusaurus-plugin-content-docs
+        │   └── current   # 文档(简体中文)
+        └── docusaurus-plugin-content-docs-community
+            └── current   # 社区(简体中文)
+```
+
+单语言的文档目录结构如下:
+
+```bash
 .
 ├── quickstart     # 1. 快速开始
 ├── read           # 2. 读取文件
@@ -139,25 +160,58 @@ git config --get user.email
 ### 文档编写指南
 
 - 使用带有 `.md` 扩展名的文件路径
-``` markdown
+```markdown
 [Example](docs/quickstart/example.md)
 ```
 
-- 使用相对于 docs/ 目录的路径
-``` markdown
+- 使用相对于 `docs/` 目录的路径
+```markdown
 [Example](docs/quickstart/example.md)
 ```
 
 - 图片文件需要存储在 `static/img` 目录，并使用相对目录的形式引用.
-``` markdown
+```markdown
 [img](/img/docs/fill/listFill_file.png)
 ```
+
+### 预览和生成静态文件
+
+进入 `website` 目录，并执行以下命令
+
+#### 安装
+
+```bash
+yarn install
+```
+
+#### 本地预览和运行
+
+```bash
+# 英文版
+yarn start
+
+# 简体中文版
+yarn start --locale zh-cn
+```
+
+此命令会启动一个本地开发服务器，并打开一个浏览器窗口。大多数更改都无需重启服务器即可实时预览。
+
+> 每次只能运行一种语言版本
+
+#### 生成静态文件(可选)
+
+```bash
+yarn build
+```
+
+此命令将生成静态内容到`build`目录中，并且可以使用任何静态内容托管服务。
+
 
 ### 文档格式校验
 
 FastExcel 使用 [markdownlint-cli2](https://github.com/DavidAnson/markdownlint-cli2) 来检查文档格式。您在编写了相关 Markdown 文章后，可以在本地执行以下命令，来预先检查 Markdown 的格式内容是否符合要求:
 
-```shell
+```bash
 cd website && yarn
 
 yarn md-lint
@@ -166,9 +220,8 @@ yarn md-lint
 yarn md-lint-fix
 ```
 
-Markdown 文章的相关格式规则可以参考 [Markdown-lint-rules](https://github.com/DavidAnson/markdownlint/blob/main/doc/Rules.md)
-
-项目中的 Markdown 格式配置文件位于: [.markdownlint-cli2.jsonc](https://github.com/fast-excel/fastexcel/blob/main/website/.markdownlint-cli2.jsonc)
+- Markdown 文章的相关格式规则可以参考 [Markdown-lint-rules](https://github.com/DavidAnson/markdownlint/blob/main/doc/Rules.md)
+- 项目中的 Markdown 格式配置文件位于: [.markdownlint-cli2.jsonc](https://github.com/fast-excel/fastexcel/blob/main/website/.markdownlint-cli2.jsonc)
 
 
 ---
