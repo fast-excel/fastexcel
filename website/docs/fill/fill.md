@@ -3,15 +3,18 @@ id: 'fill'
 title: 'Fill'
 ---
 
-# 填充
-本章节介绍如何使用 FastExcel 来填充数据到文件中。
+# Fill
 
-## 简单填充
+This section explains how to use FastExcel to fill data into files.
 
-### 概述
-基于模板文件，通过对象或 Map 填充数据到 Excel 中。
+## Simple Fill
 
-### POJO 类
+### Overview
+
+Fill data into Excel based on a template file using objects or Map.
+
+### POJO Class
+
 ```java
 @Getter
 @Setter
@@ -23,13 +26,14 @@ public class FillData {
 }
 ```
 
-### 代码示例
+### Code Example
+
 ```java
 @Test
 public void simpleFill() {
     String templateFileName = "path/to/simple.xlsx";
 
-    // 方案1：基于对象填充
+    // Approach 1: Fill based on object
     FillData fillData = new FillData();
     fillData.setName("张三");
     fillData.setNumber(5.2);
@@ -38,7 +42,7 @@ public void simpleFill() {
         .sheet()
         .doFill(fillData);
 
-    // 方案2：基于 Map 填充
+    // Approach 2: Fill based on Map
     Map<String, Object> map = new HashMap<>();
     map.put("name", "张三");
     map.put("number", 5.2);
@@ -48,32 +52,37 @@ public void simpleFill() {
         .doFill(map);
 }
 ```
-### 模板
+
+### Template
+
 ![img](/img/docs/fill/simpleFill_file.png)
 
-### 结果
+### Result
+
 ![img](/img/docs/fill/simpleFill_result.png)
 
 ---
 
-## 填充列表
+## Fill List
 
-### 概述
-填充多个数据项到模板列表中，支持内存批量操作和文件缓存分批填充。
+### Overview
 
-### 代码示例
+Fill multiple data items into a template list, supporting in-memory batch operations and file cache batch filling.
+
+### Code Example
+
 ```java
 @Test
 public void listFill() {
     String templateFileName = "path/to/list.xlsx";
 
-    // 方案1：一次性填充所有数据
+    // Approach 1: Fill all data at once
     FastExcel.write("listFill.xlsx")
         .withTemplate(templateFileName)
         .sheet()
         .doFill(data());
 
-    // 方案2：分批填充
+    // Approach 2: Batch filling
     try (ExcelWriter writer = FastExcel.write("listFillBatch.xlsx").withTemplate(templateFileName).build()) {
         WriteSheet writeSheet = FastExcel.writerSheet().build();
         writer.fill(data(), writeSheet);
@@ -82,20 +91,24 @@ public void listFill() {
 }
 ```
 
-### 模板
+### Template
+
 ![img](/img/docs/fill/listFill_file.png)
 
-### 结果
+### Result
+
 ![img](/img/docs/fill/listFill_result.png)
 
 ---
 
-## 复杂填充
+## Complex Fill
 
-### 概述
-在模板中填充多种数据类型，包括列表和普通变量。
+### Overview
 
-### 代码示例
+Fill various data types in a template, including lists and regular variables.
+
+### Code Example
+
 ```java
 @Test
 public void complexFill() {
@@ -104,11 +117,11 @@ public void complexFill() {
     try (ExcelWriter writer = FastExcel.write("complexFill.xlsx").withTemplate(templateFileName).build()) {
         WriteSheet writeSheet = FastExcel.writerSheet().build();
 
-        // 填充列表数据，开启 forceNewRow
+        // Fill list data, with forceNewRow enabled
         FillConfig config = FillConfig.builder().forceNewRow(true).build();
         writer.fill(data(), config, writeSheet);
 
-        // 填充普通变量
+        // Fill regular variables
         Map<String, Object> map = new HashMap<>();
         map.put("date", "2024年11月20日");
         map.put("total", 1000);
@@ -117,20 +130,24 @@ public void complexFill() {
 }
 ```
 
-### 模板
+### Template
+
 ![img](/img/docs/fill/complexFill_file.png)
 
-### 结果
+### Result
+
 ![img](/img/docs/fill/complexFill_result.png)
 
 ---
 
-## 大数据量填充
+## Complex Fill with Large Data
 
-### 概述
-优化大数据量填充性能，确保模板列表在最后一行，后续数据通过 `WriteTable` 填充。
+### Overview
 
-### 代码示例
+Optimize performance for filling large data, ensuring the template list is at the last row, and subsequent data is filled using `WriteTable`.
+
+### Code Example
+
 ```java
 @Test
 public void complexFillWithTable() {
@@ -139,15 +156,15 @@ public void complexFillWithTable() {
     try (ExcelWriter writer = FastExcel.write("complexFillWithTable.xlsx").withTemplate(templateFileName).build()) {
         WriteSheet writeSheet = FastExcel.writerSheet().build();
 
-        // 填充列表数据
+        // Fill list data
         writer.fill(data(), writeSheet);
 
-        // 填充其他变量
+        // Fill list data
         Map<String, Object> map = new HashMap<>();
         map.put("date", "2024年11月20日");
         writer.fill(map, writeSheet);
 
-        // 填充统计信息
+        // Fill statistical information
         List<List<String>> totalList = new ArrayList<>();
         totalList.add(Arrays.asList(null, null, null, "统计: 1000"));
         writer.write(totalList, writeSheet);
@@ -155,20 +172,24 @@ public void complexFillWithTable() {
 }
 ```
 
-### 模板
+### Template
+
 ![img](/img/docs/fill/complexFillWithTable_file.png)
 
-### 结果
+### Result
+
 ![img](/img/docs/fill/complexFillWithTable_result.png)
 
 ---
 
-## 横向填充
+## Horizontal Fill
 
-### 概述
-将列表数据横向填充，适用于动态列数场景。
+### Overview
 
-### 代码示例
+Fill list data horizontally, suitable for scenarios with dynamic column numbers.
+
+### Code Example
+
 ```java
 @Test
 public void horizontalFill() {
@@ -187,20 +208,24 @@ public void horizontalFill() {
 }
 ```
 
-### 模板
+### Template
+
 ![img](/img/docs/fill/horizontalFill_file.png)
 
-### 结果
+### Result
+
 ![img](/img/docs/fill/horizontalFill_result.png)
 
 ---
 
-## 多列表组合填充
+## Fill Multiple Lists Together
 
-### 概述
-支持多个列表同时填充，列表之间通过前缀区分。
+### Overview
 
-### 代码示例
+Support filling multiple lists simultaneously, with prefixes to differentiate between lists.
+
+### Code Example
+
 ```java
 @Test
 public void compositeFill() {
@@ -209,7 +234,7 @@ public void compositeFill() {
     try (ExcelWriter writer = FastExcel.write("compositeFill.xlsx").withTemplate(templateFileName).build()) {
         WriteSheet writeSheet = FastExcel.writerSheet().build();
 
-        // 使用 FillWrapper 进行多列表填充
+        // Use FillWrapper for filling multiple lists
         writer.fill(new FillWrapper("data1", data()), writeSheet);
         writer.fill(new FillWrapper("data2", data()), writeSheet);
         writer.fill(new FillWrapper("data3", data()), writeSheet);
@@ -221,8 +246,10 @@ public void compositeFill() {
 }
 ```
 
-### 模板
+### Template
+
 ![img](/img/docs/fill/compositeFill_file.png)
 
-### 结果
+### Result
+
 ![img](/img/docs/fill/compositeFill_result.png)
