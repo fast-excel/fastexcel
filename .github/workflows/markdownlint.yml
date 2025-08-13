@@ -36,7 +36,7 @@ jobs:
             markdownlint-cli2 $CHANGED_MD --config website/.markdownlint-cli2.jsonc > lint-result.txt || true
             if [ -s lint-result.txt ]; then
               echo "Lint failed."
-              # 输出不合规文件内容到 comment-body.txt
+              # Output non-compliant file contents to comment-body.txt
               for file in $CHANGED_MD; do
                 echo "\n---\n**$file 内容:**\n" >> comment-body.txt
                 echo '\n```markdown' >> comment-body.txt
