@@ -38,7 +38,7 @@ jobs:
               echo "Lint failed."
               # Output non-compliant file contents to comment-body.txt
               for file in $CHANGED_MD; do
-                echo "\n---\n**$file 内容:**\n" >> comment-body.txt
+                echo "\n---\n**$file Content:**\n" >> comment-body.txt
                 echo '\n```markdown' >> comment-body.txt
                 cat "$file" >> comment-body.txt
                 echo '\n```' >> comment-body.txt
