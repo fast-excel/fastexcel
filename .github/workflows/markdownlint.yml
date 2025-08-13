@@ -10,7 +10,7 @@ on:
 
 jobs:
   markdownlint:
-    if: github.event_name == 'push' || github.event.pull_request.changed_files > 0
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
