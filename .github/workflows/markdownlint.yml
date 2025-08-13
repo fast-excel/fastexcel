@@ -43,7 +43,7 @@ jobs:
                 cat "$file" >> comment-body.txt
                 echo '\n```' >> comment-body.txt
               done
-              echo "\n---\n**Lint结果:**\n" >> comment-body.txt
+              echo "\n---\n**Lint Results:**\n" >> comment-body.txt
               cat lint-result.txt >> comment-body.txt
               exit 1
             fi
