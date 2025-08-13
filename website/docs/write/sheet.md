@@ -3,15 +3,15 @@ id: 'sheet'
 title: 'Sheet'
 ---
 
-# Sheet 页
-本章节将介绍设置 Sheet 来写入数据的使用。
+# Sheet
+This chapter introduces how to configure Sheets to write data.
 
-## 写入同一个 Sheet
+## Writing to the Same Sheet
 
-### 概述
-分批写入数据到同一个 Sheet。
+### Overview
+Write data in batches to the same Sheet.
 
-### 代码示例
+### Code Example
 ```java
 @Test
 public void writeSingleSheet() {
@@ -26,17 +26,17 @@ public void writeSingleSheet() {
 }
 ```
 
-### 结果
+### Result
 ![img](/img/docs/write/repeatedWrite.png)
 
 ---
 
-## 写入多个 Sheet
+## Writing to Multiple Sheets
 
-### 概述
-分批写入数据到多个 Sheet，可实现大数据量的分页写入。
+### Overview
+Write data in batches to multiple Sheets, enabling paginated writing for large data volumes.
 
-### 代码示例
+### Code Example
 ```java
 @Test
 public void writeMultiSheet() {
@@ -51,24 +51,24 @@ public void writeMultiSheet() {
 }
 ```
 
-### 结果
+### Result
 ![img](/img/docs/write/repeatedWrite.png)
 
 ---
 
-## 使用 Table 写入
+## Writing Using Tables
 
-### 概述
-支持在一个 Sheet 中使用多个 Table 分块写入。
+### Overview
+Supports using multiple Tables within a single Sheet for segmented writing.
 
-### 代码示例
+### Code Example
 ```java
 @Test
 public void tableWrite() {
     String fileName = "tableWrite" + System.currentTimeMillis() + ".xlsx";
 
     try (ExcelWriter excelWriter = FastExcel.write(fileName, DemoData.class).build()) {
-        WriteSheet writeSheet = FastExcel.writerSheet("Table示例").build();
+        WriteSheet writeSheet = FastExcel.writerSheet("Table Example").build();
         WriteTable table1 = FastExcel.writerTable(0).build();
         WriteTable table2 = FastExcel.writerTable(1).build();
 
@@ -78,5 +78,5 @@ public void tableWrite() {
 }
 ```
 
-### 结果
+### Result
 ![img](/img/docs/write/tableWrite.png)

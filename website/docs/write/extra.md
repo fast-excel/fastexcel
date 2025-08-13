@@ -3,16 +3,16 @@ id: 'extra'
 title: 'Extra'
 ---
 
-# 额外信息
-本章节将介绍如何写入额外的信息，如批注、超链接、公式、合并单元格等。
+# Extra Information
+This chapter introduces how to write extra information such as comments, hyperlinks, formulas, merged cells, etc.
 
-## 批注
+## Comments
 
-### 概述
-通过拦截器在特定单元格添加批注，适用于标注说明或特殊提示。
+### Overview
+Add comments to specific cells through interceptors, suitable for annotations or special reminders.
 
-### 代码示例
-自定义拦截器
+### Code Example
+Custom interceptor
 ```java
 @Slf4j
 public class CommentWriteHandler implements RowWriteHandler {
@@ -22,39 +22,39 @@ public class CommentWriteHandler implements RowWriteHandler {
         if (BooleanUtils.isTrue(context.getHead())) {
             Sheet sheet = context.getWriteSheetHolder().getSheet();
             Drawing<?> drawingPatriarch = sheet.createDrawingPatriarch();
-            // 在第一行第二列创建批注
+            // Create comment in first row, second column
             Comment comment = drawingPatriarch.createCellComment(
                 new XSSFClientAnchor(0, 0, 0, 0, (short) 1, 0, (short) 2, 1));
-            comment.setString(new XSSFRichTextString("批注内容"));
+            comment.setString(new XSSFRichTextString("Comment content"));
             sheet.getRow(0).getCell(1).setCellComment(comment);
         }
     }
 }
 ```
 
-使用
+Usage
 ```java
 @Test
 public void commentWrite() {
     String fileName = "commentWrite" + System.currentTimeMillis() + ".xlsx";
 
     FastExcel.write(fileName, DemoData.class)
-        .inMemory(Boolean.TRUE) // 批注必须启用内存模式
+        .inMemory(Boolean.TRUE) // Comments must enable in-memory mode
         .registerWriteHandler(new CommentWriteHandler())
-        .sheet("批注示例")
+        .sheet("Comment Example")
         .doWrite(data());
 }
 ```
 
-### 结果
+### Result
 ![img](/img/docs/write/commentWrite.png)
 
 ---
 
-## 超链接
-写入额外的超链接信息
+## Hyperlinks
+Write extra hyperlink information
 
-### POJO类
+### POJO Class
 ```java
 @Getter
 @Setter
@@ -64,14 +64,14 @@ public class WriteCellDemoData {
 }
 ```
 
-### 代码示例
+### Code Example
 ```java
 @Test
 public void writeHyperlinkDataWrite() {
     String fileName = "writeCellDataWrite" + System.currentTimeMillis() + ".xlsx";
     WriteCellDemoData data = new WriteCellDemoData();
-    // 设置超链接
-    data.setHyperlink(new WriteCellData<>("点击访问").hyperlink("https://example.com"));
+    // Set hyperlink
+    data.setHyperlink(new WriteCellData<>("Click to visit").hyperlink("https://example.com"));
 
     FastExcel.write(fileName, WriteCellDemoData.class)
         .sheet()
@@ -79,15 +79,15 @@ public void writeHyperlinkDataWrite() {
 }
 ```
 
-### 结果
+### Result
 ![img](/img/docs/write/writeCellDataWrite.png)
 
 ---
 
-## 公式
-写入额外的公式信息
+## Formulas
+Write extra formula information
 
-### POJO类
+### POJO Class
 ```java
 @Getter
 @Setter
@@ -97,13 +97,13 @@ public class WriteCellDemoData {
 }
 ```
 
-### 代码示例
+### Code Example
 ```java
 @Test
 public void writeFormulaDataWrite() {
     String fileName = "writeCellDataWrite" + System.currentTimeMillis() + ".xlsx";
     WriteCellDemoData data = new WriteCellDemoData();
-    // 设置公式
+    // Set formula
     data.setFormulaData(new WriteCellData<>("=SUM(A1:A10)"));
 
     FastExcel.write(fileName, WriteCellDemoData.class)
@@ -112,17 +112,17 @@ public void writeFormulaDataWrite() {
 }
 ```
 
-### 结果
+### Result
 ![img](/img/docs/write/writeCellDataWrite.png)
 
 ---
 
-## 根据模板写入
+## Template-based Writing
 
-### 概述
-支持使用已有的模板文件，在模板上填充数据，适用于规范化输出。
+### Overview
+Supports using existing template files and filling data into templates, suitable for standardized output.
 
-### 代码示例
+### Code Example
 ```java
 @Test
 public void templateWrite() {
@@ -138,86 +138,86 @@ public void templateWrite() {
 
 ---
 
-## 合并单元格
+## Merged Cells
 
-### 概述
-支持通过注解或自定义合并策略实现合并单元格。
+### Overview
+Supports merged cells through annotations or custom merge strategies.
 
-### 代码示例
+### Code Example
 
-注解方式
+Annotation approach
 ```java
 @Getter
 @Setter
 @EqualsAndHashCode
 public class DemoMergeData {
-    @ContentLoopMerge(eachRow = 2) // 每隔 2 行合并一次
-    @ExcelProperty("字符串标题")
+    @ContentLoopMerge(eachRow = 2) // Merge every 2 rows
+    @ExcelProperty("String Title")
     private String string;
 
-    @ExcelProperty("日期标题")
+    @ExcelProperty("Date Title")
     private Date date;
 
-    @ExcelProperty("数字标题")
+    @ExcelProperty("Number Title")
     private Double doubleData;
 }
 ```
 
-自定义合并策略
+Custom merge strategy
 ```java
 public class CustomMergeStrategy extends AbstractMergeStrategy {
     @Override
     protected void merge(Sheet sheet, WriteSheetHolder writeSheetHolder) {
-        // 自定义合并规则
-        sheet.addMergedRegion(new CellRangeAddress(1, 2, 0, 1)); // 示例合并范围
+        // Custom merge rules
+        sheet.addMergedRegion(new CellRangeAddress(1, 2, 0, 1)); // Example merge range
     }
 }
 ```
 
-使用
+Usage
 ```java
 @Test
 public void mergeWrite() {
     String fileName = "mergeWrite" + System.currentTimeMillis() + ".xlsx";
 
-    // 注解方式
+    // Annotation approach
     FastExcel.write(fileName, DemoMergeData.class)
-        .sheet("合并示例")
+        .sheet("Merge Example")
         .doWrite(data());
 
-    // 自定义合并策略
+    // Custom merge strategy
     FastExcel.write(fileName, DemoData.class)
         .registerWriteHandler(new CustomMergeStrategy())
-        .sheet("自定义合并")
+        .sheet("Custom Merge")
         .doWrite(data());
 }
 ```
 
-### 结果
+### Result
 ![img](/img/docs/write/mergeWrite.png)
 
 ---
 
-## 自定义拦截器
+## Custom Interceptors
 
-### 概述
-实现自定义逻辑（如添加下拉框等）需要通过拦截器操作。
+### Overview
+Implement custom logic (such as adding dropdowns) through interceptor operations.
 
-### 代码示例
+### Code Example
 
-设置下拉框
+Setting dropdowns
 ```java
 public class DropdownWriteHandler implements SheetWriteHandler {
     @Override
     public void afterSheetCreate(SheetWriteHandlerContext context) {
         DataValidationHelper helper = context.getWriteSheetHolder().getSheet().getDataValidationHelper();
-        CellRangeAddressList range = new CellRangeAddressList(1, 10, 0, 0); // 下拉框区域
-        DataValidationConstraint constraint = helper.createExplicitListConstraint(new String[] {"选项1", "选项2"});
+        CellRangeAddressList range = new CellRangeAddressList(1, 10, 0, 0); // Dropdown area
+        DataValidationConstraint constraint = helper.createExplicitListConstraint(new String[] {"Option 1", "Option 2"});
         DataValidation validation = helper.createValidation(constraint, range);
         context.getWriteSheetHolder().getSheet().addValidationData(validation);
     }
 }
 ```
 
-### 结果
+### Result
 ![img](/img/docs/write/customHandlerWrite.png)

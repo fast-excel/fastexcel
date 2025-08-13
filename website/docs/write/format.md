@@ -3,34 +3,34 @@ id: 'format'
 title: 'Format'
 ---
 
-# 格式化
-本章节将介绍写入数据时的数据格式化。
+# Formatting
+This chapter introduces data formatting when writing data.
 
-## 自定义格式写入
+## Custom Format Writing
 
-### 概述
-支持日期、数字或其他自定义格式，通过注解实现。
+### Overview
+Supports date, number, or other custom formats through annotations.
 
-### POJO类
+### POJO Class
 ```java
 @Getter
 @Setter
 @EqualsAndHashCode
 public class ConverterData {
-    @ExcelProperty(value = "字符串标题", converter = CustomStringStringConverter.class)
+    @ExcelProperty(value = "String Title", converter = CustomStringStringConverter.class)
     private String string;
 
-    @DateTimeFormat("yyyy年MM月dd日HH时mm分ss秒")
-    @ExcelProperty("日期标题")
+    @DateTimeFormat("yyyyMMddHHmmss")
+    @ExcelProperty("Date Title")
     private Date date;
 
     @NumberFormat("#.##%")
-    @ExcelProperty("数字标题")
+    @ExcelProperty("Number Title")
     private Double doubleData;
 }
 ```
 
-### 代码示例
+### Code Example
 ```java
 @Test
 public void converterWrite() {
@@ -41,5 +41,5 @@ public void converterWrite() {
 }
 ```
 
-### 结果
+### Result
 ![img](/img/docs/write/converterWrite.png)

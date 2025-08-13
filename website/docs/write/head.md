@@ -3,30 +3,30 @@ id: 'head'
 title: 'Head'
 ---
 
-# 表头
-本章节将介绍写入 Excel 中的表头数据。
+# Headers
+This chapter introduces how to write header data in Excel.
 
-## 复杂头写入
+## Complex Header Writing
 
-### 概述
-支持设置多级表头，通过 `@ExcelProperty` 注解指定主标题和子标题。
+### Overview
+Supports setting multi-level headers by specifying main titles and subtitles through the `@ExcelProperty` annotation.
 
-### POJO类
+### POJO Class
 ```java
 @Getter
 @Setter
 @EqualsAndHashCode
 public class ComplexHeadData {
-    @ExcelProperty({"主标题", "字符串标题"})
+    @ExcelProperty({"Main Title", "String Title"})
     private String string;
-    @ExcelProperty({"主标题", "日期标题"})
+    @ExcelProperty({"Main Title", "Date Title"})
     private Date date;
-    @ExcelProperty({"主标题", "数字标题"})
+    @ExcelProperty({"Main Title", "Number Title"})
     private Double doubleData;
 }
 ```
 
-### 代码示例
+### Code Example
 ```java
 @Test
 public void complexHeadWrite() {
@@ -37,26 +37,26 @@ public void complexHeadWrite() {
 }
 ```
 
-### 结果
+### Result
 ![img](/img/docs/write/complexHeadWrite.png)
 
 ---
 
-## 动态头写入
+## Dynamic Header Writing
 
-### 概述
-实时生成动态表头，适用于表头内容动态变化的场景。
+### Overview
+Generate dynamic headers in real-time, suitable for scenarios where header content changes dynamically.
 
-### 代码示例
+### Code Example
 ```java
 @Test
 public void dynamicHeadWrite() {
     String fileName = "dynamicHeadWrite" + System.currentTimeMillis() + ".xlsx";
 
     List<List<String>> head = Arrays.asList(
-        Collections.singletonList("动态字符串标题"),
-        Collections.singletonList("动态数字标题"),
-        Collections.singletonList("动态日期标题"));
+        Collections.singletonList("Dynamic String Title"),
+        Collections.singletonList("Dynamic Number Title"),
+        Collections.singletonList("Dynamic Date Title"));
 
     FastExcel.write(fileName)
         .head(head)
@@ -65,5 +65,5 @@ public void dynamicHeadWrite() {
 }
 ```
 
-### 结果
+### Result
 ![img](/img/docs/write/dynamicHeadWrite.png)

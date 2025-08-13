@@ -3,34 +3,35 @@ id: 'simple'
 title: 'Simple'
 ---
 
-# 简单写入
-本章节介绍如何使用 FastExcel 完成简单 Excel 写入
+# Simple Writing
+This chapter introduces how to use FastExcel to perform simple Excel writing operations.
 
-## 概述
-使用 FastExcel 进行简单的 Excel 数据写入，可以快速地将实体对象写入 Excel 文件，是最基本、最常用的写入方式。
+## Overview
+Use FastExcel for simple Excel data writing to quickly write entity objects to Excel files. 
+This is the most basic and commonly used writing approach.
 
-## 代码示例
+## Code Examples
 
-### POJO 类
-与 Excel 结构对应的 POJO 类 `DemoData`
+### POJO Class
+The `DemoData` POJO class corresponding to the Excel structure:
 
 ```java
 @Getter
 @Setter
 @EqualsAndHashCode
 public class DemoData {
-    @ExcelProperty("字符串标题")
+    @ExcelProperty("String Title")
     private String string;
-    @ExcelProperty("日期标题")
+    @ExcelProperty("Date Title")
     private Date date;
-    @ExcelProperty("数字标题")
+    @ExcelProperty("Number Title")
     private Double doubleData;
     @ExcelIgnore
-    private String ignore; // 忽略的字段
+    private String ignore; // Ignored field
 }
 ```
 
-### 数据列表
+### Data List
 
 ```java
 private List<DemoData> data() {
@@ -47,11 +48,11 @@ private List<DemoData> data() {
 ```
 
 
-### 写入方式
+### Writing Methods
 
-FastExcel 提供了多种写入方式，包括 `Lambda` 表达式、数据列表、`ExcelWriter` 对象等。
+FastExcel provides multiple writing methods, including `Lambda` expressions, data lists, `ExcelWriter` objects, etc.
 
-#### `Lambda` 表达式
+#### `Lambda` Expression
 ```java
 @Test
 public void simpleWrite() {
@@ -63,7 +64,7 @@ public void simpleWrite() {
 }
 ```
 
-#### 数据列表
+#### Data List
 ```java
 @Test
 public void simpleWrite() {
@@ -75,7 +76,7 @@ public void simpleWrite() {
 }
 ```
 
-#### `ExcelWriter` 对象
+#### `ExcelWriter` Object
 ```java
 @Test
 public void simpleWrite() {

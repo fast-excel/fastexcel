@@ -4,16 +4,16 @@ title: 'POJO'
 ---
 
 # POJO
-本章节将介绍通过设置 POJO 来写入。
+This chapter introduces how to write data by configuring POJO classes.
 
-## 根据参数只导出指定列
+## Export Only Specified Columns Based on Parameters
 
-### 概述
-通过设置列名集合动态选择要导出的列，支持忽略列或仅导出特定列。
+### Overview
+Dynamically select columns to export by setting a collection of column names, supporting ignoring columns or exporting only specific columns.
 
-### 代码示例
+### Code Examples
 
-忽略指定列
+Ignore specified columns
 
 ```java
 @Test
@@ -28,7 +28,7 @@ public void excludeOrIncludeWrite() {
 }
 ```
 
-仅导出指定列
+Export only specified columns
 
 ```java
 @Test
@@ -43,32 +43,32 @@ public void excludeOrIncludeWrite() {
 }
 ```
 
-### 结果
+### Result
 ![img](/img/docs/write/excludeOrIncludeWrite.png)
 
 ---
 
-## 指定写入的列顺序
+## Specify Column Order for Writing
 
-### 概述
-通过 `@ExcelProperty` 注解的 `index` 属性指定列顺序。
+### Overview
+Specify column order using the `index` attribute of the `@ExcelProperty` annotation.
 
-### POJO类
+### POJO Class
 ```java
 @Getter
 @Setter
 @EqualsAndHashCode
 public class IndexData {
-    @ExcelProperty(value = "字符串标题", index = 0)
+    @ExcelProperty(value = "String Title", index = 0)
     private String string;
-    @ExcelProperty(value = "日期标题", index = 1)
+    @ExcelProperty(value = "Date Title", index = 1)
     private Date date;
-    @ExcelProperty(value = "数字标题", index = 3)
+    @ExcelProperty(value = "Number Title", index = 3)
     private Double doubleData;
 }
 ```
 
-### 代码示例
+### Code Example
 ```java
 @Test
 public void indexWrite() {
@@ -79,43 +79,43 @@ public void indexWrite() {
 }
 ```
 
-### 结果
+### Result
 ![img](/img/docs/write/indexWrite.png)
 
 ---
 
-## 不创建对象的写入
+## Writing Without Creating Objects
 
-### 概述
-直接使用 `List<List<String>>` 定义头和数据写入，无需创建实体类。
+### Overview
+Write data directly using `List<List<String>>` to define headers and data without creating entity classes.
 
-### 代码示例
+### Code Example
 ```java
 @Test
 public void noModelWrite() {
     String fileName = "noModelWrite" + System.currentTimeMillis() + ".xlsx";
 
     FastExcel.write(fileName)
-        .head(head()) // 动态头
-        .sheet("无对象写入")
+        .head(head()) // Dynamic headers
+        .sheet("No Object Write")
         .doWrite(dataList());
 }
 
 private List<List<String>> head() {
     return Arrays.asList(
-        Collections.singletonList("字符串标题"),
-        Collections.singletonList("数字标题"),
-        Collections.singletonList("日期标题"));
+        Collections.singletonList("String Title"),
+        Collections.singletonList("Number Title"),
+        Collections.singletonList("Date Title"));
 }
 
 private List<List<Object>> dataList() {
     List<List<Object>> list = new ArrayList<>();
     for (int i = 0; i < 10; i++) {
-        list.add(Arrays.asList("字符串" + i, 0.56, new Date()));
+        list.add(Arrays.asList("String" + i, 0.56, new Date()));
     }
     return list;
 }
 ```
 
-### 结果
+### Result
 ![img](/img/docs/write/noModelWrite.png)
