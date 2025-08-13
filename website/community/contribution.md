@@ -23,6 +23,7 @@ There are many ways to contribute to FastExcel:
 - Improve or refine documentation
 
 **Principle**:
+
 - Any pull request that contributes to the improvement of the project should be encouraged.
 - Before contributing a new feature, please propose and discuss it in an `issue` or `discussion`. We will not merge features that have not been discussed and confirmed.
 
@@ -49,18 +50,19 @@ https://github.com/<your-username>/fastexcel
 ```
 
 **Clone Repository**: Run the following command to clone the forked project to your local machine:
+
 ```bash
 git clone git@github.com:<your-username>/fastexcel.git
 ```
 
 **Set Upstream Repository**: Set the official repository as `upstream` for easy synchronization of updates:
+
 ```bash
 git remote add upstream git@github.com:fast-excel/fastexcel.git
 git remote set-url --push upstream no-pushing
 ```
 
 Running `git remote -v` can verify if the configuration is correct.
-
 
 ### Branch definition
 
@@ -162,16 +164,19 @@ The directory structure for single-language documents is as follows:
 ### Documentation Writing Guidelines
 
 - Use file paths with the `.md` extension
+
 ```markdown
 [Example](docs/quickstart/example.md)
 ```
 
 - Use paths relative to the docs/ directory
+
 ```markdown
 [Example](docs/quickstart/example.md)
 ```
 
 - Image files must be stored in the `static/img` directory and referenced using relative directory paths.
+
 ```markdown
 [img](/img/docs/fill/listFill_file.png)
 ```
@@ -207,7 +212,6 @@ yarn build
 ```
 
 This command generates static content into the `build` directory and can be served using any static contents hosting service.
-
 
 ### Document Format Inspection
 

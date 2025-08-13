@@ -4,14 +4,17 @@ title: '格式转换'
 ---
 
 # 格式转换
+
 FastExcel 支持日期、数字、自定义格式转换。
 
 ## 概述
+
 在使用过程中，我们可能需要对读取或写入的数据进行特定格式的转换。FastExcel 提供了灵活的转换器机制，允许用户自定义数据转换规则，以满足各种业务需求。
 
 ## 示例
 
 ### POJO 类
+
 ```java
 @Getter
 @Setter
@@ -29,6 +32,7 @@ public class ConverterData {
 ```
 
 ### 转换器
+
 ```java
 public class CustomStringStringConverter implements Converter<String> {
     @Override
@@ -54,6 +58,7 @@ public class CustomStringStringConverter implements Converter<String> {
 ```
 
 ### 代码示例
+
 ```java
 @Test
 public void converterRead() {

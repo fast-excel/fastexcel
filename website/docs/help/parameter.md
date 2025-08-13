@@ -112,7 +112,6 @@ All parameters inherit from `BasicParameter`.
 | locale              | Empty         | DeepL Translate_ The world's most accurate translator                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
 | filedCacheLocation  | THREAD_LOCAL  | Parsing the fields of the class will have a cache. Before, it was placed globally in a Map. After 3.3.0, it is placed in ThreadLocal by default, meaning that each read and write will reparse the class. You can reflectively modify the annotations of the class, and concurrent scenarios will not affect each other.<br/>THREAD_LOCAL: Default, the cache will be cleared each time, but not the same time.<br/>MEMORY: Placed in global memory, theoretically better performance, but cannot modify the exported object through reflection, exclusion, etc.<br/>NONE: No caching, performance will degrade, consider using it when reading and writing at the same time, and you need to reflectively exclude, modify objects, etc. |
 
-
 ## Reading Operations
 
 ### ReadBasicParameter
@@ -154,7 +153,6 @@ All parameters inherit from `BasicParameter`.
 | sheetHidden     | false         | Normal Hidden Status                                                                           |
 | sheetVeryHidden | false         | Absolute Hidden State                                                                          |
 | numRows         | 0             | Read the specified number of rows. 0 means no limit on the number of rows, i.e. read all rows. |
-
 
 ## Writing Operations
 

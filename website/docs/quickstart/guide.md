@@ -6,10 +6,11 @@ title: 'Guide'
 # Installation
 
 ## Compatibility Information
+
 The following table lists the minimum Java language version requirements for each version of the FastExcel library:
 
-| Version | JDK Version Support Range | Notes                          |
-|---------|:-------------------------:|--------------------------------|
+| Version | JDK Version Support Range | Notes                                                  |
+|---------|---------------------------|--------------------------------------------------------|
 | 1.2.x   | JDK8 - JDK21              | Current master branch, fully compatible with EasyExcel |
 | 1.1.x   | JDK8 - JDK21              | Current master branch, fully compatible with EasyExcel |
 | 1.0.x   | JDK8 - JDK21              | Current master branch, fully compatible with EasyExcel |

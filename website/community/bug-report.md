@@ -12,6 +12,7 @@ We appreciate all the feedback and suggestions you have. If you find any bugs du
 Before creating a new issue, please ensure you have completed the following preparatory steps. This will help avoid duplicate work and save both your time and the maintainers' time.
 
 ### Read the Documentation
+
 - Please read the `README` file and the official documentation in the project to see if there are any solutions to the problems mentioned.
 
 ### Search Existing Issues
@@ -21,6 +22,7 @@ Before creating a new issue, please ensure you have completed the following prep
 - If an unresolved issue is closed for some reason, please **comment and provide additional details** to reopen it.
 
 ### Update to the latest version
+
 Please make sure you are using the latest stable version of the project or the latest code from the main branch. Many issues have been resolved in newer versions.
 
 ---

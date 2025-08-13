@@ -37,7 +37,7 @@ All configurations are inherited. The configuration of `Workbook` will be inheri
 
 ---
 
-##  WriteHandler
+## WriteHandler
 
 ### Overview
 
@@ -52,7 +52,6 @@ FastExcel provides the following WriteHandler interfaces for handling different 
 | **CellWriteHandler**  | Interceptor at the cell level, allows custom operations on cell data and styles.                                   |
 | **RowWriteHandler**   | Row-level interceptor, used to perform additional operations after row data is written.                            |
 | **SheetWriteHandler** | Worksheet-level interceptor, used to set worksheet-level properties (such as freeze panes, drop-down lists, etc.). |
-
 
 ### Use
 
@@ -194,12 +193,11 @@ public void dropdownWrite() {
 
 ---
 
-##  ReadListener
+## ReadListener
 
 ### Overview
 
 `ReadListener` is an interface provided by FastExcel for processing each row of data when reading an Excel file. It is one of the core components of FastExcel, allowing developers to implement custom logic to handle data rows, process headers, and even perform specific operations after reading is complete.
-
 
 ### Methods
 
@@ -277,7 +275,6 @@ public void simpleRead() {
         .doRead();
 }
 ```
-
 
 #### Processing Table Headers
 
@@ -373,6 +370,7 @@ public void pageRead() {
 ```
 
 > **Note**：
+>
 > - `PageReadListener` is a convenient utility class provided by FastExcel that supports batch processing based on pagination.
 > - The default page size is 1, which can be specified using the constructor.
 
@@ -385,6 +383,7 @@ public void pageRead() {
 `AnalysisEventListener` is the core listener used in FastExcel for processing Excel data. It is based on an event-driven mechanism, allowing developers to perform custom operations when reading each row of data and to perform corresponding processing after all data has been parsed. It is typically used for streaming large amounts of data and is suitable for scenarios that require processing large data volumes and performing batch operations (such as batch insertion into a database).
 
 Core Features:
+
 - **Line-by-line reading**: `AnalysisEventListener` reads data from Excel files line by line, executing the `invoke` method when reading each line of data, making it suitable for streaming processing.
 - **Memory control**: You can set `BATCH_COUNT` to control the amount of data processed each time, preventing memory overflow.
 - **Batch Processing**: You can cache a certain amount of data and process it in batches, suitable for scenarios with large data volumes.
@@ -576,10 +575,12 @@ public void readWithExceptionHandling() {
 #### How to choose
 
 Use `AnalysisEventListener`:
+
 - If you need to control memory consumption, batch process data, or handle complex read logic (such as paginated reading or batch writing to a database).
 - Suitable for processing large datasets, offering greater flexibility.
 
 Use `ReadListener`:
+
 - If you want to simplify your code and do not have complex memory control requirements, and only need to handle the logic for each row of data.
 - Suitable for simple Excel data reading and exception handling scenarios.
 

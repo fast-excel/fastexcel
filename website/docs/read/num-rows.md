@@ -4,12 +4,13 @@ title: 'Rows'
 ---
 
 # Reading Rows
+
 This chapter introduces how to read a specified number of rows.
 
 ## Overview
 
-During data analysis and processing, quickly viewing the first few rows of an Excel file can help us better understand the data structure and content. 
-By default, FastExcel reads all data from the entire Excel file. 
+During data analysis and processing, quickly viewing the first few rows of an Excel file can help us better understand the data structure and content.
+By default, FastExcel reads all data from the entire Excel file.
 However, by setting the `numRows` parameter, you can limit the number of rows to read. 0 means no limit on the number of rows, i.e., read all rows. The row count includes header rows.
 
 ## All Sheets
@@ -33,6 +34,7 @@ public void allSheetRead() {
 ## Single Sheet
 
 ### Code Example
+
 ```java
 @Test
 public void singleSheetRead() {

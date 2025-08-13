@@ -4,15 +4,19 @@ title: 'Extra'
 ---
 
 # Extra Information
+
 This chapter introduces how to write extra information such as comments, hyperlinks, formulas, merged cells, etc.
 
 ## Comments
 
 ### Overview
+
 Add comments to specific cells through interceptors, suitable for annotations or special reminders.
 
 ### Code Example
+
 Custom interceptor
+
 ```java
 @Slf4j
 public class CommentWriteHandler implements RowWriteHandler {
@@ -33,6 +37,7 @@ public class CommentWriteHandler implements RowWriteHandler {
 ```
 
 Usage
+
 ```java
 @Test
 public void commentWrite() {
@@ -47,14 +52,17 @@ public void commentWrite() {
 ```
 
 ### Result
+
 ![img](/img/docs/write/commentWrite.png)
 
 ---
 
 ## Hyperlinks
+
 Write extra hyperlink information
 
 ### POJO Class
+
 ```java
 @Getter
 @Setter
@@ -65,6 +73,7 @@ public class WriteCellDemoData {
 ```
 
 ### Code Example
+
 ```java
 @Test
 public void writeHyperlinkDataWrite() {
@@ -80,14 +89,17 @@ public void writeHyperlinkDataWrite() {
 ```
 
 ### Result
+
 ![img](/img/docs/write/writeCellDataWrite.png)
 
 ---
 
 ## Formulas
+
 Write extra formula information
 
 ### POJO Class
+
 ```java
 @Getter
 @Setter
@@ -98,6 +110,7 @@ public class WriteCellDemoData {
 ```
 
 ### Code Example
+
 ```java
 @Test
 public void writeFormulaDataWrite() {
@@ -113,6 +126,7 @@ public void writeFormulaDataWrite() {
 ```
 
 ### Result
+
 ![img](/img/docs/write/writeCellDataWrite.png)
 
 ---
@@ -120,9 +134,11 @@ public void writeFormulaDataWrite() {
 ## Template-based Writing
 
 ### Overview
+
 Supports using existing template files and filling data into templates, suitable for standardized output.
 
 ### Code Example
+
 ```java
 @Test
 public void templateWrite() {
@@ -141,11 +157,13 @@ public void templateWrite() {
 ## Merged Cells
 
 ### Overview
+
 Supports merged cells through annotations or custom merge strategies.
 
 ### Code Example
 
 Annotation approach
+
 ```java
 @Getter
 @Setter
@@ -164,6 +182,7 @@ public class DemoMergeData {
 ```
 
 Custom merge strategy
+
 ```java
 public class CustomMergeStrategy extends AbstractMergeStrategy {
     @Override
@@ -175,6 +194,7 @@ public class CustomMergeStrategy extends AbstractMergeStrategy {
 ```
 
 Usage
+
 ```java
 @Test
 public void mergeWrite() {
@@ -194,6 +214,7 @@ public void mergeWrite() {
 ```
 
 ### Result
+
 ![img](/img/docs/write/mergeWrite.png)
 
 ---
@@ -201,11 +222,13 @@ public void mergeWrite() {
 ## Custom Interceptors
 
 ### Overview
+
 Implement custom logic (such as adding dropdowns) through interceptor operations.
 
 ### Code Example
 
 Setting dropdowns
+
 ```java
 public class DropdownWriteHandler implements SheetWriteHandler {
     @Override
@@ -220,4 +243,5 @@ public class DropdownWriteHandler implements SheetWriteHandler {
 ```
 
 ### Result
+
 ![img](/img/docs/write/customHandlerWrite.png)

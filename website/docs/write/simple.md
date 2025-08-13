@@ -4,15 +4,18 @@ title: 'Simple'
 ---
 
 # Simple Writing
+
 This chapter introduces how to use FastExcel to perform simple Excel writing operations.
 
 ## Overview
-Use FastExcel for simple Excel data writing to quickly write entity objects to Excel files. 
+
+Use FastExcel for simple Excel data writing to quickly write entity objects to Excel files.
 This is the most basic and commonly used writing approach.
 
 ## Code Examples
 
 ### POJO Class
+
 The `DemoData` POJO class corresponding to the Excel structure:
 
 ```java
@@ -47,12 +50,12 @@ private List<DemoData> data() {
 }
 ```
 
-
 ### Writing Methods
 
 FastExcel provides multiple writing methods, including `Lambda` expressions, data lists, `ExcelWriter` objects, etc.
 
 #### `Lambda` Expression
+
 ```java
 @Test
 public void simpleWrite() {
@@ -65,6 +68,7 @@ public void simpleWrite() {
 ```
 
 #### Data List
+
 ```java
 @Test
 public void simpleWrite() {
@@ -77,6 +81,7 @@ public void simpleWrite() {
 ```
 
 #### `ExcelWriter` Object
+
 ```java
 @Test
 public void simpleWrite() {

@@ -4,14 +4,17 @@ title: 'Format'
 ---
 
 # Formatting
+
 This chapter introduces data formatting when writing data.
 
 ## Custom Format Writing
 
 ### Overview
+
 Supports date, number, or other custom formats through annotations.
 
 ### POJO Class
+
 ```java
 @Getter
 @Setter
@@ -31,6 +34,7 @@ public class ConverterData {
 ```
 
 ### Code Example
+
 ```java
 @Test
 public void converterWrite() {
@@ -42,4 +46,5 @@ public void converterWrite() {
 ```
 
 ### Result
+
 ![img](/img/docs/write/converterWrite.png)

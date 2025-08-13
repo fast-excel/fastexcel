@@ -4,14 +4,17 @@ title: 'Image'
 ---
 
 # Images
+
 This chapter introduces how to export files containing images.
 
 ## Image Export
 
 ### Overview
+
 Supports exporting images through various methods including files, streams, byte arrays, URLs, etc.
 
 #### POJO Class
+
 ```java
 @Getter
 @Setter
@@ -29,6 +32,7 @@ public class ImageDemoData {
 ```
 
 #### Code Example
+
 ```java
 @Test
 public void imageWrite() throws Exception {
@@ -49,4 +53,5 @@ public void imageWrite() throws Exception {
 ```
 
 ### Result
+
 ![img](/img/docs/write/imgWrite.png)

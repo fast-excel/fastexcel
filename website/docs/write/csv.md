@@ -4,9 +4,11 @@ title: 'CSV'
 ---
 
 # Writing CSV Files
+
 This chapter introduces how to use FastExcel to write custom CSV files.
 
 ## Overview
+
 FastExcel writes CSV files through different parameter configurations. It uses [Apache Commons CSV](https://commons.apache.org/proper/commons-csv) as the underlying implementation and also supports direct configuration through [CSVFormat](https://commons.apache.org/proper/commons-csv/apidocs/org/apache/commons/csv/CSVFormat.html) settings to achieve writing objectives.
 
 The main parameters are as follows:
@@ -30,7 +32,9 @@ The following sections will explain each parameter in detail with code examples.
 `delimiter` specifies the field separator in CSV files. The default value is a comma `,`. Additionally, FastExcel provides constants in `CsvConstant` to simplify usage.
 
 #### Code Example
+
 If the CSV file uses `\u0000` as the separator, you can configure it as follows:
+
 ```java
 @Test
 public void delimiterDemo() {
@@ -48,6 +52,7 @@ public void delimiterDemo() {
 > Note: This cannot be the same as the `recordSeparator` setting. It's recommended to use in combination with `QuoteMode`.
 
 #### Code Example
+
 ```java
 @Test
 public void quoteDemo() {
@@ -64,6 +69,7 @@ public void quoteDemo() {
 `recordSeparator` specifies the line separator in the file. Different operating systems may use different line separators (for example, Windows uses `CRLF`, while Unix/Linux uses `LF`).
 
 #### Code Example
+
 ```java
 @Test
 public void recordSeparatorDemo() {
@@ -77,10 +83,11 @@ public void recordSeparatorDemo() {
 
 ### nullString
 
-`nullString` is used to replace `null` values with a specific string when writing to the file. 
+`nullString` is used to replace `null` values with a specific string when writing to the file.
 For example, you can replace `null` objects with the string `"N/A"`.
 
 #### Code Example
+
 ```java
 @Test
 public void nullStringDemo() {
@@ -97,6 +104,7 @@ public void nullStringDemo() {
 `escape` specifies the escape character. When `escape` is used, the output CSV will preserve and display the content.
 
 #### Code Example
+
 ```java
 @Test
 public void escapeDemo() {

@@ -23,12 +23,14 @@ title: '贡献指南'
 - 改进或完善文档
 
 **原则**：
+
 - 任何有助于项目改进的 PR 都值得鼓励！
 - 贡献一个新的功能，请先在 `issue` 或 `discussion` 中提出和讨论。我们不会合并**未经讨论和确认的**的功能
 
 ---
 
 ## 贡献代码
+
 所有改进均可通过 Pull Request (PR) 实现。在提交 Pull Request 前，请熟悉以下指南：
 
 ### 工作区准备
@@ -42,23 +44,25 @@ title: '贡献指南'
 确保您已注册 GitHub 账号，并按照以下步骤完成本地开发环境配置：
 
 **Fork 仓库**：在 FastExcel 的 [GitHub 页面](https://github.com/fast-excel/fastexcel) 点击 `Fork` 按钮，将项目复制到您的 GitHub 账户下，
+
 ```bash
 https://github.com/<your-username>/fastexcel
 ```
 
 **克隆代码库**：运行以下命令将 Fork 的项目克隆到本地：
+
 ```bash
 git clone git@github.com:<your-username>/fastexcel.git
 ```
 
 **设置上游仓库**：将官方仓库设置为 `upstream`，方便同步更新：
+
 ```bash
 git remote add upstream git@github.com:fast-excel/fastexcel.git
 git remote set-url --push upstream no-pushing
 ```
 
 运行 `git remote -v` 可检查配置是否正确。
-
 
 ### 分支定义
 
@@ -160,16 +164,19 @@ Docusaurus 支持国际化，主要需要维护的文档目录结构如下:
 ### 文档编写指南
 
 - 使用带有 `.md` 扩展名的文件路径
+
 ```markdown
 [Example](docs/quickstart/example.md)
 ```
 
 - 使用相对于 `docs/` 目录的路径
+
 ```markdown
 [Example](docs/quickstart/example.md)
 ```
 
 - 图片文件需要存储在 `static/img` 目录，并使用相对目录的形式引用.
+
 ```markdown
 [img](/img/docs/fill/listFill_file.png)
 ```
@@ -206,7 +213,6 @@ yarn build
 
 此命令将生成静态内容到`build`目录中，并且可以使用任何静态内容托管服务。
 
-
 ### 文档格式校验
 
 FastExcel 使用 [markdownlint-cli2](https://github.com/DavidAnson/markdownlint-cli2) 来检查文档格式。您在编写了相关 Markdown 文章后，可以在本地执行以下命令，来预先检查 Markdown 的格式内容是否符合要求:
@@ -222,7 +228,6 @@ yarn md-lint-fix
 
 - Markdown 文章的相关格式规则可以参考 [Markdown-lint-rules](https://github.com/DavidAnson/markdownlint/blob/main/doc/Rules.md)
 - 项目中的 Markdown 格式配置文件位于: [.markdownlint-cli2.jsonc](https://github.com/fast-excel/fastexcel/blob/main/website/.markdownlint-cli2.jsonc)
-
 
 ---
 

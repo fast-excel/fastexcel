@@ -4,19 +4,25 @@ title: 'Simple'
 ---
 
 # Simple Reading
+
 This chapter introduces how to use FastExcel to perform simple Excel reading operations.
 
 ## Data Listeners
+
 ### Overview
+
 FastExcel provides a listener mechanism for processing each row of data while reading Excel files.
 
 ### Usage
+
 Data listeners need to be instantiated and support various usage patterns.
 
 #### Instantiation
+
 Listeners cannot be managed by Spring and must be re-instantiated each time an Excel file is read.
 
 #### `Lambda` Expressions
+
 ```java
 @Test
 public void simpleRead() {
@@ -31,6 +37,7 @@ public void simpleRead() {
 ```
 
 #### Anonymous Inner Classes
+
 ```java
 @Test
 public void simpleRead() {
@@ -51,6 +58,7 @@ public void simpleRead() {
 ```
 
 #### Data Listeners
+
 ```java
 @Test
 public void simpleRead() {
@@ -65,12 +73,15 @@ public void simpleRead() {
 ---
 
 ## POJO Classes and Listeners
+
 ### Overview
 
 FastExcel provides a simple way to read Excel files. Users only need to define a POJO class to represent the data structure, then read data through FastExcel's listener mechanism.
 
 ### POJO Class
+
 The `DemoData` POJO class corresponding to the Excel structure:
+
 ```java
 @Getter
 @Setter
@@ -83,6 +94,7 @@ public class DemoData {
 ```
 
 ### Data Listener
+
 `DemoDataListener` is a custom listener used to process data read from Excel.
 
 ```java
@@ -119,9 +131,11 @@ public void simpleRead() {
 ## Without POJO Classes and Listeners
 
 ### Overview
+
 FastExcel supports reading Excel files directly without defining POJO classes, using `Map<Integer, String>` to read data directly, where the key is the **column index** and the value is the **cell data**.
 
 ### Data Listener
+
 ```java
 @Slf4j
 public class NoModelDataListener extends AnalysisEventListener<Map<Integer, String>> {
@@ -143,9 +157,11 @@ public class NoModelDataListener extends AnalysisEventListener<Map<Integer, Stri
 ## Synchronous Reading
 
 ### Overview
+
 Use the `doReadSync` method to directly read Excel data into a list **in memory**. This method is recommended for scenarios with **small data volumes**. The read data can be either a list of POJO objects or a list of Maps.
 
 ### POJO Class
+
 The `DemoData` POJO class corresponding to the Excel structure:
 
 ```java
@@ -162,6 +178,7 @@ public class DemoData {
 ### Code Examples
 
 #### Reading as POJO Object List
+
 ```java
 @Test
 public void synchronousReadToObjectList() {
@@ -180,6 +197,7 @@ public void synchronousReadToObjectList() {
 ```
 
 #### Reading as Map List
+
 When not using POJOs, each row can be read as a Map, where the key is the column index and the value is the cell content.
 
 ```java

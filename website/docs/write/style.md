@@ -4,14 +4,17 @@ title: 'Style'
 ---
 
 # Style
+
 This chapter introduces style settings when writing data.
 
 ## Annotations
 
 ### Overview
+
 Set cell styles through annotations in entity classes, including font, background color, row height, etc.
 
 ### POJO Class
+
 ```java
 @Getter
 @Setter
@@ -42,6 +45,7 @@ public class DemoStyleData {
 ```
 
 ### Code Example
+
 ```java
 @Test
 public void annotationStyleWrite() {
@@ -54,6 +58,7 @@ public void annotationStyleWrite() {
 ```
 
 ### Result
+
 ![img](/img/docs/write/annotationStyleWrite.png)
 
 ---
@@ -61,9 +66,11 @@ public void annotationStyleWrite() {
 ## Built-in Interceptors
 
 ### Overview
+
 Use `HorizontalCellStyleStrategy` to set styles for headers and content separately.
 
 ### Code Example
+
 ```java
 @Test
 public void handlerStyleWrite() {
@@ -96,6 +103,7 @@ public void handlerStyleWrite() {
 ```
 
 ### Result
+
 ![img](/img/docs/write/handlerStyleWrite.png)
 
 ---
@@ -103,10 +111,13 @@ public void handlerStyleWrite() {
 ## Custom Interceptors
 
 ### Overview
+
 If existing strategies cannot meet requirements, you can implement the `CellWriteHandler` interface for complete custom control over styling.
 
 ### Code Example
+
 Custom interceptor
+
 ```java
 @Slf4j
 public class CustomCellStyleWriteHandler implements CellWriteHandler {
@@ -135,6 +146,7 @@ public class CustomCellStyleWriteHandler implements CellWriteHandler {
 ```
 
 Usage
+
 ```java
 @Test
 public void customCellStyleWrite() {
@@ -152,9 +164,11 @@ public void customCellStyleWrite() {
 ## Custom POI Styles
 
 ### Overview
+
 Directly manipulate POI's `CellStyle`, suitable for precise style control.
 
 ### Code Example
+
 ```java
 @Test
 public void poiStyleWrite() {
@@ -186,9 +200,11 @@ public void poiStyleWrite() {
 ## Column Width and Row Height
 
 ### Overview
+
 Control column width and row height through annotations, suitable for scenarios with specific table format requirements.
 
 ### POJO Class
+
 ```java
 @Getter
 @Setter
@@ -210,6 +226,7 @@ public class WidthAndHeightData {
 ```
 
 ### Code Example
+
 ```java
 @Test
 public void widthAndHeightWrite() {
@@ -222,4 +239,5 @@ public void widthAndHeightWrite() {
 ```
 
 ### Result
+
 ![img](/img/docs/write/widthAndHeightWrite.png)
