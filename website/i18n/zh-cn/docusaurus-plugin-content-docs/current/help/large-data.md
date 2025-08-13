@@ -8,7 +8,7 @@ title: '大数据量文件'
 ## 读取
 
 ### 概述
-当需要读取 10M 大小以上的文件时,Excel 03 没有办法处理，相对内存占用大很多。Excel 07 版本有个共享字符串[共享字符串](https://docs.microsoft.com/zh-cn/office/open-xml/working-with-the-shared-string-table)的概念，这个会非常占用内存，如果全部读取到内存的话，大概是 Excel 文件的大小的 3-10 倍，所以 FastExcel 用先存储文件的，然后再反序列化去读取的策略来节约内存。当然需要通过文件反序列化以后，效率会降低，大概降低 30-50%（不一定，也看命中率，可能会超过100%）。
+当需要读取 10M 大小以上的文件时,Excel 03 没有办法处理，相对内存占用大很多。Excel 07 版本有个[共享字符串](https://learn.microsoft.com/en-us/office/open-xml/spreadsheet/working-with-the-shared-string-table)的概念，这个会非常占用内存，如果全部读取到内存的话，大概是 Excel 文件的大小的 3-10 倍，所以 FastExcel 用先存储文件的，然后再反序列化去读取的策略来节约内存。当然需要通过文件反序列化以后，效率会降低，大概降低 30-50%（不一定，也看命中率，可能会超过100%）。
 
 如果对读取效率感觉还能接受，就用默认的，永久占用（单个 Excel 读取整个过程）一般不会超过50M(大概率就30M)，剩下临时的 GC 会很快回收。
 
