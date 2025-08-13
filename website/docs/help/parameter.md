@@ -97,7 +97,7 @@ WriteTable  --|>  WriteBasicParameter
 WriteWorkbook  --|>  WriteBasicParameter
 ```
 
-## General parameters
+## General Parameters
 
 All parameters inherit from `BasicParameter`.
 

@@ -65,7 +65,7 @@ FastExcel provides the following WriteHandler interfaces for handling different 
 
 ### Example
 
-#### Set cell style
+#### Set Cell Style
 
 Set the background color to yellow and font color to blue for all content cells.
 
@@ -228,7 +228,7 @@ public void dropdownWrite() {
 
 ### Example
 
-#### Process row data
+#### Process Row Data
 
 Customise a `ReadListener`
 
@@ -279,7 +279,7 @@ public void simpleRead() {
 ```
 
 
-#### Processing table headers
+#### Processing Table Headers
 
 Customise a `ReadListener`
 
@@ -317,7 +317,7 @@ public void readWithHead() {
 }
 ```
 
-#### Handling exceptions
+#### Handling Exceptions
 
 Customise a `ReadListener`
 
@@ -469,7 +469,7 @@ public void simpleRead() {
 }
 ```
 
-#### Processing table headers
+#### Processing Table Headers
 
 You can use the `invokeHead` method to obtain header information for handling dynamic header scenarios or for customising header data parsing.
 
@@ -559,7 +559,7 @@ public void readWithExceptionHandling() {
 }
 ```
 
-### Compared to `ReadListener`
+### Compared to ReadListener
 
 `AnalysisEventListener` and `ReadListener` are both interfaces provided by FastExcel, designed to allow developers to perform customised processing when reading Excel files. However, they have some key differences in terms of functionality and use cases.
 
@@ -575,14 +575,15 @@ public void readWithExceptionHandling() {
 
 #### How to choose
 
-- Use `AnalysisEventListener`:
+Use `AnalysisEventListener`:
 - If you need to control memory consumption, batch process data, or handle complex read logic (such as paginated reading or batch writing to a database).
 - Suitable for processing large datasets, offering greater flexibility.
 
-- Use `ReadListener`:
+Use `ReadListener`:
 - If you want to simplify your code and do not have complex memory control requirements, and only need to handle the logic for each row of data.
-    - Suitable for simple Excel data reading and exception handling scenarios.
-      In summary, `ReadListener` is a more simplified interface suitable for simpler scenarios, while `AnalysisEventListener` offers greater control and scalability, making it suitable for complex data processing requirements. Developers can choose the appropriate listener based on their actual needs.
+- Suitable for simple Excel data reading and exception handling scenarios.
+
+In summary, `ReadListener` is a more simplified interface suitable for simpler scenarios, while `AnalysisEventListener` offers greater control and scalability, making it suitable for complex data processing requirements. Developers can choose the appropriate listener based on their actual needs.
 
 ## Converter
 

@@ -143,9 +143,9 @@ This section describes common issues that may arise when using FastExcel.
 - **Q:** How to resolve dependency conflict issues?
 - **A:** Common dependency conflicts include POI, ehcache, commons-io, etc. It is recommended to check the dependency tree in the project, ensure that the versions used are compatible with FastExcel. You can use the Maven `dependency:tree` command to view the dependency tree.
 
-## 性能监控
-- **Q:** 如何监控FastExcel的性能？
-- **A:** 可以通过开启调试日志来监控FastExcel的性能。例如：
+## Performance Monitoring
+- **Q:** How to monitor the performance of FastExcel?
+- **A:** You can monitor the performance of FastExcel by enabling debug logging. For example:
 
   ```java
   LoggerContext lc = (LoggerContext) LoggerFactory.getILoggerFactory();
