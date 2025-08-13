@@ -25,7 +25,7 @@ public class CommentWriteHandler implements RowWriteHandler {
             // Create comment in first row, second column
             Comment comment = drawingPatriarch.createCellComment(
                 new XSSFClientAnchor(0, 0, 0, 0, (short) 1, 0, (short) 2, 1));
-            comment.setString(new XSSFRichTextString("Comment content"));
+            comment.setString(new XSSFRichTextString("批注内容"));
             sheet.getRow(0).getCell(1).setCellComment(comment);
         }
     }
@@ -41,7 +41,7 @@ public void commentWrite() {
     FastExcel.write(fileName, DemoData.class)
         .inMemory(Boolean.TRUE) // Comments must enable in-memory mode
         .registerWriteHandler(new CommentWriteHandler())
-        .sheet("Comment Example")
+        .sheet("批注示例")
         .doWrite(data());
 }
 ```
@@ -71,7 +71,7 @@ public void writeHyperlinkDataWrite() {
     String fileName = "writeCellDataWrite" + System.currentTimeMillis() + ".xlsx";
     WriteCellDemoData data = new WriteCellDemoData();
     // Set hyperlink
-    data.setHyperlink(new WriteCellData<>("Click to visit").hyperlink("https://example.com"));
+    data.setHyperlink(new WriteCellData<>("点击访问").hyperlink("https://example.com"));
 
     FastExcel.write(fileName, WriteCellDemoData.class)
         .sheet()
@@ -152,13 +152,13 @@ Annotation approach
 @EqualsAndHashCode
 public class DemoMergeData {
     @ContentLoopMerge(eachRow = 2) // Merge every 2 rows
-    @ExcelProperty("String Title")
+    @ExcelProperty("字符串标题")
     private String string;
 
-    @ExcelProperty("Date Title")
+    @ExcelProperty("日期标题")
     private Date date;
 
-    @ExcelProperty("Number Title")
+    @ExcelProperty("数字标题")
     private Double doubleData;
 }
 ```
@@ -182,13 +182,13 @@ public void mergeWrite() {
 
     // Annotation approach
     FastExcel.write(fileName, DemoMergeData.class)
-        .sheet("Merge Example")
+        .sheet("合并示例")
         .doWrite(data());
 
     // Custom merge strategy
     FastExcel.write(fileName, DemoData.class)
         .registerWriteHandler(new CustomMergeStrategy())
-        .sheet("Custom Merge")
+        .sheet("自定义合并")
         .doWrite(data());
 }
 ```
@@ -212,7 +212,7 @@ public class DropdownWriteHandler implements SheetWriteHandler {
     public void afterSheetCreate(SheetWriteHandlerContext context) {
         DataValidationHelper helper = context.getWriteSheetHolder().getSheet().getDataValidationHelper();
         CellRangeAddressList range = new CellRangeAddressList(1, 10, 0, 0); // Dropdown area
-        DataValidationConstraint constraint = helper.createExplicitListConstraint(new String[] {"Option 1", "Option 2"});
+        DataValidationConstraint constraint = helper.createExplicitListConstraint(new String[] {"选项1", "选项2"});
         DataValidation validation = helper.createValidation(constraint, range);
         context.getWriteSheetHolder().getSheet().addValidationData(validation);
     }

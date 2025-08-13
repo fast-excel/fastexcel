@@ -17,11 +17,11 @@ Supports setting multi-level headers by specifying main titles and subtitles thr
 @Setter
 @EqualsAndHashCode
 public class ComplexHeadData {
-    @ExcelProperty({"Main Title", "String Title"})
+    @ExcelProperty({"主标题", "字符串标题"})
     private String string;
-    @ExcelProperty({"Main Title", "Date Title"})
+    @ExcelProperty({"主标题", "日期标题"})
     private Date date;
-    @ExcelProperty({"Main Title", "Number Title"})
+    @ExcelProperty({"主标题", "数字标题"})
     private Double doubleData;
 }
 ```
@@ -54,9 +54,9 @@ public void dynamicHeadWrite() {
     String fileName = "dynamicHeadWrite" + System.currentTimeMillis() + ".xlsx";
 
     List<List<String>> head = Arrays.asList(
-        Collections.singletonList("Dynamic String Title"),
-        Collections.singletonList("Dynamic Number Title"),
-        Collections.singletonList("Dynamic Date Title"));
+        Collections.singletonList("动态字符串标题"),
+        Collections.singletonList("动态数字标题"),
+        Collections.singletonList("动态日期标题"));
 
     FastExcel.write(fileName)
         .head(head)

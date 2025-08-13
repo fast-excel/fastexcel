@@ -30,13 +30,13 @@ public class DemoStyleData {
     @HeadFontStyle(fontHeightInPoints = 30)
     @ContentStyle(fillPatternType = FillPatternTypeEnum.SOLID_FOREGROUND, fillForegroundColor = 40)
     @ContentFontStyle(fontHeightInPoints = 30)
-    @ExcelProperty("String Title")
+    @ExcelProperty("字符串标题")
     private String string;
 
-    @ExcelProperty("Date Title")
+    @ExcelProperty("日期标题")
     private Date date;
 
-    @ExcelProperty("Number Title")
+    @ExcelProperty("数字标题")
     private Double doubleData;
 }
 ```
@@ -90,7 +90,7 @@ public void handlerStyleWrite() {
 
     FastExcel.write(fileName, DemoData.class)
         .registerWriteHandler(styleStrategy)
-        .sheet("Style Template")
+        .sheet("样式模板")
         .doWrite(data());
 }
 ```
@@ -128,7 +128,7 @@ public class CustomCellStyleWriteHandler implements CellWriteHandler {
             writeFont.setFontHeightInPoints((short) 14); // Font size 14
             writeCellStyle.setWriteFont(writeFont);
 
-            log.info("Custom cell style applied: Row {}, Column {}", context.getRowIndex(), context.getColumnIndex());
+            log.info("已自定义单元格样式: 行 {}, 列 {}", context.getRowIndex(), context.getColumnIndex());
         }
     }
 }
@@ -142,7 +142,7 @@ public void customCellStyleWrite() {
 
     FastExcel.write(fileName, DemoData.class)
         .registerWriteHandler(new CustomCellStyleWriteHandler())
-        .sheet("Custom Style")
+        .sheet("自定义样式")
         .doWrite(data());
 }
 ```
@@ -176,7 +176,7 @@ public void poiStyleWrite() {
                 }
             }
         })
-        .sheet("POI Style")
+        .sheet("POI样式")
         .doWrite(data());
 }
 ```
@@ -197,14 +197,14 @@ Control column width and row height through annotations, suitable for scenarios 
 @HeadRowHeight(30)
 @ColumnWidth(25) // Default column width
 public class WidthAndHeightData {
-    @ExcelProperty("String Title")
+    @ExcelProperty("字符串标题")
     private String string;
 
-    @ExcelProperty("Date Title")
+    @ExcelProperty("日期标题")
     private Date date;
 
     @ColumnWidth(50) // Individually set column width
-    @ExcelProperty("Number Title")
+    @ExcelProperty("数字标题")
     private Double doubleData;
 }
 ```

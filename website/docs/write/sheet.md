@@ -68,7 +68,7 @@ public void tableWrite() {
     String fileName = "tableWrite" + System.currentTimeMillis() + ".xlsx";
 
     try (ExcelWriter excelWriter = FastExcel.write(fileName, DemoData.class).build()) {
-        WriteSheet writeSheet = FastExcel.writerSheet("Table Example").build();
+        WriteSheet writeSheet = FastExcel.writerSheet("Table示例").build();
         WriteTable table1 = FastExcel.writerTable(0).build();
         WriteTable table2 = FastExcel.writerTable(1).build();
 

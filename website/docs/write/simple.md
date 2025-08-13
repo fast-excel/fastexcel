@@ -20,11 +20,11 @@ The `DemoData` POJO class corresponding to the Excel structure:
 @Setter
 @EqualsAndHashCode
 public class DemoData {
-    @ExcelProperty("String Title")
+    @ExcelProperty("字符串标题")
     private String string;
-    @ExcelProperty("Date Title")
+    @ExcelProperty("日期标题")
     private Date date;
-    @ExcelProperty("Number Title")
+    @ExcelProperty("数字标题")
     private Double doubleData;
     @ExcelIgnore
     private String ignore; // Ignored field
