@@ -10,7 +10,7 @@ This section describes common issues that may arise when using FastExcel.
 ## Feature Limitations
 
 - **Q:** What functions does FastExcel support? What functions are not supported?
-- **A:** FastExcel supports efficient reading and writing operations for Excel files, including support for CSV format (starting from version 3.0.0-beta1). Unsupported functions include concurrent writing to a single file, reading and writing image macros, etc.
+- **A:** FastExcel supports efficient reading and writing operations for Excel files, including support for CSV format. Unsupported functions include concurrent writing to a single file, reading and writing image macros, etc.
 
 ## Choosing Write Operations
 
