@@ -33,7 +33,7 @@ jobs:
             CHANGED_MD=$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | grep -E '\.md$' || true)
           fi
           if [ -n "$CHANGED_MD" ]; then
-            markdownlint-cli2 $CHANGED_MD --config website/.markdownlint-cli2.jsonc > lint-result.txt || true
+            markdownlint-cli2 "$CHANGED_MD" --config website/.markdownlint-cli2.jsonc > lint-result.txt || true
             if [ -s lint-result.txt ]; then
               echo "Lint failed."
               # Output non-compliant file contents to comment-body.txt
