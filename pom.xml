@@ -35,7 +35,7 @@
         <poi.version>5.4.1</poi.version>
         <ehcache.version>3.9.11</ehcache.version>
         <commons-io.version>2.16.1</commons-io.version>
-        <slf4j-api.version>1.7.36</slf4j-api.version>
+        <slf4j-api.version>2.0.17</slf4j-api.version>
         <lombok.version>1.18.32</lombok.version>
         <spring-core.version>5.3.37</spring-core.version>
         <fastjson2.version>2.0.51</fastjson2.version>
