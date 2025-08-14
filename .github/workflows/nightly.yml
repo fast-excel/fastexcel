@@ -17,7 +17,7 @@ jobs:
       max-parallel: 4
     name: Test JDK ${{ matrix.java }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
