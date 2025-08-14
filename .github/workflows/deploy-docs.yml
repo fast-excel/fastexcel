@@ -16,7 +16,7 @@ jobs:
           node-version: 18
       - run: cd website && npm install
       - run: cd website && npm run build
-      - uses: peaceiris/actions-gh-pages@v3
+      - uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.DOC_PAT_TOKEN }}
           publish_dir: website/build
