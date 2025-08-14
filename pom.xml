@@ -40,7 +40,7 @@
         <spring-core.version>5.3.37</spring-core.version>
         <fastjson2.version>2.0.51</fastjson2.version>
         <spring-boot-starter-web.version>2.7.18</spring-boot-starter-web.version>
-        <spring-boot-starter-test.version>2.7.18</spring-boot-starter-test.version>
+        <spring-boot-starter-test.version>3.5.4</spring-boot-starter-test.version>
         <slf4j-simple.version>1.7.36</slf4j-simple.version>
         <jcl-over-slf4j.version>1.7.36</jcl-over-slf4j.version>
         <log4j-over-slf4j.version>1.7.36</log4j-over-slf4j.version>
