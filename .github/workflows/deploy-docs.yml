@@ -14,7 +14,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-      - run: cd website && npm ci
+      - run: cd website && npm install
       - run: cd website && npm run build
       - uses: peaceiris/actions-gh-pages@v3
         with:

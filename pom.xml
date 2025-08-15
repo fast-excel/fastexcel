@@ -33,7 +33,6 @@
         <maven.test.skip>true</maven.test.skip>
         <commons-csv.version>1.11.0</commons-csv.version>
         <poi.version>5.4.1</poi.version>
-        <poi-ooxml.version>5.4.1</poi-ooxml.version>
         <ehcache.version>3.9.11</ehcache.version>
         <commons-io.version>2.16.1</commons-io.version>
         <slf4j-api.version>1.7.36</slf4j-api.version>
@@ -117,7 +116,7 @@
             <dependency>
                 <groupId>org.apache.poi</groupId>
                 <artifactId>poi-ooxml</artifactId>
-                <version>${poi-ooxml.version}</version>
+                <version>${poi.version}</version>
                 <exclusions>
                     <exclusion>
                         <groupId>commons-io</groupId>
@@ -194,7 +193,6 @@
                 <version>${mockserver.version}</version>
                 <scope>test</scope>
             </dependency>
-
 
 
         </dependencies>
@@ -411,17 +409,17 @@
                         <importOrder>
                             <order>\#|</order>
                         </importOrder>
-                        <removeUnusedImports/>
-                        <trimTrailingWhitespace/>
-                        <endWithNewline/>
+                        <removeUnusedImports />
+                        <trimTrailingWhitespace />
+                        <endWithNewline />
                         <indent>
                             <spaces>true</spaces>
                             <spacesPerTab>4</spacesPerTab>
                         </indent>
                     </java>
                     <pom>
-                        <trimTrailingWhitespace/>
-                        <endWithNewline/>
+                        <trimTrailingWhitespace />
+                        <endWithNewline />
                         <indent>
                             <spaces>true</spaces>
                             <spacesPerTab>4</spacesPerTab>
@@ -459,7 +457,9 @@
                 <jdk>[9,)</jdk>
             </activation>
             <properties>
-                <surefire.jdk9plus.args>--add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/sun.reflect.annotation=ALL-UNNAMED</surefire.jdk9plus.args>
+                <surefire.jdk9plus.args>--add-opens=java.base/java.lang=ALL-UNNAMED
+                    --add-opens=java.base/java.util=ALL-UNNAMED
+                    --add-opens=java.base/sun.reflect.annotation=ALL-UNNAMED</surefire.jdk9plus.args>
             </properties>
         </profile>
         <profile>
