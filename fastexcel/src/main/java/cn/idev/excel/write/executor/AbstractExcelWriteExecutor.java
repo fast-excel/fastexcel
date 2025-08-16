@@ -217,6 +217,8 @@ public abstract class AbstractExcelWriteExecutor implements ExcelWriteExecutor {
             int index =
                     workbook.addPicture(imageData.getImage(), FileTypeUtils.getImageTypeFormat(imageData.getImage()));
             ClientAnchor anchor = helper.createClientAnchor();
+            drawing.createPicture(anchor, index);
+
             if (imageData.getTop() != null) {
                 anchor.setDy1(StyleUtil.getCoordinate(imageData.getTop()));
             }
@@ -242,7 +244,6 @@ public abstract class AbstractExcelWriteExecutor implements ExcelWriteExecutor {
             if (imageData.getAnchorType() != null) {
                 anchor.setAnchorType(imageData.getAnchorType().getValue());
             }
-            drawing.createPicture(anchor, index);
         }
     }
 
