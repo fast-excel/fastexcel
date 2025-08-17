@@ -3,21 +3,24 @@ id: 'head'
 title: 'Head'
 ---
 
-# 表头
-本章节将介绍读取 Excel 中的表头数据。
+# Headers
 
-## 读取表头数据
+This chapter introduces how to read header data from Excel files.
 
-### 概述
-可以通过重写监听器的 `invokeHead` 方法获取表头信息。
+## Reading Header Data
 
-### 数据监听器
+### Overview
+
+You can obtain header information by overriding the `invokeHead` method in the listener.
+
+### Data Listener
+
 ```java
 @Slf4j
 public class DemoHeadDataListener extends AnalysisEventListener<DemoData> {
     @Override
     public void invokeHead(Map<Integer, ReadCellData<?>> headMap, AnalysisContext context) {
-        log.info("解析到表头数据: {}", JSON.toJSONString(headMap));
+        log.info("Parsed header data: {}", JSON.toJSONString(headMap));
     }
 
     @Override
@@ -28,7 +31,8 @@ public class DemoHeadDataListener extends AnalysisEventListener<DemoData> {
 }
 ```
 
-### 代码示例
+### Code Example
+
 ```java
 @Test
 public void headerRead() {
@@ -42,12 +46,14 @@ public void headerRead() {
 
 ---
 
-## 多行表头读取
+## Multi-Row Header Reading
 
-### 概述
-通过设置 `headRowNumber` 参数或根据实体类的表头注解自动解析多行表头。
+### Overview
 
-### 代码示例
+Parse multi-row headers by setting the `headRowNumber` parameter or automatically based on header annotations in entity classes.
+
+### Code Example
+
 ```java
 @Test
 public void complexHeaderRead() {
@@ -55,7 +61,7 @@ public void complexHeaderRead() {
 
     FastExcel.read(fileName, DemoData.class, new DemoDataListener())
         .sheet()
-        // 设置多行表头的行数，默认为 1
+        // Set the number of header rows, default is 1
         .headRowNumber(2)
         .doRead();
 }
@@ -63,12 +69,14 @@ public void complexHeaderRead() {
 
 ---
 
-## 表头 POJO
+## Header POJO
 
-### 概述
-通过使用 `head()` 方法设置表头 POJO。
+### Overview
 
-### 代码示例
+Set header POJO using the `head()` method.
+
+### Code Example
+
 ```java
 @Test
 public void headerPojoRead() {

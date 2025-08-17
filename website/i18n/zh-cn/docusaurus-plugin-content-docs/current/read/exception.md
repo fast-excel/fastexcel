@@ -4,12 +4,15 @@ title: '异常处理'
 ---
 
 # 异常处理
+
 本章节将介绍如何处理异常。
 
 ## 概述
+
 通过重写监听器的 `onException` 方法处理数据转换或其他读取异常。
 
 ## 数据监听器
+
 ```java
 @Slf4j
 public class DemoExceptionListener extends AnalysisEventListener<ExceptionDemoData> {
@@ -31,6 +34,7 @@ public class DemoExceptionListener extends AnalysisEventListener<ExceptionDemoDa
 ```
 
 ## 代码示例
+
 ```java
 @Test
 public void exceptionRead() {

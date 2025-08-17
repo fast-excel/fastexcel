@@ -4,14 +4,17 @@ title: '简单写入'
 ---
 
 # 简单写入
+
 本章节介绍如何使用 FastExcel 完成简单 Excel 写入
 
 ## 概述
+
 使用 FastExcel 进行简单的 Excel 数据写入，可以快速地将实体对象写入 Excel 文件，是最基本、最常用的写入方式。
 
 ## 代码示例
 
 ### POJO 类
+
 与 Excel 结构对应的 POJO 类 `DemoData`
 
 ```java
@@ -46,12 +49,12 @@ private List<DemoData> data() {
 }
 ```
 
-
 ### 写入方式
 
 FastExcel 提供了多种写入方式，包括 `Lambda` 表达式、数据列表、`ExcelWriter` 对象等。
 
 #### `Lambda` 表达式
+
 ```java
 @Test
 public void simpleWrite() {
@@ -64,6 +67,7 @@ public void simpleWrite() {
 ```
 
 #### 数据列表
+
 ```java
 @Test
 public void simpleWrite() {
@@ -76,6 +80,7 @@ public void simpleWrite() {
 ```
 
 #### `ExcelWriter` 对象
+
 ```java
 @Test
 public void simpleWrite() {

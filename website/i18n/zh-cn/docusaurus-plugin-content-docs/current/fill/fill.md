@@ -4,14 +4,17 @@ title: '填充'
 ---
 
 # 填充
+
 本章节介绍如何使用 FastExcel 来填充数据到文件中。
 
 ## 简单填充
 
 ### 概述
+
 基于模板文件，通过对象或 Map 填充数据到 Excel 中。
 
 ### POJO 类
+
 ```java
 @Getter
 @Setter
@@ -24,6 +27,7 @@ public class FillData {
 ```
 
 ### 代码示例
+
 ```java
 @Test
 public void simpleFill() {
@@ -48,10 +52,13 @@ public void simpleFill() {
         .doFill(map);
 }
 ```
+
 ### 模板
+
 ![img](/img/docs/fill/simpleFill_file.png)
 
 ### 结果
+
 ![img](/img/docs/fill/simpleFill_result.png)
 
 ---
@@ -59,9 +66,11 @@ public void simpleFill() {
 ## 填充列表
 
 ### 概述
+
 填充多个数据项到模板列表中，支持内存批量操作和文件缓存分批填充。
 
 ### 代码示例
+
 ```java
 @Test
 public void listFill() {
@@ -83,9 +92,11 @@ public void listFill() {
 ```
 
 ### 模板
+
 ![img](/img/docs/fill/listFill_file.png)
 
 ### 结果
+
 ![img](/img/docs/fill/listFill_result.png)
 
 ---
@@ -93,9 +104,11 @@ public void listFill() {
 ## 复杂填充
 
 ### 概述
+
 在模板中填充多种数据类型，包括列表和普通变量。
 
 ### 代码示例
+
 ```java
 @Test
 public void complexFill() {
@@ -118,9 +131,11 @@ public void complexFill() {
 ```
 
 ### 模板
+
 ![img](/img/docs/fill/complexFill_file.png)
 
 ### 结果
+
 ![img](/img/docs/fill/complexFill_result.png)
 
 ---
@@ -128,9 +143,11 @@ public void complexFill() {
 ## 大数据量填充
 
 ### 概述
+
 优化大数据量填充性能，确保模板列表在最后一行，后续数据通过 `WriteTable` 填充。
 
 ### 代码示例
+
 ```java
 @Test
 public void complexFillWithTable() {
@@ -156,9 +173,11 @@ public void complexFillWithTable() {
 ```
 
 ### 模板
+
 ![img](/img/docs/fill/complexFillWithTable_file.png)
 
 ### 结果
+
 ![img](/img/docs/fill/complexFillWithTable_result.png)
 
 ---
@@ -166,9 +185,11 @@ public void complexFillWithTable() {
 ## 横向填充
 
 ### 概述
+
 将列表数据横向填充，适用于动态列数场景。
 
 ### 代码示例
+
 ```java
 @Test
 public void horizontalFill() {
@@ -188,9 +209,11 @@ public void horizontalFill() {
 ```
 
 ### 模板
+
 ![img](/img/docs/fill/horizontalFill_file.png)
 
 ### 结果
+
 ![img](/img/docs/fill/horizontalFill_result.png)
 
 ---
@@ -198,9 +221,11 @@ public void horizontalFill() {
 ## 多列表组合填充
 
 ### 概述
+
 支持多个列表同时填充，列表之间通过前缀区分。
 
 ### 代码示例
+
 ```java
 @Test
 public void compositeFill() {
@@ -222,7 +247,9 @@ public void compositeFill() {
 ```
 
 ### 模板
+
 ![img](/img/docs/fill/compositeFill_file.png)
 
 ### 结果
+
 ![img](/img/docs/fill/compositeFill_result.png)

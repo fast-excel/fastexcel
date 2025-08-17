@@ -3,15 +3,18 @@ id: 'extra'
 title: 'Extra'
 ---
 
-# 额外信息
-本章节将介绍如何读取额外的信息，如批注、超链接、合并单元格等。
+# Extra Information
 
-## 批注
+This chapter introduces how to read extra information such as comments, hyperlinks, merged cells, etc.
 
-### 概述
-读取额外的批注信息。
+## Comments
 
-### 数据监听器
+### Overview
+
+Read extra comment information.
+
+### Data Listener
+
 ```java
 @Slf4j
 public class DemoCommentExtraListener implements ReadListener<DemoData> {
@@ -23,15 +26,16 @@ public class DemoCommentExtraListener implements ReadListener<DemoData> {
 
     @Override
     public void extra(CellExtra extra, AnalysisContext context) {
-        log.info("读取到额外信息: {}", JSON.toJSONString(extra));
+        log.info("Read extra information: {}", JSON.toJSONString(extra));
         if(CellExtraTypeEnum.COMMENT == extra.getType()) {
-            log.info("批注信息: {}", extra.getText());
+            log.info("Comment information: {}", extra.getText());
         }
     }
 }
 ```
 
-### 代码示例
+### Code Example
+
 ```java
 @Test
 public void extraRead() {
@@ -46,12 +50,14 @@ public void extraRead() {
 
 ---
 
-## 超链接
+## Hyperlinks
 
-### 概述
-读取额外的超链接信息。
+### Overview
 
-### 数据监听器
+Read extra hyperlink information.
+
+### Data Listener
+
 ```java
 @Slf4j
 public class DemoHyperLinkExtraListener implements ReadListener<DemoData> {
@@ -63,15 +69,16 @@ public class DemoHyperLinkExtraListener implements ReadListener<DemoData> {
 
     @Override
     public void extra(CellExtra extra, AnalysisContext context) {
-        log.info("读取到额外信息: {}", JSON.toJSONString(extra));
+        log.info("Read extra information: {}", JSON.toJSONString(extra));
         if(CellExtraTypeEnum.HYPERLINK == extra.getType()) {
-            log.info("超链接信息: {}", extra.getText());
+            log.info("Hyperlink information: {}", extra.getText());
         }
     }
 }
 ```
 
-### 代码示例
+### Code Example
+
 ```java
 @Test
 public void extraRead() {
@@ -86,12 +93,14 @@ public void extraRead() {
 
 ---
 
-## 合并单元格
+## Merged Cells
 
-### 概述
-读取合并单元格范围信息。
+### Overview
 
-### 数据监听器
+Read merged cell range information.
+
+### Data Listener
+
 ```java
 @Slf4j
 public class DemoMergeExtraListener implements ReadListener<DemoData> {
@@ -103,15 +112,16 @@ public class DemoMergeExtraListener implements ReadListener<DemoData> {
 
     @Override
     public void extra(CellExtra extra, AnalysisContext context) {
-        log.info("读取到额外信息: {}", JSON.toJSONString(extra));
+        log.info("Read extra information: {}", JSON.toJSONString(extra));
         if(CellExtraTypeEnum.MERGE == extra.getType()) {
-            log.info("合并单元格范围: {} - {}", extra.getFirstRowIndex(), extra.getLastRowIndex());
+            log.info("Merged cell range: {} - {}", extra.getFirstRowIndex(), extra.getLastRowIndex());
         }
     }
 }
 ```
 
-### 代码示例
+### Code Example
+
 ```java
 @Test
 public void extraRead() {

@@ -21,13 +21,13 @@ function HomepageHeader() {
           </p>
           <div className={styles.buttons}>
             <Link
-                className="button button--secondary button--lg"
+                className={clsx("button button--secondary button--lg", styles.buttonWidth)}
                 to="/docs/quickstart/guide">
                 <Translate>quickstart</Translate>
             </Link>
 
             <Link
-                className="button button--secondary button--lg"
+                className={clsx("button button--secondary button--lg", styles.buttonWidth, styles.buttonWithIcon)}
                 to="https://github.com/fast-excel/fastexcel">
                 <img
                     src="img/github_icon.svg"

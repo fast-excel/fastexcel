@@ -3,17 +3,20 @@ id: 'sheet'
 title: 'Sheet'
 ---
 
-# Sheet 页
-本章节将介绍设置 Sheet 来读取数据的使用
+# Sheet
 
-## 读取多个 Sheet
+This chapter introduces how to configure Sheets to read data.
 
-### 概述
-可以读取 Excel 文件中的多个 Sheet，且同一个 Sheet 不可重复读取。
+## Reading Multiple Sheets
 
-### 代码示例
+### Overview
 
-#### 读取全部 Sheet
+You can read multiple Sheets from an Excel file, but the same Sheet cannot be read repeatedly.
+
+### Code Example
+
+#### Reading All Sheets
+
 ```java
 @Test
 public void readAllSheet() {
@@ -25,12 +28,13 @@ public void readAllSheet() {
 
 ---
 
-## 读取指定 Sheet
+## Reading Specific Sheets
 
-### 概述
-可以读取 Excel 文件具体的某个 Sheet，支持指定 Sheet 的索引或名称
+### Overview
 
-### 代码示例
+You can read a specific Sheet from an Excel file, supporting specification by Sheet index or name.
+
+### Code Example
 
 ```java
 @Test
@@ -38,9 +42,9 @@ public void readSingleSheet() {
     String fileName = "path/to/demo.xlsx";
 
     try (ExcelReader excelReader = FastExcel.read(fileName).build()) {
-        // Sheet 索引
+        // Sheet index
         ReadSheet sheet1 = FastExcel.readSheet(0).head(DemoData.class).registerReadListener(new DemoDataListener()).build();
-        // Sheet 名
+        // Sheet name
         ReadSheet sheet2 = FastExcel.readSheet("Sheet2").head(DemoData.class).registerReadListener(new DemoDataListener()).build();
         excelReader.read(sheet1, sheet2);
     }
@@ -49,12 +53,15 @@ public void readSingleSheet() {
 
 ---
 
-## 忽略隐藏 Sheet
+## Ignoring Hidden Sheets
 
-### 概述
-通过设置 `ignoreHiddenSheet` 参数为 true ，此时不会读取“隐藏”状态的 Sheet 中的数据。支持“普通隐藏”和“绝对隐藏”。
+### Overview
 
-### 代码示例
+By setting the `ignoreHiddenSheet` parameter to true, data from Sheets in "hidden" state will not be read.
+This supports both **"normal hidden"** and **"very hidden"** states.
+
+### Code Example
+
 ```java
 @Test
 public void exceptionRead() {
@@ -67,4 +74,4 @@ public void exceptionRead() {
 }
 ```
 
-> 微软 Excel 中，Sheet 有“普通隐藏(xlSheetHidden)”和“绝对隐藏(xlSheetVeryHidden)”两种状态，绝对隐藏可通过 `VBA` 来设置，此时隐藏的 Sheet 无法通过“取消隐藏”的操作来取消。
+> In Microsoft Excel, Sheets have two hidden states: "normal hidden (xlSheetHidden)" and "very hidden (xlSheetVeryHidden)". Very hidden can be set through `VBA`, and in this case, the hidden Sheet cannot be unhidden through the "Unhide" operation.

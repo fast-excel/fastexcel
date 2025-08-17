@@ -3,29 +3,32 @@ id: 'style'
 title: 'Style'
 ---
 
-# 样式
-本章节将介绍写入数据时的样式设置。
+# Style
 
-## 注解
+This chapter introduces style settings when writing data.
 
-### 概述
-通过实体类中的注解设置单元格样式，包括字体、背景颜色、行高等。
+## Annotations
 
-### POJO 类
+### Overview
+
+Set cell styles through annotations in entity classes, including font, background color, row height, etc.
+
+### POJO Class
+
 ```java
 @Getter
 @Setter
 @EqualsAndHashCode
-// 设置头部背景为红色
+// Set header background to red
 @HeadStyle(fillPatternType = FillPatternTypeEnum.SOLID_FOREGROUND, fillForegroundColor = 10)
-// 设置头部字体大小为20
+// Set header font size to 20
 @HeadFontStyle(fontHeightInPoints = 20)
-// 设置内容背景为绿色
+// Set content background to green
 @ContentStyle(fillPatternType = FillPatternTypeEnum.SOLID_FOREGROUND, fillForegroundColor = 17)
-// 设置内容字体大小为20
+// Set content font size to 20
 @ContentFontStyle(fontHeightInPoints = 20)
 public class DemoStyleData {
-    // 单独设置某列的头部和内容样式
+    // Individually set header and content styles for a specific column
     @HeadStyle(fillPatternType = FillPatternTypeEnum.SOLID_FOREGROUND, fillForegroundColor = 14)
     @HeadFontStyle(fontHeightInPoints = 30)
     @ContentStyle(fillPatternType = FillPatternTypeEnum.SOLID_FOREGROUND, fillForegroundColor = 40)
@@ -41,7 +44,8 @@ public class DemoStyleData {
 }
 ```
 
-### 代码示例
+### Code Example
+
 ```java
 @Test
 public void annotationStyleWrite() {
@@ -53,38 +57,41 @@ public void annotationStyleWrite() {
 }
 ```
 
-### 结果
+### Result
+
 ![img](/img/docs/write/annotationStyleWrite.png)
 
 ---
 
-## 内置拦截器
+## Built-in Interceptors
 
-### 概述
-通过 `HorizontalCellStyleStrategy` 为表头和内容分别设置样式。
+### Overview
 
-### 代码示例
+Use `HorizontalCellStyleStrategy` to set styles for headers and content separately.
+
+### Code Example
+
 ```java
 @Test
 public void handlerStyleWrite() {
     String fileName = "handlerStyleWrite" + System.currentTimeMillis() + ".xlsx";
 
-    // 定义表头样式
+    // Define header style
     WriteCellStyle headStyle = new WriteCellStyle();
-    headStyle.setFillForegroundColor(IndexedColors.RED.getIndex()); // 红色背景
+    headStyle.setFillForegroundColor(IndexedColors.RED.getIndex()); // Red background
     WriteFont headFont = new WriteFont();
-    headFont.setFontHeightInPoints((short) 20); // 字体大小为20
+    headFont.setFontHeightInPoints((short) 20); // Font size 20
     headStyle.setWriteFont(headFont);
 
-    // 定义内容样式
+    // Define content style
     WriteCellStyle contentStyle = new WriteCellStyle();
-    contentStyle.setFillForegroundColor(IndexedColors.GREEN.getIndex()); // 绿色背景
+    contentStyle.setFillForegroundColor(IndexedColors.GREEN.getIndex()); // Green background
     contentStyle.setFillPatternType(FillPatternType.SOLID_FOREGROUND);
     WriteFont contentFont = new WriteFont();
     contentFont.setFontHeightInPoints((short) 20);
     contentStyle.setWriteFont(contentFont);
 
-    // 使用策略设置样式
+    // Use strategy to set styles
     HorizontalCellStyleStrategy styleStrategy =
         new HorizontalCellStyleStrategy(headStyle, contentStyle);
 
@@ -95,37 +102,41 @@ public void handlerStyleWrite() {
 }
 ```
 
-### 结果
+### Result
+
 ![img](/img/docs/write/handlerStyleWrite.png)
 
 ---
 
-## 自定义拦截器
+## Custom Interceptors
 
-### 概述
-如果已有策略无法满足需求，可以实现 `CellWriteHandler` 接口对样式进行完全自定义控制。
+### Overview
 
-### 代码示例
-自定义拦截器
+If existing strategies cannot meet requirements, you can implement the `CellWriteHandler` interface for complete custom control over styling.
+
+### Code Example
+
+Custom interceptor
+
 ```java
 @Slf4j
 public class CustomCellStyleWriteHandler implements CellWriteHandler {
 
     @Override
     public void afterCellDispose(CellWriteHandlerContext context) {
-        // 仅设置内容单元格的样式
+        // Only set styles for content cells
         if (BooleanUtils.isNotTrue(context.getHead())) {
             WriteCellData<?> cellData = context.getFirstCellData();
             WriteCellStyle writeCellStyle = cellData.getOrCreateStyle();
 
-            // 设置背景颜色为黄色
+            // Set background color to yellow
             writeCellStyle.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
             writeCellStyle.setFillPatternType(FillPatternType.SOLID_FOREGROUND);
 
-            // 设置字体为蓝色
+            // Set font to blue
             WriteFont writeFont = new WriteFont();
             writeFont.setColor(IndexedColors.BLUE.getIndex());
-            writeFont.setFontHeightInPoints((short) 14); // 字体大小为14
+            writeFont.setFontHeightInPoints((short) 14); // Font size 14
             writeCellStyle.setWriteFont(writeFont);
 
             log.info("已自定义单元格样式: 行 {}, 列 {}", context.getRowIndex(), context.getColumnIndex());
@@ -134,7 +145,8 @@ public class CustomCellStyleWriteHandler implements CellWriteHandler {
 }
 ```
 
-使用
+Usage
+
 ```java
 @Test
 public void customCellStyleWrite() {
@@ -149,12 +161,14 @@ public void customCellStyleWrite() {
 
 ---
 
-## 自定义 POI 样式
+## Custom POI Styles
 
-### 概述
-直接操作 POI 的 `CellStyle`，适合对样式精确控制。
+### Overview
 
-### 代码示例
+Directly manipulate POI's `CellStyle`, suitable for precise style control.
+
+### Code Example
+
 ```java
 @Test
 public void poiStyleWrite() {
@@ -168,7 +182,7 @@ public void poiStyleWrite() {
                     Cell cell = context.getCell();
                     Workbook workbook = context.getWriteWorkbookHolder().getWorkbook();
 
-                    // 创建并设置样式
+                    // Create and set style
                     CellStyle cellStyle = workbook.createCellStyle();
                     cellStyle.setFillForegroundColor(IndexedColors.LIGHT_ORANGE.getIndex());
                     cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
@@ -183,19 +197,21 @@ public void poiStyleWrite() {
 
 ---
 
-## 列宽和行高
+## Column Width and Row Height
 
-### 概述
-通过注解控制列宽、行高，适用于对表格格式有特定要求的场景。
+### Overview
 
-### POJO类
+Control column width and row height through annotations, suitable for scenarios with specific table format requirements.
+
+### POJO Class
+
 ```java
 @Getter
 @Setter
 @EqualsAndHashCode
 @ContentRowHeight(20)
 @HeadRowHeight(30)
-@ColumnWidth(25) // 默认列宽
+@ColumnWidth(25) // Default column width
 public class WidthAndHeightData {
     @ExcelProperty("字符串标题")
     private String string;
@@ -203,13 +219,14 @@ public class WidthAndHeightData {
     @ExcelProperty("日期标题")
     private Date date;
 
-    @ColumnWidth(50) // 单独设置列宽
+    @ColumnWidth(50) // Individually set column width
     @ExcelProperty("数字标题")
     private Double doubleData;
 }
 ```
 
-### 代码示例
+### Code Example
+
 ```java
 @Test
 public void widthAndHeightWrite() {
@@ -221,5 +238,6 @@ public void widthAndHeightWrite() {
 }
 ```
 
-### 结果
+### Result
+
 ![img](/img/docs/write/widthAndHeightWrite.png)

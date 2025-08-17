@@ -4,16 +4,19 @@ title: 'POJO'
 ---
 
 # POJO
-本章节将介绍通过设置 POJO 来读取数据的使用
 
-## 按列名或列下标读取
+This chapter introduces how to read data by configuring POJO classes.
 
-### 概述
-您可以通过指定**列名**或**列下标**来读取 Excel 数据。这使得与动态生成的 Excel 文件交互更加灵活。
+## Reading by Column Name or Column Index
 
-### 示例代码
+### Overview
 
-#### POJO类
+You can read Excel data by specifying **column names** or **column indexes**. This makes interaction with dynamically generated Excel files more flexible.
+
+### Example Code
+
+#### POJO Class
+
 ```java
 @Getter
 @Setter
@@ -22,15 +25,16 @@ public class IndexOrNameData {
     @ExcelProperty(index = 2)
     private Double doubleData;
 
-    @ExcelProperty("字符串标题")
+    @ExcelProperty("String Title")
     private String string;
 
-    @ExcelProperty("日期标题")
+    @ExcelProperty("Date Title")
     private Date date;
 }
 ```
 
 #### 代码示例
+
 ```java
 @Test
 public void indexOrNameRead() {
@@ -44,12 +48,14 @@ public void indexOrNameRead() {
 
 ---
 
-## 单元格对象
+## Cell Objects
 
-### 概述
-使用 `CellData` 类型接收单元格数据以支持公式和多种单元格格式。
+### Overview
 
-### POJO类
+Use the `CellData` type to receive cell data to support formulas and various cell formats.
+
+### POJO Class
+
 ```java
 @Getter
 @Setter
@@ -62,7 +68,8 @@ public class CellDataReadDemoData {
 }
 ```
 
-### 代码示例
+### Code Example
+
 ```java
 @Test
 public void cellDataRead() {
@@ -76,24 +83,26 @@ public void cellDataRead() {
 
 ---
 
-## 无 POJO 类与监听器
+## Without POJO Classes and Listeners
 
-### 概述
-FastExcel 支持不定义 POJO 类直接读取 Excel 文件，通过 `Map<Integer, String>` 直接读取数据。
+### Overview
 
-### 数据监听器
+FastExcel supports reading Excel files directly without defining POJO classes, using `Map<Integer, String>` to read data directly.
+
+### Data Listener
+
 ```java
 @Slf4j
 public class NoModelDataListener extends AnalysisEventListener<Map<Integer, String>> {
 
     @Override
     public void invoke(Map<Integer, String> data, AnalysisContext context) {
-        log.info("读取到一条数据:{}", JSON.toJSONString(data));
+        log.info("Read one record: {}", JSON.toJSONString(data));
     }
 
     @Override
     public void doAfterAllAnalysed(AnalysisContext context) {
-        log.info("所有数据读取完成！");
+        log.info("All data reading completed!");
     }
 }
 ```

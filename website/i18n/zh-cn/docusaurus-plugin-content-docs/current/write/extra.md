@@ -4,15 +4,19 @@ title: '额外信息'
 ---
 
 # 额外信息
+
 本章节将介绍如何写入额外的信息，如批注、超链接、公式、合并单元格等。
 
 ## 批注
 
 ### 概述
+
 通过拦截器在特定单元格添加批注，适用于标注说明或特殊提示。
 
 ### 代码示例
+
 自定义拦截器
+
 ```java
 @Slf4j
 public class CommentWriteHandler implements RowWriteHandler {
@@ -33,6 +37,7 @@ public class CommentWriteHandler implements RowWriteHandler {
 ```
 
 使用
+
 ```java
 @Test
 public void commentWrite() {
@@ -47,14 +52,17 @@ public void commentWrite() {
 ```
 
 ### 结果
+
 ![img](/img/docs/write/commentWrite.png)
 
 ---
 
 ## 超链接
+
 写入额外的超链接信息
 
 ### POJO类
+
 ```java
 @Getter
 @Setter
@@ -65,6 +73,7 @@ public class WriteCellDemoData {
 ```
 
 ### 代码示例
+
 ```java
 @Test
 public void writeHyperlinkDataWrite() {
@@ -80,14 +89,17 @@ public void writeHyperlinkDataWrite() {
 ```
 
 ### 结果
+
 ![img](/img/docs/write/writeCellDataWrite.png)
 
 ---
 
 ## 公式
+
 写入额外的公式信息
 
 ### POJO类
+
 ```java
 @Getter
 @Setter
@@ -98,6 +110,7 @@ public class WriteCellDemoData {
 ```
 
 ### 代码示例
+
 ```java
 @Test
 public void writeFormulaDataWrite() {
@@ -113,6 +126,7 @@ public void writeFormulaDataWrite() {
 ```
 
 ### 结果
+
 ![img](/img/docs/write/writeCellDataWrite.png)
 
 ---
@@ -120,9 +134,11 @@ public void writeFormulaDataWrite() {
 ## 根据模板写入
 
 ### 概述
+
 支持使用已有的模板文件，在模板上填充数据，适用于规范化输出。
 
 ### 代码示例
+
 ```java
 @Test
 public void templateWrite() {
@@ -141,11 +157,13 @@ public void templateWrite() {
 ## 合并单元格
 
 ### 概述
+
 支持通过注解或自定义合并策略实现合并单元格。
 
 ### 代码示例
 
 注解方式
+
 ```java
 @Getter
 @Setter
@@ -164,6 +182,7 @@ public class DemoMergeData {
 ```
 
 自定义合并策略
+
 ```java
 public class CustomMergeStrategy extends AbstractMergeStrategy {
     @Override
@@ -175,6 +194,7 @@ public class CustomMergeStrategy extends AbstractMergeStrategy {
 ```
 
 使用
+
 ```java
 @Test
 public void mergeWrite() {
@@ -194,6 +214,7 @@ public void mergeWrite() {
 ```
 
 ### 结果
+
 ![img](/img/docs/write/mergeWrite.png)
 
 ---
@@ -201,11 +222,13 @@ public void mergeWrite() {
 ## 自定义拦截器
 
 ### 概述
+
 实现自定义逻辑（如添加下拉框等）需要通过拦截器操作。
 
 ### 代码示例
 
 设置下拉框
+
 ```java
 public class DropdownWriteHandler implements SheetWriteHandler {
     @Override
@@ -220,4 +243,5 @@ public class DropdownWriteHandler implements SheetWriteHandler {
 ```
 
 ### 结果
+
 ![img](/img/docs/write/customHandlerWrite.png)

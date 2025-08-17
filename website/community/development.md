@@ -27,16 +27,18 @@ Ensure that you have registered a GitHub account and follow the steps below to c
 
 **Fork the repository**: Click the `Fork` button on the FastExcel [GitHub page](https://github.com/fast-excel/fastexcel) to copy the project to your GitHub account.
 
-```
+```bash
 https://github.com/<your-username>/fastexcel
 ```
 
 **Clone Repository**: Run the following command to clone the forked project to your local machine:
+
 ```bash
 git clone git@github.com:<your-username>/fastexcel.git
 ```
 
 **Set Upstream Repository**: Set the official repository as `upstream` for easy synchronization of updates:
+
 ```bash
 git remote add upstream git@github.com:fast-excel/fastexcel.git
 git remote set-url --push upstream no-pushing
@@ -47,11 +49,13 @@ Running `git remote -v` can verify if the configuration is correct.
 ## Compilation
 
 Run the following command to compile
+
 ```bash
 mvn clean install -DskipTests
 ```
 
 To speed up the build process, you can:
+
 - Use `-DskipTests` to skip unit tests
 - Use Maven's parallel build feature, e.g., `mvn clean install -DskipTests -T 1C`
 

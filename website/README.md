@@ -36,7 +36,6 @@ yarn write-translations --locale zh-cn
 yarn write-translations --locale en
 ```
 
-
 ## Build
 
 ```bash

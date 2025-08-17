@@ -4,9 +4,11 @@ title: 'CSV'
 ---
 
 # 写入 CSV 文件
+
 本章节介绍如何使用 FastExcel 来写入自定义 CSV 文件。
 
 ## 概述
+
 FastExcel 通过不同的参数设计进行 CSV 的写入。其底层使用了[Apache Commons CSV](https://commons.apache.org/proper/commons-csv)，也支持通过直接设置[CSVFormat](https://commons.apache.org/proper/commons-csv/apidocs/org/apache/commons/csv/CSVFormat.html)进行设定来达成写入的目标。
 
 主要的参数如下：
@@ -30,7 +32,9 @@ FastExcel 通过不同的参数设计进行 CSV 的写入。其底层使用了[A
 `delimiter` 用于指定 CSV 文件中的字段分隔符。默认值为英文逗号 `,`。同时，FastExcel 提供了一些常量`CsvConstant`，用于简化使用。
 
 #### 代码示例
+
 如果 CSV 文件使用 `\u0000` 作为分隔符，可以如下设置：
+
 ```java
 @Test
 public void delimiterDemo() {
@@ -48,6 +52,7 @@ public void delimiterDemo() {
 > 注意不可和 `recordSeparator` 的设置重复，建议结合`QuoteMode`使用。
 
 #### 代码示例
+
 ```java
 @Test
 public void quoteDemo() {
@@ -64,6 +69,7 @@ public void quoteDemo() {
 `recordSeparator` 用于指定文件中的换行符。不同操作系统的换行符可能不同（例如，Windows 使用 `CRLF`，而 Unix/Linux 使用 `LF`）。
 
 #### 代码示例
+
 ```java
 @Test
 public void recordSeparatorDemo() {
@@ -80,6 +86,7 @@ public void recordSeparatorDemo() {
 `nullString` 用于写入文件中将 `null` 值置换成特定字符串。例如，可以将 `null` 对象置换成字符串 `"N/A"`。
 
 #### 代码示例
+
 ```java
 @Test
 public void nullStringDemo() {
@@ -96,6 +103,7 @@ public void nullStringDemo() {
 `escape` 用于指定转义字符。当使用了`escape`，输出的CSV有包含会保留显示。
 
 #### 代码示例
+
 ```java
 @Test
 public void escapeDemo() {

@@ -6,10 +6,11 @@ title: '指南'
 # 安装
 
 ## 兼容说明
+
 下表列出了各版本 FastExcel 基础库对 Java 语言版本最低要求的情况：
 
-| 版本    |  jdk版本支持范围   | 备注            |
-|-------|:------------:|---------------|
+| 版本    | jdk版本支持范围    | 备注            |
+|-------|--------------|---------------|
 | 1.2.x | jdk8 - jdk21 | 完全兼容easyexcel |
 | 1.1.x | jdk8 - jdk21 | 完全兼容easyexcel |
 | 1.0.x | jdk8 - jdk21 | 完全兼容easyexcel |
@@ -101,5 +102,3 @@ import cn.idev.excel.*;
 ### 使用建议
 
 为了兼容性考虑保留了 EasyExcel 类，但是建议以后使用 FastExcel 类，FastExcel 类是 FastExcel 的入口类，功能包含了 EasyExcel 类的所有功能，以后新特性仅在 FastExcel 类中添加。
-
-

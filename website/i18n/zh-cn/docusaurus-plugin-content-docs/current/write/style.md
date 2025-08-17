@@ -4,14 +4,17 @@ title: '样式'
 ---
 
 # 样式
+
 本章节将介绍写入数据时的样式设置。
 
 ## 注解
 
 ### 概述
+
 通过实体类中的注解设置单元格样式，包括字体、背景颜色、行高等。
 
 ### POJO 类
+
 ```java
 @Getter
 @Setter
@@ -42,6 +45,7 @@ public class DemoStyleData {
 ```
 
 ### 代码示例
+
 ```java
 @Test
 public void annotationStyleWrite() {
@@ -54,6 +58,7 @@ public void annotationStyleWrite() {
 ```
 
 ### 结果
+
 ![img](/img/docs/write/annotationStyleWrite.png)
 
 ---
@@ -61,9 +66,11 @@ public void annotationStyleWrite() {
 ## 内置拦截器
 
 ### 概述
+
 通过 `HorizontalCellStyleStrategy` 为表头和内容分别设置样式。
 
 ### 代码示例
+
 ```java
 @Test
 public void handlerStyleWrite() {
@@ -96,6 +103,7 @@ public void handlerStyleWrite() {
 ```
 
 ### 结果
+
 ![img](/img/docs/write/handlerStyleWrite.png)
 
 ---
@@ -103,10 +111,13 @@ public void handlerStyleWrite() {
 ## 自定义拦截器
 
 ### 概述
+
 如果已有策略无法满足需求，可以实现 `CellWriteHandler` 接口对样式进行完全自定义控制。
 
 ### 代码示例
+
 自定义拦截器
+
 ```java
 @Slf4j
 public class CustomCellStyleWriteHandler implements CellWriteHandler {
@@ -135,6 +146,7 @@ public class CustomCellStyleWriteHandler implements CellWriteHandler {
 ```
 
 使用
+
 ```java
 @Test
 public void customCellStyleWrite() {
@@ -152,9 +164,11 @@ public void customCellStyleWrite() {
 ## 自定义 POI 样式
 
 ### 概述
+
 直接操作 POI 的 `CellStyle`，适合对样式精确控制。
 
 ### 代码示例
+
 ```java
 @Test
 public void poiStyleWrite() {
@@ -186,9 +200,11 @@ public void poiStyleWrite() {
 ## 列宽和行高
 
 ### 概述
+
 通过注解控制列宽、行高，适用于对表格格式有特定要求的场景。
 
 ### POJO类
+
 ```java
 @Getter
 @Setter
@@ -210,6 +226,7 @@ public class WidthAndHeightData {
 ```
 
 ### 代码示例
+
 ```java
 @Test
 public void widthAndHeightWrite() {
@@ -222,4 +239,5 @@ public void widthAndHeightWrite() {
 ```
 
 ### 结果
+
 ![img](/img/docs/write/widthAndHeightWrite.png)

@@ -4,11 +4,13 @@ title: '实体类'
 ---
 
 # POJO
+
 本章节将介绍通过设置 POJO 来写入。
 
 ## 根据参数只导出指定列
 
 ### 概述
+
 通过设置列名集合动态选择要导出的列，支持忽略列或仅导出特定列。
 
 ### 代码示例
@@ -44,6 +46,7 @@ public void excludeOrIncludeWrite() {
 ```
 
 ### 结果
+
 ![img](/img/docs/write/excludeOrIncludeWrite.png)
 
 ---
@@ -51,9 +54,11 @@ public void excludeOrIncludeWrite() {
 ## 指定写入的列顺序
 
 ### 概述
+
 通过 `@ExcelProperty` 注解的 `index` 属性指定列顺序。
 
 ### POJO类
+
 ```java
 @Getter
 @Setter
@@ -69,6 +74,7 @@ public class IndexData {
 ```
 
 ### 代码示例
+
 ```java
 @Test
 public void indexWrite() {
@@ -80,6 +86,7 @@ public void indexWrite() {
 ```
 
 ### 结果
+
 ![img](/img/docs/write/indexWrite.png)
 
 ---
@@ -87,9 +94,11 @@ public void indexWrite() {
 ## 不创建对象的写入
 
 ### 概述
+
 直接使用 `List<List<String>>` 定义头和数据写入，无需创建实体类。
 
 ### 代码示例
+
 ```java
 @Test
 public void noModelWrite() {
@@ -118,4 +127,5 @@ private List<List<Object>> dataList() {
 ```
 
 ### 结果
+
 ![img](/img/docs/write/noModelWrite.png)

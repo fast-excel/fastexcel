@@ -4,14 +4,17 @@ title: '图片'
 ---
 
 # 图片
+
 本章节介绍如何导出包含图片的文件。
 
 ## 图片导出
 
 ### 概述
+
 支持通过文件、流、字节数组、URL 等多种方式导出图片。
 
 #### POJO 类
+
 ```java
 @Getter
 @Setter
@@ -29,6 +32,7 @@ public class ImageDemoData {
 ```
 
 #### 代码示例
+
 ```java
 @Test
 public void imageWrite() throws Exception {
@@ -49,4 +53,5 @@ public void imageWrite() throws Exception {
 ```
 
 ### 结果
+
 ![img](/img/docs/write/imgWrite.png)

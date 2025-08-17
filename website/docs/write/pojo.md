@@ -4,16 +4,18 @@ title: 'POJO'
 ---
 
 # POJO
-本章节将介绍通过设置 POJO 来写入。
 
-## 根据参数只导出指定列
+This chapter introduces how to write data by configuring POJO classes.
 
-### 概述
-通过设置列名集合动态选择要导出的列，支持忽略列或仅导出特定列。
+## Export Only Specified Columns Based on Parameters
 
-### 代码示例
+### Overview
 
-忽略指定列
+Dynamically select columns to export by setting a collection of column names, supporting ignoring columns or exporting only specific columns.
+
+### Code Examples
+
+Ignore specified columns
 
 ```java
 @Test
@@ -28,7 +30,7 @@ public void excludeOrIncludeWrite() {
 }
 ```
 
-仅导出指定列
+Export only specified columns
 
 ```java
 @Test
@@ -43,17 +45,20 @@ public void excludeOrIncludeWrite() {
 }
 ```
 
-### 结果
+### Result
+
 ![img](/img/docs/write/excludeOrIncludeWrite.png)
 
 ---
 
-## 指定写入的列顺序
+## Specify Column Order for Writing
 
-### 概述
-通过 `@ExcelProperty` 注解的 `index` 属性指定列顺序。
+### Overview
 
-### POJO类
+Specify column order using the `index` attribute of the `@ExcelProperty` annotation.
+
+### POJO Class
+
 ```java
 @Getter
 @Setter
@@ -68,7 +73,8 @@ public class IndexData {
 }
 ```
 
-### 代码示例
+### Code Example
+
 ```java
 @Test
 public void indexWrite() {
@@ -79,24 +85,27 @@ public void indexWrite() {
 }
 ```
 
-### 结果
+### Result
+
 ![img](/img/docs/write/indexWrite.png)
 
 ---
 
-## 不创建对象的写入
+## Writing Without Creating Objects
 
-### 概述
-直接使用 `List<List<String>>` 定义头和数据写入，无需创建实体类。
+### Overview
 
-### 代码示例
+Write data directly using `List<List<String>>` to define headers and data without creating entity classes.
+
+### Code Example
+
 ```java
 @Test
 public void noModelWrite() {
     String fileName = "noModelWrite" + System.currentTimeMillis() + ".xlsx";
 
     FastExcel.write(fileName)
-        .head(head()) // 动态头
+        .head(head()) // Dynamic headers
         .sheet("无对象写入")
         .doWrite(dataList());
 }
@@ -117,5 +126,6 @@ private List<List<Object>> dataList() {
 }
 ```
 
-### 结果
+### Result
+
 ![img](/img/docs/write/noModelWrite.png)

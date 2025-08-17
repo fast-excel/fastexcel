@@ -3,22 +3,25 @@ id: 'exception'
 title: 'Exception'
 ---
 
-# 异常处理
-本章节将介绍如何处理异常。
+# Exception Handling
 
-## 概述
-通过重写监听器的 `onException` 方法处理数据转换或其他读取异常。
+This chapter introduces how to handle exceptions.
 
-## 数据监听器
+## Overview
+
+Handle data conversion or other reading exceptions by overriding the `onException` method in the listener.
+
+## Data Listener
+
 ```java
 @Slf4j
 public class DemoExceptionListener extends AnalysisEventListener<ExceptionDemoData> {
     @Override
     public void onException(Exception exception, AnalysisContext context) {
-        log.error("失败: {}", exception.getMessage());
+        log.error("Failed: {}", exception.getMessage());
         if (exception instanceof ExcelDataConvertException) {
             ExcelDataConvertException ex = (ExcelDataConvertException) exception;
-            log.error("第 {} 行, 第 {} 列异常, 数据: {}", ex.getRowIndex(), ex.getColumnIndex(), ex.getCellData());
+            log.error("Row {}, Column {} exception, data: {}", ex.getRowIndex(), ex.getColumnIndex(), ex.getCellData());
         }
     }
 
@@ -30,7 +33,8 @@ public class DemoExceptionListener extends AnalysisEventListener<ExceptionDemoDa
 }
 ```
 
-## 代码示例
+## Code Example
+
 ```java
 @Test
 public void exceptionRead() {

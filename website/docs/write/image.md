@@ -3,15 +3,18 @@ id: 'image'
 title: 'Image'
 ---
 
-# 图片
-本章节介绍如何导出包含图片的文件。
+# Images
 
-## 图片导出
+This chapter introduces how to export files containing images.
 
-### 概述
-支持通过文件、流、字节数组、URL 等多种方式导出图片。
+## Image Export
 
-#### POJO 类
+### Overview
+
+Supports exporting images through various methods including files, streams, byte arrays, URLs, etc.
+
+#### POJO Class
+
 ```java
 @Getter
 @Setter
@@ -28,7 +31,8 @@ public class ImageDemoData {
 }
 ```
 
-#### 代码示例
+#### Code Example
+
 ```java
 @Test
 public void imageWrite() throws Exception {
@@ -48,5 +52,6 @@ public void imageWrite() throws Exception {
 }
 ```
 
-### 结果
+### Result
+
 ![img](/img/docs/write/imgWrite.png)

@@ -3,10 +3,11 @@ id: 'parameter'
 title: 'Parameter'
 ---
 
-# 参数
-本章节介绍使用 FastExcel 中的参数。
+# Parameter
 
-## 类图
+This section introduces the parameters used in FastExcel.
+
+## Class Diagram
 
 ```mermaid
 classDiagram
@@ -96,109 +97,107 @@ WriteTable  --|>  WriteBasicParameter
 WriteWorkbook  --|>  WriteBasicParameter
 ```
 
-## 通用参数
+## General Parameters
 
-所有参数，都继承自`BasicParameter`
+All parameters inherit from `BasicParameter`.
 
-| 名称                  | 默认值   | 描述                                                                                   |
-|---------------------|-------|--------------------------------------------------------------------------------------|
-| head           | 空     | 与`clazz`二选一。读取文件头对应的列表，会根据列表匹配数据，建议使用class                                           |
-| clazz           | 空     | 与`head`二选一。读取文件的头对应的class，也可以使用注解。如果两个都不指定，则会读取全部数据                                  |
-| customConverterList           | 空     | 默认加载了很多转换器，这里可以加入不支持的字段                                                              |
-| autoTrim           | true  | 会对表头、读取数据等进行自动去除前后空格                                                                 |
-| use1904windowing           | false | excel中时间是存储1900年起的一个双精度浮点数，但是有时候默认开始日期是1904，所以设置这个值改成默认1904年开始                       |
-| useScientificFormat           | false | 数字转文本的时候在较大的数值的是否是否采用科学计数法                                                           |
-| locale           | 空 | 此参数用于格式化日期和数字                                                                        |
-| filedCacheLocation           | THREAD_LOCAL | 解析class的field会有缓存，默认放到ThreadLocal ，也就是说每次读写都会重新解析class，可以反射修改class的注解，并发场景不会相互影响<br/>THREAD_LOCAL：默认，每次读写都会缓存，但是不是同一次不会影响<br/>MEMORY：放到全局的内存里面，理论上性能会更好，但是无法通过反射、排除等方法修改导出的对象<br/>NONE：不缓存，性能会变差，涉及到读的同时要写，而且还要反射、排除等方法去修改对象的情况下可以考虑使用。 |
+| Name                | Default Value | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+|---------------------|---------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| head                | Empty         | Choose one of `head` or `clazz`. Reads the list corresponding to the file header and matches the data based on the list. It is recommended to use class.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| clazz               | Empty         | Choose one of `head` or `clazz`. Reads the class corresponding to the file header, and annotations can also be used. If neither is specified, all data will be read.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| customConverterList | Empty         | Many converters are loaded by default. You can add unsupported fields here.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| autoTrim            | true          | Automatically trims the header, reads data, etc.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| use1904windowing    | false         | In Excel, time is stored as a double-precision floating-point number starting from 1900, but sometimes the default start date is 1904. So setting this value changes the default start date to 1904.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| useScientificFormat | false         | When converting numbers to text, whether to use scientific notation for large values.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| locale              | Empty         | DeepL Translate_ The world's most accurate translator                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| filedCacheLocation  | THREAD_LOCAL  | Parsing the fields of the class will have a cache. Before, it was placed globally in a Map. After 3.3.0, it is placed in ThreadLocal by default, meaning that each read and write will reparse the class. You can reflectively modify the annotations of the class, and concurrent scenarios will not affect each other.<br/>THREAD_LOCAL: Default, the cache will be cleared each time, but not the same time.<br/>MEMORY: Placed in global memory, theoretically better performance, but cannot modify the exported object through reflection, exclusion, etc.<br/>NONE: No caching, performance will degrade, consider using it when reading and writing at the same time, and you need to reflectively exclude, modify objects, etc. |
 
+## Reading Operations
 
-## 读操作
+### ReadBasicParameter
 
-### ReadBasicParameter 通用参数
+| Name                   | Default Value | Description                                                                                              |
+|------------------------|---------------|----------------------------------------------------------------------------------------------------------|
+| customReadListenerList | Empty         | Can register multiple listeners. When reading Excel, the listener's methods will be continuously called. |
+| headRowNumber          | 1             | The number of rows in the header of Excel, default is 1 row.                                             |
 
-| 名称                  | 默认值   | 描述                                                       |
-|---------------------|-------|----------------------------------------------------------|
-| customReadListenerList           | 空     | 可以注册多个监听器，读取excel的时候会不断的回调监听器中的方法                        |
-| headRowNumber           | 1     | excel中头的行数，默认1行                                          |
+### ReadWorkbook
 
-### ReadWorkbook 参数
+| Name                     | Default Value           | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+|--------------------------|-------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| excelType                | Empty                   | The current type of Excel, supports XLS, XLSX, CSV.                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| inputStream              | Empty                   | Choose between `file` and `inputStream`. Reads the file stream. If a stream is received, it is used directly. If not, it is recommended to use the `file` parameter. Using `inputStream` will help create temporary files, but in the end it is still `file`.                                                                                                                                                                                                             |
+| file                     | Empty                   | Choose between `inputStream` and `file`. Reads the file.                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| mandatoryUseInputStream  | false                   | Forces the use of `inputStream` to create objects, which may degrade performance but will not create temporary files.                                                                                                                                                                                                                                                                                                                                                     |
+| charset                  | Charset#defaultCharset  | Only useful for CSV files, specifies the encoding used when reading the file.                                                                                                                                                                                                                                                                                                                                                                                             |
+| autoCloseStream          | true                    | Automatically closes the read stream.                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| readCache                | Empty                   | For files smaller than 5MB, use memory. For files larger than 5MB, use `EhCache`. It is not recommended to use this parameter.                                                                                                                                                                                                                                                                                                                                            |
+| readCacheSelector        | SimpleReadCacheSelector | Used to select when to use memory to store temporary data and when to use disk to store temporary data.                                                                                                                                                                                                                                                                                                                                                                   |
+| ignoreEmptyRow           | true                    | Ignore empty rows.                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| password                 | Empty                   | Password for reading the file.                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| xlsxSAXParserFactoryName | Empty                   | Specifies the name of the class used for sax reading, for example: `com.sun.org.apache.xerces.internal.jaxp.SAXParserFactoryImpl`.                                                                                                                                                                                                                                                                                                                                        |
+| useDefaultListener       | true                    | By default, `ModelBuildEventListener` is added to help convert to the object passed in. Setting it to `false` will not assist in converting objects, and custom listeners will receive a `Map<Integer, CellData>` object. If you still want to receive `class` objects, call the `readListener` method and add custom `beforeListener`, `ModelBuildEventListener`, and custom `afterListener`.                                                                            |
+| extraReadSet             | Empty                   | Set of additional content to be read, which is not read by default.                                                                                                                                                                                                                                                                                                                                                                                                       |
+| readDefaultReturn        | STRING                  | STRING: Returns an array of `Map<Integer, String>`, the return value is the content you see in the Excel cell without clicking on it.<br/>ACTUAL_DATA: Returns an array of `Map<Integer, Object>`, the actual data stored, will automatically convert types, `Object` type can be `BigDecimal`, `Boolean`, `String`, `LocalDateTime`, `null`, one of them.<br/>READ_CELL_DATA: Returns an array of `Map<Integer, ReadCellData<?>>`, where `?` type refers to ACTUAL_DATA. |
+| customObject             | STRING                  | STRING: Returns an array of `Map<Integer, String>`, the return value is the content you see in the Excel cell without clicking on it.<br/>ACTUAL_DATA: Returns an array of `Map<Integer, Object>`, the actual data stored, will automatically convert types, `Object` type can be `BigDecimal`, `Boolean`, `String`, `LocalDateTime`, `null`, one of them.<br/>READ_CELL_DATA: Returns an array of `Map<Integer, ReadCellData<?>>`, where `?` type refers to ACTUAL_DATA. |
+| numRows                  | 0                       | Read the specified number of rows. 0 means no limit on the number of rows, i.e. read all rows.                                                                                                                                                                                                                                                                                                                                                                            |
+| ignoreHiddenSheet        | true                    | `@since 1.3.0`<br/> Ignore hidden sheets.                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| csvFormat                | CSVFormat.DEFAULT       | `@since 1.3.0`<br/> Set the CSVFormat object, which is only valid for csv files.                                                                                                                                                                                                                                                                                                                                                                                          |
 
-| 名称                  | 默认值                     | 描述                                                                                                                                                                                                                                                                                                        |
-|---------------------|-------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| excelType           | 空                       | 当前excel的类型,支持XLS、XLSX、CSV                                                                                                                                                                                                                                                                                 |
-| inputStream           | 空                       | 与`file`二选一。读取文件的流，如果接收到的是流就只用，不用流建议使用`file`参数。因为使用了`inputStream` FastExcel会帮忙创建临时文件，最终还是`file`                                                                                                                                                                                                            |
-| file           | 空                       | 与`inputStream`二选一。读取文件的文件。                                                                                                                                                                                                                                                                                |
-| mandatoryUseInputStream           | false                   | 强制使用  `inputStream` 来创建对象，性能会变差，但是不会创建临文件。                                                                                                                                                                                                                                                                |
-| charset           | Charset#defaultCharset  | 只有csv文件有用，读取文件的时候使用的编码                                                                                                                                                                                                                                                                                    |
-| autoCloseStream           | true                    | 自动关闭读取的流。                                                                                                                                                                                                                                                                                                 |
-| readCache           | 空                       | 默认小于5M用 内存，超过5M会使用 `EhCache`,这里不建议使用这个参数。                                                                                                                                                                                                                                                                 |
-| readCacheSelector           | SimpleReadCacheSelector | 用于选择什么时候用内存去存储临时数据，什么时候用磁盘存储临时数据                                                                                                                                                                                                                                                                          |
-| ignoreEmptyRow           | true                    | 忽略空的行                                                                                                                                                                                                                                                                                                     |
-| password           | 空                       | 读取文件的密码                                                                                                                                                                                                                                                                                                   |
-| xlsxSAXParserFactoryName           | 空                       | 指定sax读取使用的class的名称，例如：`com.sun.org.apache.xerces.internal.jaxp.SAXParserFactoryImpl`                                                                                                                                                                                                                      |
-| useDefaultListener           | true                    | 默认会加入`ModelBuildEventListener` 来帮忙转换成传入`class`的对象，设置成`false`后将不会协助转换对象，自定义的监听器会接收到`Map<Integer,CellData>`对象，如果还想继续接听到`class`对象，请调用`readListener`方法，加入自定义的`beforeListener`、 `ModelBuildEventListener`、 自定义的`afterListener`即可。                                                                              |
-| extraReadSet           | 空                       | 额外需要读取内容的set，默认不读取这些数据                                                                                                                                                                                                                                                                                    |
-| readDefaultReturn           | STRING                  | STRING:会返回一个Map&lt;IntegerString&gt;的数组，返回值就是你在excel里面不点击单元格看到的内容<br/>   ACTUAL_DATA：会返回一个Map&lt;Integer,Object&gt;的数组，返回实际上存储的数据，会帮自动转换类型，Object类型为`BigDecimal`、`Boolean`、`String`、`LocalDateTime`、null，中的一个，<br/>READ_CELL_DATA: 会返回一个Map&lt;Integer,ReadCellData&lt;?&gt;&gt;的数组,其中`?`类型参照ACTUAL_DATA的 |
-| customObject           | STRING                  | STRING:会返回一个Map&lt;IntegerString&gt;的数组，返回值就是你在excel里面不点击单元格看到的内容<br/>   ACTUAL_DATA：会返回一个Map&lt;Integer,Object&gt;的数组，返回实际上存储的数据，会帮自动转换类型，Object类型为`BigDecimal`、`Boolean`、`String`、`LocalDateTime`、null，中的一个，<br/>READ_CELL_DATA: 会返回一个Map&lt;Integer,ReadCellData&lt;?&gt;&gt;的数组,其中`?`类型参照ACTUAL_DATA的 |
-| numRows           | 0                       | 读取指定的行数,0表示不限制行数，即读取所有行                                                                                                                                                                                                                                                                                   |
-| ignoreHiddenSheet           | true                    | `@since 1.3.0`<br/> 忽略隐藏的sheet                                                                                                                                                                                                                                                                            |
-| csvFormat           | CSVFormat.DEFAULT       | `@since 1.3.0`<br/> 设置 CSVFormat 对象，仅对 csv 文件有效                                                                                                                                                                                                                                                           |
+### ReadSheet
 
-### ReadSheet 参数
+| Name            | Default Value | Description                                                                                    |
+|-----------------|---------------|------------------------------------------------------------------------------------------------|
+| sheetNo         | 0             | The code of the Sheet to be read, recommended to use this to specify which Sheet to read.      |
+| sheetName       | Empty         | Match the Sheet by name.                                                                       |
+| sheetHidden     | false         | Normal Hidden Status                                                                           |
+| sheetVeryHidden | false         | Absolute Hidden State                                                                          |
+| numRows         | 0             | Read the specified number of rows. 0 means no limit on the number of rows, i.e. read all rows. |
 
-| 名称                  | 默认值   | 描述                            |
-|---------------------|-------|-------------------------------|
-| sheetNo           | 0     | 需要读取Sheet的编码，建议使用这个来指定读取哪个Sheet |
-| sheetName           | 空     | 根据名字去匹配Sheet                  |
-| sheetHidden           | false | Sheet 页普通隐藏状态                 |
-| sheetVeryHidden           | false     | Sheet 页绝对隐藏状态                   |
-| numRows           | 0     | 读取指定的行数,0表示不限制行数，即读取所有行       |
+## Writing Operations
 
+### WriteBasicParameter
 
-## 写操作
+| Name                    | Default Value | Description                                                                                                                                                                      |
+|-------------------------|---------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| customWriteHandlerList  | Empty         | Writing handler. Can implement `WorkbookWriteHandler`, `SheetWriteHandler`, `RowWriteHandler`, `CellWriteHandler`, which will be called at different stages of writing to Excel. |
+| relativeHeadRowIndex    | 0             | Number of rows to leave blank above Excel.                                                                                                                                       |
+| needHead                | true          | Whether to write the header to Excel.                                                                                                                                            |
+| useDefaultStyle         | true          | Whether to use default styles.                                                                                                                                                   |
+| automaticMergeHead      | true          | Automatically merge headers, matching the same fields above, below, left, and right in the header.                                                                               |
+| excludeColumnIndexes    | Empty         | Exclude indexes of data in the object.                                                                                                                                           |
+| excludeColumnFieldNames | Empty         | Exclude fields of data in the object.                                                                                                                                            |
+| includeColumnIndexes    | Empty         | Only export indexes of data in the object.                                                                                                                                       |
+| includeColumnFieldNames | Empty         | Only export fields of data in the object.                                                                                                                                        |
+| orderByIncludeColumn    | false         | When using the parameters `includeColumnFieldNames` or `includeColumnIndexes`, it will sort according to the order of the collection passed in.                                  |
 
-### WriteBasicParameter 通用参数
+### WriteWorkbook
 
-| 名称                  | 默认值   | 描述                                                                                                                                                                                                                                                                                  |
-|---------------------|-------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| customWriteHandlerList           | 空     | 写的处理器。可以实现`WorkbookWriteHandler`,`SheetWriteHandler`,`RowWriteHandler`,`CellWriteHandler`，在写入excel的不同阶段会调用                                                                                                                                                                          |
-| relativeHeadRowIndex           | 0     | 写入到excel和上面空开几行                                                                                                                                                                                                                                                                     |
-| needHead           | true  | 是否需要写入头到excel                                                                                                                                                                                                                                                                       |
-| useDefaultStyle           | true  | 是否使用默认的样式                                                                                                                                                                                                                                                                           |
-| automaticMergeHead           | true  | 自动合并头，头中相同的字段上下左右都会去尝试匹配                                                                                                                                                                                                                                                            |
-| excludeColumnIndexes           | 空     | 需要排除对象中的index的数据                                                                                                                                                                                                                                                                    |
-| excludeColumnFieldNames           | 空     | 需要排除对象中的字段的数据                                                                                                                                                                                                                                                                       |
-| includeColumnIndexes           | 空     | 只要导出对象中的index的数据                                                                                                                                                                                                                                                                    |
-| includeColumnFieldNames           | 空     | 只要导出对象中的字段的数据                                                                                                                                                                                                                                                                       |
-| orderByIncludeColumn           | false | 在使用了参数includeColumnFieldNames 或者 includeColumnIndexes的时候，会根据传入集合的顺序排序                                                                                                                                                                                                  |
+| Name                    | Default Value          | Description                                                                                                                                   |
+|-------------------------|------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------|
+| excelType               | Empty                  | The current type of Excel, supports XLS, XLSX, CSV.                                                                                           |
+| outputStream            | Empty                  | Choose between `file` and `outputStream`. Writes the file stream.                                                                             |
+| file                    | Empty                  | Choose between `outputStream` and `file`. Writes the file.                                                                                    |
+| templateInputStream     | Empty                  | Template file stream.                                                                                                                         |
+| templateFile            | Empty                  | Template file.                                                                                                                                |
+| charset                 | Charset#defaultCharset | Only useful for CSV files, specifies the encoding used when writing the file.                                                                 |
+| autoCloseStream         | true                   | Automatically closes the write stream.                                                                                                        |
+| password                | Empty                  | Password for reading the file.                                                                                                                |
+| inMemory                | false                  | Whether to process in memory, by default, a temporary file will be generated to save memory. Memory mode is more efficient, but prone to OOM. |
+| writeExcelOnException   | false                  | If an exception occurs during writing, whether to try to write the data to Excel.                                                             |
+| withBom                 | true                   | Set the encoding prefix in the CSV file, otherwise Office software may display garbled characters.                                            |
+| mandatoryUseInputStream | false                  | Forces the use of `inputStream` to create objects, which may degrade performance but will not create temporary files.                         |
+| csvFormat               | CSVFormat.DEFAULT      | `@since 1.3.0`<br/> Set the CSVFormat object, which is only valid for csv files.                                                              |
 
-### WriteWorkbook 参数
+### WriteSheet
 
-| 名称                  | 默认值                    | 描述                                      |
-|---------------------|------------------------|-----------------------------------------|
-| excelType           | 空                      | 当前excel的类型,支持XLS、XLSX、CSV               |
-| outputStream           | 空                      | 与`file`二选一。写入文件的流                       |
-| file           | 空                      | 与`outputStream`二选一。写入的文件                |
-| templateInputStream           | 空                      | 模板的文件流                                  |
-| templateFile           | 空                      | 模板文件                                    |
-| charset           | Charset#defaultCharset | 只有csv文件有用，写入文件的时候使用的编码                  |
-| autoCloseStream           | true                   | 自动关闭写入的流。                               |
-| password           | 空                      | 读取文件的密码                                 |
-| inMemory           | false                  | 是否在内存处理，默认会生成临时文件以节约内存。内存模式效率会更好，但是容易OOM |
-| writeExcelOnException           | false                  | 写入过程中抛出异常了，是否尝试把数据写入到excel              |
-| withBom           | true                   | 在 csv 文件中设置编码前缀，否则 office 软件可能会显示乱码     |
-| mandatoryUseInputStream           | false                   | 强制使用  `outputStream` 来创建对象，性能会变差，但是不会创建临文件。
-| csvFormat           | CSVFormat.DEFAULT       | `@since 1.3.0`<br/> 设置 CSVFormat 对象，仅对 csv 文件有效                                                                                                                                                                                                                                                           |
+| Name      | Default Value | Description                                             |
+|-----------|---------------|---------------------------------------------------------|
+| sheetNo   | 0             | Code of the Sheet to be written.                        |
+| sheetName | Empty         | Name of the Sheet to be written, defaults to `sheetNo`. |
 
-### WriteSheet 参数
+### WriteTable
 
-| 名称 | 默认值 | 描述 |
-|---------------------|-----|---------------------------------|
-| sheetNo | 0 | 需要写入的编码 |
-| sheetName | 空 | 需要写的Sheet名称，默认同`sheetNo`                |
-
-### WriteTable 参数
-
-| 名称                  | 默认值 | 描述                              |
-|---------------------|-----|---------------------------------|
-| tableNo           | 0   | 需要写入的编码            |
+| Name    | Default Value | Description                      |
+|---------|---------------|----------------------------------|
+| tableNo | 0             | Code of the table to be written. |

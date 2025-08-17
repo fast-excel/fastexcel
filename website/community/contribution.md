@@ -23,6 +23,7 @@ There are many ways to contribute to FastExcel:
 - Improve or refine documentation
 
 **Principle**:
+
 - Any pull request that contributes to the improvement of the project should be encouraged.
 - Before contributing a new feature, please propose and discuss it in an `issue` or `discussion`. We will not merge features that have not been discussed and confirmed.
 
@@ -34,7 +35,7 @@ All improvements can be implemented through Pull Request (PR). Before submitting
 
 ### Workspace Preparation
 
-To develop FastExcel, you need **Maven 3.8.1 or above** and **JDK (Java Development Kit) 17 or above**. Currently, it is recommended to use **Maven 3.9.0 or above** and **Java 21 or above** for the development environment. However, you must use **Java 1.8** compatible language features during compilation to ensure FastExcel can run in environments with Java 1.8 or above.
+To develop FastExcel, you need **Maven 3.9 or above** and **JDK (Java Development Kit) 17 or above**. However, you must use **Java 1.8** compatible language features during compilation to ensure FastExcel can run in environments with Java 1.8 or above.
 
 > You can use tools such as [SDKMAN](https://sdkman.io/) to configure multiple versions of the Java toolchain.
 
@@ -44,23 +45,24 @@ Ensure that you have registered a GitHub account and follow the steps below to c
 
 **Fork the repository**: Click the `Fork` button on the FastExcel [GitHub page](https://github.com/fast-excel/fastexcel) to copy the project to your GitHub account.
 
-```
+```bash
 https://github.com/<your-username>/fastexcel
 ```
 
 **Clone Repository**: Run the following command to clone the forked project to your local machine:
+
 ```bash
 git clone git@github.com:<your-username>/fastexcel.git
 ```
 
 **Set Upstream Repository**: Set the official repository as `upstream` for easy synchronization of updates:
+
 ```bash
 git remote add upstream git@github.com:fast-excel/fastexcel.git
 git remote set-url --push upstream no-pushing
 ```
 
 Running `git remote -v` can verify if the configuration is correct.
-
 
 ### Branch definition
 
@@ -112,7 +114,7 @@ git config --get user.email
 
 ### PR Description
 
-To help reviewers quickly understand the content and purpose of the PR, use the  [PR 模板](https://github.com/fast-excel/fastexcel/blob/main/.github/pull_request_template.md). A detailed description greatly improves code review efficiency.
+To help reviewers quickly understand the content and purpose of the PR, use the [pull_request_template](https://github.com/fast-excel/fastexcel/blob/main/.github/pull_request_template.md). A detailed description greatly improves code review efficiency.
 
 ---
 
@@ -124,9 +126,30 @@ Any contribution of test cases is encouraged, especially unit tests. It is recom
 
 ## Contribution Document
 
-Documentation is an important component of the FastExcel official website and serves as a vital bridge between the project and the community.
+Documentation is an important component of the FastExcel official website and serves as a vital bridge between the project and the community.The FastExcel official website is built using [Docusaurus](https://docusaurus.io/), and the documentation is maintained in the [website](https://github.com/fast-excel/fastexcel/tree/main/website) directory.
+
+### Requirements
+
+- [Node.js](https://nodejs.org/en/download/) version 18.0 or above (which can be checked by running `node -v`). You can use [nvm](https://github.com/nvm-sh/nvm) for managing multiple Node versions on a single machine installed.
+- When installing Node.js, you are recommended to check all checkboxes related to dependencies.
 
 ### Directory Structure Description
+
+Docusaurus supports I18n. The main documentation directory structure that needs to be maintained is as follows:
+
+```bash
+.
+├── community      # Community(English)
+├── docs           # Documentation(English)
+└── i18n           # I18n
+    └── zh-cn
+        ├── docusaurus-plugin-content-docs
+        │   └── current   # Documentation(Simplified Chinese)
+        └── docusaurus-plugin-content-docs-community
+            └── current   # Community(Simplified Chinese)
+```
+
+The directory structure for single-language documents is as follows:
 
 ```bash
 .
@@ -141,19 +164,70 @@ Documentation is an important component of the FastExcel official website and se
 ### Documentation Writing Guidelines
 
 - Use file paths with the `.md` extension
-``` markdown
-[Example](quickstart/example.md)
+
+```markdown
+[Example](docs/quickstart/example.md)
 ```
 
 - Use paths relative to the docs/ directory
-``` markdown
-[Example](quickstart/example.md)
+
+```markdown
+[Example](docs/quickstart/example.md)
 ```
 
-- Image files must be stored in the `docs/images` directory and referenced using relative directory paths.
-``` markdown
+- Image files must be stored in the `static/img` directory and referenced using relative directory paths.
+
+```markdown
 [img](/img/docs/fill/listFill_file.png)
 ```
+
+### Preview and generate static files
+
+Enter the `website` directory and execute the command
+
+#### Installation
+
+```bash
+yarn install
+```
+
+#### Local Development
+
+```bash
+# English
+yarn start
+
+# Simplified Chinese
+yarn start --locale zh-cn
+```
+
+This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
+
+> Only one language version can be run at a time.
+
+#### Build(Optional)
+
+```bash
+yarn build
+```
+
+This command generates static content into the `build` directory and can be served using any static contents hosting service.
+
+### Document Format Inspection
+
+FastExcel uses [markdownlint-cli2](https://github.com/DavidAnson/markdownlint-cli2) to check document formatting. After writing the relevant Markdown articles, you can run the following command locally to pre-check whether the Markdown formatting meets the requirements:
+
+```bash
+cd website && yarn
+
+yarn md-lint
+
+# If the documentation is wrong, you can use the following command to attempt an automatic repair.
+yarn md-lint-fix
+```
+
+- For formatting rules for Markdown articles you can refer to: [Markdown-lint-rules](https://github.com/DavidAnson/markdownlint/blob/main/doc/Rules.md)
+- Markdown format configuration file in the project: [.markdownlint-cli2.jsonc](https://github.com/fast-excel/fastexcel/blob/main/website/.markdownlint-cli2.jsonc)
 
 ---
 

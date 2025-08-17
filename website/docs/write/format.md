@@ -3,15 +3,18 @@ id: 'format'
 title: 'Format'
 ---
 
-# 格式化
-本章节将介绍写入数据时的数据格式化。
+# Formatting
 
-## 自定义格式写入
+This chapter introduces data formatting when writing data.
 
-### 概述
-支持日期、数字或其他自定义格式，通过注解实现。
+## Custom Format Writing
 
-### POJO类
+### Overview
+
+Supports date, number, or other custom formats through annotations.
+
+### POJO Class
+
 ```java
 @Getter
 @Setter
@@ -30,7 +33,8 @@ public class ConverterData {
 }
 ```
 
-### 代码示例
+### Code Example
+
 ```java
 @Test
 public void converterWrite() {
@@ -41,5 +45,6 @@ public void converterWrite() {
 }
 ```
 
-### 结果
+### Result
+
 ![img](/img/docs/write/converterWrite.png)
