@@ -1,0 +1,26 @@
+{
+  "version.label": {
+    "message": "Next",
+    "description": "The label for version current"
+  },
+  "sidebar.docs.category.quickstart": {
+    "message": "快速开始",
+    "description": "The label for category quickstart in sidebar docs"
+  },
+  "sidebar.docs.category.read": {
+    "message": "读取",
+    "description": "The label for category read in sidebar docs"
+  },
+  "sidebar.docs.category.write": {
+    "message": "写入",
+    "description": "The label for category write in sidebar docs"
+  },
+  "sidebar.docs.category.fill": {
+    "message": "填充",
+    "description": "The label for category fill in sidebar docs"
+  },
+  "sidebar.docs.category.help": {
+    "message": "帮助",
+    "description": "The label for category help in sidebar docs"
+  }
+}

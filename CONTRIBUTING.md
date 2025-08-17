@@ -58,7 +58,7 @@ FastExcel 欢迎社区的每一位用户和开发者成为贡献者。无论是�
 
 ### 工作区准备
 
-开发 FastExcel 需要 Java 工具链。目前，开发工具链要求 JDK 21 及以上的版本，但在编码过程中必须使用 JRE 1.8 兼容的语言特性，保证产出的 JAR 包能在 JRE 1.8 及以上版本环境中运行。
+开发 FastExcel 需要 **3.8.1及以上版本的Maven** 和 **17及以上版本的JDK (Java Development Kit)** 。目前，开发环境推荐 **3.9.0** 及以上版本的Maven和 **21** 及以上的版本Java，但在编译过程中必须使用 **Java 1.8** 兼容的语言特性，保证 FastExcel 能在 Java 1.8 及以上版本环境中运行。
 
 您可以使用 [SDKMAN](https://sdkman.io/) 等工具配置多版本的 Java 工具链。如果使用 IntelliJ IDEA 开发，可以设置项目 [Language Level](https://www.jetbrains.com/help/idea/project-settings-and-structure.html#language-level) 为 8 以确保后向兼容。
 
