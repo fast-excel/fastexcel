@@ -19,6 +19,7 @@ public class CellDataReadDemoData {
     // Note that although this is a date, the type stored is number because excel stores it as number
     private CellData<Date> date;
     private CellData<Double> doubleData;
-    // This may not be perfectly retrieved. Some formulas are dependent and may not be read. This issue will be fixed later
+    // This may not be perfectly retrieved. Some formulas are dependent and may not be read. This issue will be fixed
+    // later
     private CellData<String> formulaValue;
 }
