@@ -19,8 +19,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Web read and write examples
- *
- *
  **/
 @Controller
 public class WebTest {
@@ -35,11 +33,13 @@ public class WebTest {
      * <p>
      * 2. Set the return parameters
      * <p>
-     * 3. Write directly. Note that the OutputStream will be automatically closed when finish is called. It's fine to close the stream outside as well
+     * 3. Write directly. Note that the OutputStream will be automatically closed when finish is called. It's fine to
+     * close the stream outside as well
      */
     @GetMapping("download")
     public void download(HttpServletResponse response) throws IOException {
-        // Note: Some students reported that using Swagger causes various issues, please use browser directly or use Postman
+        // Note: Some students reported that using Swagger causes various issues, please use browser directly or use
+        // Postman
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
         response.setCharacterEncoding("utf-8");
         // Here URLEncoder.encode can prevent Chinese character encoding issues, which is unrelated to EasyExcel
@@ -58,7 +58,8 @@ public class WebTest {
      */
     @GetMapping("downloadFailedUsingJson")
     public void downloadFailedUsingJson(HttpServletResponse response) throws IOException {
-        // Note: Some students reported that using Swagger causes various issues, please use browser directly or use Postman
+        // Note: Some students reported that using Swagger causes various issues, please use browser directly or use
+        // Postman
         try {
             response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
             response.setCharacterEncoding("utf-8");
@@ -87,7 +88,8 @@ public class WebTest {
      * <p>
      * 1. Create the entity object corresponding to Excel. Refer to {@link UploadData}
      * <p>
-     * 2. Since Excel is read row by row by default, you need to create a row-by-row callback listener for Excel. Refer to {@link UploadDataListener}
+     * 2. Since Excel is read row by row by default, you need to create a row-by-row callback listener for Excel. Refer
+     * to {@link UploadDataListener}
      * <p>
      * 3. Read directly
      */
