@@ -39,7 +39,8 @@ public class WebTest {
      */
     @GetMapping("download")
     public void download(HttpServletResponse response) throws IOException {
-        // Note: Some students reported that using Swagger causes various issues, please use browser directly or use Postman
+        // Note: Some students reported that using Swagger causes various issues, please use browser directly or use
+        // Postman
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
         response.setCharacterEncoding("utf-8");
         // Here URLEncoder.encode can prevent Chinese character encoding issues, which is unrelated to EasyExcel
@@ -58,7 +59,8 @@ public class WebTest {
      */
     @GetMapping("downloadFailedUsingJson")
     public void downloadFailedUsingJson(HttpServletResponse response) throws IOException {
-        // Note: Some students reported that using Swagger causes various issues, please use browser directly or use Postman
+        // Note: Some students reported that using Swagger causes various issues, please use browser directly or use
+        // Postman
         try {
             response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
             response.setCharacterEncoding("utf-8");
