@@ -16,6 +16,7 @@ output/
 .flattened-pom.xml
 dependency-reduced-pom.xml
 
+
 /.mvn/wrapper/maven-wrapper.jar
 
 # website
