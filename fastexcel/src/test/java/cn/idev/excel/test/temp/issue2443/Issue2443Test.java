@@ -14,7 +14,6 @@ import org.junit.jupiter.api.Test;
 
 @Slf4j
 public class Issue2443Test {
-    // CS304 (manually written) Issue link: https://github.com/fast-excel/fastexcel/issues/2443
     @Test
     public void IssueTest1() {
         String fileName = TestFileUtil.getPath() + "temp/issue2443" + File.separator + "date1.xlsx";
@@ -27,7 +26,6 @@ public class Issue2443Test {
                 .doRead();
     }
 
-    // CS304 (manually written) Issue link: https://github.com/fast-excel/fastexcel/issues/2443
     @Test
     public void IssueTest2() {
         String fileName = TestFileUtil.getPath() + "temp/issue2443" + File.separator + "date2.xlsx";

@@ -73,9 +73,7 @@ public class ModelBuildEventListener implements IgnoreExceptionReadListener<Map<
                 }
             }
         }
-        // fix https://github.com/fast-excel/fastexcel/issues/2014
         int headSize = calculateHeadSize(readSheetHolder);
-        // fix https://github.com/fast-excel/fastexcel/issues/220
         while (index <= headSize) {
             map.put(index, null);
             index++;
@@ -178,7 +176,6 @@ public class ModelBuildEventListener implements IgnoreExceptionReadListener<Map<
                 dataMap.put(fieldName, value);
 
                 // 规避由于实体类 setter 不规范导致无法赋值的问题
-                // fix https://github.com/alibaba/easyexcel/issues/3524
                 if (dataMap.get(fieldName) == null) {
                     Object bean = dataMap.getBean();
                     try {

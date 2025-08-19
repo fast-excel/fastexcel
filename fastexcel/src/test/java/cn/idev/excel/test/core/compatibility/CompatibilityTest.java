@@ -30,7 +30,6 @@ public class CompatibilityTest {
 
     @Test
     public void t01() {
-        // https://github.com/fast-excel/fastexcel/issues/2236
         List<Map<Integer, Object>> list = FastExcel.read(TestFileUtil.getPath() + "compatibility/t01.xls")
                 .sheet()
                 .doReadSync();
@@ -78,7 +77,6 @@ public class CompatibilityTest {
 
     @Test
     public void t05() {
-        // https://github.com/fast-excel/fastexcel/issues/1956
         // Excel read date needs to be rounded
         List<Map<Integer, String>> list = FastExcel.read(TestFileUtil.getPath() + "compatibility/t05.xlsx")
                 .sheet()
@@ -104,7 +102,6 @@ public class CompatibilityTest {
 
     @Test
     public void t07() {
-        // https://github.com/fast-excel/fastexcel/issues/2805
         // Excel read date needs to be rounded
         List<Map<Integer, Object>> list = FastExcel.read(TestFileUtil.getPath() + "compatibility/t07.xlsx")
                 .readDefaultReturn(ReadDefaultReturnEnum.ACTUAL_DATA)
@@ -123,7 +120,6 @@ public class CompatibilityTest {
 
     @Test
     public void t08() {
-        // https://github.com/fast-excel/fastexcel/issues/2693
         // Temporary files may be deleted if there is no operation for a long time, so they need to be recreated.
         File file = TestFileUtil.createNewFile("compatibility/t08.xlsx");
         FastExcel.write(file, SimpleData.class).sheet().doWrite(data());

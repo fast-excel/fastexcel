@@ -16,7 +16,6 @@ public class BeanMapUtils {
      * <code>BeanMap.Generator</code> instead of this static method.
      *
      * Custom naming policy to prevent null pointer exceptions.
-     * see: https://github.com/fast-excel/fastexcel/issues/2064
      *
      * @param bean the JavaBean underlying the map
      * @return a new <code>BeanMap</code> instance

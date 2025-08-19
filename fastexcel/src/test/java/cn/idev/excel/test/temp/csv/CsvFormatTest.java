@@ -151,7 +151,6 @@ public class CsvFormatTest {
             excelWriter.write(csvDataList, writeSheet);
         }
 
-        // https://github.com/alibaba/FastExcel/issues/3868
         csvFile = TestFileUtil.readFile(CSV_BASE + "csv-delimiter.csv");
         try (ExcelReader excelReader =
                 FastExcel.read(csvFile, CsvData.class, new CsvDataListener()).build()) {

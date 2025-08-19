@@ -22,7 +22,6 @@ public class Issue2319Test {
                 .doRead();
     }
 
-    // CS304 (manually written) Issue link: https://github.com/alibaba/FastExcel/issues/2319
     @Test
     public void IssueTest2() {
         String fileName = TestFileUtil.getPath() + "temp/issue2319" + File.separator + "test2.xlsx";

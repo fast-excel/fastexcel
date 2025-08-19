@@ -16,10 +16,6 @@ import org.openxmlformats.schemas.spreadsheetml.x2006.main.CTWorksheet;
 
 /**
  * Handle the problem of unable to write dimension.
- *
- * https://github.com/fast-excel/fastexcel/issues/1282
- *
- *
  */
 @Slf4j
 public class DimensionWorkbookWriteHandler implements WorkbookWriteHandler {
