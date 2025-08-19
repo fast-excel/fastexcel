@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
+    
     <parent>
         <groupId>cn.idev.excel</groupId>
         <artifactId>fastexcel-parent</artifactId>
         <version>1.2.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-
+    
     <artifactId>fastexcel</artifactId>
     <name>fastexcel</name>
-
+    
     <properties>
         <surefire.test.includes>cn/idev/excel/test/core/**/*.java</surefire.test.includes>
     </properties>
-
+    
     <dependencies>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-csv</artifactId>
         </dependency>
-
+        
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi</artifactId>
@@ -38,7 +38,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
+        
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
@@ -49,7 +49,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
+        
         <dependency>
             <groupId>org.ehcache</groupId>
             <artifactId>ehcache</artifactId>
@@ -62,7 +62,7 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
         </dependency>
-
+        
         <!-- provided -->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -74,7 +74,7 @@
             <artifactId>fastexcel-support</artifactId>
             <version>0.0.1</version>
         </dependency>
-
+        
         <!-- test -->
         <dependency>
             <groupId>com.alibaba.fastjson2</groupId>
@@ -117,7 +117,7 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
+    
     <build>
         <plugins>
             <plugin>
@@ -133,6 +133,32 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
+            </plugin>
+            
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <version>2.0.0</version>
+                <configuration>
+                    <!-- 扫描所有模块 -->
+                    <aggregate>true</aggregate>
+                    <!-- 包含传递依赖 -->
+                    <includeTransitiveDependencies>true</includeTransitiveDependencies>
+                    <!-- 输出文件 -->
+                    <thirdPartyFilename>THIRD-PARTY.txt</thirdPartyFilename>
+                    <!-- 使用 UTF-8 避免中文乱码 -->
+                    <encoding>UTF-8</encoding>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>generate-license-report</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <!-- 收集依赖的 License 信息 -->
+                            <goal>aggregate-add-third-party</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

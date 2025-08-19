@@ -2,7 +2,7 @@
 
 ## 1.1.0
 
-此次升级主要修复 [EasyExcel](https://github.com/alibaba/easyexcel) 历史 BUG，同时剔除了部分依赖库，符合 MIT 协议的相关规范。
+此次升级主要修复历史 BUG，同时剔除了部分依赖库，符合 MIT 协议的相关规范。
 
 具体更新内容如下：
 - 【改进】移除 `itext` 依赖库，将 `转换PDF` 功能迁移至新项目；
@@ -16,7 +16,7 @@
 ## 1.2.0
 
 此次升级主要内容： 
-1. 修复[EasyExcel](https://github.com/alibaba/easyexcel) 历史 BUG；
+1. 修复历史 BUG；
 2. 将项目的开源协议修改为Apache-2.0 license；
 3. 修复测试模块中一些无法本地运行的测试用例；
 4. 更新并增加相关API文档和说明。
