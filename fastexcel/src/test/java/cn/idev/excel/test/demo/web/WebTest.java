@@ -1,6 +1,6 @@
 package cn.idev.excel.test.demo.web;
 
-import cn.idev.excel.EasyExcel;
+import cn.idev.excel.FastExcel;
 import cn.idev.excel.util.ListUtils;
 import cn.idev.excel.util.MapUtils;
 import com.alibaba.fastjson2.JSON;
@@ -43,11 +43,11 @@ public class WebTest {
         // Postman
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
         response.setCharacterEncoding("utf-8");
-        // Here URLEncoder.encode can prevent Chinese character encoding issues, which is unrelated to EasyExcel
+        // Here URLEncoder.encode can prevent Chinese character encoding issues, which is unrelated to FastExcel
         String fileName = URLEncoder.encode("test", "UTF-8").replaceAll("\\+", "%20");
         response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
 
-        EasyExcel.write(response.getOutputStream(), DownloadData.class)
+        FastExcel.write(response.getOutputStream(), DownloadData.class)
                 .sheet("Template")
                 .doWrite(data());
     }
@@ -64,11 +64,11 @@ public class WebTest {
         try {
             response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
             response.setCharacterEncoding("utf-8");
-            // Here URLEncoder.encode can prevent Chinese character encoding issues, which is unrelated to EasyExcel
+            // Here URLEncoder.encode can prevent Chinese character encoding issues, which is unrelated to FastExcel
             String fileName = URLEncoder.encode("test", "UTF-8").replaceAll("\\+", "%20");
             response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
             // Here we need to set not to close the stream
-            EasyExcel.write(response.getOutputStream(), DownloadData.class)
+            FastExcel.write(response.getOutputStream(), DownloadData.class)
                     .autoCloseStream(Boolean.FALSE)
                     .sheet("Template")
                     .doWrite(data());
@@ -96,7 +96,7 @@ public class WebTest {
     @PostMapping("upload")
     @ResponseBody
     public String upload(MultipartFile file) throws IOException {
-        EasyExcel.read(file.getInputStream(), UploadData.class, new UploadDataListener(uploadDAO))
+        FastExcel.read(file.getInputStream(), UploadData.class, new UploadDataListener(uploadDAO))
                 .sheet()
                 .doRead();
         return "success";

@@ -1,6 +1,6 @@
 package cn.idev.excel.test.demo.write;
 
-import cn.idev.excel.EasyExcel;
+import cn.idev.excel.FastExcel;
 import cn.idev.excel.test.util.TestFileUtil;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,7 +15,7 @@ public class WriteWithColorTest {
     @Test
     public void write() {
         String fileName = TestFileUtil.getPath() + "simpleWrite" + System.currentTimeMillis() + ".xlsx";
-        EasyExcel.write(fileName, ColorDemoData.class).sheet("模板").doWrite(this::data);
+        FastExcel.write(fileName, ColorDemoData.class).sheet("模板").doWrite(this::data);
         System.out.println(fileName);
     }
 

@@ -36,7 +36,7 @@ import org.apache.poi.util.TempFileCreationStrategy;
  *
  *
  */
-public class EasyExcelTempFileCreationStrategy implements TempFileCreationStrategy {
+public class FastExcelTempFileCreationStrategy implements TempFileCreationStrategy {
     /**
      * Name of POI files directory in temporary directory.
      */
@@ -62,7 +62,7 @@ public class EasyExcelTempFileCreationStrategy implements TempFileCreationStrate
      *
      * @see File#createTempFile(String, String)
      */
-    public EasyExcelTempFileCreationStrategy() {
+    public FastExcelTempFileCreationStrategy() {
         this(null);
     }
 
@@ -73,7 +73,7 @@ public class EasyExcelTempFileCreationStrategy implements TempFileCreationStrate
      *            directory).
      * @see Files#createTempFile(Path, String, String, FileAttribute[])
      */
-    public EasyExcelTempFileCreationStrategy(File dir) {
+    public FastExcelTempFileCreationStrategy(File dir) {
         this.dir = dir;
     }
 

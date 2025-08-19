@@ -1,7 +1,7 @@
 package cn.idev.excel.test.core.large;
 
-import cn.idev.excel.EasyExcel;
 import cn.idev.excel.ExcelWriter;
+import cn.idev.excel.FastExcel;
 import cn.idev.excel.test.util.TestFileUtil;
 import cn.idev.excel.write.metadata.WriteSheet;
 import java.io.File;
@@ -48,7 +48,7 @@ public class LargeDataTest {
     @Test
     public void t01Read() throws Exception {
         long start = System.currentTimeMillis();
-        EasyExcel.read(
+        FastExcel.read(
                         TestFileUtil.getPath() + "large" + File.separator + "large07.xlsx",
                         LargeData.class,
                         new LargeDataListener())
@@ -61,8 +61,8 @@ public class LargeDataTest {
     @Test
     public void t02Fill() {
         try (ExcelWriter excelWriter =
-                EasyExcel.write(fileFill07).withTemplate(template07).build()) {
-            WriteSheet writeSheet = EasyExcel.writerSheet().build();
+                FastExcel.write(fileFill07).withTemplate(template07).build()) {
+            WriteSheet writeSheet = FastExcel.writerSheet().build();
             for (int j = 0; j < 5000; j++) {
                 excelWriter.fill(data(), writeSheet);
                 log.info("{} fill success.", j);
@@ -74,8 +74,8 @@ public class LargeDataTest {
     public void t03ReadAndWriteCsv() {
         // write
         long start = System.currentTimeMillis();
-        try (ExcelWriter excelWriter = EasyExcel.write(fileCsv).build()) {
-            WriteSheet writeSheet = EasyExcel.writerSheet().build();
+        try (ExcelWriter excelWriter = FastExcel.write(fileCsv).build()) {
+            WriteSheet writeSheet = FastExcel.writerSheet().build();
             for (int j = 0; j < 5000; j++) {
                 excelWriter.write(data(), writeSheet);
                 log.info("{} write success.", j);
@@ -85,7 +85,7 @@ public class LargeDataTest {
 
         //  read
         start = System.currentTimeMillis();
-        EasyExcel.read(fileCsv, LargeData.class, new LargeDataListener())
+        FastExcel.read(fileCsv, LargeData.class, new LargeDataListener())
                 .sheet()
                 .doRead();
         log.info("CSV large data total time spent:{}", System.currentTimeMillis() - start);
@@ -94,16 +94,16 @@ public class LargeDataTest {
     @Test
     public void t04Write() throws Exception {
         ExcelWriter excelWriter =
-                EasyExcel.write(fileWriteTemp07, LargeData.class).build();
-        WriteSheet writeSheet = EasyExcel.writerSheet().build();
+                FastExcel.write(fileWriteTemp07, LargeData.class).build();
+        WriteSheet writeSheet = FastExcel.writerSheet().build();
         for (int j = 0; j < 2; j++) {
             excelWriter.write(data(), writeSheet);
         }
         excelWriter.finish();
 
         long start = System.currentTimeMillis();
-        excelWriter = EasyExcel.write(fileWrite07, LargeData.class).build();
-        writeSheet = EasyExcel.writerSheet().build();
+        excelWriter = FastExcel.write(fileWrite07, LargeData.class).build();
+        writeSheet = FastExcel.writerSheet().build();
         for (int j = 0; j < 5000; j++) {
             excelWriter.write(data(), writeSheet);
             log.info("{} write success.", j);

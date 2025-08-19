@@ -1,7 +1,7 @@
 package cn.idev.excel.test.temp.large;
 
-import cn.idev.excel.EasyExcel;
 import cn.idev.excel.ExcelWriter;
+import cn.idev.excel.FastExcel;
 import cn.idev.excel.test.util.TestFileUtil;
 import cn.idev.excel.write.metadata.WriteSheet;
 import java.io.File;
@@ -54,7 +54,7 @@ public class TempLargeDataTest {
     @Test
     public void read() throws Exception {
         long start = System.currentTimeMillis();
-        EasyExcel.read(
+        FastExcel.read(
                         Files.newInputStream(Paths.get("src/test/resources/simple/LargeData.xlsx")),
                         LargeData.class,
                         new LargeDataListener())
@@ -68,7 +68,7 @@ public class TempLargeDataTest {
     public void noModelRead() throws Exception {
         ZipSecureFile.setMaxEntrySize(Long.MAX_VALUE);
         long start = System.currentTimeMillis();
-        EasyExcel.read("src/test/resources/simple/no_model_10000_rows.xlsx", new NoModelLargeDataListener())
+        FastExcel.read("src/test/resources/simple/no_model_10000_rows.xlsx", new NoModelLargeDataListener())
                 .sheet()
                 .doRead();
         log.info("Large data total time spent:{}", System.currentTimeMillis() - start);
@@ -76,18 +76,18 @@ public class TempLargeDataTest {
 
     @Test
     public void t04Write() throws Exception {
-        ExcelWriter excelWriter = EasyExcel.write(fileWriteTemp07, cn.idev.excel.test.core.large.LargeData.class)
+        ExcelWriter excelWriter = FastExcel.write(fileWriteTemp07, cn.idev.excel.test.core.large.LargeData.class)
                 .build();
-        WriteSheet writeSheet = EasyExcel.writerSheet().build();
+        WriteSheet writeSheet = FastExcel.writerSheet().build();
         for (int j = 0; j < 2; j++) {
             excelWriter.write(data(), writeSheet);
         }
         excelWriter.finish();
 
         long start = System.currentTimeMillis();
-        excelWriter = EasyExcel.write(fileWrite07, cn.idev.excel.test.core.large.LargeData.class)
+        excelWriter = FastExcel.write(fileWrite07, cn.idev.excel.test.core.large.LargeData.class)
                 .build();
-        writeSheet = EasyExcel.writerSheet().build();
+        writeSheet = FastExcel.writerSheet().build();
         for (int j = 0; j < 5000; j++) {
             excelWriter.write(data(), writeSheet);
             log.info("{} write success.", j);
@@ -121,10 +121,10 @@ public class TempLargeDataTest {
     @Test
     public void t04WriteExcel() {
         IntStream.rangeClosed(0, 100).forEach(index -> {
-            try (ExcelWriter excelWriter = EasyExcel.write(
+            try (ExcelWriter excelWriter = FastExcel.write(
                             fileWriteTemp07, cn.idev.excel.test.core.large.LargeData.class)
                     .build()) {
-                WriteSheet writeSheet = EasyExcel.writerSheet().build();
+                WriteSheet writeSheet = FastExcel.writerSheet().build();
                 for (int j = 0; j < 5000; j++) {
                     excelWriter.write(data(), writeSheet);
                 }
@@ -137,10 +137,10 @@ public class TempLargeDataTest {
     @Test
     public void t04WriteExcelNo() throws Exception {
         IntStream.rangeClosed(0, 10000).forEach(index -> {
-            try (ExcelWriter excelWriter = EasyExcel.write(
+            try (ExcelWriter excelWriter = FastExcel.write(
                             fileWriteTemp07, cn.idev.excel.test.core.large.LargeData.class)
                     .build()) {
-                WriteSheet writeSheet = EasyExcel.writerSheet().build();
+                WriteSheet writeSheet = FastExcel.writerSheet().build();
                 for (int j = 0; j < 50; j++) {
                     excelWriter.write(data(), writeSheet);
                 }

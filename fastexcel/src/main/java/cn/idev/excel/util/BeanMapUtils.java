@@ -25,16 +25,16 @@ public class BeanMapUtils {
         BeanMap.Generator gen = new BeanMap.Generator();
         gen.setBean(bean);
         gen.setContextClass(bean.getClass());
-        gen.setNamingPolicy(EasyExcelNamingPolicy.INSTANCE);
+        gen.setNamingPolicy(FastExcelNamingPolicy.INSTANCE);
         return gen.create();
     }
 
-    public static class EasyExcelNamingPolicy extends DefaultNamingPolicy {
-        public static final EasyExcelNamingPolicy INSTANCE = new EasyExcelNamingPolicy();
+    public static class FastExcelNamingPolicy extends DefaultNamingPolicy {
+        public static final FastExcelNamingPolicy INSTANCE = new FastExcelNamingPolicy();
 
         @Override
         protected String getTag() {
-            return "ByEasyExcelCGLIB";
+            return "ByFastExcelCGLIB";
         }
     }
 }

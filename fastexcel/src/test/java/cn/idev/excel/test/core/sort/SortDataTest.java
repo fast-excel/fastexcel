@@ -1,6 +1,6 @@
 package cn.idev.excel.test.core.sort;
 
-import cn.idev.excel.EasyExcel;
+import cn.idev.excel.FastExcel;
 import cn.idev.excel.test.util.TestFileUtil;
 import java.io.File;
 import java.util.ArrayList;
@@ -67,8 +67,8 @@ public class SortDataTest {
     }
 
     private void readAndWrite(File file) {
-        EasyExcel.write(file, SortData.class).sheet().doWrite(data());
-        List<Map<Integer, String>> dataMap = EasyExcel.read(file).sheet().doReadSync();
+        FastExcel.write(file, SortData.class).sheet().doWrite(data());
+        List<Map<Integer, String>> dataMap = FastExcel.read(file).sheet().doReadSync();
         Assertions.assertEquals(1, dataMap.size());
         Map<Integer, String> record = dataMap.get(0);
         Assertions.assertEquals("column1", record.get(0));
@@ -78,12 +78,12 @@ public class SortDataTest {
         Assertions.assertEquals("column5", record.get(4));
         Assertions.assertEquals("column6", record.get(5));
 
-        EasyExcel.read(file, SortData.class, new SortDataListener()).sheet().doRead();
+        FastExcel.read(file, SortData.class, new SortDataListener()).sheet().doRead();
     }
 
     private void readAndWriteNoHead(File file) {
-        EasyExcel.write(file).head(head()).sheet().doWrite(data());
-        List<Map<Integer, String>> dataMap = EasyExcel.read(file).sheet().doReadSync();
+        FastExcel.write(file).head(head()).sheet().doWrite(data());
+        List<Map<Integer, String>> dataMap = FastExcel.read(file).sheet().doReadSync();
         Assertions.assertEquals(1, dataMap.size());
         Map<Integer, String> record = dataMap.get(0);
         Assertions.assertEquals("column1", record.get(0));
@@ -92,7 +92,7 @@ public class SortDataTest {
         Assertions.assertEquals("column4", record.get(3));
         Assertions.assertEquals("column5", record.get(4));
         Assertions.assertEquals("column6", record.get(5));
-        EasyExcel.read(file, SortData.class, new SortDataListener()).sheet().doRead();
+        FastExcel.read(file, SortData.class, new SortDataListener()).sheet().doRead();
     }
 
     private List<List<String>> head() {

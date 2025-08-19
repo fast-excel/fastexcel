@@ -1,6 +1,6 @@
 package cn.idev.excel.test.temp.issue2443;
 
-import cn.idev.excel.EasyExcel;
+import cn.idev.excel.FastExcel;
 import cn.idev.excel.metadata.property.ExcelContentProperty;
 import cn.idev.excel.read.listener.PageReadListener;
 import cn.idev.excel.test.util.TestFileUtil;
@@ -18,7 +18,7 @@ public class Issue2443Test {
     @Test
     public void IssueTest1() {
         String fileName = TestFileUtil.getPath() + "temp/issue2443" + File.separator + "date1.xlsx";
-        EasyExcel.read(fileName, Issue2443.class, new PageReadListener<Issue2443>(dataList -> {
+        FastExcel.read(fileName, Issue2443.class, new PageReadListener<Issue2443>(dataList -> {
                     for (Issue2443 issueData : dataList) {
                         log.info("读取到一条数据{}", JSON.toJSONString(issueData));
                     }
@@ -31,7 +31,7 @@ public class Issue2443Test {
     @Test
     public void IssueTest2() {
         String fileName = TestFileUtil.getPath() + "temp/issue2443" + File.separator + "date2.xlsx";
-        EasyExcel.read(fileName, Issue2443.class, new PageReadListener<Issue2443>(dataList -> {
+        FastExcel.read(fileName, Issue2443.class, new PageReadListener<Issue2443>(dataList -> {
                     for (Issue2443 issueData : dataList) {
                         log.info("读取到一条数据{}", JSON.toJSONString(issueData));
                     }

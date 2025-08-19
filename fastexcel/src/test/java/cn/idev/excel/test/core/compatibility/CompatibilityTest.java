@@ -1,6 +1,6 @@
 package cn.idev.excel.test.core.compatibility;
 
-import cn.idev.excel.EasyExcel;
+import cn.idev.excel.FastExcel;
 import cn.idev.excel.cache.Ehcache;
 import cn.idev.excel.enums.ReadDefaultReturnEnum;
 import cn.idev.excel.test.core.simple.SimpleData;
@@ -31,7 +31,7 @@ public class CompatibilityTest {
     @Test
     public void t01() {
         // https://github.com/fast-excel/fastexcel/issues/2236
-        List<Map<Integer, Object>> list = EasyExcel.read(TestFileUtil.getPath() + "compatibility/t01.xls")
+        List<Map<Integer, Object>> list = FastExcel.read(TestFileUtil.getPath() + "compatibility/t01.xls")
                 .sheet()
                 .doReadSync();
         Assertions.assertEquals(2, list.size());
@@ -42,7 +42,7 @@ public class CompatibilityTest {
     @Test
     public void t02() {
         // Exist in `sharedStrings.xml` `x:t` start tag, need to be compatible
-        List<Map<Integer, Object>> list = EasyExcel.read(TestFileUtil.getPath() + "compatibility/t02.xlsx")
+        List<Map<Integer, Object>> list = FastExcel.read(TestFileUtil.getPath() + "compatibility/t02.xlsx")
                 .sheet()
                 .headRowNumber(0)
                 .doReadSync();
@@ -55,7 +55,7 @@ public class CompatibilityTest {
     @Test
     public void t03() {
         // In the presence of the first line of a lot of null columns, ignore null columns
-        List<Map<Integer, Object>> list = EasyExcel.read(TestFileUtil.getPath() + "compatibility/t03.xlsx")
+        List<Map<Integer, Object>> list = FastExcel.read(TestFileUtil.getPath() + "compatibility/t03.xlsx")
                 .sheet()
                 .doReadSync();
         log.info("data:{}", JSON.toJSONString(list));
@@ -67,7 +67,7 @@ public class CompatibilityTest {
     @Test
     public void t04() {
         // Exist in `sheet1.xml` `ns2:t` start tag, need to be compatible
-        List<Map<Integer, Object>> list = EasyExcel.read(TestFileUtil.getPath() + "compatibility/t04.xlsx")
+        List<Map<Integer, Object>> list = FastExcel.read(TestFileUtil.getPath() + "compatibility/t04.xlsx")
                 .sheet()
                 .doReadSync();
         log.info("data:{}", JSON.toJSONString(list));
@@ -80,7 +80,7 @@ public class CompatibilityTest {
     public void t05() {
         // https://github.com/fast-excel/fastexcel/issues/1956
         // Excel read date needs to be rounded
-        List<Map<Integer, String>> list = EasyExcel.read(TestFileUtil.getPath() + "compatibility/t05.xlsx")
+        List<Map<Integer, String>> list = FastExcel.read(TestFileUtil.getPath() + "compatibility/t05.xlsx")
                 .sheet()
                 .doReadSync();
         log.info("data:{}", JSON.toJSONString(list));
@@ -94,7 +94,7 @@ public class CompatibilityTest {
     @Test
     public void t06() {
         // Keep error precision digital format
-        List<Map<Integer, String>> list = EasyExcel.read(TestFileUtil.getPath() + "compatibility/t06.xlsx")
+        List<Map<Integer, String>> list = FastExcel.read(TestFileUtil.getPath() + "compatibility/t06.xlsx")
                 .headRowNumber(0)
                 .sheet()
                 .doReadSync();
@@ -106,7 +106,7 @@ public class CompatibilityTest {
     public void t07() {
         // https://github.com/fast-excel/fastexcel/issues/2805
         // Excel read date needs to be rounded
-        List<Map<Integer, Object>> list = EasyExcel.read(TestFileUtil.getPath() + "compatibility/t07.xlsx")
+        List<Map<Integer, Object>> list = FastExcel.read(TestFileUtil.getPath() + "compatibility/t07.xlsx")
                 .readDefaultReturn(ReadDefaultReturnEnum.ACTUAL_DATA)
                 .sheet()
                 .doReadSync();
@@ -114,7 +114,7 @@ public class CompatibilityTest {
         Assertions.assertEquals(0, new BigDecimal("24.1998124").compareTo((BigDecimal)
                         list.get(0).get(11)));
 
-        list = EasyExcel.read(TestFileUtil.getPath() + "compatibility/t07.xlsx")
+        list = FastExcel.read(TestFileUtil.getPath() + "compatibility/t07.xlsx")
                 .sheet()
                 .doReadSync();
         log.info("data:{}", JSON.toJSONString(list));
@@ -126,15 +126,15 @@ public class CompatibilityTest {
         // https://github.com/fast-excel/fastexcel/issues/2693
         // Temporary files may be deleted if there is no operation for a long time, so they need to be recreated.
         File file = TestFileUtil.createNewFile("compatibility/t08.xlsx");
-        EasyExcel.write(file, SimpleData.class).sheet().doWrite(data());
+        FastExcel.write(file, SimpleData.class).sheet().doWrite(data());
 
         List<Map<Integer, Object>> list =
-                EasyExcel.read(file).readCache(new Ehcache(null, 20)).sheet().doReadSync();
+                FastExcel.read(file).readCache(new Ehcache(null, 20)).sheet().doReadSync();
         Assertions.assertEquals(10L, list.size());
 
         FileUtils.delete(new File(System.getProperty(TempFile.JAVA_IO_TMPDIR)));
 
-        list = EasyExcel.read(file).readCache(new Ehcache(null, 20)).sheet().doReadSync();
+        list = FastExcel.read(file).readCache(new Ehcache(null, 20)).sheet().doReadSync();
         Assertions.assertEquals(10L, list.size());
     }
 
@@ -143,7 +143,7 @@ public class CompatibilityTest {
         // `SH_x005f_x000D_Z002` exists in `ShardingString.xml` and needs to be replaced by: `SH_x000D_Z002`
         File file = TestFileUtil.readFile("compatibility/t09.xlsx");
         List<Map<Integer, Object>> list =
-                EasyExcel.read(file).headRowNumber(0).sheet().doReadSync();
+                FastExcel.read(file).headRowNumber(0).sheet().doReadSync();
         log.info("data:{}", JSON.toJSONString(list));
         Assertions.assertEquals(1, list.size());
 

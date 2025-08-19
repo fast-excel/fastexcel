@@ -4,9 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class EasyexcelApplication {
+public class FastExcelApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(EasyexcelApplication.class, args);
+        SpringApplication.run(FastExcelApplication.class, args);
     }
 }

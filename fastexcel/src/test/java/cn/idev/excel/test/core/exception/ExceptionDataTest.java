@@ -1,7 +1,7 @@
 package cn.idev.excel.test.core.exception;
 
-import cn.idev.excel.EasyExcel;
 import cn.idev.excel.ExcelWriter;
+import cn.idev.excel.FastExcel;
 import cn.idev.excel.test.util.TestFileUtil;
 import cn.idev.excel.write.metadata.WriteSheet;
 import java.io.File;
@@ -80,10 +80,10 @@ public class ExceptionDataTest {
 
     private void readAndWriteExcelAnalysisStopSheetException(File file) throws Exception {
         try (ExcelWriter excelWriter =
-                EasyExcel.write(file, ExceptionData.class).build()) {
+                FastExcel.write(file, ExceptionData.class).build()) {
             for (int i = 0; i < 5; i++) {
                 String sheetName = "sheet" + i;
-                WriteSheet writeSheet = EasyExcel.writerSheet(i, sheetName).build();
+                WriteSheet writeSheet = FastExcel.writerSheet(i, sheetName).build();
                 List<ExceptionData> data = data(sheetName);
                 excelWriter.write(data, writeSheet);
             }
@@ -91,7 +91,7 @@ public class ExceptionDataTest {
 
         ExcelAnalysisStopSheetExceptionDataListener excelAnalysisStopSheetExceptionDataListener =
                 new ExcelAnalysisStopSheetExceptionDataListener();
-        EasyExcel.read(file, ExceptionData.class, excelAnalysisStopSheetExceptionDataListener)
+        FastExcel.read(file, ExceptionData.class, excelAnalysisStopSheetExceptionDataListener)
                 .doReadAll();
         Map<Integer, List<String>> dataMap = excelAnalysisStopSheetExceptionDataListener.getDataMap();
         Assertions.assertEquals(5, dataMap.size());
@@ -108,8 +108,8 @@ public class ExceptionDataTest {
     }
 
     private void readAndWriteException(File file) throws Exception {
-        EasyExcel.write(new FileOutputStream(file), ExceptionData.class).sheet().doWrite(data());
-        ArithmeticException exception = Assertions.assertThrows(ArithmeticException.class, () -> EasyExcel.read(
+        FastExcel.write(new FileOutputStream(file), ExceptionData.class).sheet().doWrite(data());
+        ArithmeticException exception = Assertions.assertThrows(ArithmeticException.class, () -> FastExcel.read(
                         new FileInputStream(file), ExceptionData.class, new ExceptionThrowDataListener())
                 .sheet()
                 .doRead());
@@ -117,8 +117,8 @@ public class ExceptionDataTest {
     }
 
     private void readAndWrite(File file) throws Exception {
-        EasyExcel.write(new FileOutputStream(file), ExceptionData.class).sheet().doWrite(data());
-        EasyExcel.read(new FileInputStream(file), ExceptionData.class, new ExceptionDataListener())
+        FastExcel.write(new FileOutputStream(file), ExceptionData.class).sheet().doWrite(data());
+        FastExcel.read(new FileInputStream(file), ExceptionData.class, new ExceptionDataListener())
                 .sheet()
                 .doRead();
     }

@@ -1,7 +1,7 @@
 package cn.idev.excel.test.demo.fill;
 
-import cn.idev.excel.EasyExcel;
 import cn.idev.excel.ExcelWriter;
+import cn.idev.excel.FastExcel;
 import cn.idev.excel.enums.WriteDirectionEnum;
 import cn.idev.excel.test.util.TestFileUtil;
 import cn.idev.excel.util.ListUtils;
@@ -41,7 +41,7 @@ public class FillTest {
         FillData fillData = new FillData();
         fillData.setName("Zhang San");
         fillData.setNumber(5.2);
-        EasyExcel.write(fileName).withTemplate(templateFileName).sheet().doFill(fillData);
+        FastExcel.write(fileName).withTemplate(templateFileName).sheet().doFill(fillData);
 
         // Option 2: Fill based on a Map
         fileName = TestFileUtil.getPath() + "simpleFill" + System.currentTimeMillis() + ".xlsx";
@@ -49,7 +49,7 @@ public class FillTest {
         Map<String, Object> map = MapUtils.newHashMap();
         map.put("name", "Zhang San");
         map.put("number", 5.2);
-        EasyExcel.write(fileName).withTemplate(templateFileName).sheet().doFill(map);
+        FastExcel.write(fileName).withTemplate(templateFileName).sheet().doFill(map);
     }
 
     /**
@@ -70,13 +70,13 @@ public class FillTest {
         // Option 1: Load all data into memory at once and fill
         String fileName = TestFileUtil.getPath() + "listFill" + System.currentTimeMillis() + ".xlsx";
         // This will fill the first sheet, and the file stream will be automatically closed.
-        EasyExcel.write(fileName).withTemplate(templateFileName).sheet().doFill(data());
+        FastExcel.write(fileName).withTemplate(templateFileName).sheet().doFill(data());
 
         // Option 2: Fill in multiple passes, using file caching (saves memory)
         fileName = TestFileUtil.getPath() + "listFill" + System.currentTimeMillis() + ".xlsx";
         try (ExcelWriter excelWriter =
-                EasyExcel.write(fileName).withTemplate(templateFileName).build()) {
-            WriteSheet writeSheet = EasyExcel.writerSheet().build();
+                FastExcel.write(fileName).withTemplate(templateFileName).build()) {
+            WriteSheet writeSheet = FastExcel.writerSheet().build();
             excelWriter.fill(data(), writeSheet);
             excelWriter.fill(data(), writeSheet);
         }
@@ -98,8 +98,8 @@ public class FillTest {
         String fileName = TestFileUtil.getPath() + "complexFill" + System.currentTimeMillis() + ".xlsx";
         // Option 1
         try (ExcelWriter excelWriter =
-                EasyExcel.write(fileName).withTemplate(templateFileName).build()) {
-            WriteSheet writeSheet = EasyExcel.writerSheet().build();
+                FastExcel.write(fileName).withTemplate(templateFileName).build()) {
+            WriteSheet writeSheet = FastExcel.writerSheet().build();
             // Note: The forceNewRow parameter is used here. When writing a list, it will always create a new row, and
             // the data below will be shifted down. Default is false, which will use the next row if available,
             // otherwise create a new one.
@@ -138,8 +138,8 @@ public class FillTest {
 
         // Option 1
         try (ExcelWriter excelWriter =
-                EasyExcel.write(fileName).withTemplate(templateFileName).build()) {
-            WriteSheet writeSheet = EasyExcel.writerSheet().build();
+                FastExcel.write(fileName).withTemplate(templateFileName).build()) {
+            WriteSheet writeSheet = FastExcel.writerSheet().build();
             // Directly write data
             excelWriter.fill(data(), writeSheet);
             excelWriter.fill(data(), writeSheet);
@@ -184,8 +184,8 @@ public class FillTest {
         String fileName = TestFileUtil.getPath() + "horizontalFill" + System.currentTimeMillis() + ".xlsx";
         // Option 1
         try (ExcelWriter excelWriter =
-                EasyExcel.write(fileName).withTemplate(templateFileName).build()) {
-            WriteSheet writeSheet = EasyExcel.writerSheet().build();
+                FastExcel.write(fileName).withTemplate(templateFileName).build()) {
+            WriteSheet writeSheet = FastExcel.writerSheet().build();
             FillConfig fillConfig = FillConfig.builder()
                     .direction(WriteDirectionEnum.HORIZONTAL)
                     .build();
@@ -216,8 +216,8 @@ public class FillTest {
 
         // Option 1
         try (ExcelWriter excelWriter =
-                EasyExcel.write(fileName).withTemplate(templateFileName).build()) {
-            WriteSheet writeSheet = EasyExcel.writerSheet().build();
+                FastExcel.write(fileName).withTemplate(templateFileName).build()) {
+            WriteSheet writeSheet = FastExcel.writerSheet().build();
             FillConfig fillConfig = FillConfig.builder()
                     .direction(WriteDirectionEnum.HORIZONTAL)
                     .build();
@@ -257,7 +257,7 @@ public class FillTest {
 
         // Fill the template with data.
         // The dates in the data will be formatted according to the template's settings.
-        EasyExcel.write(fileName).withTemplate(templateFileName).sheet().doFill(data());
+        FastExcel.write(fileName).withTemplate(templateFileName).sheet().doFill(data());
     }
 
     private List<FillData> data() {

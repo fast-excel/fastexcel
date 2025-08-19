@@ -1,6 +1,6 @@
 package cn.idev.excel.test.core.converter;
 
-import cn.idev.excel.EasyExcel;
+import cn.idev.excel.FastExcel;
 import cn.idev.excel.metadata.data.WriteCellData;
 import cn.idev.excel.test.util.TestFileUtil;
 import cn.idev.excel.test.util.TestUtil;
@@ -53,8 +53,8 @@ public class ConverterDataTest {
     }
 
     private void readAndWrite(File file) throws Exception {
-        EasyExcel.write(file, ConverterWriteData.class).sheet().doWrite(data());
-        EasyExcel.read(file, ConverterReadData.class, new ConverterDataListener())
+        FastExcel.write(file, ConverterWriteData.class).sheet().doWrite(data());
+        FastExcel.read(file, ConverterReadData.class, new ConverterDataListener())
                 .sheet()
                 .doRead();
     }
@@ -96,7 +96,7 @@ public class ConverterDataTest {
             imageData.setString(imagePath);
             inputStream = FileUtils.openInputStream(new File(imagePath));
             imageData.setInputStream(inputStream);
-            EasyExcel.write(file, ImageData.class).sheet().doWrite(list);
+            FastExcel.write(file, ImageData.class).sheet().doWrite(list);
         } finally {
             if (inputStream != null) {
                 inputStream.close();
@@ -105,7 +105,7 @@ public class ConverterDataTest {
     }
 
     private void readAllConverter(String fileName) {
-        EasyExcel.read(TestFileUtil.readFile(fileName), ReadAllConverterData.class, new ReadAllConverterDataListener())
+        FastExcel.read(TestFileUtil.readFile(fileName), ReadAllConverterData.class, new ReadAllConverterDataListener())
                 .sheet()
                 .doRead();
     }

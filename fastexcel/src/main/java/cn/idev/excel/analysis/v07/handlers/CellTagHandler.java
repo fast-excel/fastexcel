@@ -1,7 +1,7 @@
 package cn.idev.excel.analysis.v07.handlers;
 
-import cn.idev.excel.constant.EasyExcelConstants;
 import cn.idev.excel.constant.ExcelXmlConstants;
+import cn.idev.excel.constant.FastExcelConstants;
 import cn.idev.excel.context.xlsx.XlsxReadContext;
 import cn.idev.excel.enums.CellDataTypeEnum;
 import cn.idev.excel.metadata.data.ReadCellData;
@@ -89,7 +89,7 @@ public class CellTagHandler extends AbstractXlsxTagHandler {
                 tempCellData.setType(CellDataTypeEnum.NUMBER);
                 tempCellData.setOriginalNumberValue(new BigDecimal(tempDataString));
                 tempCellData.setNumberValue(
-                        tempCellData.getOriginalNumberValue().round(EasyExcelConstants.EXCEL_MATH_CONTEXT));
+                        tempCellData.getOriginalNumberValue().round(FastExcelConstants.EXCEL_MATH_CONTEXT));
                 break;
             default:
                 throw new IllegalStateException("Cannot set values now");

@@ -1,6 +1,6 @@
 package cn.idev.excel.test.core.template;
 
-import cn.idev.excel.EasyExcel;
+import cn.idev.excel.FastExcel;
 import cn.idev.excel.test.util.TestFileUtil;
 import java.io.File;
 import java.util.ArrayList;
@@ -36,22 +36,22 @@ public class TemplateDataTest {
     }
 
     private void readAndWrite07(File file) {
-        EasyExcel.write(file, TemplateData.class)
+        FastExcel.write(file, TemplateData.class)
                 .withTemplate(TestFileUtil.readFile("template" + File.separator + "template07.xlsx"))
                 .sheet()
                 .doWrite(data());
-        EasyExcel.read(file, TemplateData.class, new TemplateDataListener())
+        FastExcel.read(file, TemplateData.class, new TemplateDataListener())
                 .headRowNumber(3)
                 .sheet()
                 .doRead();
     }
 
     private void readAndWrite03(File file) {
-        EasyExcel.write(file, TemplateData.class)
+        FastExcel.write(file, TemplateData.class)
                 .withTemplate(TestFileUtil.readFile("template" + File.separator + "template03.xls"))
                 .sheet()
                 .doWrite(data());
-        EasyExcel.read(file, TemplateData.class, new TemplateDataListener())
+        FastExcel.read(file, TemplateData.class, new TemplateDataListener())
                 .headRowNumber(3)
                 .sheet()
                 .doRead();

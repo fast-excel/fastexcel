@@ -1,6 +1,6 @@
 package cn.idev.excel.test.temp;
 
-import cn.idev.excel.EasyExcel;
+import cn.idev.excel.FastExcel;
 import cn.idev.excel.support.cglib.beans.BeanMap;
 import cn.idev.excel.support.cglib.core.DebuggingClassWriter;
 import cn.idev.excel.util.BeanMapUtils;
@@ -24,7 +24,7 @@ public class Xls03Test {
 
     @Test
     public void test() {
-        List<Object> list = EasyExcel.read("src/test/resources/compatibility/t07.xlsx")
+        List<Object> list = FastExcel.read("src/test/resources/compatibility/t07.xlsx")
                 .sheet()
                 .doReadSync();
         for (Object data : list) {

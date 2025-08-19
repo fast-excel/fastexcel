@@ -1,6 +1,6 @@
 package cn.idev.excel.test.core.bom;
 
-import cn.idev.excel.EasyExcel;
+import cn.idev.excel.FastExcel;
 import cn.idev.excel.context.AnalysisContext;
 import cn.idev.excel.metadata.data.ReadCellData;
 import cn.idev.excel.read.listener.ReadListener;
@@ -53,14 +53,14 @@ public class BomDataTest {
         if (charsetName != null) {
             charset = Charset.forName(charsetName);
         }
-        EasyExcel.write(new FileOutputStream(file), BomData.class)
+        FastExcel.write(new FileOutputStream(file), BomData.class)
                 .charset(charset)
                 .withBom(withBom)
                 .excelType(ExcelTypeEnum.CSV)
                 .sheet()
                 .doWrite(data());
 
-        EasyExcel.read(file, BomData.class, new ReadListener<BomData>() {
+        FastExcel.read(file, BomData.class, new ReadListener<BomData>() {
 
                     private final List<BomData> dataList = Lists.newArrayList();
 
@@ -89,7 +89,7 @@ public class BomDataTest {
     }
 
     private void readCsv(File file) {
-        EasyExcel.read(file, BomData.class, new ReadListener<BomData>() {
+        FastExcel.read(file, BomData.class, new ReadListener<BomData>() {
 
                     private final List<BomData> dataList = Lists.newArrayList();
 

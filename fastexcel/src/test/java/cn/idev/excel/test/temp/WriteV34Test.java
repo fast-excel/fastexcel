@@ -1,6 +1,6 @@
 package cn.idev.excel.test.temp;
 
-import cn.idev.excel.EasyExcel;
+import cn.idev.excel.FastExcel;
 import cn.idev.excel.test.demo.write.DemoData;
 import cn.idev.excel.test.util.TestFileUtil;
 import cn.idev.excel.write.metadata.style.WriteCellStyle;
@@ -44,7 +44,7 @@ public class WriteV34Test {
                 new HorizontalCellStyleStrategy(headWriteCellStyle, contentWriteCellStyle);
 
         // 这里 需要指定写用哪个class去写，然后写到第一个sheet，名字为模板 然后文件流会自动关闭
-        EasyExcel.write(fileName, DemoData.class)
+        FastExcel.write(fileName, DemoData.class)
                 .head(head())
                 .registerWriteHandler(horizontalCellStyleStrategy)
                 .sheet("模板")

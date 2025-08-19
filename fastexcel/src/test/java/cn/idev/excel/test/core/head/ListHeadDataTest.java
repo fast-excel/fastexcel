@@ -1,6 +1,6 @@
 package cn.idev.excel.test.core.head;
 
-import cn.idev.excel.EasyExcel;
+import cn.idev.excel.FastExcel;
 import cn.idev.excel.test.util.TestFileUtil;
 import cn.idev.excel.util.DateUtils;
 import java.io.File;
@@ -45,8 +45,8 @@ public class ListHeadDataTest {
     }
 
     private void readAndWrite(File file) throws Exception {
-        EasyExcel.write(file).head(head()).sheet().doWrite(data());
-        EasyExcel.read(file)
+        FastExcel.write(file).head(head()).sheet().doWrite(data());
+        FastExcel.read(file)
                 .registerReadListener(new ListHeadDataListener())
                 .sheet()
                 .doRead();

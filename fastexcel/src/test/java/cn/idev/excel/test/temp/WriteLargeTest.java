@@ -1,7 +1,7 @@
 package cn.idev.excel.test.temp;
 
-import cn.idev.excel.EasyExcel;
 import cn.idev.excel.ExcelWriter;
+import cn.idev.excel.FastExcel;
 import cn.idev.excel.read.listener.PageReadListener;
 import cn.idev.excel.test.core.large.LargeData;
 import cn.idev.excel.test.util.TestFileUtil;
@@ -63,10 +63,10 @@ public class WriteLargeTest {
         HorizontalCellStyleStrategy horizontalCellStyleStrategy =
                 new HorizontalCellStyleStrategy(headWriteCellStyle, contentWriteCellStyle);
 
-        ExcelWriter excelWriter = EasyExcel.write(fileName, LargeData.class)
+        ExcelWriter excelWriter = FastExcel.write(fileName, LargeData.class)
                 .registerWriteHandler(horizontalCellStyleStrategy)
                 .build();
-        WriteSheet writeSheet = EasyExcel.writerSheet().build();
+        WriteSheet writeSheet = FastExcel.writerSheet().build();
         for (int j = 0; j < 100; j++) {
             excelWriter.write(data(), writeSheet);
             log.info("{} fill success.", j);
@@ -81,7 +81,7 @@ public class WriteLargeTest {
         // 这里 需要指定读用哪个class去读，然后读取第一个sheet 文件流会自动关闭
         // 这里默认每次会读取100条数据 然后返回过来 直接调用使用数据就行
         // 具体需要返回多少行可以在`PageReadListener`的构造函数设置
-        EasyExcel.read(fileName, new PageReadListener<List<Map<String, String>>>(dataList -> {
+        FastExcel.read(fileName, new PageReadListener<List<Map<String, String>>>(dataList -> {
                     log.info("SIZEL：{}", dataList.size());
                 }))
                 .sheet()
@@ -164,8 +164,8 @@ public class WriteLargeTest {
         // 方法2 如果写到不同的sheet 同一个对象
         String fileName = TestFileUtil.getPath() + "large" + System.currentTimeMillis() + ".xlsx";
 
-        ExcelWriter excelWriter = EasyExcel.write(fileName, LargeData.class).build();
-        WriteSheet writeSheet = EasyExcel.writerSheet().build();
+        ExcelWriter excelWriter = FastExcel.write(fileName, LargeData.class).build();
+        WriteSheet writeSheet = FastExcel.writerSheet().build();
         for (int j = 0; j < 100; j++) {
             excelWriter.write(data(), writeSheet);
             log.info("{} fill success.", j);

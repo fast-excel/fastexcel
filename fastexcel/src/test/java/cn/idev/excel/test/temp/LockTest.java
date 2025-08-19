@@ -1,6 +1,6 @@
 package cn.idev.excel.test.temp;
 
-import cn.idev.excel.EasyExcel;
+import cn.idev.excel.FastExcel;
 import com.alibaba.fastjson2.JSON;
 import java.io.FileInputStream;
 import java.util.List;
@@ -18,7 +18,7 @@ public class LockTest {
 
     @Test
     public void test() throws Exception {
-        List<Object> list = EasyExcel.read(new FileInputStream("src/test/resources/simple/simple07.xlsx"))
+        List<Object> list = FastExcel.read(new FileInputStream("src/test/resources/simple/simple07.xlsx"))
                 .useDefaultListener(false)
                 .doReadAllSync();
         for (Object data : list) {
@@ -28,7 +28,7 @@ public class LockTest {
 
     @Test
     public void test2() throws Exception {
-        List<Object> list = EasyExcel.read(new FileInputStream("src/test/resources/simple/simple07.xlsx"))
+        List<Object> list = FastExcel.read(new FileInputStream("src/test/resources/simple/simple07.xlsx"))
                 .sheet()
                 .headRowNumber(0)
                 .doReadSync();

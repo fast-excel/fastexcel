@@ -1,7 +1,7 @@
 package cn.idev.excel.test.demo.rare;
 
-import cn.idev.excel.EasyExcel;
 import cn.idev.excel.ExcelWriter;
+import cn.idev.excel.FastExcel;
 import cn.idev.excel.test.demo.write.DemoData;
 import cn.idev.excel.test.util.TestFileUtil;
 import cn.idev.excel.util.FileUtils;
@@ -42,7 +42,7 @@ public class WriteTest {
         File file = TestFileUtil.createNewFile("rare/compressedTemporaryFile" + System.currentTimeMillis() + ".xlsx");
 
         // Specify which class to use for writing here
-        try (ExcelWriter excelWriter = EasyExcel.write(file, DemoData.class)
+        try (ExcelWriter excelWriter = FastExcel.write(file, DemoData.class)
                 .registerWriteHandler(new WorkbookWriteHandler() {
 
                     /**
@@ -64,7 +64,7 @@ public class WriteTest {
                 })
                 .build()) {
             // Note that the same sheet should only be created once
-            WriteSheet writeSheet = EasyExcel.writerSheet("Template").build();
+            WriteSheet writeSheet = FastExcel.writerSheet("Template").build();
             // 100,000 data entries to ensure sufficient space
             for (int i = 0; i < 10000; i++) {
                 // Query data from the database page by page. Here you can query data for each page from the database
@@ -88,7 +88,7 @@ public class WriteTest {
         // event
         // If it is after the last row, since there will be no more data afterwards, just intercept the
         // afterWorkbookDispose event and write the data when the Excel file is almost done
-        EasyExcel.write(file, DemoData.class)
+        FastExcel.write(file, DemoData.class)
                 // Writing value before the last row
                 .registerWriteHandler(new RowWriteHandler() {
                     @Override

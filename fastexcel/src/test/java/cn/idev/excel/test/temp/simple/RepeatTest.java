@@ -1,7 +1,7 @@
 package cn.idev.excel.test.temp.simple;
 
-import cn.idev.excel.EasyExcel;
 import cn.idev.excel.ExcelReader;
+import cn.idev.excel.FastExcel;
 import cn.idev.excel.read.metadata.ReadSheet;
 import cn.idev.excel.test.temp.LockData;
 import java.io.IOException;
@@ -18,14 +18,14 @@ public class RepeatTest {
 
     @Test
     public void xlsTest1() throws IOException {
-        try (ExcelReader reader = EasyExcel.read(
+        try (ExcelReader reader = FastExcel.read(
                         Files.newInputStream(Paths.get("src/test/resources/repeat/repeat.xls")),
                         LockData.class,
                         new RepeatListener())
                 .headRowNumber(0)
                 .build()) {
-            ReadSheet r1 = EasyExcel.readSheet(0).build();
-            ReadSheet r2 = EasyExcel.readSheet(2).build();
+            ReadSheet r1 = FastExcel.readSheet(0).build();
+            ReadSheet r2 = FastExcel.readSheet(2).build();
             reader.read(r1);
             reader.read(r2);
             reader.finish();
@@ -34,13 +34,13 @@ public class RepeatTest {
 
     @Test
     public void xlsTest2() throws IOException {
-        try (ExcelReader reader = EasyExcel.read(
+        try (ExcelReader reader = FastExcel.read(
                         Files.newInputStream(Paths.get("src/test/resources/repeat/repeat.xls")),
                         LockData.class,
                         new RepeatListener())
                 .headRowNumber(0)
                 .build()) {
-            ReadSheet r2 = EasyExcel.readSheet(1).build();
+            ReadSheet r2 = FastExcel.readSheet(1).build();
             reader.read(r2);
             reader.finish();
         }
@@ -48,13 +48,13 @@ public class RepeatTest {
 
     @Test
     public void xlsTest3() throws IOException {
-        try (ExcelReader reader = EasyExcel.read(
+        try (ExcelReader reader = FastExcel.read(
                         Files.newInputStream(Paths.get("src/test/resources/repeat/repeat.xls")),
                         LockData.class,
                         new RepeatListener())
                 .headRowNumber(0)
                 .build()) {
-            ReadSheet r2 = EasyExcel.readSheet(0).build();
+            ReadSheet r2 = FastExcel.readSheet(0).build();
             reader.read(r2);
             reader.finish();
         }
@@ -62,14 +62,14 @@ public class RepeatTest {
 
     @Test
     public void xlsxTest1() throws IOException {
-        try (ExcelReader reader = EasyExcel.read(
+        try (ExcelReader reader = FastExcel.read(
                         Files.newInputStream(Paths.get("src/test/resources/repeat/repeat.xlsx")),
                         LockData.class,
                         new RepeatListener())
                 .headRowNumber(0)
                 .build()) {
-            ReadSheet r1 = EasyExcel.readSheet(0).build();
-            ReadSheet r2 = EasyExcel.readSheet(2).build();
+            ReadSheet r1 = FastExcel.readSheet(0).build();
+            ReadSheet r2 = FastExcel.readSheet(2).build();
             reader.read(r1);
             reader.read(r2);
             reader.finish();
@@ -78,13 +78,13 @@ public class RepeatTest {
 
     @Test
     public void xlsxTest2() throws IOException {
-        try (ExcelReader reader = EasyExcel.read(
+        try (ExcelReader reader = FastExcel.read(
                         Files.newInputStream(Paths.get("src/test/resources/repeat/repeat.xlsx")),
                         LockData.class,
                         new RepeatListener())
                 .headRowNumber(0)
                 .build()) {
-            ReadSheet r2 = EasyExcel.readSheet(1).build();
+            ReadSheet r2 = FastExcel.readSheet(1).build();
             reader.read(r2);
             reader.finish();
         }
@@ -92,13 +92,13 @@ public class RepeatTest {
 
     @Test
     public void xlsxTest3() throws IOException {
-        try (ExcelReader reader = EasyExcel.read(
+        try (ExcelReader reader = FastExcel.read(
                         Files.newInputStream(Paths.get("src/test/resources/repeat/repeat.xlsx")),
                         LockData.class,
                         new RepeatListener())
                 .headRowNumber(0)
                 .build()) {
-            ReadSheet r2 = EasyExcel.readSheet(0).build();
+            ReadSheet r2 = FastExcel.readSheet(0).build();
             reader.read(r2);
             reader.finish();
         }
