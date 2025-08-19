@@ -8,13 +8,9 @@ slug: /
 
 ## What is FastExcel
 
-FastExcel is the latest work created by the original author of EasyExcel. After I left Alibaba in 2023, and with Alibaba announcing the cessation of EasyExcel updates, I decided to continue maintaining and upgrading this project. When restarting, I chose the name FastExcel to emphasize the high performance of this framework when handling Excel files, not just its simplicity and ease of use.
+Fast, Concise, Java tool for processing Excel files that solves memory overflow issues with large files.
 
-FastExcel will always be free and open source , using the business-friendly Apache license., making it suitable for any commercial scenarios. This provides developers and enterprises with great freedom and flexibility. Some notable features of FastExcel include:
-
-- Full compatibility with all functionalities and features of the original EasyExcel, allowing users to transition seamlessly.
-- Migrating from EasyExcel to FastExcel only requires a simple change of package name and Maven dependency to complete the upgrade.
-- Functionally, it offers more innovations and improvements than EasyExcel.
+FastExcel will always be free and open source , using the business-friendly Apache license, making it suitable for any commercial scenarios. This provides developers and enterprises with great freedom and flexibility. 
 
 We plan to introduce more new features in the future to continuously enhance user experience and tool usability. We welcome everyone to continue following the development of FastExcel. FastExcel is committed to becoming your best choice for handling Excel files.
 

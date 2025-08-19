@@ -8,13 +8,9 @@ slug: /
 
 ## 什么是 FastExcel
 
-[FastExcel](https://github.com/fast-excel/fastexcel) 是由原 EasyExcel 作者创建的新项目。2023 年我已从阿里离职，近期阿里宣布停止更新 EasyExcel，我决定继续维护和升级这个项目。在重新开始时，我选择为它起名为 FastExcel，以突出这个框架在处理 Excel 文件时的高性能表现，而不仅仅是简单易用。
+快速、简洁、解决大文件内存溢出的 Java 处理 Excel 工具。
 
-FastExcel 将始终坚持免费开源，并采用商业友好的 Apache 协议，使其适用于任何商业化场景。这为开发者和企业提供了极大的自由度和灵活性。其一些显著特点包括：
-
-- 完全兼容原 EasyExcel 的所有功能和特性，这使得用户可以无缝过渡。
-- 从 EasyExcel 迁移到 FastExcel 只需简单地更换包名和 Maven 依赖即可完成升级。
-- 在功能上，比 EasyExcel 提供更多新的特性和改进。
+FastExcel 将始终坚持免费开源，并采用商业友好的 Apache 协议，使其适用于任何商业化场景。这为开发者和企业提供了极大的自由度和灵活性。
 
 我们计划在未来推出更多新特性，以不断提升用户体验和工具实用性。欢迎大家持续关注 FastExcel 的发展，FastExcel 致力于成为您处理 Excel 文件的最佳选择。
 
