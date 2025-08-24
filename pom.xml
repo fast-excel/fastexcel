@@ -42,7 +42,7 @@
         <spring-boot-starter-web.version>2.7.18</spring-boot-starter-web.version>
         <spring-boot-starter-test.version>2.7.18</spring-boot-starter-test.version>
         <slf4j-simple.version>1.7.36</slf4j-simple.version>
-        <jcl-over-slf4j.version>1.7.36</jcl-over-slf4j.version>
+        <jcl-over-slf4j.version>2.0.17</jcl-over-slf4j.version>
         <log4j-over-slf4j.version>1.7.36</log4j-over-slf4j.version>
         <logback-classic.version>1.5.18</logback-classic.version>
         <mockserver.version>5.15.0</mockserver.version>
