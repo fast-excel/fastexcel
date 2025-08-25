@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project
-    xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+        xmlns="http://maven.apache.org/POM/4.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
 >
     <modelVersion>4.0.0</modelVersion>
 
@@ -50,6 +50,7 @@
         <surefire.jvm.args>-Xmx2g -Xms2g -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8</surefire.jvm.args>
         <surefire.jdk9plus.args></surefire.jdk9plus.args>
         <argLine></argLine>
+        <jazzer.junit.version>0.25.0</jazzer.junit.version>
 
     </properties>
 
@@ -193,7 +194,34 @@
                 <version>${mockserver.version}</version>
                 <scope>test</scope>
             </dependency>
-
+            <dependency>
+                <groupId>com.code-intelligence</groupId>
+                <artifactId>jazzer-junit</artifactId>
+                <version>${jazzer.junit.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.junit.jupiter</groupId>
+                        <artifactId>junit-jupiter-engine</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.junit.jupiter</groupId>
+                        <artifactId>junit-jupiter-api</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.junit.jupiter</groupId>
+                        <artifactId>junit-jupiter-params</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.junit.platform</groupId>
+                        <artifactId>junit-platform-launcher</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.junit.platform</groupId>
+                        <artifactId>junit-platform-commons</artifactId>
+                    </exclusion>
+                </exclusions>
+                <scope>test</scope>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>
@@ -409,17 +437,17 @@
                         <importOrder>
                             <order>\#|</order>
                         </importOrder>
-                        <removeUnusedImports />
-                        <trimTrailingWhitespace />
-                        <endWithNewline />
+                        <removeUnusedImports/>
+                        <trimTrailingWhitespace/>
+                        <endWithNewline/>
                         <indent>
                             <spaces>true</spaces>
                             <spacesPerTab>4</spacesPerTab>
                         </indent>
                     </java>
                     <pom>
-                        <trimTrailingWhitespace />
-                        <endWithNewline />
+                        <trimTrailingWhitespace/>
+                        <endWithNewline/>
                         <indent>
                             <spaces>true</spaces>
                             <spacesPerTab>4</spacesPerTab>
@@ -459,7 +487,8 @@
             <properties>
                 <surefire.jdk9plus.args>--add-opens=java.base/java.lang=ALL-UNNAMED
                     --add-opens=java.base/java.util=ALL-UNNAMED
-                    --add-opens=java.base/sun.reflect.annotation=ALL-UNNAMED</surefire.jdk9plus.args>
+                    --add-opens=java.base/sun.reflect.annotation=ALL-UNNAMED
+                </surefire.jdk9plus.args>
             </properties>
         </profile>
         <profile>
@@ -468,7 +497,7 @@
                 <jdk>1.8</jdk>
             </activation>
             <properties>
-                <surefireArgLine> -Dfile.encoding=UTF-8</surefireArgLine>
+                <surefireArgLine>-Dfile.encoding=UTF-8</surefireArgLine>
             </properties>
         </profile>
     </profiles>

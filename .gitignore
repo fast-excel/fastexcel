@@ -40,3 +40,5 @@ website/versioned_sidebars
 website/versions.json
 website/pnpm-lock.yaml
 website/yarn.lock
+**/.cifuzz-corpus/
+**/fuzz_corpus/
