@@ -10,8 +10,10 @@ import cn.idev.excel.read.metadata.ReadWorkbook;
 import cn.idev.excel.support.ExcelTypeEnum;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.util.zip.ZipOutputStream;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -59,6 +61,39 @@ public class XlsxSaxAnalyserReadOpcPackageTest {
         ByteArrayInputStream decrypted = new ByteArrayInputStream("still-not-xlsx".getBytes(StandardCharsets.UTF_8));
 
         ExcelCommonException ex = assertThrows(ExcelCommonException.class, () -> new XlsxSaxAnalyser(ctx, decrypted));
+        assertTrue(ex.getMessage() != null && ex.getMessage().toLowerCase().contains("invalid ooxml/zip format"));
+    }
+
+    @Test
+    void emptyZipFile_throwsExcelCommonException() throws Exception {
+        File tmp = File.createTempFile("empty-zip", ".xlsx");
+        try (FileOutputStream fos = new FileOutputStream(tmp);
+                ZipOutputStream zos = new ZipOutputStream(fos)) {
+            // write an empty zip with no entries
+        }
+        try {
+            ReadWorkbook rw = new ReadWorkbook();
+            rw.setFile(tmp);
+            XlsxReadContext ctx = new DefaultXlsxReadContext(rw, ExcelTypeEnum.XLSX);
+            ExcelCommonException ex = assertThrows(ExcelCommonException.class, () -> new XlsxSaxAnalyser(ctx, null));
+            assertTrue(ex.getMessage() != null && ex.getMessage().toLowerCase().contains("invalid ooxml/zip format"));
+        } finally {
+            try {
+                Files.deleteIfExists(tmp.toPath());
+            } catch (Exception ignore) {
+            }
+        }
+    }
+
+    @Test
+    void inputStream_nonMandatoryUseTempFileBranch_throwsExcelCommonException() {
+        ReadWorkbook rw = new ReadWorkbook();
+        rw.setInputStream(new ByteArrayInputStream("not-xlsx".getBytes(StandardCharsets.UTF_8)));
+        // mandatoryUseInputStream unset or false -> will write to temp file and then open
+        rw.setMandatoryUseInputStream(false);
+        XlsxReadContext ctx = new DefaultXlsxReadContext(rw, ExcelTypeEnum.XLSX);
+
+        ExcelCommonException ex = assertThrows(ExcelCommonException.class, () -> new XlsxSaxAnalyser(ctx, null));
         assertTrue(ex.getMessage() != null && ex.getMessage().toLowerCase().contains("invalid ooxml/zip format"));
     }
 }
