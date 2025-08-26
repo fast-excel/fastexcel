@@ -16,4 +16,27 @@ output/
 .flattened-pom.xml
 dependency-reduced-pom.xml
 
+
 /.mvn/wrapper/maven-wrapper.jar
+
+# website
+.vscode/
+website/node_modules
+website/build
+website/node_modules
+website/build
+website/.docusaurus
+website/.cache-loader
+website/.env.local
+website/.env.development.local
+website/.env.test.local
+website/.env.production.local
+website/npm-debug.log*
+website/yarn-debug.log*
+website/yarn-error.log*
+website/package-lock.json
+website/versioned_docs
+website/versioned_sidebars
+website/versions.json
+website/pnpm-lock.yaml
+website/yarn.lock

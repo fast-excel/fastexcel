@@ -4,6 +4,7 @@ import cn.idev.excel.metadata.AbstractParameterBuilder;
 import cn.idev.excel.read.listener.ReadListener;
 import cn.idev.excel.read.metadata.ReadBasicParameter;
 import cn.idev.excel.util.ListUtils;
+import java.util.Objects;
 
 /**
  * Build ExcelBuilder
@@ -55,6 +56,16 @@ public abstract class AbstractExcelReaderParameterBuilder<
             parameter().setCustomReadListenerList(ListUtils.newArrayList());
         }
         parameter().getCustomReadListenerList().add(readListener);
+        return self();
+    }
+
+    public T registerReadListenerIfNotNull(ReadListener<?> readListener) {
+        if (Objects.nonNull(readListener)) {
+            if (parameter().getCustomReadListenerList() == null) {
+                parameter().setCustomReadListenerList(ListUtils.newArrayList());
+            }
+            parameter().getCustomReadListenerList().add(readListener);
+        }
         return self();
     }
 }

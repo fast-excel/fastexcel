@@ -1,8 +1,8 @@
 package cn.idev.excel.test.core.repetition;
 
-import cn.idev.excel.EasyExcel;
 import cn.idev.excel.ExcelReader;
 import cn.idev.excel.ExcelWriter;
+import cn.idev.excel.FastExcel;
 import cn.idev.excel.read.metadata.ReadSheet;
 import cn.idev.excel.test.util.TestFileUtil;
 import cn.idev.excel.write.metadata.WriteSheet;
@@ -55,13 +55,13 @@ public class RepetitionDataTest {
 
     private void readAndWrite(File file) {
         try (ExcelWriter excelWriter =
-                EasyExcel.write(file, RepetitionData.class).build()) {
-            WriteSheet writeSheet = EasyExcel.writerSheet(0).build();
+                FastExcel.write(file, RepetitionData.class).build()) {
+            WriteSheet writeSheet = FastExcel.writerSheet(0).build();
             excelWriter.write(data(), writeSheet).write(data(), writeSheet);
         }
-        try (ExcelReader excelReader = EasyExcel.read(file, RepetitionData.class, new RepetitionDataListener())
+        try (ExcelReader excelReader = FastExcel.read(file, RepetitionData.class, new RepetitionDataListener())
                 .build()) {
-            ReadSheet readSheet = EasyExcel.readSheet(0).build();
+            ReadSheet readSheet = FastExcel.readSheet(0).build();
             excelReader.read(readSheet);
         }
     }
@@ -83,15 +83,15 @@ public class RepetitionDataTest {
 
     private void readAndWriteTable(File file) {
         try (ExcelWriter excelWriter =
-                EasyExcel.write(file, RepetitionData.class).build()) {
-            WriteSheet writeSheet = EasyExcel.writerSheet(0).build();
+                FastExcel.write(file, RepetitionData.class).build()) {
+            WriteSheet writeSheet = FastExcel.writerSheet(0).build();
             WriteTable writeTable =
-                    EasyExcel.writerTable(0).relativeHeadRowIndex(0).build();
+                    FastExcel.writerTable(0).relativeHeadRowIndex(0).build();
             excelWriter.write(data(), writeSheet, writeTable).write(data(), writeSheet, writeTable);
         }
-        try (ExcelReader excelReader = EasyExcel.read(file, RepetitionData.class, new RepetitionDataListener())
+        try (ExcelReader excelReader = FastExcel.read(file, RepetitionData.class, new RepetitionDataListener())
                 .build()) {
-            ReadSheet readSheet = EasyExcel.readSheet(0).headRowNumber(2).build();
+            ReadSheet readSheet = FastExcel.readSheet(0).headRowNumber(2).build();
             excelReader.read(readSheet);
         }
     }

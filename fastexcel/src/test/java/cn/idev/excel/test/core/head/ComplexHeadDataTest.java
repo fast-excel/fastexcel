@@ -1,6 +1,6 @@
 package cn.idev.excel.test.core.head;
 
-import cn.idev.excel.EasyExcel;
+import cn.idev.excel.FastExcel;
 import cn.idev.excel.test.util.TestFileUtil;
 import java.io.File;
 import java.util.ArrayList;
@@ -49,8 +49,8 @@ public class ComplexHeadDataTest {
     }
 
     private void readAndWrite(File file) {
-        EasyExcel.write(file, ComplexHeadData.class).sheet().doWrite(data());
-        EasyExcel.read(file, ComplexHeadData.class, new ComplexDataListener())
+        FastExcel.write(file, ComplexHeadData.class).sheet().doWrite(data());
+        FastExcel.read(file, ComplexHeadData.class, new ComplexDataListener())
                 .xlsxSAXParserFactoryName("com.sun.org.apache.xerces.internal.jaxp.SAXParserFactoryImpl")
                 .sheet()
                 .doRead();
@@ -72,11 +72,11 @@ public class ComplexHeadDataTest {
     }
 
     private void readAndWriteAutomaticMergeHead(File file) {
-        EasyExcel.write(file, ComplexHeadData.class)
+        FastExcel.write(file, ComplexHeadData.class)
                 .automaticMergeHead(Boolean.FALSE)
                 .sheet()
                 .doWrite(data());
-        EasyExcel.read(file, ComplexHeadData.class, new ComplexDataListener())
+        FastExcel.read(file, ComplexHeadData.class, new ComplexDataListener())
                 .sheet()
                 .doRead();
     }

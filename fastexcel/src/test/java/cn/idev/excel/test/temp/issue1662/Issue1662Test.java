@@ -1,6 +1,6 @@
 package cn.idev.excel.test.temp.issue1662;
 
-import cn.idev.excel.EasyExcel;
+import cn.idev.excel.FastExcel;
 import cn.idev.excel.test.util.TestFileUtil;
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,7 +12,7 @@ public class Issue1662Test {
     public void test1662() {
         String fileName = TestFileUtil.getPath() + "Test1939" + ".xlsx";
         System.out.println(fileName);
-        EasyExcel.write(fileName).head(head()).sheet("模板").doWrite(dataList());
+        FastExcel.write(fileName).head(head()).sheet("模板").doWrite(dataList());
     }
 
     private List<List<String>> head() {

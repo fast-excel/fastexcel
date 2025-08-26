@@ -8,7 +8,7 @@
 
     <groupId>cn.idev.excel</groupId>
     <artifactId>fastexcel-parent</artifactId>
-    <version>1.2.0</version>
+    <version>1.3.0</version>
 
     <packaging>pom</packaging>
 
@@ -33,13 +33,12 @@
         <maven.test.skip>true</maven.test.skip>
         <commons-csv.version>1.11.0</commons-csv.version>
         <poi.version>5.4.1</poi.version>
-        <poi-ooxml.version>5.4.1</poi-ooxml.version>
         <ehcache.version>3.9.11</ehcache.version>
         <commons-io.version>2.16.1</commons-io.version>
         <slf4j-api.version>1.7.36</slf4j-api.version>
         <lombok.version>1.18.32</lombok.version>
         <spring-core.version>5.3.37</spring-core.version>
-        <fastjson2.version>2.0.51</fastjson2.version>
+        <fastjson2.version>2.0.58</fastjson2.version>
         <spring-boot-starter-web.version>2.7.18</spring-boot-starter-web.version>
         <spring-boot-starter-test.version>2.7.18</spring-boot-starter-test.version>
         <slf4j-simple.version>1.7.36</slf4j-simple.version>
@@ -117,7 +116,7 @@
             <dependency>
                 <groupId>org.apache.poi</groupId>
                 <artifactId>poi-ooxml</artifactId>
-                <version>${poi-ooxml.version}</version>
+                <version>${poi.version}</version>
                 <exclusions>
                     <exclusion>
                         <groupId>commons-io</groupId>
@@ -194,7 +193,6 @@
                 <version>${mockserver.version}</version>
                 <scope>test</scope>
             </dependency>
-
 
 
         </dependencies>
@@ -411,17 +409,17 @@
                         <importOrder>
                             <order>\#|</order>
                         </importOrder>
-                        <removeUnusedImports/>
-                        <trimTrailingWhitespace/>
-                        <endWithNewline/>
+                        <removeUnusedImports />
+                        <trimTrailingWhitespace />
+                        <endWithNewline />
                         <indent>
                             <spaces>true</spaces>
                             <spacesPerTab>4</spacesPerTab>
                         </indent>
                     </java>
                     <pom>
-                        <trimTrailingWhitespace/>
-                        <endWithNewline/>
+                        <trimTrailingWhitespace />
+                        <endWithNewline />
                         <indent>
                             <spaces>true</spaces>
                             <spacesPerTab>4</spacesPerTab>
@@ -459,7 +457,9 @@
                 <jdk>[9,)</jdk>
             </activation>
             <properties>
-                <surefire.jdk9plus.args>--add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/sun.reflect.annotation=ALL-UNNAMED</surefire.jdk9plus.args>
+                <surefire.jdk9plus.args>--add-opens=java.base/java.lang=ALL-UNNAMED
+                    --add-opens=java.base/java.util=ALL-UNNAMED
+                    --add-opens=java.base/sun.reflect.annotation=ALL-UNNAMED</surefire.jdk9plus.args>
             </properties>
         </profile>
         <profile>

@@ -2,7 +2,7 @@ package cn.idev.excel.test.temp.read;
 
 import static org.mockserver.model.HttpRequest.request;
 import static org.mockserver.model.HttpResponse.response;
-import cn.idev.excel.EasyExcel;
+import cn.idev.excel.FastExcel;
 import cn.idev.excel.context.AnalysisContext;
 import cn.idev.excel.read.listener.ReadListener;
 import cn.idev.excel.test.demo.read.Sample;
@@ -39,7 +39,7 @@ public class WebStreamReadTest {
         URL url = new URL("http://localhost:" + mockServer.getPort() + "/sample.xlsx");
         InputStream is = url.openStream();
         List<String> body = new LinkedList<>();
-        EasyExcel.read(is, Sample.class, new ReadListener<Sample>() {
+        FastExcel.read(is, Sample.class, new ReadListener<Sample>() {
                     @Override
                     public void invoke(Sample data, AnalysisContext context) {
                         body.add(data.getHeader());

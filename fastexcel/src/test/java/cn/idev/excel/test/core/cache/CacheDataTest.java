@@ -1,6 +1,6 @@
 package cn.idev.excel.test.core.cache;
 
-import cn.idev.excel.EasyExcel;
+import cn.idev.excel.FastExcel;
 import cn.idev.excel.annotation.ExcelProperty;
 import cn.idev.excel.context.AnalysisContext;
 import cn.idev.excel.enums.CacheLocationEnum;
@@ -53,8 +53,8 @@ public class CacheDataTest {
         ThreadLocal<Map<Class<?>, FieldCache>> fieldThreadLocal =
                 (ThreadLocal<Map<Class<?>, FieldCache>>) field.get(ClassUtils.class.newInstance());
         Assertions.assertNull(fieldThreadLocal.get());
-        EasyExcel.write(file07, CacheData.class).sheet().doWrite(data());
-        EasyExcel.read(file07, CacheData.class, new PageReadListener<DemoData>(dataList -> {
+        FastExcel.write(file07, CacheData.class).sheet().doWrite(data());
+        FastExcel.read(file07, CacheData.class, new PageReadListener<DemoData>(dataList -> {
                     Assertions.assertNotNull(fieldThreadLocal.get());
                 }))
                 .sheet()
@@ -64,8 +64,8 @@ public class CacheDataTest {
 
     @Test
     public void t02ReadAndWriteInvoke() throws Exception {
-        EasyExcel.write(fileCacheInvoke, CacheInvokeData.class).sheet().doWrite(dataInvoke());
-        EasyExcel.read(fileCacheInvoke, CacheInvokeData.class, new AnalysisEventListener<CacheInvokeData>() {
+        FastExcel.write(fileCacheInvoke, CacheInvokeData.class).sheet().doWrite(dataInvoke());
+        FastExcel.read(fileCacheInvoke, CacheInvokeData.class, new AnalysisEventListener<CacheInvokeData>() {
 
                     @Override
                     public void invokeHeadMap(Map<Integer, String> headMap, AnalysisContext context) {
@@ -91,8 +91,8 @@ public class CacheDataTest {
         Map map = (Map) memberValues.get(invocationHandler);
         map.put("value", new String[] {"姓名2"});
 
-        EasyExcel.write(fileCacheInvoke2, CacheInvokeData.class).sheet().doWrite(dataInvoke());
-        EasyExcel.read(fileCacheInvoke2, CacheInvokeData.class, new AnalysisEventListener<CacheInvokeData>() {
+        FastExcel.write(fileCacheInvoke2, CacheInvokeData.class).sheet().doWrite(dataInvoke());
+        FastExcel.read(fileCacheInvoke2, CacheInvokeData.class, new AnalysisEventListener<CacheInvokeData>() {
 
                     @Override
                     public void invokeHeadMap(Map<Integer, String> headMap, AnalysisContext context) {
@@ -113,11 +113,11 @@ public class CacheDataTest {
 
     @Test
     public void t03ReadAndWriteInvokeMemory() throws Exception {
-        EasyExcel.write(fileCacheInvokeMemory, CacheInvokeMemoryData.class)
+        FastExcel.write(fileCacheInvokeMemory, CacheInvokeMemoryData.class)
                 .filedCacheLocation(CacheLocationEnum.MEMORY)
                 .sheet()
                 .doWrite(dataInvokeMemory());
-        EasyExcel.read(
+        FastExcel.read(
                         fileCacheInvokeMemory,
                         CacheInvokeMemoryData.class,
                         new AnalysisEventListener<CacheInvokeMemoryData>() {
@@ -147,11 +147,11 @@ public class CacheDataTest {
         Map map = (Map) memberValues.get(invocationHandler);
         map.put("value", new String[] {"姓名2"});
 
-        EasyExcel.write(fileCacheInvokeMemory2, CacheInvokeMemoryData.class)
+        FastExcel.write(fileCacheInvokeMemory2, CacheInvokeMemoryData.class)
                 .filedCacheLocation(CacheLocationEnum.MEMORY)
                 .sheet()
                 .doWrite(dataInvokeMemory());
-        EasyExcel.read(
+        FastExcel.read(
                         fileCacheInvokeMemory2,
                         CacheInvokeMemoryData.class,
                         new AnalysisEventListener<CacheInvokeMemoryData>() {

@@ -1,7 +1,7 @@
 package cn.idev.excel.test.temp.issue1663;
 
-import cn.idev.excel.EasyExcel;
 import cn.idev.excel.ExcelWriter;
+import cn.idev.excel.FastExcel;
 import cn.idev.excel.enums.WriteDirectionEnum;
 import cn.idev.excel.test.demo.fill.FillData;
 import cn.idev.excel.test.util.TestFileUtil;
@@ -22,8 +22,8 @@ public class FillTest {
 
         String fileName = TestFileUtil.getPath() + "temp/issue1663" + File.separator + "issue1663.xlsx";
         ExcelWriter excelWriter =
-                EasyExcel.write(fileName).withTemplate(templateFileName).build();
-        WriteSheet writeSheet = EasyExcel.writerSheet().build();
+                FastExcel.write(fileName).withTemplate(templateFileName).build();
+        WriteSheet writeSheet = FastExcel.writerSheet().build();
         FillConfig fillConfig =
                 FillConfig.builder().direction(WriteDirectionEnum.VERTICAL).build();
         excelWriter.fill(new FillWrapper("data1", data()), fillConfig, writeSheet);

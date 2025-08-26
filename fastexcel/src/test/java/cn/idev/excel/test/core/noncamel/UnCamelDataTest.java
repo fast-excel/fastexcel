@@ -1,6 +1,6 @@
 package cn.idev.excel.test.core.noncamel;
 
-import cn.idev.excel.EasyExcel;
+import cn.idev.excel.FastExcel;
 import cn.idev.excel.test.util.TestFileUtil;
 import java.io.File;
 import java.util.ArrayList;
@@ -43,8 +43,8 @@ public class UnCamelDataTest {
     }
 
     private void readAndWrite(File file) {
-        EasyExcel.write(file, UnCamelData.class).sheet().doWrite(data());
-        EasyExcel.read(file, UnCamelData.class, new UnCamelDataListener())
+        FastExcel.write(file, UnCamelData.class).sheet().doWrite(data());
+        FastExcel.read(file, UnCamelData.class, new UnCamelDataListener())
                 .sheet()
                 .doRead();
     }

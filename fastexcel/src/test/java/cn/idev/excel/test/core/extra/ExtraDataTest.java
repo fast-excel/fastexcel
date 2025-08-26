@@ -1,6 +1,6 @@
 package cn.idev.excel.test.core.extra;
 
-import cn.idev.excel.EasyExcel;
+import cn.idev.excel.FastExcel;
 import cn.idev.excel.context.AnalysisContext;
 import cn.idev.excel.enums.CellExtraTypeEnum;
 import cn.idev.excel.metadata.CellExtra;
@@ -42,7 +42,7 @@ public class ExtraDataTest {
 
     @Test
     public void t03Read() {
-        EasyExcel.read(extraRelationships, ExtraData.class, new ReadListener() {
+        FastExcel.read(extraRelationships, ExtraData.class, new ReadListener() {
                     @Override
                     public void invoke(Object data, AnalysisContext context) {}
 
@@ -74,7 +74,7 @@ public class ExtraDataTest {
     }
 
     private void read(File file) {
-        EasyExcel.read(file, ExtraData.class, new ExtraDataListener())
+        FastExcel.read(file, ExtraData.class, new ExtraDataListener())
                 .extraRead(CellExtraTypeEnum.COMMENT)
                 .extraRead(CellExtraTypeEnum.HYPERLINK)
                 .extraRead(CellExtraTypeEnum.MERGE)

@@ -1,6 +1,6 @@
 package cn.idev.excel.test.core.annotation;
 
-import cn.idev.excel.EasyExcel;
+import cn.idev.excel.FastExcel;
 import cn.idev.excel.test.core.StyleTestUtils;
 import cn.idev.excel.test.util.TestFileUtil;
 import cn.idev.excel.util.DateUtils;
@@ -65,7 +65,7 @@ public class AnnotationDataTest {
     }
 
     private void writeStyle(File file) throws Exception {
-        EasyExcel.write().file(file).head(AnnotationStyleData.class).sheet().doWrite(dataStyle());
+        FastExcel.write().file(file).head(AnnotationStyleData.class).sheet().doWrite(dataStyle());
 
         Workbook workbook = WorkbookFactory.create(file);
         Sheet sheet = workbook.getSheetAt(0);
@@ -93,7 +93,7 @@ public class AnnotationDataTest {
     }
 
     private void readAndWrite(File file) throws Exception {
-        EasyExcel.write().file(file).head(AnnotationData.class).sheet().doWrite(dataStyle());
+        FastExcel.write().file(file).head(AnnotationData.class).sheet().doWrite(dataStyle());
 
         if (file == fileCsv) {
             return;

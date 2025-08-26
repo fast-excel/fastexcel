@@ -1,7 +1,7 @@
 package cn.idev.excel.test.temp.bug;
 
-import cn.idev.excel.EasyExcel;
 import cn.idev.excel.ExcelWriter;
+import cn.idev.excel.FastExcel;
 import cn.idev.excel.write.metadata.WriteSheet;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -15,9 +15,9 @@ public class ExcelCreat {
     public static void main(String[] args) throws FileNotFoundException {
         List<DataType> data = getData();
         ExcelWriter excelWriter = null;
-        excelWriter = EasyExcel.write(new FileOutputStream("all.xlsx")).build();
+        excelWriter = FastExcel.write(new FileOutputStream("all.xlsx")).build();
         WriteSheet writeSheet =
-                EasyExcel.writerSheet(1, "test").head(HeadType.class).build();
+                FastExcel.writerSheet(1, "test").head(HeadType.class).build();
         excelWriter.write(data, writeSheet);
         excelWriter.finish();
     }

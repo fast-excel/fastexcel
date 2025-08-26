@@ -1,6 +1,6 @@
 package cn.idev.excel.test.temp.csv;
 
-import cn.idev.excel.EasyExcel;
+import cn.idev.excel.FastExcel;
 import cn.idev.excel.test.util.TestFileUtil;
 import com.alibaba.fastjson2.JSON;
 import java.io.File;
@@ -51,10 +51,10 @@ public class CsvReadTest {
         String fileName = TestFileUtil.getPath() + "simpleWrite" + System.currentTimeMillis() + ".csv";
         // 这里 需要指定写用哪个class去写，然后写到第一个sheet，名字为模板 然后文件流会自动关闭
         // 如果这里想使用03 则 传入excelType参数即可
-        EasyExcel.write(fileName, CsvData.class).sheet().doWrite(data());
+        FastExcel.write(fileName, CsvData.class).sheet().doWrite(data());
 
         // 读
-        List<Object> list = EasyExcel.read(fileName).sheet(0).headRowNumber(0).doReadSync();
+        List<Object> list = FastExcel.read(fileName).sheet(0).headRowNumber(0).doReadSync();
         log.info("数据：{}", list.size());
         for (Object data : list) {
             log.info("返回数据：{}", JSON.toJSONString(data));
@@ -67,9 +67,9 @@ public class CsvReadTest {
         String fileName = TestFileUtil.getPath() + "simpleWrite" + System.currentTimeMillis() + ".csv";
         // 这里 需要指定写用哪个class去写，然后写到第一个sheet，名字为模板 然后文件流会自动关闭
         // 如果这里想使用03 则 传入excelType参数即可
-        EasyExcel.write(fileName, CsvData.class).sheet().doWrite(data());
+        FastExcel.write(fileName, CsvData.class).sheet().doWrite(data());
 
-        EasyExcel.read(fileName, CsvData.class, new CsvDataListener()).sheet().doRead();
+        FastExcel.read(fileName, CsvData.class, new CsvDataListener()).sheet().doRead();
     }
 
     @Test

@@ -1,6 +1,6 @@
 package cn.idev.excel.test.core.fill.style;
 
-import cn.idev.excel.EasyExcel;
+import cn.idev.excel.FastExcel;
 import cn.idev.excel.metadata.Head;
 import cn.idev.excel.test.core.fill.FillData;
 import cn.idev.excel.test.util.TestFileUtil;
@@ -190,7 +190,7 @@ public class FillStyleAnnotatedTest {
     }
 
     private void fill(File file, File template) throws Exception {
-        EasyExcel.write(file, FillStyleAnnotatedData.class)
+        FastExcel.write(file, FillStyleAnnotatedData.class)
                 .withTemplate(template)
                 .sheet()
                 .doFill(data());
@@ -320,7 +320,7 @@ public class FillStyleAnnotatedTest {
     }
 
     private void fillStyleHandler(File file, File template) throws Exception {
-        EasyExcel.write(file, FillData.class)
+        FastExcel.write(file, FillData.class)
                 .withTemplate(template)
                 .sheet()
                 .registerWriteHandler(new AbstractVerticalCellStyleStrategy() {

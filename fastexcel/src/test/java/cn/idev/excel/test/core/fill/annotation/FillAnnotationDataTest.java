@@ -1,6 +1,6 @@
 package cn.idev.excel.test.core.fill.annotation;
 
-import cn.idev.excel.EasyExcel;
+import cn.idev.excel.FastExcel;
 import cn.idev.excel.test.util.TestFileUtil;
 import cn.idev.excel.util.DateUtils;
 import java.io.File;
@@ -57,7 +57,7 @@ public class FillAnnotationDataTest {
     }
 
     private void readAndWrite(File file, File fileTemplate) throws Exception {
-        EasyExcel.write()
+        FastExcel.write()
                 .file(file)
                 .head(FillAnnotationData.class)
                 .withTemplate(fileTemplate)

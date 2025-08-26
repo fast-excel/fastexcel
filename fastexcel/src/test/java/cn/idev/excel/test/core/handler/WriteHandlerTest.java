@@ -1,6 +1,6 @@
 package cn.idev.excel.test.core.handler;
 
-import cn.idev.excel.EasyExcel;
+import cn.idev.excel.FastExcel;
 import cn.idev.excel.test.util.TestFileUtil;
 import java.io.File;
 import java.util.ArrayList;
@@ -74,7 +74,7 @@ public class WriteHandlerTest {
 
     private void workbookWrite(File file) {
         WriteHandler writeHandler = new WriteHandler();
-        EasyExcel.write(file)
+        FastExcel.write(file)
                 .head(WriteHandlerData.class)
                 .registerWriteHandler(writeHandler)
                 .sheet()
@@ -84,7 +84,7 @@ public class WriteHandlerTest {
 
     private void sheetWrite(File file) {
         WriteHandler writeHandler = new WriteHandler();
-        EasyExcel.write(file)
+        FastExcel.write(file)
                 .head(WriteHandlerData.class)
                 .sheet()
                 .registerWriteHandler(writeHandler)
@@ -94,7 +94,7 @@ public class WriteHandlerTest {
 
     private void tableWrite(File file) {
         WriteHandler writeHandler = new WriteHandler();
-        EasyExcel.write(file)
+        FastExcel.write(file)
                 .head(WriteHandlerData.class)
                 .sheet()
                 .table(0)

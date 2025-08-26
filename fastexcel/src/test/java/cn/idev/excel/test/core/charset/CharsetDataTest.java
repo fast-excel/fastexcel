@@ -1,6 +1,6 @@
 package cn.idev.excel.test.core.charset;
 
-import cn.idev.excel.EasyExcel;
+import cn.idev.excel.FastExcel;
 import cn.idev.excel.context.AnalysisContext;
 import cn.idev.excel.metadata.data.ReadCellData;
 import cn.idev.excel.read.listener.ReadListener;
@@ -46,8 +46,8 @@ public class CharsetDataTest {
 
     @Test
     public void t02ReadAndWriteCsvError() {
-        EasyExcel.write(fileCsvError, CharsetData.class).charset(GBK).sheet().doWrite(data());
-        EasyExcel.read(fileCsvError, CharsetData.class, new ReadListener<CharsetData>() {
+        FastExcel.write(fileCsvError, CharsetData.class).charset(GBK).sheet().doWrite(data());
+        FastExcel.read(fileCsvError, CharsetData.class, new ReadListener<CharsetData>() {
 
                     private final List<CharsetData> dataList = Lists.newArrayList();
 
@@ -71,8 +71,8 @@ public class CharsetDataTest {
     }
 
     private void readAndWrite(File file, Charset charset) {
-        EasyExcel.write(file, CharsetData.class).charset(charset).sheet().doWrite(data());
-        EasyExcel.read(file, CharsetData.class, new ReadListener<CharsetData>() {
+        FastExcel.write(file, CharsetData.class).charset(charset).sheet().doWrite(data());
+        FastExcel.read(file, CharsetData.class, new ReadListener<CharsetData>() {
 
                     private final List<CharsetData> dataList = Lists.newArrayList();
 

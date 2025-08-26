@@ -1,6 +1,6 @@
 package cn.idev.excel.test.core.head;
 
-import cn.idev.excel.EasyExcel;
+import cn.idev.excel.FastExcel;
 import cn.idev.excel.test.util.TestFileUtil;
 import java.io.File;
 import java.util.ArrayList;
@@ -43,8 +43,8 @@ public class NoHeadDataTest {
     }
 
     private void readAndWrite(File file) {
-        EasyExcel.write(file, NoHeadData.class).needHead(Boolean.FALSE).sheet().doWrite(data());
-        EasyExcel.read(file, NoHeadData.class, new NoHeadDataListener())
+        FastExcel.write(file, NoHeadData.class).needHead(Boolean.FALSE).sheet().doWrite(data());
+        FastExcel.read(file, NoHeadData.class, new NoHeadDataListener())
                 .headRowNumber(0)
                 .sheet()
                 .doRead();

@@ -219,7 +219,6 @@ public class ExcelAnalyserImpl implements ExcelAnalyser {
         }
 
         // close csv.
-        // https://github.com/fast-excel/fastexcel/issues/2309
         try {
             if ((readWorkbookHolder instanceof CsvReadWorkbookHolder)
                     && ((CsvReadWorkbookHolder) readWorkbookHolder).getCsvParser() != null

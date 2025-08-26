@@ -1,6 +1,6 @@
 package cn.idev.excel.test.core.excludeorinclude;
 
-import cn.idev.excel.EasyExcel;
+import cn.idev.excel.FastExcel;
 import cn.idev.excel.test.util.TestFileUtil;
 import java.io.File;
 import java.util.ArrayList;
@@ -156,11 +156,11 @@ public class ExcludeOrIncludeDataTest {
         Set<Integer> excludeColumnIndexes = new HashSet<Integer>();
         excludeColumnIndexes.add(0);
         excludeColumnIndexes.add(3);
-        EasyExcel.write(file, ExcludeOrIncludeData.class)
+        FastExcel.write(file, ExcludeOrIncludeData.class)
                 .excludeColumnIndexes(excludeColumnIndexes)
                 .sheet()
                 .doWrite(data());
-        List<Map<Integer, String>> dataMap = EasyExcel.read(file).sheet().doReadSync();
+        List<Map<Integer, String>> dataMap = FastExcel.read(file).sheet().doReadSync();
         Assertions.assertEquals(1, dataMap.size());
         Map<Integer, String> record = dataMap.get(0);
         Assertions.assertEquals(2, record.size());
@@ -173,11 +173,11 @@ public class ExcludeOrIncludeDataTest {
         excludeColumnFieldNames.add("column1");
         excludeColumnFieldNames.add("column3");
         excludeColumnFieldNames.add("column4");
-        EasyExcel.write(file, ExcludeOrIncludeData.class)
+        FastExcel.write(file, ExcludeOrIncludeData.class)
                 .excludeColumnFieldNames(excludeColumnFieldNames)
                 .sheet()
                 .doWrite(data());
-        List<Map<Integer, String>> dataMap = EasyExcel.read(file).sheet().doReadSync();
+        List<Map<Integer, String>> dataMap = FastExcel.read(file).sheet().doReadSync();
         Assertions.assertEquals(1, dataMap.size());
         Map<Integer, String> record = dataMap.get(0);
         Assertions.assertEquals(1, record.size());
@@ -188,11 +188,11 @@ public class ExcludeOrIncludeDataTest {
         Set<Integer> includeColumnIndexes = new HashSet<Integer>();
         includeColumnIndexes.add(1);
         includeColumnIndexes.add(2);
-        EasyExcel.write(file, ExcludeOrIncludeData.class)
+        FastExcel.write(file, ExcludeOrIncludeData.class)
                 .includeColumnIndexes(includeColumnIndexes)
                 .sheet()
                 .doWrite(data());
-        List<Map<Integer, String>> dataMap = EasyExcel.read(file).sheet().doReadSync();
+        List<Map<Integer, String>> dataMap = FastExcel.read(file).sheet().doReadSync();
         Assertions.assertEquals(1, dataMap.size());
         Map<Integer, String> record = dataMap.get(0);
         Assertions.assertEquals(2, record.size());
@@ -204,11 +204,11 @@ public class ExcludeOrIncludeDataTest {
         Set<String> includeColumnFieldNames = new HashSet<String>();
         includeColumnFieldNames.add("column2");
         includeColumnFieldNames.add("column3");
-        EasyExcel.write(file, ExcludeOrIncludeData.class)
+        FastExcel.write(file, ExcludeOrIncludeData.class)
                 .sheet()
                 .includeColumnFieldNames(includeColumnFieldNames)
                 .doWrite(data());
-        List<Map<Integer, String>> dataMap = EasyExcel.read(file).sheet().doReadSync();
+        List<Map<Integer, String>> dataMap = FastExcel.read(file).sheet().doReadSync();
         Assertions.assertEquals(1, dataMap.size());
         Map<Integer, String> record = dataMap.get(0);
         Assertions.assertEquals(2, record.size());
@@ -222,12 +222,12 @@ public class ExcludeOrIncludeDataTest {
         includeColumnIndexes.add(1);
         includeColumnIndexes.add(2);
         includeColumnIndexes.add(0);
-        EasyExcel.write(file, ExcludeOrIncludeData.class)
+        FastExcel.write(file, ExcludeOrIncludeData.class)
                 .includeColumnIndexes(includeColumnIndexes)
                 .orderByIncludeColumn(true)
                 .sheet()
                 .doWrite(data());
-        List<Map<Integer, String>> dataMap = EasyExcel.read(file).sheet().doReadSync();
+        List<Map<Integer, String>> dataMap = FastExcel.read(file).sheet().doReadSync();
         Assertions.assertEquals(1, dataMap.size());
         Map<Integer, String> record = dataMap.get(0);
         Assertions.assertEquals(4, record.size());
@@ -242,12 +242,12 @@ public class ExcludeOrIncludeDataTest {
         includeColumnFieldNames.add("column4");
         includeColumnFieldNames.add("column2");
         includeColumnFieldNames.add("column3");
-        EasyExcel.write(file, ExcludeOrIncludeData.class)
+        FastExcel.write(file, ExcludeOrIncludeData.class)
                 .includeColumnFieldNames(includeColumnFieldNames)
                 .orderByIncludeColumn(true)
                 .sheet()
                 .doWrite(data());
-        List<Map<Integer, String>> dataMap = EasyExcel.read(file).sheet().doReadSync();
+        List<Map<Integer, String>> dataMap = FastExcel.read(file).sheet().doReadSync();
         Assertions.assertEquals(1, dataMap.size());
         Map<Integer, String> record = dataMap.get(0);
         Assertions.assertEquals(3, record.size());
