@@ -21,7 +21,9 @@ import cn.idev.excel.util.ListUtils;
 import cn.idev.excel.util.TestFileUtil;
 import cn.idev.excel.write.handler.CellWriteHandler;
 import cn.idev.excel.write.handler.EscapeHexCellWriteHandler;
+import cn.idev.excel.write.handler.SheetWriteHandler;
 import cn.idev.excel.write.handler.context.CellWriteHandlerContext;
+import cn.idev.excel.write.handler.context.SheetWriteHandlerContext;
 import cn.idev.excel.write.merge.LoopMergeStrategy;
 import cn.idev.excel.write.metadata.WriteSheet;
 import cn.idev.excel.write.metadata.WriteTable;
@@ -41,7 +43,9 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.junit.jupiter.api.Test;
 
@@ -738,6 +742,23 @@ public class WriteTest {
         String fileName = TestFileUtil.getPath() + "noModelWrite" + System.currentTimeMillis() + ".xlsx";
         // 这里 需要指定写用哪个class去写，然后写到第一个sheet，名字为模板 然后文件流会自动关闭
         FastExcel.write(fileName).head(head()).sheet("模板").doWrite(dataList());
+    }
+
+    @Test
+    public void sheetDisposeTest() {
+        String fileName = TestFileUtil.getPath() + "simpleWrite" + System.currentTimeMillis() + ".xlsx";
+        FastExcel.write(fileName, DemoData.class)
+                .sheet("模板")
+                .registerWriteHandler(new SheetWriteHandler() {
+                    @Override
+                    public void afterSheetDispose(SheetWriteHandlerContext context) {
+                        Sheet sheet = context.getWriteSheetHolder().getSheet();
+                        // 合并区域单元格
+                        sheet.addMergedRegionUnsafe(new CellRangeAddress(1, 10, 2, 2));
+                    }
+                })
+                .doWrite(this::data);
+        System.out.println(fileName);
     }
 
     private List<LongestMatchColumnWidthData> dataLong() {

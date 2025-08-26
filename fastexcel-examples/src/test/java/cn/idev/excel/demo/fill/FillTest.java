@@ -6,19 +6,23 @@ import cn.idev.excel.enums.WriteDirectionEnum;
 import cn.idev.excel.util.ListUtils;
 import cn.idev.excel.util.MapUtils;
 import cn.idev.excel.util.TestFileUtil;
+import cn.idev.excel.write.handler.SheetWriteHandler;
+import cn.idev.excel.write.handler.context.SheetWriteHandlerContext;
 import cn.idev.excel.write.metadata.WriteSheet;
 import cn.idev.excel.write.metadata.fill.FillConfig;
 import cn.idev.excel.write.metadata.fill.FillWrapper;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.junit.jupiter.api.Test;
+
 import java.io.File;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.junit.jupiter.api.Test;
 
 /**
  * Example of writing and filling data into Excel
- *
  *
  * @since 2.1.1
  */
@@ -75,7 +79,7 @@ public class FillTest {
         // Option 2: Fill in multiple passes, using file caching (saves memory)
         fileName = TestFileUtil.getPath() + "listFill" + System.currentTimeMillis() + ".xlsx";
         try (ExcelWriter excelWriter =
-                FastExcel.write(fileName).withTemplate(templateFileName).build()) {
+                     FastExcel.write(fileName).withTemplate(templateFileName).build()) {
             WriteSheet writeSheet = FastExcel.writerSheet().build();
             excelWriter.fill(data(), writeSheet);
             excelWriter.fill(data(), writeSheet);
@@ -98,7 +102,7 @@ public class FillTest {
         String fileName = TestFileUtil.getPath() + "complexFill" + System.currentTimeMillis() + ".xlsx";
         // Option 1
         try (ExcelWriter excelWriter =
-                FastExcel.write(fileName).withTemplate(templateFileName).build()) {
+                     FastExcel.write(fileName).withTemplate(templateFileName).build()) {
             WriteSheet writeSheet = FastExcel.writerSheet().build();
             // Note: The forceNewRow parameter is used here. When writing a list, it will always create a new row, and
             // the data below will be shifted down. Default is false, which will use the next row if available,
@@ -138,7 +142,7 @@ public class FillTest {
 
         // Option 1
         try (ExcelWriter excelWriter =
-                FastExcel.write(fileName).withTemplate(templateFileName).build()) {
+                     FastExcel.write(fileName).withTemplate(templateFileName).build()) {
             WriteSheet writeSheet = FastExcel.writerSheet().build();
             // Directly write data
             excelWriter.fill(data(), writeSheet);
@@ -184,7 +188,7 @@ public class FillTest {
         String fileName = TestFileUtil.getPath() + "horizontalFill" + System.currentTimeMillis() + ".xlsx";
         // Option 1
         try (ExcelWriter excelWriter =
-                FastExcel.write(fileName).withTemplate(templateFileName).build()) {
+                     FastExcel.write(fileName).withTemplate(templateFileName).build()) {
             WriteSheet writeSheet = FastExcel.writerSheet().build();
             FillConfig fillConfig = FillConfig.builder()
                     .direction(WriteDirectionEnum.HORIZONTAL)
@@ -216,7 +220,7 @@ public class FillTest {
 
         // Option 1
         try (ExcelWriter excelWriter =
-                FastExcel.write(fileName).withTemplate(templateFileName).build()) {
+                     FastExcel.write(fileName).withTemplate(templateFileName).build()) {
             WriteSheet writeSheet = FastExcel.writerSheet().build();
             FillConfig fillConfig = FillConfig.builder()
                     .direction(WriteDirectionEnum.HORIZONTAL)
@@ -243,7 +247,6 @@ public class FillTest {
      * This method demonstrates how to fill an Excel template where date fields
      * are already formatted in the template. The written data will automatically
      * follow the predefined date format in the template.
-     *
      */
     @Test
     public void dateFormatFill() {
@@ -258,6 +261,27 @@ public class FillTest {
         // Fill the template with data.
         // The dates in the data will be formatted according to the template's settings.
         FastExcel.write(fileName).withTemplate(templateFileName).sheet().doFill(data());
+    }
+
+    @Test
+    public void testFillSheetDispose() {
+        String templateFileName =
+                TestFileUtil.getPath() + "demo" + File.separator + "fill" + File.separator + "simple.xlsx";
+        String fileName = TestFileUtil.getPath() + "simpleFill" + System.currentTimeMillis() + ".xlsx";
+        FillData fillData = new FillData();
+        fillData.setName("Zhang San");
+        fillData.setNumber(5.2);
+        FastExcel.write(fileName)
+                .withTemplate(templateFileName)
+                .sheet()
+                .registerWriteHandler(new SheetWriteHandler() {
+                    @Override
+                    public void afterSheetDispose(SheetWriteHandlerContext context) {
+                        Sheet sheet = context.getWriteSheetHolder().getSheet();
+                        sheet.addMergedRegionUnsafe(new CellRangeAddress(1, 2, 0, 1));
+                    }
+                })
+                .doFill(fillData);
     }
 
     private List<FillData> data() {

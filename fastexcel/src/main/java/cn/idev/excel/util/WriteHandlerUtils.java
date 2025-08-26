@@ -204,4 +204,12 @@ public class WriteHandlerUtils {
             rowHandlerExecutionChain.afterRowDispose(context);
         }
     }
+
+    public static void afterSheetDispose(WriteContext writeContext) {
+        SheetWriteHandlerContext context = WriteHandlerUtils.createSheetWriteHandlerContext(writeContext);
+        SheetHandlerExecutionChain sheetHandlerExecutionChain = getSheetHandlerExecutionChain(context, false);
+        if (sheetHandlerExecutionChain != null) {
+            sheetHandlerExecutionChain.afterSheetDispose(context);
+        }
+    }
 }

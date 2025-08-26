@@ -6,6 +6,7 @@ import cn.idev.excel.enums.WriteTypeEnum;
 import cn.idev.excel.exception.ExcelGenerateException;
 import cn.idev.excel.support.ExcelTypeEnum;
 import cn.idev.excel.util.FileUtils;
+import cn.idev.excel.util.WriteHandlerUtils;
 import cn.idev.excel.write.executor.ExcelWriteAddExecutor;
 import cn.idev.excel.write.executor.ExcelWriteFillExecutor;
 import cn.idev.excel.write.metadata.WriteSheet;
@@ -55,6 +56,8 @@ public class ExcelBuilderImpl implements ExcelBuilder {
                 excelWriteAddExecutor = new ExcelWriteAddExecutor(context);
             }
             excelWriteAddExecutor.add(data);
+            // execute callback after the sheet is written
+            WriteHandlerUtils.afterSheetDispose(context);
         } catch (RuntimeException e) {
             finishOnException();
             throw e;
@@ -78,6 +81,8 @@ public class ExcelBuilderImpl implements ExcelBuilder {
                 excelWriteFillExecutor = new ExcelWriteFillExecutor(context);
             }
             excelWriteFillExecutor.fill(data, fillConfig);
+            // execute callback after the sheet is written
+            WriteHandlerUtils.afterSheetDispose(context);
         } catch (RuntimeException e) {
             finishOnException();
             throw e;
