@@ -11,15 +11,14 @@ import cn.idev.excel.write.handler.context.SheetWriteHandlerContext;
 import cn.idev.excel.write.metadata.WriteSheet;
 import cn.idev.excel.write.metadata.fill.FillConfig;
 import cn.idev.excel.write.metadata.fill.FillWrapper;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.util.CellRangeAddress;
-import org.junit.jupiter.api.Test;
-
 import java.io.File;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.junit.jupiter.api.Test;
 
 /**
  * Example of writing and filling data into Excel
@@ -79,7 +78,7 @@ public class FillTest {
         // Option 2: Fill in multiple passes, using file caching (saves memory)
         fileName = TestFileUtil.getPath() + "listFill" + System.currentTimeMillis() + ".xlsx";
         try (ExcelWriter excelWriter =
-                     FastExcel.write(fileName).withTemplate(templateFileName).build()) {
+                FastExcel.write(fileName).withTemplate(templateFileName).build()) {
             WriteSheet writeSheet = FastExcel.writerSheet().build();
             excelWriter.fill(data(), writeSheet);
             excelWriter.fill(data(), writeSheet);
@@ -102,7 +101,7 @@ public class FillTest {
         String fileName = TestFileUtil.getPath() + "complexFill" + System.currentTimeMillis() + ".xlsx";
         // Option 1
         try (ExcelWriter excelWriter =
-                     FastExcel.write(fileName).withTemplate(templateFileName).build()) {
+                FastExcel.write(fileName).withTemplate(templateFileName).build()) {
             WriteSheet writeSheet = FastExcel.writerSheet().build();
             // Note: The forceNewRow parameter is used here. When writing a list, it will always create a new row, and
             // the data below will be shifted down. Default is false, which will use the next row if available,
@@ -142,7 +141,7 @@ public class FillTest {
 
         // Option 1
         try (ExcelWriter excelWriter =
-                     FastExcel.write(fileName).withTemplate(templateFileName).build()) {
+                FastExcel.write(fileName).withTemplate(templateFileName).build()) {
             WriteSheet writeSheet = FastExcel.writerSheet().build();
             // Directly write data
             excelWriter.fill(data(), writeSheet);
@@ -188,7 +187,7 @@ public class FillTest {
         String fileName = TestFileUtil.getPath() + "horizontalFill" + System.currentTimeMillis() + ".xlsx";
         // Option 1
         try (ExcelWriter excelWriter =
-                     FastExcel.write(fileName).withTemplate(templateFileName).build()) {
+                FastExcel.write(fileName).withTemplate(templateFileName).build()) {
             WriteSheet writeSheet = FastExcel.writerSheet().build();
             FillConfig fillConfig = FillConfig.builder()
                     .direction(WriteDirectionEnum.HORIZONTAL)
@@ -220,7 +219,7 @@ public class FillTest {
 
         // Option 1
         try (ExcelWriter excelWriter =
-                     FastExcel.write(fileName).withTemplate(templateFileName).build()) {
+                FastExcel.write(fileName).withTemplate(templateFileName).build()) {
             WriteSheet writeSheet = FastExcel.writerSheet().build();
             FillConfig fillConfig = FillConfig.builder()
                     .direction(WriteDirectionEnum.HORIZONTAL)
