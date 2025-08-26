@@ -748,7 +748,7 @@ public class WriteTest {
     @Test
     public void sheetDisposeTest() {
         String fileName = TestFileUtil.getPath() + "simpleWrite" + System.currentTimeMillis() + ".xlsx";
-        EasyExcel.write(fileName, DemoData.class)
+        FastExcel.write(fileName, DemoData.class)
                 .sheet("模板")
                 .registerWriteHandler(new SheetWriteHandler() {
                     @Override

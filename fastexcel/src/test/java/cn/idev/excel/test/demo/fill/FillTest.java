@@ -272,7 +272,7 @@ public class FillTest {
         FillData fillData = new FillData();
         fillData.setName("Zhang San");
         fillData.setNumber(5.2);
-        EasyExcel.write(fileName)
+        FastExcel.write(fileName)
                 .withTemplate(templateFileName)
                 .sheet()
                 .registerWriteHandler(new SheetWriteHandler() {
