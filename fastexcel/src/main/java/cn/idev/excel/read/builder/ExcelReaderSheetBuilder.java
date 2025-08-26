@@ -6,6 +6,7 @@ import cn.idev.excel.exception.ExcelAnalysisException;
 import cn.idev.excel.exception.ExcelGenerateException;
 import cn.idev.excel.read.metadata.ReadSheet;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Build sheet
@@ -39,6 +40,13 @@ public class ExcelReaderSheetBuilder extends AbstractExcelReaderParameterBuilder
         return this;
     }
 
+    public ExcelReaderSheetBuilder sheetNoIfNotNull(Integer sheetNo) {
+        if (Objects.nonNull(sheetNo)) {
+            readSheet.setSheetNo(sheetNo);
+        }
+        return this;
+    }
+
     /**
      * sheet name
      *
@@ -50,6 +58,13 @@ public class ExcelReaderSheetBuilder extends AbstractExcelReaderParameterBuilder
         return this;
     }
 
+    public ExcelReaderSheetBuilder sheetNameIfNotNull(String sheetName) {
+        if (Objects.nonNull(sheetName)) {
+            readSheet.setSheetName(sheetName);
+        }
+        return this;
+    }
+
     /**
      * numRows
      *
@@ -58,6 +73,13 @@ public class ExcelReaderSheetBuilder extends AbstractExcelReaderParameterBuilder
      */
     public ExcelReaderSheetBuilder numRows(Integer numRows) {
         readSheet.setNumRows(numRows);
+        return this;
+    }
+
+    public ExcelReaderSheetBuilder numRowsIfNotNull(Integer numRows) {
+        if (Objects.nonNull(numRows)) {
+            readSheet.setNumRows(numRows);
+        }
         return this;
     }
 

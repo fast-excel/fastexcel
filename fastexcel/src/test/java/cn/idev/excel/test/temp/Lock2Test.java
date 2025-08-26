@@ -1,6 +1,6 @@
 package cn.idev.excel.test.temp;
 
-import cn.idev.excel.EasyExcel;
+import cn.idev.excel.FastExcel;
 import cn.idev.excel.metadata.data.ReadCellData;
 import cn.idev.excel.test.demo.write.DemoData;
 import cn.idev.excel.test.util.TestFileUtil;
@@ -43,7 +43,7 @@ public class Lock2Test {
 
     @Test
     public void test() throws Exception {
-        List<Object> list = EasyExcel.read("src/test/resources/converter/converter07.xlsx")
+        List<Object> list = FastExcel.read("src/test/resources/converter/converter07.xlsx")
                 // .useDefaultListener(false)
                 .sheet(0)
                 .headRowNumber(0)
@@ -59,7 +59,7 @@ public class Lock2Test {
     public void test33() throws Exception {
         File file = new File("src/test/resources/temp/lock_data.xlsx");
 
-        EasyExcel.read(file, LockData.class, new LockDataListener())
+        FastExcel.read(file, LockData.class, new LockDataListener())
                 .sheet(0)
                 .headRowNumber(0)
                 .doRead();
@@ -90,7 +90,7 @@ public class Lock2Test {
                 new HorizontalCellStyleStrategy(headWriteCellStyle, contentWriteCellStyle);
 
         // 这里 需要指定写用哪个class去写，然后写到第一个sheet，名字为模板 然后文件流会自动关闭
-        EasyExcel.write(fileName, DemoData.class)
+        FastExcel.write(fileName, DemoData.class)
                 .registerWriteHandler(horizontalCellStyleStrategy)
                 .sheet("模板")
                 .doWrite(data());
@@ -100,7 +100,7 @@ public class Lock2Test {
     public void simpleWrite() {
         String fileName = TestFileUtil.getPath() + System.currentTimeMillis() + ".xlsx";
         System.out.println(fileName);
-        EasyExcel.write(fileName).head(head()).sheet("模板").doWrite(dataList());
+        FastExcel.write(fileName).head(head()).sheet("模板").doWrite(dataList());
     }
 
     private List<List<String>> head() {
@@ -132,7 +132,7 @@ public class Lock2Test {
         // 写法1：
         String fileName = "src/test/resources/temp/lock_data.xlsx";
         // 这里 需要指定读用哪个class去读，然后读取第一个sheet 文件流会自动关闭
-        EasyExcel.read(fileName, LockData.class, new LockDataListener())
+        FastExcel.read(fileName, LockData.class, new LockDataListener())
                 .useDefaultListener(false)
                 .sheet()
                 .doRead();
@@ -141,8 +141,8 @@ public class Lock2Test {
     @Test
     public void test2(@TempDir Path tempDir) throws Exception {
         File file = tempDir.resolve(System.currentTimeMillis() + ".xlsx").toFile();
-        EasyExcel.write().file(file).sheet().doWrite(dataList());
-        List<Object> list = EasyExcel.read(file).sheet().headRowNumber(0).doReadSync();
+        FastExcel.write().file(file).sheet().doWrite(dataList());
+        List<Object> list = FastExcel.read(file).sheet().headRowNumber(0).doReadSync();
         log.info("数据：{}", list.size());
         for (Object data : list) {
             log.info("返回数据：{}", JSON.toJSONString(data));
@@ -332,7 +332,7 @@ public class Lock2Test {
     public void numberforamt3() throws Exception {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 
-        List<Map<Integer, ReadCellData>> list = EasyExcel.read("src/test/resources/temp/number_format.xlsx")
+        List<Map<Integer, ReadCellData>> list = FastExcel.read("src/test/resources/temp/number_format.xlsx")
                 .useDefaultListener(false)
                 .sheet(0)
                 .headRowNumber(0)
@@ -359,7 +359,7 @@ public class Lock2Test {
         String fileName = TestFileUtil.getPath() + "simpleWrite" + System.currentTimeMillis() + ".xlsx";
         // 这里 需要指定写用哪个class去写，然后写到第一个sheet，名字为模板 然后文件流会自动关闭
         // 如果这里想使用03 则 传入excelType参数即可
-        EasyExcel.write(fileName, DemoData.class).sheet("模板").doWrite(() -> {
+        FastExcel.write(fileName, DemoData.class).sheet("模板").doWrite(() -> {
             // 分页查询数据
             return data2();
         });
@@ -370,7 +370,7 @@ public class Lock2Test {
         String fileName = TestFileUtil.getPath() + "simpleWrite" + System.currentTimeMillis() + ".xlsx";
         // 这里 需要指定写用哪个class去写，然后写到第一个sheet，名字为模板 然后文件流会自动关闭
         // 如果这里想使用03 则 传入excelType参数即可
-        EasyExcel.write(fileName, DemoData3.class).sheet("模板").doWrite(() -> {
+        FastExcel.write(fileName, DemoData3.class).sheet("模板").doWrite(() -> {
             List<DemoData3> list = new ArrayList<>();
             DemoData3 demoData3 = new DemoData3();
             demoData3.setLocalDateTime(LocalDateTime.of(2023, 1, 1, 0, 0, 0, 400000000));
@@ -402,7 +402,7 @@ public class Lock2Test {
         String fileName = TestFileUtil.getPath() + "simpleWrite" + System.currentTimeMillis() + ".xlsx";
         // 这里 需要指定写用哪个class去写，然后写到第一个sheet，名字为模板 然后文件流会自动关闭
         // 如果这里想使用03 则 传入excelType参数即可
-        EasyExcel.write(fileName, DemoData.class).sheet("模板").doWrite(() -> {
+        FastExcel.write(fileName, DemoData.class).sheet("模板").doWrite(() -> {
             // 分页查询数据
             return data3();
         });

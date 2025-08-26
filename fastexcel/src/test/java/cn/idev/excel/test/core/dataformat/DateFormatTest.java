@@ -1,6 +1,6 @@
 package cn.idev.excel.test.core.dataformat;
 
-import cn.idev.excel.EasyExcel;
+import cn.idev.excel.FastExcel;
 import cn.idev.excel.test.util.TestFileUtil;
 import com.alibaba.fastjson2.JSON;
 import java.io.File;
@@ -48,7 +48,7 @@ public class DateFormatTest {
     @Test
     public void t03Read() {
         List<Map<Integer, String>> dataMap =
-                EasyExcel.read(file07V2).headRowNumber(0).doReadAllSync();
+                FastExcel.read(file07V2).headRowNumber(0).doReadAllSync();
         log.info("dataMap:{}", JSON.toJSONString(dataMap));
         Assertions.assertEquals("15:00", dataMap.get(0).get(0));
         Assertions.assertEquals("2023-1-01 00:00:00", dataMap.get(1).get(0));
@@ -60,7 +60,7 @@ public class DateFormatTest {
     }
 
     private void readCn(File file) {
-        List<DateFormatData> list = EasyExcel.read(file, DateFormatData.class, null)
+        List<DateFormatData> list = FastExcel.read(file, DateFormatData.class, null)
                 .locale(Locale.CHINA)
                 .sheet()
                 .doReadSync();
@@ -85,7 +85,7 @@ public class DateFormatTest {
     }
 
     private void readUs(File file) {
-        List<DateFormatData> list = EasyExcel.read(file, DateFormatData.class, null)
+        List<DateFormatData> list = FastExcel.read(file, DateFormatData.class, null)
                 .locale(Locale.US)
                 .sheet()
                 .doReadSync();

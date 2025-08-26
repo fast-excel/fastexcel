@@ -8,14 +8,14 @@ import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * 读取头
+ * Read header
  *
  *
  */
 @Slf4j
 public class CellDataDemoHeadDataListener implements ReadListener<CellDataReadDemoData> {
     /**
-     * 每隔5条存储数据库，实际使用中可以100条，然后清理list ，方便内存回收
+     * Store data to database every 5 records. In actual use, it can be 100 records, then clear the list to facilitate memory recycling
      */
     private static final int BATCH_COUNT = 100;
 
@@ -23,7 +23,7 @@ public class CellDataDemoHeadDataListener implements ReadListener<CellDataReadDe
 
     @Override
     public void invoke(CellDataReadDemoData data, AnalysisContext context) {
-        log.info("解析到一条数据:{}", JSON.toJSONString(data));
+        log.info("Parsed one record: {}", JSON.toJSONString(data));
         if (cachedDataList.size() >= BATCH_COUNT) {
             saveData();
             cachedDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
@@ -33,14 +33,14 @@ public class CellDataDemoHeadDataListener implements ReadListener<CellDataReadDe
     @Override
     public void doAfterAllAnalysed(AnalysisContext context) {
         saveData();
-        log.info("所有数据解析完成！");
+        log.info("All data parsing completed!");
     }
 
     /**
-     * 加上存储数据库
+     * Save data to database
      */
     private void saveData() {
-        log.info("{}条数据，开始存储数据库！", cachedDataList.size());
-        log.info("存储数据库成功！");
+        log.info("{} records, starting to save to database!", cachedDataList.size());
+        log.info("Successfully saved to database!");
     }
 }

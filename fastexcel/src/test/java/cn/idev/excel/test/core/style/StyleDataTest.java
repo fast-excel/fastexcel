@@ -1,6 +1,6 @@
 package cn.idev.excel.test.core.style;
 
-import cn.idev.excel.EasyExcel;
+import cn.idev.excel.FastExcel;
 import cn.idev.excel.annotation.write.style.HeadFontStyle;
 import cn.idev.excel.annotation.write.style.HeadStyle;
 import cn.idev.excel.metadata.Head;
@@ -124,7 +124,7 @@ public class StyleDataTest {
                 return writeCellStyle;
             }
         };
-        EasyExcel.write(fileVerticalCellStyleStrategy07, StyleData.class)
+        FastExcel.write(fileVerticalCellStyleStrategy07, StyleData.class)
                 .registerWriteHandler(verticalCellStyleStrategy)
                 .sheet()
                 .doWrite(data());
@@ -166,7 +166,7 @@ public class StyleDataTest {
                 return writeCellStyle;
             }
         };
-        EasyExcel.write(fileVerticalCellStyleStrategy207, StyleData.class)
+        FastExcel.write(fileVerticalCellStyleStrategy207, StyleData.class)
                 .registerWriteHandler(verticalCellStyleStrategy)
                 .sheet()
                 .doWrite(data());
@@ -174,7 +174,7 @@ public class StyleDataTest {
 
     @Test
     public void t05LoopMergeStrategy() {
-        EasyExcel.write(fileLoopMergeStrategy, StyleData.class)
+        FastExcel.write(fileLoopMergeStrategy, StyleData.class)
                 .sheet()
                 .registerWriteHandler(new LoopMergeStrategy(2, 1))
                 .doWrite(data10());
@@ -202,14 +202,14 @@ public class StyleDataTest {
                 new HorizontalCellStyleStrategy(headWriteCellStyle, contentWriteCellStyle);
 
         OnceAbsoluteMergeStrategy onceAbsoluteMergeStrategy = new OnceAbsoluteMergeStrategy(2, 2, 0, 1);
-        EasyExcel.write(file, StyleData.class)
+        FastExcel.write(file, StyleData.class)
                 .registerWriteHandler(simpleColumnWidthStyleStrategy)
                 .registerWriteHandler(simpleRowHeightStyleStrategy)
                 .registerWriteHandler(horizontalCellStyleStrategy)
                 .registerWriteHandler(onceAbsoluteMergeStrategy)
                 .sheet()
                 .doWrite(data());
-        EasyExcel.read(file, StyleData.class, new StyleDataListener()).sheet().doRead();
+        FastExcel.read(file, StyleData.class, new StyleDataListener()).sheet().doRead();
 
         Workbook workbook = WorkbookFactory.create(file);
         Sheet sheet = workbook.getSheetAt(0);

@@ -1,6 +1,6 @@
 package cn.idev.excel.test.temp.poi;
 
-import cn.idev.excel.EasyExcel;
+import cn.idev.excel.FastExcel;
 import cn.idev.excel.test.core.encrypt.EncryptData;
 import cn.idev.excel.test.core.simple.SimpleData;
 import cn.idev.excel.test.util.TestFileUtil;
@@ -54,7 +54,7 @@ public class PoiEncryptTest {
 
     @Test
     public void encryptExcel() throws Exception {
-        EasyExcel.write(
+        FastExcel.write(
                         TestFileUtil.createNewFile("encryptv2" + System.currentTimeMillis() + ".xlsx"),
                         EncryptData.class)
                 .password("123456")

@@ -10,7 +10,7 @@ import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.Hyperlink;
 
 /**
- * 自定义拦截器。对第一行第一列的头超链接到:https://github.com/fast-excel/fastexcel
+ * 自定义拦截器
  *
  *
  */

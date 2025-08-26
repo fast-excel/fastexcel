@@ -1,6 +1,6 @@
 package cn.idev.excel.test.core.nomodel;
 
-import cn.idev.excel.EasyExcel;
+import cn.idev.excel.FastExcel;
 import cn.idev.excel.enums.ReadDefaultReturnEnum;
 import cn.idev.excel.metadata.data.ReadCellData;
 import cn.idev.excel.test.util.TestFileUtil;
@@ -59,16 +59,16 @@ public class NoModelDataTest {
     }
 
     private void readAndWrite(File file, File fileRepeat, boolean isCsv) throws Exception {
-        EasyExcel.write(file).sheet().doWrite(data());
+        FastExcel.write(file).sheet().doWrite(data());
         List<Map<Integer, String>> result =
-                EasyExcel.read(file).headRowNumber(0).sheet().doReadSync();
+                FastExcel.read(file).headRowNumber(0).sheet().doReadSync();
         Assertions.assertEquals(10, result.size());
         Map<Integer, String> data10 = result.get(9);
         Assertions.assertEquals("string19", data10.get(0));
         Assertions.assertEquals("109", data10.get(1));
         Assertions.assertEquals("2020-01-01 01:01:01", data10.get(2));
 
-        List<Map<Integer, Object>> actualDataList = EasyExcel.read(file)
+        List<Map<Integer, Object>> actualDataList = FastExcel.read(file)
                 .headRowNumber(0)
                 .readDefaultReturn(ReadDefaultReturnEnum.ACTUAL_DATA)
                 .sheet()
@@ -86,7 +86,7 @@ public class NoModelDataTest {
             Assertions.assertEquals(LocalDateTime.of(2020, 1, 1, 1, 1, 1), actualData10.get(2));
         }
 
-        List<Map<Integer, ReadCellData<?>>> readCellDataList = EasyExcel.read(file)
+        List<Map<Integer, ReadCellData<?>>> readCellDataList = FastExcel.read(file)
                 .headRowNumber(0)
                 .readDefaultReturn(ReadDefaultReturnEnum.READ_CELL_DATA)
                 .sheet()
@@ -106,8 +106,8 @@ public class NoModelDataTest {
                     LocalDateTime.of(2020, 1, 1, 1, 1, 1), readCellData10.get(2).getData());
         }
 
-        EasyExcel.write(fileRepeat).sheet().doWrite(result);
-        result = EasyExcel.read(fileRepeat).headRowNumber(0).sheet().doReadSync();
+        FastExcel.write(fileRepeat).sheet().doWrite(result);
+        result = FastExcel.read(fileRepeat).headRowNumber(0).sheet().doReadSync();
         Assertions.assertEquals(10, result.size());
         data10 = result.get(9);
         Assertions.assertEquals("string19", data10.get(0));

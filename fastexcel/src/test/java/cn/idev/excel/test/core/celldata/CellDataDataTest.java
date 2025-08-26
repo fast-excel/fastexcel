@@ -1,6 +1,6 @@
 package cn.idev.excel.test.core.celldata;
 
-import cn.idev.excel.EasyExcel;
+import cn.idev.excel.FastExcel;
 import cn.idev.excel.enums.CellDataTypeEnum;
 import cn.idev.excel.metadata.data.FormulaData;
 import cn.idev.excel.metadata.data.WriteCellData;
@@ -48,8 +48,8 @@ public class CellDataDataTest {
     }
 
     private void readAndWrite(File file) throws Exception {
-        EasyExcel.write(file, CellDataWriteData.class).sheet().doWrite(data());
-        EasyExcel.read(file, CellDataReadData.class, new CellDataDataListener())
+        FastExcel.write(file, CellDataWriteData.class).sheet().doWrite(data());
+        FastExcel.read(file, CellDataReadData.class, new CellDataDataListener())
                 .sheet()
                 .doRead();
     }

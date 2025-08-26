@@ -2,7 +2,7 @@ package cn.idev.excel.analysis.v03.handlers;
 
 import cn.idev.excel.analysis.v03.IgnorableXlsRecordHandler;
 import cn.idev.excel.constant.BuiltinFormats;
-import cn.idev.excel.constant.EasyExcelConstants;
+import cn.idev.excel.constant.FastExcelConstants;
 import cn.idev.excel.context.xls.XlsReadContext;
 import cn.idev.excel.enums.CellDataTypeEnum;
 import cn.idev.excel.enums.RowTypeEnum;
@@ -55,7 +55,7 @@ public class FormulaRecordHandler extends AbstractXlsRecordHandler implements Ig
                 tempCellData.setType(CellDataTypeEnum.NUMBER);
                 tempCellData.setOriginalNumberValue(BigDecimal.valueOf(frec.getValue()));
                 tempCellData.setNumberValue(
-                        tempCellData.getOriginalNumberValue().round(EasyExcelConstants.EXCEL_MATH_CONTEXT));
+                        tempCellData.getOriginalNumberValue().round(FastExcelConstants.EXCEL_MATH_CONTEXT));
                 int dataFormat = xlsReadContext
                         .xlsReadWorkbookHolder()
                         .getFormatTrackingHSSFListener()

@@ -1,6 +1,6 @@
 package cn.idev.excel.test.temp.dataformat;
 
-import cn.idev.excel.EasyExcel;
+import cn.idev.excel.FastExcel;
 import cn.idev.excel.metadata.data.FormulaData;
 import cn.idev.excel.test.core.dataformat.DateFormatData;
 import cn.idev.excel.test.util.TestFileUtil;
@@ -34,7 +34,7 @@ public class DataFormatTest {
 
         File file = TestFileUtil.readFile("dataformat" + File.separator + "dataformat.xlsx");
 
-        List<DataFormatData> list = EasyExcel.read(file, DataFormatData.class, null)
+        List<DataFormatData> list = FastExcel.read(file, DataFormatData.class, null)
                 .sheet()
                 .headRowNumber(1)
                 .doReadSync();
@@ -63,7 +63,7 @@ public class DataFormatTest {
     public void testxls() throws Exception {
         File file = TestFileUtil.readFile("dataformat" + File.separator + "dataformat.xls");
 
-        List<DataFormatData> list = EasyExcel.read(file, DataFormatData.class, null)
+        List<DataFormatData> list = FastExcel.read(file, DataFormatData.class, null)
                 .sheet()
                 .headRowNumber(1)
                 .doReadSync();
@@ -150,7 +150,7 @@ public class DataFormatTest {
 
         File file = TestFileUtil.readFile("dataformat" + File.separator + "dataformat.xlsx");
         List<DateFormatData> list =
-                EasyExcel.read(file, DateFormatData.class, null).sheet().doReadSync();
+                FastExcel.read(file, DateFormatData.class, null).sheet().doReadSync();
         for (DateFormatData data : list) {
             log.info("返回:{}", JSON.toJSONString(data));
         }

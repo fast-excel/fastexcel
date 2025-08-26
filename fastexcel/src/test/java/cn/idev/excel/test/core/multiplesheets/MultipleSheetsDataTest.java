@@ -1,7 +1,7 @@
 package cn.idev.excel.test.core.multiplesheets;
 
-import cn.idev.excel.EasyExcel;
 import cn.idev.excel.ExcelReader;
+import cn.idev.excel.FastExcel;
 import cn.idev.excel.read.metadata.ReadSheet;
 import cn.idev.excel.test.util.TestFileUtil;
 import java.io.File;
@@ -49,7 +49,7 @@ public class MultipleSheetsDataTest {
 
     private void read(File file) {
         MultipleSheetsListener multipleSheetsListener = new MultipleSheetsListener();
-        try (ExcelReader excelReader = EasyExcel.read(file, MultipleSheetsData.class, multipleSheetsListener)
+        try (ExcelReader excelReader = FastExcel.read(file, MultipleSheetsData.class, multipleSheetsListener)
                 .build()) {
             List<ReadSheet> sheets = excelReader.excelExecutor().sheetList();
             int count = 1;
@@ -62,7 +62,7 @@ public class MultipleSheetsDataTest {
     }
 
     private void readAll(File file) {
-        EasyExcel.read(file, MultipleSheetsData.class, new MultipleSheetsListener())
+        FastExcel.read(file, MultipleSheetsData.class, new MultipleSheetsListener())
                 .doReadAll();
     }
 }

@@ -1,6 +1,6 @@
 package cn.idev.excel.test.core.simple;
 
-import cn.idev.excel.EasyExcel;
+import cn.idev.excel.FastExcel;
 import cn.idev.excel.read.listener.PageReadListener;
 import cn.idev.excel.support.ExcelTypeEnum;
 import cn.idev.excel.test.util.TestFileUtil;
@@ -65,9 +65,9 @@ public class SimpleDataTest {
      * @param file file
      */
     private void readAndWrite(File file) {
-        EasyExcel.write(file, SimpleData.class).sheet().doWrite(data());
+        FastExcel.write(file, SimpleData.class).sheet().doWrite(data());
         // use a SimpleDataListener object to handle and check result
-        EasyExcel.read(file, SimpleData.class, new SimpleDataListener()).sheet().doRead();
+        FastExcel.read(file, SimpleData.class, new SimpleDataListener()).sheet().doRead();
     }
 
     @Test
@@ -93,12 +93,12 @@ public class SimpleDataTest {
      * @throws Exception exception
      */
     private void readAndWriteInputStream(File file, ExcelTypeEnum excelTypeEnum) throws Exception {
-        EasyExcel.write(new FileOutputStream(file), SimpleData.class)
+        FastExcel.write(new FileOutputStream(file), SimpleData.class)
                 .excelType(excelTypeEnum)
                 .sheet()
                 .doWrite(data());
         // use a SimpleDataListener object to handle and check result
-        EasyExcel.read(new FileInputStream(file), SimpleData.class, new SimpleDataListener())
+        FastExcel.read(new FileInputStream(file), SimpleData.class, new SimpleDataListener())
                 .sheet()
                 .doRead();
     }
@@ -132,7 +132,7 @@ public class SimpleDataTest {
      */
     @Test
     public void t21SheetNameRead07() {
-        List<Map<Integer, Object>> list = EasyExcel.read(
+        List<Map<Integer, Object>> list = FastExcel.read(
                         TestFileUtil.readFile("simple" + File.separator + "simple07.xlsx"))
                 // set the sheet name to read
                 .sheet("simple")
@@ -145,7 +145,7 @@ public class SimpleDataTest {
      */
     @Test
     public void t22SheetNoRead07() {
-        List<Map<Integer, Object>> list = EasyExcel.read(
+        List<Map<Integer, Object>> list = FastExcel.read(
                         TestFileUtil.readFile("simple" + File.separator + "simple07.xlsx"))
                 // sheetNo begin with 0
                 .sheet(1)
@@ -164,7 +164,7 @@ public class SimpleDataTest {
     @Test
     public void t23PageReadListener07() {
         // Read the first 5 rows of an Excel file
-        EasyExcel.read(
+        FastExcel.read(
                         file07,
                         SimpleData.class,
                         new PageReadListener<SimpleData>(
@@ -187,7 +187,7 @@ public class SimpleDataTest {
      */
     private void synchronousRead(File file) {
         // Synchronous read file
-        List<Object> list = EasyExcel.read(file).head(SimpleData.class).sheet().doReadSync();
+        List<Object> list = FastExcel.read(file).head(SimpleData.class).sheet().doReadSync();
         Assertions.assertEquals(list.size(), 10);
         Assertions.assertTrue(list.get(0) instanceof SimpleData);
         Assertions.assertEquals(((SimpleData) list.get(0)).getName(), "姓名0");

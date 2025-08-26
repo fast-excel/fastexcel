@@ -1,6 +1,6 @@
 package cn.idev.excel.metadata.data;
 
-import cn.idev.excel.constant.EasyExcelConstants;
+import cn.idev.excel.constant.FastExcelConstants;
 import cn.idev.excel.enums.CellDataTypeEnum;
 import java.math.BigDecimal;
 import lombok.EqualsAndHashCode;
@@ -135,7 +135,7 @@ public class ReadCellData<T> extends CellData<T> {
         cellData.setRowIndex(rowIndex);
         cellData.setColumnIndex(columnIndex);
         cellData.setOriginalNumberValue(numberValue);
-        cellData.setNumberValue(numberValue.round(EasyExcelConstants.EXCEL_MATH_CONTEXT));
+        cellData.setNumberValue(numberValue.round(FastExcelConstants.EXCEL_MATH_CONTEXT));
         return cellData;
     }
 

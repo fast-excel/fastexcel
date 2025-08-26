@@ -16,7 +16,6 @@ public class BeanMapUtils {
      * <code>BeanMap.Generator</code> instead of this static method.
      *
      * Custom naming policy to prevent null pointer exceptions.
-     * see: https://github.com/fast-excel/fastexcel/issues/2064
      *
      * @param bean the JavaBean underlying the map
      * @return a new <code>BeanMap</code> instance
@@ -25,16 +24,16 @@ public class BeanMapUtils {
         BeanMap.Generator gen = new BeanMap.Generator();
         gen.setBean(bean);
         gen.setContextClass(bean.getClass());
-        gen.setNamingPolicy(EasyExcelNamingPolicy.INSTANCE);
+        gen.setNamingPolicy(FastExcelNamingPolicy.INSTANCE);
         return gen.create();
     }
 
-    public static class EasyExcelNamingPolicy extends DefaultNamingPolicy {
-        public static final EasyExcelNamingPolicy INSTANCE = new EasyExcelNamingPolicy();
+    public static class FastExcelNamingPolicy extends DefaultNamingPolicy {
+        public static final FastExcelNamingPolicy INSTANCE = new FastExcelNamingPolicy();
 
         @Override
         protected String getTag() {
-            return "ByEasyExcelCGLIB";
+            return "ByFastExcelCGLIB";
         }
     }
 }

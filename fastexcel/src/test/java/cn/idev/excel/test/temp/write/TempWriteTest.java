@@ -1,6 +1,6 @@
 package cn.idev.excel.test.temp.write;
 
-import cn.idev.excel.EasyExcel;
+import cn.idev.excel.FastExcel;
 import cn.idev.excel.support.cglib.beans.BeanMap;
 import cn.idev.excel.test.demo.read.CustomStringStringConverter;
 import cn.idev.excel.test.util.TestFileUtil;
@@ -32,14 +32,14 @@ public class TempWriteTest {
     public void write() {
         TempWriteData tempWriteData = new TempWriteData();
         tempWriteData.setName("zs\r\n \\ \r\n t4");
-        EasyExcel.write(
+        FastExcel.write(
                         TestFileUtil.getPath() + "TempWriteTest" + System.currentTimeMillis() + ".xlsx",
                         TempWriteData.class)
                 .sheet()
                 .registerConverter(new CustomStringStringConverter())
                 .doWrite(ListUtils.newArrayList(tempWriteData));
 
-        EasyExcel.write(
+        FastExcel.write(
                         TestFileUtil.getPath() + "TempWriteTest" + System.currentTimeMillis() + ".xlsx",
                         TempWriteData.class)
                 .sheet()
@@ -70,9 +70,9 @@ public class TempWriteTest {
         // String fileName = TestFileUtil.getPath() + "imageWrite" + System.currentTimeMillis() + ".xlsx";
         //
         //// 这里 需要指定写用哪个class去写
-        // try (ExcelWriter excelWriter = EasyExcel.write(fileName, DemoData.class).build()) {
+        // try (ExcelWriter excelWriter = FastExcel.write(fileName, DemoData.class).build()) {
         //    // 这里注意 如果同一个sheet只要创建一次
-        //    WriteSheet writeSheet = EasyExcel.writerSheet("模板").build();
+        //    WriteSheet writeSheet = FastExcel.writerSheet("模板").build();
         //    // 去调用写入,这里我调用了五次，实际使用时根据数据库分页的总的页数来
         //    for (int i = 0; i < 5; i++) {
         //        // 分页去数据库查询数据 这里可以去数据库查询每一页的数据

@@ -1,7 +1,7 @@
 package cn.idev.excel.test.core.fill;
 
-import cn.idev.excel.EasyExcel;
 import cn.idev.excel.ExcelWriter;
+import cn.idev.excel.FastExcel;
 import cn.idev.excel.enums.WriteDirectionEnum;
 import cn.idev.excel.exception.ExcelGenerateException;
 import cn.idev.excel.test.util.TestFileUtil;
@@ -136,7 +136,7 @@ public class FillDataTest {
         FillData fillData = new FillData();
         fillData.setName("Zhang San");
         fillData.setNumber(5.2);
-        EasyExcel.write(file, FillData.class)
+        FastExcel.write(file, FillData.class)
                 .withTemplate(template)
                 .sheet("Sheet2")
                 .doFill(fillData);
@@ -144,8 +144,8 @@ public class FillDataTest {
 
     private void compositeFill(File file, File template) {
         try (ExcelWriter excelWriter =
-                EasyExcel.write(file).withTemplate(template).build()) {
-            WriteSheet writeSheet = EasyExcel.writerSheet().build();
+                FastExcel.write(file).withTemplate(template).build()) {
+            WriteSheet writeSheet = FastExcel.writerSheet().build();
 
             FillConfig fillConfig = FillConfig.builder()
                     .direction(WriteDirectionEnum.HORIZONTAL)
@@ -161,7 +161,7 @@ public class FillDataTest {
             excelWriter.fill(map, writeSheet);
         }
 
-        List<Object> list = EasyExcel.read(file)
+        List<Object> list = FastExcel.read(file)
                 .ignoreEmptyRow(false)
                 .sheet()
                 .headRowNumber(0)
@@ -176,8 +176,8 @@ public class FillDataTest {
 
     private void horizontalFill(File file, File template) {
         try (ExcelWriter excelWriter =
-                EasyExcel.write(file).withTemplate(template).build()) {
-            WriteSheet writeSheet = EasyExcel.writerSheet().build();
+                FastExcel.write(file).withTemplate(template).build()) {
+            WriteSheet writeSheet = FastExcel.writerSheet().build();
             FillConfig fillConfig = FillConfig.builder()
                     .direction(WriteDirectionEnum.HORIZONTAL)
                     .build();
@@ -189,7 +189,7 @@ public class FillDataTest {
             excelWriter.finish();
         }
 
-        List<Object> list = EasyExcel.read(file).sheet().headRowNumber(0).doReadSync();
+        List<Object> list = FastExcel.read(file).sheet().headRowNumber(0).doReadSync();
         Assertions.assertEquals(list.size(), 5L);
         Map<String, String> map0 = (Map<String, String>) list.get(0);
         Assertions.assertEquals("Zhang San", map0.get(2));
@@ -197,8 +197,8 @@ public class FillDataTest {
 
     private void complexFill(File file, File template) {
         try (ExcelWriter excelWriter =
-                EasyExcel.write(file).withTemplate(template).build()) {
-            WriteSheet writeSheet = EasyExcel.writerSheet()
+                FastExcel.write(file).withTemplate(template).build()) {
+            WriteSheet writeSheet = FastExcel.writerSheet()
                     .registerWriteHandler(new LoopMergeStrategy(2, 0))
                     .build();
             FillConfig fillConfig =
@@ -210,7 +210,7 @@ public class FillDataTest {
             map.put("total", 1000);
             excelWriter.fill(map, writeSheet);
         }
-        List<Object> list = EasyExcel.read(file).sheet().headRowNumber(3).doReadSync();
+        List<Object> list = FastExcel.read(file).sheet().headRowNumber(3).doReadSync();
         Assertions.assertEquals(list.size(), 21L);
         Map<String, String> map19 = (Map<String, String>) list.get(19);
         Assertions.assertEquals("Zhang San", map19.get(0));
@@ -220,7 +220,7 @@ public class FillDataTest {
         FillData fillData = new FillData();
         fillData.setName("Zhang San");
         fillData.setNumber(5.2);
-        EasyExcel.write(file, FillData.class).withTemplate(template).sheet().doFill(fillData);
+        FastExcel.write(file, FillData.class).withTemplate(template).sheet().doFill(fillData);
     }
 
     private List<FillData> data() {

@@ -1,6 +1,6 @@
 package cn.idev.excel.test.temp;
 
-import cn.idev.excel.EasyExcel;
+import cn.idev.excel.FastExcel;
 import cn.idev.excel.test.demo.write.DemoData;
 import cn.idev.excel.test.util.TestFileUtil;
 import cn.idev.excel.util.BooleanUtils;
@@ -54,14 +54,14 @@ public class WriteV33Test {
         //    new HorizontalCellStyleStrategy(headWriteCellStyle, contentWriteCellStyle);
         //
         //// 这里 需要指定写用哪个class去写，然后写到第一个sheet，名字为模板 然后文件流会自动关闭
-        // EasyExcel.write(fileName, DemoData.class)
+        // FastExcel.write(fileName, DemoData.class)
         //    .registerWriteHandler(horizontalCellStyleStrategy)
         //    .sheet("模板")
         //    .doWrite(data());
         //
-        // 方法2: 使用easyexcel的方式完全自己写 不太推荐 尽量使用已有策略
+        // 方法2: 使用FastExcel的方式完全自己写 不太推荐 尽量使用已有策略
         // fileName = TestFileUtil.getPath() + "handlerStyleWrite" + System.currentTimeMillis() + ".xlsx";
-        // EasyExcel.write(fileName, DemoData.class)
+        // FastExcel.write(fileName, DemoData.class)
         //    .registerWriteHandler(new CellWriteHandler() {
         //        @Override
         //        public void afterCellDispose(CellWriteHandlerContext context) {
@@ -90,7 +90,7 @@ public class WriteV33Test {
         // 坑1：style里面有dataformat 用来格式化数据的 所以自己设置可能导致格式化注解不生效
         // 坑2：不要一直去创建style 记得缓存起来 最多创建6W个就挂了
         fileName = TestFileUtil.getPath() + "handlerStyleWrite" + System.currentTimeMillis() + ".xlsx";
-        EasyExcel.write(fileName, DemoData.class)
+        FastExcel.write(fileName, DemoData.class)
                 .registerWriteHandler(new CellWriteHandler() {
                     @Override
                     public void afterCellDispose(CellWriteHandlerContext context) {

@@ -1,8 +1,8 @@
 package cn.idev.excel.test.core.skip;
 
-import cn.idev.excel.EasyExcel;
 import cn.idev.excel.ExcelReader;
 import cn.idev.excel.ExcelWriter;
+import cn.idev.excel.FastExcel;
 import cn.idev.excel.event.SyncReadListener;
 import cn.idev.excel.exception.ExcelGenerateException;
 import cn.idev.excel.read.metadata.ReadSheet;
@@ -51,11 +51,11 @@ public class SkipDataTest {
     }
 
     private void readAndWrite(File file) {
-        try (ExcelWriter excelWriter = EasyExcel.write(file, SimpleData.class).build(); ) {
-            WriteSheet writeSheet0 = EasyExcel.writerSheet(0, "第一个").build();
-            WriteSheet writeSheet1 = EasyExcel.writerSheet(1, "第二个").build();
-            WriteSheet writeSheet2 = EasyExcel.writerSheet(2, "第三个").build();
-            WriteSheet writeSheet3 = EasyExcel.writerSheet(3, "第四个").build();
+        try (ExcelWriter excelWriter = FastExcel.write(file, SimpleData.class).build(); ) {
+            WriteSheet writeSheet0 = FastExcel.writerSheet(0, "第一个").build();
+            WriteSheet writeSheet1 = FastExcel.writerSheet(1, "第二个").build();
+            WriteSheet writeSheet2 = FastExcel.writerSheet(2, "第三个").build();
+            WriteSheet writeSheet3 = FastExcel.writerSheet(3, "第四个").build();
             excelWriter.write(data("name1"), writeSheet0);
             excelWriter.write(data("name2"), writeSheet1);
             excelWriter.write(data("name3"), writeSheet2);
@@ -63,16 +63,16 @@ public class SkipDataTest {
         }
 
         List<SkipData> list =
-                EasyExcel.read(file, SkipData.class, null).sheet("第二个").doReadSync();
+                FastExcel.read(file, SkipData.class, null).sheet("第二个").doReadSync();
         Assertions.assertEquals(1, list.size());
         Assertions.assertEquals("name2", list.get(0).getName());
 
         SyncReadListener syncReadListener = new SyncReadListener();
-        try (ExcelReader excelReader = EasyExcel.read(file, SkipData.class, null)
+        try (ExcelReader excelReader = FastExcel.read(file, SkipData.class, null)
                 .registerReadListener(syncReadListener)
                 .build()) {
-            ReadSheet readSheet1 = EasyExcel.readSheet("第二个").build();
-            ReadSheet readSheet3 = EasyExcel.readSheet("第四个").build();
+            ReadSheet readSheet1 = FastExcel.readSheet("第二个").build();
+            ReadSheet readSheet3 = FastExcel.readSheet("第四个").build();
             excelReader.read(readSheet1, readSheet3);
             List<Object> syncList = syncReadListener.getList();
             Assertions.assertEquals(2, syncList.size());

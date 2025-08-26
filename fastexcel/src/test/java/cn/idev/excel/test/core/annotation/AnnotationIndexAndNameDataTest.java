@@ -1,6 +1,6 @@
 package cn.idev.excel.test.core.annotation;
 
-import cn.idev.excel.EasyExcel;
+import cn.idev.excel.FastExcel;
 import cn.idev.excel.test.util.TestFileUtil;
 import java.io.File;
 import java.util.ArrayList;
@@ -45,8 +45,8 @@ public class AnnotationIndexAndNameDataTest {
     }
 
     private void readAndWrite(File file) {
-        EasyExcel.write(file, AnnotationIndexAndNameData.class).sheet().doWrite(data());
-        EasyExcel.read(file, AnnotationIndexAndNameData.class, new AnnotationIndexAndNameDataListener())
+        FastExcel.write(file, AnnotationIndexAndNameData.class).sheet().doWrite(data());
+        FastExcel.read(file, AnnotationIndexAndNameData.class, new AnnotationIndexAndNameDataListener())
                 .sheet()
                 .doRead();
     }
