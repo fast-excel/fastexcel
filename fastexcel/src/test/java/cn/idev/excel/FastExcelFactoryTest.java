@@ -25,11 +25,6 @@ import org.junit.jupiter.api.io.TempDir;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-/**
- * @author : wh
- * @date : 2025/8/11
- * @description:
- */
 @ExtendWith(MockitoExtension.class)
 @DisplayName("FastExcelFactory Unit Tests")
 class FastExcelFactoryTest {
