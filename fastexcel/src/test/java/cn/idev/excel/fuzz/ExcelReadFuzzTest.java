@@ -1,4 +1,4 @@
-package cn.idev.excel.test.fuzz;
+package cn.idev.excel.fuzz;
 
 import cn.idev.excel.FastExcelFactory;
 import cn.idev.excel.read.builder.ExcelReaderBuilder;

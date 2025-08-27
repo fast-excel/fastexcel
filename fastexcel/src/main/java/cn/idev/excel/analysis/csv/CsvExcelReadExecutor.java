@@ -17,6 +17,7 @@ import cn.idev.excel.util.StringUtils;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -92,6 +93,19 @@ public class CsvExcelReadExecutor implements ExcelReadExecutor {
             } catch (ExcelAnalysisStopSheetException e) {
                 if (log.isDebugEnabled()) {
                     log.debug("Custom stop!", e);
+                }
+            } catch (UncheckedIOException e) {
+                // Apache Commons CSV may throw UncheckedIOException wrapping an IOException when the input
+                // contains truncated quoted fields or reaches EOF unexpectedly. Treat such cases as benign
+                // and end the current sheet gracefully; otherwise, rethrow as analysis exception.
+                if (isBenignCsvParseException(e)) {
+                    if (log.isDebugEnabled()) {
+                        log.debug("CSV parse finished early due to benign parse error: {}", e.getMessage());
+                    } else if (log.isWarnEnabled()) {
+                        log.warn("CSV parse finished early due to benign parse error.");
+                    }
+                } else {
+                    throw new ExcelAnalysisException(e);
                 }
             }
 
@@ -203,5 +217,30 @@ public class CsvExcelReadExecutor implements ExcelReadExecutor {
         csvReadContext.csvReadSheetHolder().setCellMap(cellMap);
         csvReadContext.csvReadSheetHolder().setRowIndex(rowIndex);
         csvReadContext.analysisEventProcessor().endRow(csvReadContext);
+    }
+
+    /**
+     * Determine whether an UncheckedIOException from Commons CSV is benign, i.e., caused by
+     * truncated quoted fields or early EOF while parsing an encapsulated token. In such cases
+     * we should stop reading the current sheet gracefully rather than failing the whole read.
+     */
+    private static boolean isBenignCsvParseException(Throwable t) {
+        Throwable cur = t;
+        while (cur != null) {
+            if (cur instanceof IOException) {
+                String msg = cur.getMessage();
+                if (msg != null) {
+                    // Messages observed from Apache Commons CSV
+                    if (msg.contains("EOF reached before encapsulated token finished")
+                            || msg.contains("encapsulated token finished")
+                            || msg.contains("Unexpected EOF in quoted field")
+                            || msg.contains("Unclosed quoted field")) {
+                        return true;
+                    }
+                }
+            }
+            cur = cur.getCause();
+        }
+        return false;
     }
 }

@@ -1,11 +1,10 @@
-package cn.idev.excel.test.core.exception;
+package cn.idev.excel.exception;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import cn.idev.excel.analysis.v07.XlsxSaxAnalyser;
 import cn.idev.excel.context.xlsx.DefaultXlsxReadContext;
 import cn.idev.excel.context.xlsx.XlsxReadContext;
-import cn.idev.excel.exception.ExcelCommonException;
 import cn.idev.excel.read.metadata.ReadWorkbook;
 import cn.idev.excel.support.ExcelTypeEnum;
 import java.io.ByteArrayInputStream;
