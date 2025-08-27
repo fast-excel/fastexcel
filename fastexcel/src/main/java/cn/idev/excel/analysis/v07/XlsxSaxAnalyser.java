@@ -8,6 +8,7 @@ import cn.idev.excel.context.xlsx.XlsxReadContext;
 import cn.idev.excel.enums.CellExtraTypeEnum;
 import cn.idev.excel.exception.ExcelAnalysisException;
 import cn.idev.excel.exception.ExcelAnalysisStopSheetException;
+import cn.idev.excel.exception.ExcelCommonException;
 import cn.idev.excel.metadata.CellExtra;
 import cn.idev.excel.read.metadata.ReadSheet;
 import cn.idev.excel.read.metadata.holder.xlsx.XlsxReadWorkbookHolder;
@@ -30,6 +31,7 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.openxml4j.exceptions.NotOfficeXmlFileException;
 import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.openxml4j.opc.PackageAccess;
 import org.apache.poi.openxml4j.opc.PackagePart;
@@ -210,26 +212,31 @@ public class XlsxSaxAnalyser implements ExcelReadExecutor {
 
     private OPCPackage readOpcPackage(XlsxReadWorkbookHolder xlsxReadWorkbookHolder, InputStream decryptedStream)
             throws Exception {
-        if (decryptedStream == null && xlsxReadWorkbookHolder.getFile() != null) {
-            return OPCPackage.open(xlsxReadWorkbookHolder.getFile());
-        }
-        if (xlsxReadWorkbookHolder.getMandatoryUseInputStream()) {
-            if (decryptedStream != null) {
-                return OPCPackage.open(decryptedStream);
-            } else {
-                return OPCPackage.open(xlsxReadWorkbookHolder.getInputStream());
+        try {
+            if (decryptedStream == null && xlsxReadWorkbookHolder.getFile() != null) {
+                return OPCPackage.open(xlsxReadWorkbookHolder.getFile());
             }
+            if (xlsxReadWorkbookHolder.getMandatoryUseInputStream()) {
+                if (decryptedStream != null) {
+                    return OPCPackage.open(decryptedStream);
+                } else {
+                    return OPCPackage.open(xlsxReadWorkbookHolder.getInputStream());
+                }
+            }
+            File readTempFile = FileUtils.createCacheTmpFile();
+            xlsxReadWorkbookHolder.setTempFile(readTempFile);
+            File tempFile = new File(readTempFile.getPath(), UUID.randomUUID() + ".xlsx");
+            if (decryptedStream != null) {
+                FileUtils.writeToFile(tempFile, decryptedStream, false);
+            } else {
+                FileUtils.writeToFile(
+                        tempFile, xlsxReadWorkbookHolder.getInputStream(), xlsxReadWorkbookHolder.getAutoCloseStream());
+            }
+            return OPCPackage.open(tempFile, PackageAccess.READ);
+        } catch (NotOfficeXmlFileException | InvalidFormatException e) {
+            // Wrap as a common, expected format error for callers/tests to handle gracefully
+            throw new ExcelCommonException("Invalid OOXML/zip format: " + e.getMessage(), e);
         }
-        File readTempFile = FileUtils.createCacheTmpFile();
-        xlsxReadWorkbookHolder.setTempFile(readTempFile);
-        File tempFile = new File(readTempFile.getPath(), UUID.randomUUID() + ".xlsx");
-        if (decryptedStream != null) {
-            FileUtils.writeToFile(tempFile, decryptedStream, false);
-        } else {
-            FileUtils.writeToFile(
-                    tempFile, xlsxReadWorkbookHolder.getInputStream(), xlsxReadWorkbookHolder.getAutoCloseStream());
-        }
-        return OPCPackage.open(tempFile, PackageAccess.READ);
     }
 
     @Override
