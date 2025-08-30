@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 360
     env:
-      # 启用 Jazzer JUnit 模式进行模糊测试， 避免binary target 复杂的命令行配置
+      # Enable Jazzer JUnit mode for fuzz testing, avoiding complex binary target command line configuration
       JAZZER_FUZZ: '1'
       # Write crash/reproduction artifacts to temp directory for upload; -max_total_time unit is seconds
       JAZZER_ARGS: "-artifact_prefix=${{ runner.temp }}/jazzer-artifacts/ -max_total_time=300  -rss_limit_mb=2048"
