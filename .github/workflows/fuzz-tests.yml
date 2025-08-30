@@ -2,7 +2,7 @@ name: Fuzz Tests (daily)
 
 on:
   schedule:
-    - cron: '0 16 * * *' # 每天 GMT+8 凌晨 00:00 触发
+    - cron: '0 16 * * *' # Runs daily at 00:00 GMT+8
   workflow_dispatch:
 
 jobs:
