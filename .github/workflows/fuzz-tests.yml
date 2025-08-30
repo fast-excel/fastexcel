@@ -1,0 +1,43 @@
+name: Fuzz Tests (daily)
+
+on:
+  schedule:
+    - cron: '0 16 * * *' # 每天 GMT+8 凌晨 00:00 触发
+  workflow_dispatch:
+
+jobs:
+  fuzz:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    env:
+      # 启用 Jazzer JUnit 模式进行模糊测试， 避免binary target 复杂的命令行配置
+      JAZZER_FUZZ: '1'
+      # 将 crash/复现体产物统一写入临时目录，便于作为构件上传， -max_total_time unit is second
+      JAZZER_ARGS: "-artifact_prefix=${{ runner.temp }}/jazzer-artifacts/ -max_total_time=300  -rss_limit_mb=2048"
+      MAVEN_OPTS: '-Xmx2g -Xms2g -Dfile.encoding=UTF-8'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'maven'
+
+      - name: Run fuzz tests (fastexcel module)
+        shell: bash
+        run: |
+          mkdir -p "${{ runner.temp }}/jazzer-artifacts/"
+          # 仅执行 fuzz 包下的测试，并强制不跳过测试
+          mvn -B -pl fastexcel -am -D"maven.test.skip=false" -DtrimStackTrace=false -D"test=cn.idev.excel.fuzz.*Test" test
+
+      - name: Upload Jazzer artifacts (crashes, repros)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: jazzer-artifacts
+          path: ${{ runner.temp }}/jazzer-artifacts/
+          if-no-files-found: ignore
+
