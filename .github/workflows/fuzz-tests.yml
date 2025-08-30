@@ -30,7 +30,7 @@ jobs:
         shell: bash
         run: |
           mkdir -p "${{ runner.temp }}/jazzer-artifacts/"
-          # 仅执行 fuzz 包下的测试，并强制不跳过测试
+          # Execute only tests under fuzz package and force tests not to be skipped
           mvn -B -pl fastexcel -am -D"maven.test.skip=false" -DtrimStackTrace=false -D"test=cn.idev.excel.fuzz.*Test" test
 
       - name: Upload Jazzer artifacts (crashes, repros)
