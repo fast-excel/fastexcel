@@ -12,7 +12,7 @@ jobs:
     env:
       # 启用 Jazzer JUnit 模式进行模糊测试， 避免binary target 复杂的命令行配置
       JAZZER_FUZZ: '1'
-      # 将 crash/复现体产物统一写入临时目录，便于作为构件上传， -max_total_time unit is second
+      # Write crash/reproduction artifacts to temp directory for upload; -max_total_time unit is seconds
       JAZZER_ARGS: "-artifact_prefix=${{ runner.temp }}/jazzer-artifacts/ -max_total_time=300  -rss_limit_mb=2048"
       MAVEN_OPTS: '-Xmx2g -Xms2g -Dfile.encoding=UTF-8'
     steps:
