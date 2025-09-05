@@ -4,6 +4,7 @@ import cn.idev.excel.constant.ExcelXmlConstants;
 import cn.idev.excel.constant.FastExcelConstants;
 import cn.idev.excel.context.xlsx.XlsxReadContext;
 import cn.idev.excel.enums.CellDataTypeEnum;
+import cn.idev.excel.metadata.GlobalConfiguration;
 import cn.idev.excel.metadata.data.ReadCellData;
 import cn.idev.excel.read.metadata.holder.xlsx.XlsxReadSheetHolder;
 import cn.idev.excel.util.BooleanUtils;
@@ -95,9 +96,14 @@ public class CellTagHandler extends AbstractXlsxTagHandler {
                 throw new IllegalStateException("Cannot set values now");
         }
 
-        if (tempCellData.getStringValue() != null
-                && xlsxReadContext.currentReadHolder().globalConfiguration().getAutoTrim()) {
-            tempCellData.setStringValue(tempCellData.getStringValue().trim());
+        if (tempCellData.getStringValue() != null) {
+            GlobalConfiguration globalConfiguration =
+                    xlsxReadContext.currentReadHolder().globalConfiguration();
+            if (globalConfiguration.getAutoStrip()) {
+                tempCellData.setStringValue(StringUtils.strip(tempCellData.getStringValue()));
+            } else if (globalConfiguration.getAutoTrim()) {
+                tempCellData.setStringValue(tempCellData.getStringValue().trim());
+            }
         }
 
         tempCellData.checkEmpty();

@@ -107,9 +107,8 @@ public class CsvWriterBuilder extends AbstractExcelWriterParameterBuilder<CsvWri
     }
 
     private ExcelWriter buildExcelWriter() {
-        if (this.writeWorkbook.getAutoTrim() != null) {
-            this.csvFormatBuilder.setTrim(this.writeWorkbook.getAutoTrim());
-        }
+        this.csvFormatBuilder.setTrim(Boolean.TRUE.equals(this.writeWorkbook.getAutoTrim())
+                || Boolean.TRUE.equals(this.writeWorkbook.getAutoStrip()));
         if (this.writeWorkbook.getNeedHead() != null) {
             this.csvFormatBuilder.setSkipHeaderRecord(!this.writeWorkbook.getNeedHead());
         }

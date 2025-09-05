@@ -46,18 +46,21 @@ public class SheetUtils {
             if (!match) {
                 String parameterSheetName = parameterReadSheet.getSheetName();
                 if (!StringUtils.isEmpty(parameterSheetName)) {
-                    boolean autoTrim = (parameterReadSheet.getAutoTrim() != null && parameterReadSheet.getAutoTrim())
-                            || (parameterReadSheet.getAutoTrim() == null
-                                    && analysisContext
-                                            .readWorkbookHolder()
-                                            .getGlobalConfiguration()
-                                            .getAutoTrim());
                     String sheetName = readSheet.getSheetName();
-                    if (autoTrim) {
-                        parameterSheetName = parameterSheetName.trim();
-                        sheetName = sheetName.trim();
+                    if (sheetName != null) {
+                        boolean autoTrim = getAutoTrimFlag(parameterReadSheet, analysisContext);
+                        if (autoTrim) {
+                            parameterSheetName = parameterSheetName.trim();
+                            sheetName = sheetName.trim();
+                        }
+
+                        boolean autoStrip = getAutoStripFlag(parameterReadSheet, analysisContext);
+                        if (autoStrip) {
+                            parameterSheetName = StringUtils.strip(parameterSheetName);
+                            sheetName = StringUtils.strip(sheetName);
+                        }
+                        match = parameterSheetName.equals(sheetName);
                     }
-                    match = parameterSheetName.equals(sheetName);
                 }
             }
             if (match) {
@@ -66,5 +69,37 @@ public class SheetUtils {
             }
         }
         return null;
+    }
+
+    /**
+     * Get autoTrim flag
+     *
+     * @param parameterReadSheet actual sheet
+     * @param analysisContext    Analysis Context
+     * @return autoTrim flag
+     */
+    private static boolean getAutoTrimFlag(ReadSheet parameterReadSheet, AnalysisContext analysisContext) {
+        return (parameterReadSheet.getAutoTrim() != null && parameterReadSheet.getAutoTrim())
+                || (parameterReadSheet.getAutoTrim() == null
+                        && analysisContext
+                                .readWorkbookHolder()
+                                .getGlobalConfiguration()
+                                .getAutoTrim());
+    }
+
+    /**
+     * Get autoStrip flag
+     *
+     * @param parameterReadSheet actual sheet
+     * @param analysisContext    Analysis Context
+     * @return autoStrip flag
+     */
+    private static boolean getAutoStripFlag(ReadSheet parameterReadSheet, AnalysisContext analysisContext) {
+        return (parameterReadSheet.getAutoStrip() != null && parameterReadSheet.getAutoStrip())
+                || (parameterReadSheet.getAutoStrip() == null
+                        && analysisContext
+                                .readWorkbookHolder()
+                                .getGlobalConfiguration()
+                                .getAutoStrip());
     }
 }

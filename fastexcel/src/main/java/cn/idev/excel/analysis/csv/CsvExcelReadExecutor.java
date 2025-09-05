@@ -193,6 +193,8 @@ public class CsvExcelReadExecutor implements ExcelReadExecutor {
         int columnIndex = 0;
         Boolean autoTrim =
                 csvReadContext.currentReadHolder().globalConfiguration().getAutoTrim();
+        Boolean autoStrip =
+                csvReadContext.currentReadHolder().globalConfiguration().getAutoStrip();
         while (cellIterator.hasNext()) {
             String cellString = cellIterator.next();
             ReadCellData<String> readCellData = new ReadCellData<>();
@@ -202,7 +204,13 @@ public class CsvExcelReadExecutor implements ExcelReadExecutor {
             // csv is an empty string of whether <code>,,</code> is read or <code>,"",</code>
             if (StringUtils.isNotBlank(cellString)) {
                 readCellData.setType(CellDataTypeEnum.STRING);
-                readCellData.setStringValue(autoTrim ? cellString.trim() : cellString);
+                if (autoStrip) {
+                    readCellData.setStringValue(StringUtils.strip(cellString));
+                } else if (autoTrim) {
+                    readCellData.setStringValue(cellString.trim());
+                } else {
+                    readCellData.setStringValue(cellString);
+                }
             } else {
                 readCellData.setType(CellDataTypeEnum.EMPTY);
             }
