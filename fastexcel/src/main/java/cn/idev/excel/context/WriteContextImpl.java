@@ -233,6 +233,11 @@ public class WriteContextImpl implements WriteContext {
         if (currentSheet == null) {
             currentSheet = createSheet();
         }
+
+        if (currentSheet != null && writeSheetHolder.getSheetNo() == null) {
+            writeSheetHolder.setSheetNo(writeWorkbookHolder.getWorkbook().getSheetIndex(currentSheet));
+        }
+
         writeSheetHolder.setSheet(currentSheet);
         WriteHandlerUtils.afterSheetCreate(sheetWriteHandlerContext);
         if (WriteTypeEnum.ADD.equals(writeType)) {
