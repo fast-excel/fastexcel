@@ -267,11 +267,11 @@ public class StringUtils {
      * StringUtils.strip(" ab c ") = "ab c"
      * </pre>
      *
-     * @param str  the String to remove whitespace from, may be null
+     * @param str the String to remove whitespace from, may be null
      * @return the stripped String, {@code null} if null String input
      */
     public static String strip(final String str) {
-        if (str == null || str.isEmpty() || !isBlank(str)) {
+        if (str == null || str.isEmpty()) {
             return str;
         }
 
@@ -299,13 +299,13 @@ public class StringUtils {
      * @see java.lang.Character#isSpaceChar(char)
      */
     public static boolean isBlankChar(final char ch) {
-        return Character.isWhitespace(ch)
-                || Character.isSpaceChar(ch)
-                || ch == '\ufeff'
+        return Character.isSpaceChar(ch)
+                || Character.isWhitespace(ch)
                 || ch == '\u202a'
-                || ch == '\u0000'
+                || ch == '\ufeff'
                 || ch == '\u3164'
                 || ch == '\u2800'
+                || ch == '\u200c'
                 || ch == '\u180e';
     }
 }
