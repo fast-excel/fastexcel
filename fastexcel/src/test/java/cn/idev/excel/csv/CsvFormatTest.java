@@ -14,15 +14,6 @@ import cn.idev.excel.util.StringUtils;
 import cn.idev.excel.util.TestFileUtil;
 import cn.idev.excel.write.metadata.WriteSheet;
 import cn.idev.excel.write.metadata.holder.WriteWorkbookHolder;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVPrinter;
-import org.apache.commons.csv.QuoteMode;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -31,6 +22,14 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
+import org.apache.commons.csv.QuoteMode;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 @Slf4j
 public class CsvFormatTest {
@@ -154,7 +153,7 @@ public class CsvFormatTest {
 
         csvFile = TestFileUtil.readFile(CSV_BASE + "csv-delimiter.csv");
         try (ExcelReader excelReader =
-                     FastExcel.read(csvFile, CsvData.class, new CsvDataListener()).build()) {
+                FastExcel.read(csvFile, CsvData.class, new CsvDataListener()).build()) {
             ReadWorkbookHolder readWorkbookHolder =
                     excelReader.analysisContext().readWorkbookHolder();
             if (readWorkbookHolder instanceof CsvReadWorkbookHolder) {

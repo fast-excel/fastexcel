@@ -28,6 +28,5 @@ public class CsvDataListener extends AnalysisEventListener<Object> {
     }
 
     @Override
-    public void doAfterAllAnalysed(AnalysisContext context) {
-    }
+    public void doAfterAllAnalysed(AnalysisContext context) {}
 }
