@@ -13,13 +13,12 @@ import cn.idev.excel.util.StringUtils;
 import cn.idev.excel.util.TestFileUtil;
 import cn.idev.excel.write.metadata.WriteSheet;
 import com.alibaba.fastjson2.JSON;
-import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 @Slf4j
 public class AutoStripParameterTest {
