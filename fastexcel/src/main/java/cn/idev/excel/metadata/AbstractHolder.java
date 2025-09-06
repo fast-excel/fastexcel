@@ -71,7 +71,7 @@ public abstract class AbstractHolder implements ConfigurationHolder {
                         prentAbstractHolder.getGlobalConfiguration().getAutoStrip());
             }
         } else {
-            globalConfiguration.setAutoTrim(basicParameter.getAutoStrip());
+            globalConfiguration.setAutoStrip(basicParameter.getAutoStrip());
         }
 
         if (basicParameter.getUse1904windowing() == null) {

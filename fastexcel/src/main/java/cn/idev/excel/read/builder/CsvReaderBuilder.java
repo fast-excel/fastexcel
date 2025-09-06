@@ -107,7 +107,8 @@ public class CsvReaderBuilder extends AbstractExcelReaderParameterBuilder<CsvRea
     }
 
     private ExcelReader buildExcelReader() {
-        this.csvFormatBuilder.setTrim(Boolean.TRUE.equals(this.readWorkbook.getAutoTrim())
+        this.csvFormatBuilder.setTrim(this.readWorkbook.getAutoTrim() == null
+                || this.readWorkbook.getAutoTrim()
                 || Boolean.TRUE.equals(this.readWorkbook.getAutoStrip()));
         if (this.readWorkbook.getIgnoreEmptyRow() != null) {
             this.csvFormatBuilder.setIgnoreEmptyLines(this.readWorkbook.getIgnoreEmptyRow());
