@@ -48,16 +48,15 @@ public class SheetUtils {
                 if (!StringUtils.isEmpty(parameterSheetName)) {
                     String sheetName = readSheet.getSheetName();
                     if (sheetName != null) {
-                        boolean autoTrim = getAutoTrimFlag(parameterReadSheet, analysisContext);
-                        if (autoTrim) {
-                            parameterSheetName = parameterSheetName.trim();
-                            sheetName = sheetName.trim();
-                        }
+                        boolean autoStrip = ParameterUtil.getAutoStripFlag(parameterReadSheet, analysisContext);
+                        boolean autoTrim = ParameterUtil.getAutoTrimFlag(parameterReadSheet, analysisContext);
 
-                        boolean autoStrip = getAutoStripFlag(parameterReadSheet, analysisContext);
                         if (autoStrip) {
                             parameterSheetName = StringUtils.strip(parameterSheetName);
                             sheetName = StringUtils.strip(sheetName);
+                        } else if (autoTrim) {
+                            parameterSheetName = parameterSheetName.trim();
+                            sheetName = sheetName.trim();
                         }
                         match = parameterSheetName.equals(sheetName);
                     }
@@ -69,37 +68,5 @@ public class SheetUtils {
             }
         }
         return null;
-    }
-
-    /**
-     * Get autoTrim flag
-     *
-     * @param parameterReadSheet actual sheet
-     * @param analysisContext    Analysis Context
-     * @return autoTrim flag
-     */
-    private static boolean getAutoTrimFlag(ReadSheet parameterReadSheet, AnalysisContext analysisContext) {
-        return (parameterReadSheet.getAutoTrim() != null && parameterReadSheet.getAutoTrim())
-                || (parameterReadSheet.getAutoTrim() == null
-                        && analysisContext
-                                .readWorkbookHolder()
-                                .getGlobalConfiguration()
-                                .getAutoTrim());
-    }
-
-    /**
-     * Get autoStrip flag
-     *
-     * @param parameterReadSheet actual sheet
-     * @param analysisContext    Analysis Context
-     * @return autoStrip flag
-     */
-    private static boolean getAutoStripFlag(ReadSheet parameterReadSheet, AnalysisContext analysisContext) {
-        return (parameterReadSheet.getAutoStrip() != null && parameterReadSheet.getAutoStrip())
-                || (parameterReadSheet.getAutoStrip() == null
-                        && analysisContext
-                                .readWorkbookHolder()
-                                .getGlobalConfiguration()
-                                .getAutoStrip());
     }
 }
