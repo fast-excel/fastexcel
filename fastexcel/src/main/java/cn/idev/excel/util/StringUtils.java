@@ -290,9 +290,9 @@ public class StringUtils {
     }
 
     /**
-     * Checks if the CharSequence is whitespace
+     * Checks if the character is whitespace
      *
-     * @param ch the CharSequence to check
+     * @param ch the character to check
      * @return {@code true} if the character is a Java whitespace
      * character; {@code false} otherwise.
      * @see java.lang.Character#isWhitespace(char)
