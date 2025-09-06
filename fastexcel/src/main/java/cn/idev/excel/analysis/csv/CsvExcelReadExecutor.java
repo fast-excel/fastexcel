@@ -150,15 +150,17 @@ public class CsvExcelReadExecutor implements ExcelReadExecutor {
     /**
      * Builds and returns a CSVParser instance based on the provided CSVFormat, InputStream, and ByteOrderMarkEnum.
      *
+     * <p>
+     * This method checks if the byteOrderMark is null. If it is null, it creates a CSVParser using the provided
+     * input stream and charset. Otherwise, it wraps the input stream with a BOMInputStream to handle files with a
+     * Byte Order Mark, ensuring proper decoding of the file content.
+     * </p>
+     *
      * @param csvFormat     The format configuration for parsing the CSV file.
      * @param inputStream   The input stream from which the CSV data will be read.
      * @param byteOrderMark The enumeration representing the Byte Order Mark (BOM) of the file's character set.
      * @return A CSVParser instance configured to parse the CSV data.
      * @throws IOException If an I/O error occurs while creating the parser or reading from the input stream.
-     *                     <p>
-     *                     This method checks if the byteOrderMark is null. If it is null, it creates a CSVParser using the provided
-     *                     input stream and charset. Otherwise, it wraps the input stream with a BOMInputStream to handle files with a
-     *                     Byte Order Mark, ensuring proper decoding of the file content.
      */
     private CSVParser buildCsvParser(CSVFormat csvFormat, InputStream inputStream, ByteOrderMarkEnum byteOrderMark)
             throws IOException {
