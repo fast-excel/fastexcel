@@ -28,7 +28,7 @@ public class StringUtilsTest {
         Assertions.assertTrue(StringUtils.isBlankChar('\u202a'));
         Assertions.assertTrue(StringUtils.isBlankChar('\u3164'));
         Assertions.assertTrue(StringUtils.isBlankChar('\u2800'));
-        Assertions.assertTrue(StringUtils.isBlankChar('\u2800'));
+        Assertions.assertTrue(StringUtils.isBlankChar('\u200c'));
         Assertions.assertTrue(StringUtils.isBlankChar('\u180e'));
     }
 }
