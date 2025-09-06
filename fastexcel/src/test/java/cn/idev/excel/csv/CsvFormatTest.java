@@ -1,4 +1,4 @@
-package cn.idev.excel.temp.csv;
+package cn.idev.excel.csv;
 
 import cn.idev.excel.ExcelReader;
 import cn.idev.excel.ExcelWriter;
