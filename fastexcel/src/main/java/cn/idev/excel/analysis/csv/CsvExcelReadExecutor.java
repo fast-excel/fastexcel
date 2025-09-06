@@ -146,18 +146,21 @@ public class CsvExcelReadExecutor implements ExcelReadExecutor {
         // As a fallback, build the CSV parser using the input stream.
         return buildCsvParser(csvFormat, csvReadWorkbookHolder.getInputStream(), byteOrderMark);
     }
+
     /**
      * Builds and returns a CSVParser instance based on the provided CSVFormat, InputStream, and ByteOrderMarkEnum.
      *
-     * @param csvFormat The format configuration for parsing the CSV file.
-     * @param inputStream The input stream from which the CSV data will be read.
-     * @param byteOrderMark The enumeration representing the Byte Order Mark (BOM) of the file's character set.
-     * @return A CSVParser instance configured to parse the CSV data.
-     * @throws IOException If an I/O error occurs while creating the parser or reading from the input stream.
-     *
+     * <p>
      * This method checks if the byteOrderMark is null. If it is null, it creates a CSVParser using the provided
      * input stream and charset. Otherwise, it wraps the input stream with a BOMInputStream to handle files with a
      * Byte Order Mark, ensuring proper decoding of the file content.
+     * </p>
+     *
+     * @param csvFormat     The format configuration for parsing the CSV file.
+     * @param inputStream   The input stream from which the CSV data will be read.
+     * @param byteOrderMark The enumeration representing the Byte Order Mark (BOM) of the file's character set.
+     * @return A CSVParser instance configured to parse the CSV data.
+     * @throws IOException If an I/O error occurs while creating the parser or reading from the input stream.
      */
     private CSVParser buildCsvParser(CSVFormat csvFormat, InputStream inputStream, ByteOrderMarkEnum byteOrderMark)
             throws IOException {
@@ -173,26 +176,28 @@ public class CsvExcelReadExecutor implements ExcelReadExecutor {
     /**
      * Processes a single CSV record and maps its content to a structured format for further analysis.
      *
-     * @param record The CSV record to be processed.
+     * @param record   The CSV record to be processed.
      * @param rowIndex The index of the current row being processed.
-     * This method performs the following steps:
-     * 1. Initializes a `LinkedHashMap` to store cell data, ensuring the order of columns is preserved.
-     * 2. Iterates through each cell in the CSV record using an iterator.
-     * 3. For each cell, creates a `ReadCellData` object and sets its metadata (row index, column index, type, and value).
-     *    - If the cell is not blank, it is treated as a string and optionally trimmed based on the `autoTrim` configuration.
-     *    - If the cell is blank, it is marked as empty.
-     * 4. Adds the processed cell data to the `cellMap`.
-     * 5. Determines the row type: if the `cellMap` is empty, the row is marked as `EMPTY`; otherwise, it is marked as `DATA`.
-     * 6. Creates a `ReadRowHolder` object with the row's metadata and cell map, and stores it in the context.
-     * 7. Updates the context's sheet holder with the cell map and row index.
-     * 8. Notifies the analysis event processor that the row processing has ended.
+     *                 This method performs the following steps:
+     *                 1. Initializes a `LinkedHashMap` to store cell data, ensuring the order of columns is preserved.
+     *                 2. Iterates through each cell in the CSV record using an iterator.
+     *                 3. For each cell, creates a `ReadCellData` object and sets its metadata (row index, column index, type, and value).
+     *                 - If the cell is not blank, it is treated as a string and optionally trimmed based on the `autoTrim` configuration.
+     *                 - If the cell is blank, it is marked as empty.
+     *                 4. Adds the processed cell data to the `cellMap`.
+     *                 5. Determines the row type: if the `cellMap` is empty, the row is marked as `EMPTY`; otherwise, it is marked as `DATA`.
+     *                 6. Creates a `ReadRowHolder` object with the row's metadata and cell map, and stores it in the context.
+     *                 7. Updates the context's sheet holder with the cell map and row index.
+     *                 8. Notifies the analysis event processor that the row processing has ended.
      */
     private void dealRecord(CSVRecord record, int rowIndex) {
         Map<Integer, Cell> cellMap = new LinkedHashMap<>();
         Iterator<String> cellIterator = record.iterator();
         int columnIndex = 0;
         Boolean autoTrim =
-                csvReadContext.currentReadHolder().globalConfiguration().getAutoTrim();
+                csvReadContext.csvReadWorkbookHolder().globalConfiguration().getAutoTrim();
+        Boolean autoStrip =
+                csvReadContext.csvReadWorkbookHolder().globalConfiguration().getAutoStrip();
         while (cellIterator.hasNext()) {
             String cellString = cellIterator.next();
             ReadCellData<String> readCellData = new ReadCellData<>();
@@ -202,7 +207,13 @@ public class CsvExcelReadExecutor implements ExcelReadExecutor {
             // csv is an empty string of whether <code>,,</code> is read or <code>,"",</code>
             if (StringUtils.isNotBlank(cellString)) {
                 readCellData.setType(CellDataTypeEnum.STRING);
-                readCellData.setStringValue(autoTrim ? cellString.trim() : cellString);
+                if (autoStrip) {
+                    readCellData.setStringValue(StringUtils.strip(cellString));
+                } else if (autoTrim) {
+                    readCellData.setStringValue(cellString.trim());
+                } else {
+                    readCellData.setStringValue(cellString);
+                }
             } else {
                 readCellData.setType(CellDataTypeEnum.EMPTY);
             }

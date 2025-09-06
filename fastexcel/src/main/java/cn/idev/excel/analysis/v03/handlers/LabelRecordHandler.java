@@ -3,7 +3,9 @@ package cn.idev.excel.analysis.v03.handlers;
 import cn.idev.excel.analysis.v03.IgnorableXlsRecordHandler;
 import cn.idev.excel.context.xls.XlsReadContext;
 import cn.idev.excel.enums.RowTypeEnum;
+import cn.idev.excel.metadata.GlobalConfiguration;
 import cn.idev.excel.metadata.data.ReadCellData;
+import cn.idev.excel.util.StringUtils;
 import org.apache.poi.hssf.record.LabelRecord;
 import org.apache.poi.hssf.record.Record;
 
@@ -15,9 +17,14 @@ public class LabelRecordHandler extends AbstractXlsRecordHandler implements Igno
     public void processRecord(XlsReadContext xlsReadContext, Record record) {
         LabelRecord lrec = (LabelRecord) record;
         String data = lrec.getValue();
-        if (data != null
-                && xlsReadContext.currentReadHolder().globalConfiguration().getAutoTrim()) {
-            data = data.trim();
+        if (data != null) {
+            GlobalConfiguration globalConfiguration =
+                    xlsReadContext.currentReadHolder().globalConfiguration();
+            if (globalConfiguration.getAutoStrip()) {
+                data = StringUtils.strip(data);
+            } else if (globalConfiguration.getAutoTrim()) {
+                data = data.trim();
+            }
         }
         xlsReadContext
                 .xlsReadSheetHolder()

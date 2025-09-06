@@ -58,7 +58,7 @@ public abstract class AbstractParameterBuilder<T extends AbstractParameterBuilde
 
     /**
      * true if date uses 1904 windowing, or false if using 1900 date windowing.
-     *
+     * <p>
      * default is false
      *
      * @param use1904windowing
@@ -83,7 +83,7 @@ public abstract class AbstractParameterBuilder<T extends AbstractParameterBuilde
 
     /**
      * The cache used when parsing fields such as head.
-     *
+     * <p>
      * default is THREAD_LOCAL.
      *
      * @since 3.3.0
@@ -101,6 +101,17 @@ public abstract class AbstractParameterBuilder<T extends AbstractParameterBuilde
      */
     public T autoTrim(Boolean autoTrim) {
         parameter().setAutoTrim(autoTrim);
+        return self();
+    }
+
+    /**
+     * Automatic strip includes sheet name and content
+     *
+     * @param autoStrip
+     * @return
+     */
+    public T autoStrip(Boolean autoStrip) {
+        parameter().setAutoStrip(autoStrip);
         return self();
     }
 

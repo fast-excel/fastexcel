@@ -23,8 +23,6 @@ public class GlobalConfiguration {
      * true if date uses 1904 windowing, or false if using 1900 date windowing.
      *
      * default is false
-     *
-     * @return
      */
     private Boolean use1904windowing;
     /**
@@ -47,8 +45,16 @@ public class GlobalConfiguration {
      */
     private CacheLocationEnum filedCacheLocation;
 
+    /**
+     * Automatic strip includes sheet name and content
+     *
+     * default is false
+     */
+    private Boolean autoStrip;
+
     public GlobalConfiguration() {
         this.autoTrim = Boolean.TRUE;
+        this.autoStrip = Boolean.FALSE;
         this.use1904windowing = Boolean.FALSE;
         this.locale = Locale.getDefault();
         this.useScientificFormat = Boolean.FALSE;

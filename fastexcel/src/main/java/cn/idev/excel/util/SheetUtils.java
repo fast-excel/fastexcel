@@ -46,18 +46,20 @@ public class SheetUtils {
             if (!match) {
                 String parameterSheetName = parameterReadSheet.getSheetName();
                 if (!StringUtils.isEmpty(parameterSheetName)) {
-                    boolean autoTrim = (parameterReadSheet.getAutoTrim() != null && parameterReadSheet.getAutoTrim())
-                            || (parameterReadSheet.getAutoTrim() == null
-                                    && analysisContext
-                                            .readWorkbookHolder()
-                                            .getGlobalConfiguration()
-                                            .getAutoTrim());
                     String sheetName = readSheet.getSheetName();
-                    if (autoTrim) {
-                        parameterSheetName = parameterSheetName.trim();
-                        sheetName = sheetName.trim();
+                    if (sheetName != null) {
+                        boolean autoStrip = ParameterUtil.getAutoStripFlag(parameterReadSheet, analysisContext);
+                        boolean autoTrim = ParameterUtil.getAutoTrimFlag(parameterReadSheet, analysisContext);
+
+                        if (autoStrip) {
+                            parameterSheetName = StringUtils.strip(parameterSheetName);
+                            sheetName = StringUtils.strip(sheetName);
+                        } else if (autoTrim) {
+                            parameterSheetName = parameterSheetName.trim();
+                            sheetName = sheetName.trim();
+                        }
+                        match = parameterSheetName.equals(sheetName);
                     }
-                    match = parameterSheetName.equals(sheetName);
                 }
             }
             if (match) {
