@@ -12,8 +12,6 @@ jobs:
     env:
       # Enable Jazzer JUnit mode for fuzz testing, avoiding complex binary target command line configuration
       JAZZER_FUZZ: '1'
-      # Write crash/reproduction artifacts to temp directory for upload; -max_total_time unit is seconds
-      JAZZER_ARGS: "-artifact_prefix=${{ runner.temp }}/jazzer-artifacts/ -max_total_time=300  -rss_limit_mb=2048"
       MAVEN_OPTS: '-Xmx2g -Xms2g -Dfile.encoding=UTF-8'
     steps:
       - name: Checkout
@@ -28,6 +26,9 @@ jobs:
 
       - name: Run fuzz tests (fastexcel module)
         shell: bash
+        env:
+          # runner context is available at step-level, so this resolves correctly
+          JAZZER_ARGS: "-artifact_prefix=${{ runner.temp }}/jazzer-artifacts/ -max_total_time=300  -rss_limit_mb=2048"
         run: |
           mkdir -p "${{ runner.temp }}/jazzer-artifacts/"
           # Execute only tests under fuzz package and force tests not to be skipped
@@ -40,4 +41,3 @@ jobs:
           name: jazzer-artifacts
           path: ${{ runner.temp }}/jazzer-artifacts/
           if-no-files-found: ignore
-
