@@ -60,4 +60,8 @@ public class BasicParameter {
      * default is THREAD_LOCAL.
      */
     private CacheLocationEnum filedCacheLocation;
+    /**
+     * Automatic strip includes sheet name and content
+     */
+    private Boolean autoStrip;
 }

@@ -247,4 +247,65 @@ public class StringUtils {
         }
         return true;
     }
+
+    /**
+     * Strips whitespace from the start and end of a String.
+     *
+     * <p>This is similar to {@link String#trim()} but removes whitespace.
+     * Whitespace is defined by {@link #isBlankChar(char)}.</p>
+     *
+     * <p>A {@code null} input String returns {@code null}.</p>
+     *
+     * <pre>
+     * StringUtils.strip(null)     = null
+     * StringUtils.strip("")       = ""
+     * StringUtils.strip("   ")    = ""
+     * StringUtils.strip("abc")    = "abc"
+     * StringUtils.strip("  abc")  = "abc"
+     * StringUtils.strip("abc  ")  = "abc"
+     * StringUtils.strip(" abc ")  = "abc"
+     * StringUtils.strip(" ab c ") = "ab c"
+     * </pre>
+     *
+     * @param str the String to remove whitespace from, may be null
+     * @return the stripped String, {@code null} if null String input
+     */
+    public static String strip(final String str) {
+        if (str == null || str.isEmpty()) {
+            return str;
+        }
+
+        int beginIndex = 0;
+        int endIndex = str.length() - 1;
+
+        while (beginIndex <= endIndex && isBlankChar(str.charAt(beginIndex))) {
+            beginIndex++;
+        }
+
+        while (endIndex > beginIndex && isBlankChar(str.charAt(endIndex))) {
+            endIndex--;
+        }
+
+        return str.substring(beginIndex, endIndex + 1);
+    }
+
+    /**
+     * Checks if the character is whitespace
+     *
+     * @param ch the character to check
+     * @return {@code true} if the character is a Java whitespace
+     * character; {@code false} otherwise.
+     * @see java.lang.Character#isWhitespace(char)
+     * @see java.lang.Character#isSpaceChar(char)
+     */
+    public static boolean isBlankChar(final char ch) {
+        return Character.isSpaceChar(ch)
+                || Character.isWhitespace(ch)
+                || ch == '\u202a'
+                || ch == '\ufeff'
+                || ch == '\u3164'
+                || ch == '\u2800'
+                || ch == '\u200c'
+                || ch == '\u180e';
+    }
 }

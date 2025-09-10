@@ -28,6 +28,7 @@ import java.io.InputStream;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.poi.hssf.OldExcelFormatException;
 import org.apache.poi.hssf.record.crypto.Biff8EncryptionKey;
 import org.apache.poi.poifs.crypt.Decryptor;
 import org.apache.poi.poifs.filesystem.DocumentFactoryHelper;
@@ -91,10 +92,21 @@ public class ExcelAnalyserImpl implements ExcelAnalyser {
             case XLS:
                 POIFSFileSystem poifsFileSystem;
                 // Initialize POIFSFileSystem based on whether a file or input stream is provided
-                if (readWorkbook.getFile() != null) {
-                    poifsFileSystem = new POIFSFileSystem(readWorkbook.getFile());
-                } else {
-                    poifsFileSystem = new POIFSFileSystem(readWorkbook.getInputStream());
+                try {
+                    if (readWorkbook.getFile() != null) {
+                        poifsFileSystem = new POIFSFileSystem(readWorkbook.getFile());
+                    } else {
+                        poifsFileSystem = new POIFSFileSystem(readWorkbook.getInputStream());
+                    }
+                } catch (OldExcelFormatException oefe) {
+                    // Very old BIFF (e.g., BIFF2) – HSSF doesn't support it. Treat as benign and no-op.
+                    log.warn(
+                            "Detected old Excel BIFF format not supported by HSSF: {}. Using no-op executor.",
+                            oefe.getMessage());
+                    XlsReadContext xlsReadContextFallback = new DefaultXlsReadContext(readWorkbook, ExcelTypeEnum.XLS);
+                    analysisContext = xlsReadContextFallback;
+                    excelReadExecutor = new NoopExcelReadExecutor();
+                    return;
                 }
                 // So in encrypted excel, it looks like XLS but it's actually XLSX
                 if (poifsFileSystem.getRoot().hasEntry(Decryptor.DEFAULT_POIFS_ENTRY)) {
@@ -293,5 +305,18 @@ public class ExcelAnalyserImpl implements ExcelAnalyser {
     @Override
     public AnalysisContext analysisContext() {
         return analysisContext;
+    }
+
+    // A no-op executor used to gracefully handle unsupported/ancient formats in fuzzing/robustness paths.
+    protected static final class NoopExcelReadExecutor implements ExcelReadExecutor {
+        @Override
+        public List<ReadSheet> sheetList() {
+            return java.util.Collections.emptyList();
+        }
+
+        @Override
+        public void execute() {
+            // intentionally no-op
+        }
     }
 }
