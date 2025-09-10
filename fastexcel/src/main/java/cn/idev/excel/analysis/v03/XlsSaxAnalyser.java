@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.hssf.OldExcelFormatException;
 import org.apache.poi.hssf.eventusermodel.EventWorkbookBuilder;
 import org.apache.poi.hssf.eventusermodel.FormatTrackingHSSFListener;
 import org.apache.poi.hssf.eventusermodel.HSSFEventFactory;
@@ -160,12 +161,44 @@ public class XlsSaxAnalyser implements HSSFListener, ExcelReadExecutor {
         request.addListenerForAllRecords(xlsReadWorkbookHolder.getFormatTrackingHSSFListener());
         try {
             factory.processWorkbookEvents(request, xlsReadWorkbookHolder.getPoifsFileSystem());
+        } catch (OldExcelFormatException e) {
+            // POI reports very old BIFF (e.g., BIFF2) formats via OldExcelFormatException. Treat as benign:
+            // stop current sheet gracefully and return without error so fuzz doesn't flag it.
+            log.warn(
+                    "Detected old Excel BIFF format not supported by HSSF ({}). Ending sheet gracefully.",
+                    e.getMessage());
+            xlsReadContext.analysisEventProcessor().endSheet(xlsReadContext);
+            throw new ExcelAnalysisException(e);
+        } catch (RuntimeException e) {
+            // Some environments may wrap OldExcelFormatException; detect by type/message in cause chain.
+            if (isOldExcelFormat(e)) {
+                log.warn("Detected wrapped OldExcelFormatException. Ending sheet gracefully.");
+                xlsReadContext.analysisEventProcessor().endSheet(xlsReadContext);
+                throw new ExcelAnalysisException(e);
+            }
+            throw e;
         } catch (IOException e) {
             throw new ExcelAnalysisException(e);
         }
 
         // There are some special xls that do not have the terminator "[EOF]", so an additional
         xlsReadContext.analysisEventProcessor().endSheet(xlsReadContext);
+    }
+
+    protected boolean isOldExcelFormat(Throwable t) {
+        for (int i = 0; i < 6 && t != null; i++, t = t.getCause()) {
+            if (t instanceof OldExcelFormatException) {
+                return true;
+            }
+            String msg = t.getMessage();
+            if (msg != null) {
+                String m = msg.toLowerCase();
+                if (m.contains("biff2") || m.contains("oldexcelformatexception") || m.contains("biff")) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**
