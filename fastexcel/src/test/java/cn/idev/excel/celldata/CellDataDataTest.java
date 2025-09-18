@@ -8,17 +8,16 @@ import cn.idev.excel.metadata.data.FormulaData;
 import cn.idev.excel.metadata.data.WriteCellData;
 import cn.idev.excel.util.DateUtils;
 import cn.idev.excel.util.TestFileUtil;
+import java.io.File;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
-
-import java.io.File;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 
 @TestMethodOrder(MethodOrderer.MethodName.class)
 @Slf4j
@@ -65,8 +64,7 @@ public class CellDataDataTest {
                     }
 
                     @Override
-                    public void doAfterAllAnalysed(AnalysisContext context) {
-                    }
+                    public void doAfterAllAnalysed(AnalysisContext context) {}
                 })
                 .doReadAll();
     }
