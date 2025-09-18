@@ -28,14 +28,6 @@ public class CellFormulaTagHandler extends AbstractXlsxTagHandler {
             return;
         }
         xlsxReadSheetHolder.setTempSharedIndex(si);
-
-        String ref = attributes.getValue(ExcelXmlConstants.ATTRIBUTE_REF);
-        if (StringUtils.isBlank(ref)) {
-            return;
-        }
-        xlsxReadSheetHolder
-                .getSharedFormula()
-                .put(si, xlsxReadSheetHolder.getTempFormula().toString());
     }
 
     @Override
@@ -44,11 +36,13 @@ public class CellFormulaTagHandler extends AbstractXlsxTagHandler {
 
         String formulaValue = xlsxReadSheetHolder.getTempFormula().toString();
         String sharedIndex = xlsxReadSheetHolder.getTempSharedIndex();
+
         if (StringUtils.isNotBlank(sharedIndex)) {
-            if (StringUtils.isBlank(formulaValue)) {
+            if (StringUtils.isNotBlank(formulaValue)) {
+                xlsxReadSheetHolder.getSharedFormula().putIfAbsent(sharedIndex, formulaValue);
+            } else {
                 formulaValue = xlsxReadSheetHolder.getSharedFormula().get(sharedIndex);
             }
-            xlsxReadSheetHolder.getSharedFormula().put(sharedIndex, formulaValue);
         }
 
         FormulaData formulaData = new FormulaData();
