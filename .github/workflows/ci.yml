@@ -25,8 +25,8 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
-          java-version: 21
-          distribution: 'adopt'
+          java-version: 25
+          distribution: 'temurin'
       - name: Check code style
         run: ./mvnw spotless:check
 
@@ -34,10 +34,10 @@ jobs:
     runs-on: ubuntu-24.04
     strategy:
       matrix:
-        java: [ 8, 11, 17, 21]
+        java: [ 8, 11, 17, 21, 25]
         distribution: [ 'adopt' ]
       fail-fast: false
-      max-parallel: 4
+      max-parallel: 5
 
     name: Test JDK ${{ matrix.java }}
     steps:

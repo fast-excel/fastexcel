@@ -11,10 +11,10 @@ jobs:
     runs-on: ubuntu-24.04
     strategy:
       matrix:
-        java: [ 8, 11, 17, 21]
+        java: [ 8, 11, 17, 21, 25]
         distribution: [ 'adopt' ]
       fail-fast: false
-      max-parallel: 4
+      max-parallel: 5
     name: Test JDK ${{ matrix.java }}
     steps:
       - uses: actions/checkout@v4
