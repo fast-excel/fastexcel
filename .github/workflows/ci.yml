@@ -25,7 +25,7 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
-          java-version: 25
+          java-version: 21
           distribution: 'temurin'
       - name: Check code style
         run: ./mvnw spotless:check
@@ -34,8 +34,17 @@ jobs:
     runs-on: ubuntu-24.04
     strategy:
       matrix:
-        java: [ 8, 11, 17, 21, 25]
-        distribution: [ 'temurin' ]
+        include:
+          - java: '8'
+            distribution: 'temurin'
+          - java: '11'
+            distribution: 'temurin'
+          - java: '17'
+            distribution: 'temurin'
+          - java: '21'
+            distribution: 'temurin'
+          - java: '25-ea'
+            distribution: 'zulu'
       fail-fast: false
       max-parallel: 5
 
