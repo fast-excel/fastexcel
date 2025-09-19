@@ -43,11 +43,12 @@ being your best choice for handling Excel files.
 
 The following table lists the minimum Java language version requirements for each version of the FastExcel library:
 
-| Version | JDK Version Support Range | Notes |
-|---------|:-------------------------:|-------|
-| 1.2.x   |       JDK8 - JDK21        |       |
-| 1.1.x   |       JDK8 - JDK21        |       |
-| 1.0.x   |       JDK8 - JDK21        |       |
+| Version  | JDK Version Support Range | Notes |
+|----------|:-------------------------:|-------|
+| 1.3.x    |       JDK8 - JDK25        |       |
+| 1.2.x    |       JDK8 - JDK21        |       |
+| 1.1.x    |       JDK8 - JDK21        |       |
+| 1.0.x    |       JDK8 - JDK21        |       |
 
 We strongly recommend using the latest version of FastExcel, as performance optimizations, bug fixes, and new features
 in the latest version will enhance your experience.
@@ -92,12 +93,12 @@ Below is an example of reading an Excel document:
 ```java
 // Implement the ReadListener interface to set up operations for reading data
 public class DemoDataListener implements ReadListener<DemoData> {
-    
+
     @Override
     public void invoke(DemoData data, AnalysisContext context) {
         System.out.println("Parsed a data entry" + JSON.toJSONString(data));
     }
-    
+
     @Override
     public void doAfterAllAnalysed(AnalysisContext context) {
         System.out.println("All data parsed!");
@@ -118,16 +119,16 @@ Below is a simple example of creating an Excel document:
 ```java
 // Sample data class
 public class DemoData {
-    
+
     @ExcelProperty("String Title")
     private String string;
-    
+
     @ExcelProperty("Date Title")
     private Date date;
-    
+
     @ExcelProperty("Number Title")
     private Double doubleData;
-    
+
     @ExcelIgnore
     private String ignore;
 }

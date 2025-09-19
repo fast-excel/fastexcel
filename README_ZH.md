@@ -40,6 +40,7 @@ Excel 文件的最佳选择。
 
 | 版本    |  jdk版本支持范围   | 备注 |
 |-------|:------------:|----|
+| 1.3.x | jdk8 - jdk25 |    |
 | 1.2.x | jdk8 - jdk21 |    |
 | 1.1.x | jdk8 - jdk21 |    |
 | 1.0.x | jdk8 - jdk21 |    |
@@ -86,12 +87,12 @@ dependencies {
 ```java
 // 实现 ReadListener 接口，设置读取数据的操作
 public class DemoDataListener implements ReadListener<DemoData> {
-    
+
     @Override
     public void invoke(DemoData data, AnalysisContext context) {
         System.out.println("解析到一条数据" + JSON.toJSONString(data));
     }
-    
+
     @Override
     public void doAfterAllAnalysed(AnalysisContext context) {
         System.out.println("所有数据解析完成！");
@@ -112,16 +113,16 @@ public static void main(String[] args) {
 ```java
 // 示例数据类
 public class DemoData {
-    
+
     @ExcelProperty("字符串标题")
     private String string;
-    
+
     @ExcelProperty("日期标题")
     private Date date;
-    
+
     @ExcelProperty("数字标题")
     private Double doubleData;
-    
+
     @ExcelIgnore
     private String ignore;
 }
