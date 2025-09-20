@@ -38,9 +38,12 @@ FastExcelは常にフリーでオープンソースであり、ビジネスに�
 
 以下の表は、各バージョンのFastExcel基礎ライブラリのJava言語バージョンの最低要件を一覧にしたものです：
 
-| バージョン  | JDKバージョンサポート範囲 | 備考 |
-|--------|:--------------:|----|
-| 1.0.0+ |  JDK8 - JDK21  |    |
+| バージョン    |  JDKバージョンサポート範囲  | 備考           |
+|----------|:----------------:|--------------|
+| 1.3.x    |   JDK8 - JDK25   |              |
+| 1.2.x    |   JDK8 - JDK21   |              |
+| 1.1.x    |   JDK8 - JDK21   |              |
+| 1.0.x    |   JDK8 - JDK21   |              |
 
 最新のFastExcelバージョンを使用することを強くお勧めします。最新バージョンのパフォーマンス最適化、バグ修正、および新機能は、使用の利便性を向上させます。
 
@@ -82,12 +85,12 @@ dependencies {
 ```java
 // ReadListenerインターフェースを実装してデータを読む操作を設定します
 public class DemoDataListener implements ReadListener<DemoData> {
-    
+
     @Override
     public void invoke(DemoData data, AnalysisContext context) {
         System.out.println("データエントリを解析しました" + JSON.toJSONString(data));
     }
-    
+
     @Override
     public void doAfterAllAnalysed(AnalysisContext context) {
         System.out.println("すべてのデータの解析が完了しました！");
@@ -108,16 +111,16 @@ public static void main(String[] args) {
 ```java
 // サンプルデータクラス
 public class DemoData {
-    
+
     @ExcelProperty("文字列タイトル")
     private String string;
-    
+
     @ExcelProperty("日付タイトル")
     private Date date;
-    
+
     @ExcelProperty("数字タイトル")
     private Double doubleData;
-    
+
     @ExcelIgnore
     private String ignore;
 }
